@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+        <item
+            android:id="@+id/nav_aboutus"
+            android:title="@string/AboutUs" />
+        <item
+            android:id="@+id/nav_donar"
+            android:title="@string/Donar" />
+        <item
+            android:id="@+id/nav_receiver"
+            android:title="@string/Receiver" />
+        <item
+            android:id="@+id/nav_bloodbanks"
+            android:title="@string/BloodBanks" />
+        <item
+            android:id="@+id/nav_precautions"
+            android:title="@string/Precautions" />
+        <item
+            android:id="@+id/nav_contactus"
+            android:title="@string/Contactus" />
+        <item
+            android:id="@+id/nav_feedback"
+            android:title="@string/Feedback" />
+        <item
+            android:id="@+id/nav_logout"
+            android:title="@string/Logout" />
+
+    </menu>
+
+
+
