@@ -3,6 +3,8 @@ package com.fit.bloodmanagment.Map;
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Build;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.ActivityCompat;
@@ -13,6 +15,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
 import com.fit.bloodmanagment.Activity.BloodBanks;
@@ -22,6 +25,8 @@ import com.fit.bloodmanagment.Activity.FeedBackActivity;
 import com.fit.bloodmanagment.Activity.PrecautionsActivity;
 import com.fit.bloodmanagment.Activity.ReceiverActivity;
 import com.fit.bloodmanagment.R;
+import com.fit.bloodmanagment.UserProfile.SiginInActivity;
+import com.fit.bloodmanagment.UserProfile.SignUpActivity;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -39,18 +44,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private final static int MY_PERMISSION_FINE_LOCATION = 101;
     View mapView;
     private Button navbtn;
+    private Button loginbtn,signupbtn;
+    private ImageView profilepic;
+    Bitmap btmp;
 
-    private boolean shouldLoadHomeFragOnBackPress = true;
-
-    private static final String TAG_ABOUTUS = "AboutUs";
-    private static final String TAG_DONAR = "Donar";
-    private static final String TAG_RECEIVER = "Receiver";
-    private static final String TAG_BLOODBANKS = "BloodBanks";
-    private static final String TAG_PRECAUTIONS = "Precautions";
-    private static final String TAG_CONTACTUS = "ContactUs";
-    private static final String TAG_FEEDBACK = "Feedback";
-
-    public static String CURRENT_TAG = TAG_ABOUTUS;
     int id;
 
     @Override
@@ -58,6 +55,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main2);
         navbtn = (Button) findViewById(R.id.navigation_button);
+        profilepic = (ImageView) findViewById(R.id.profile_pic);
+
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
@@ -67,6 +66,24 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         final DrawerLayout drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        View header  = navigationView.getHeaderView(0);
+
+        loginbtn = (Button) header.findViewById(R.id.signin_btn);
+        signupbtn = (Button) header.findViewById(R.id.signup_btn);
+
+        loginbtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MapsActivity.this,SiginInActivity.class));
+            }
+        });
+        signupbtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MapsActivity.this,SignUpActivity.class));
+            }
+        });
 
 
         navbtn.setOnClickListener(new View.OnClickListener() {
@@ -156,7 +173,5 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             layoutParams.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM, 0);
             layoutParams.setMargins(0, 1200, 30, 30);
         }
-
     }
-
 }

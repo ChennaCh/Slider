@@ -14,33 +14,37 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/MyMaterialTheme">
-        <activity android:name="com.fit.bloodmanagment.Slider.WelcomeActivity">
+        <activity android:name=".Slider.WelcomeActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name="com.fit.bloodmanagment.Slider.MainActivity"
-            android:label="@string/title_activity_welcome"
-            android:theme="@style/AppTheme.NoActionBar" />
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
 
         <activity
-            android:name="com.fit.bloodmanagment.Map.MapsActivity"
+            android:name=".Map.MapsActivity"
             android:label="@string/title_activity_maps"
             android:screenOrientation="portrait" />
-        <activity android:name="com.fit.bloodmanagment.Activity.AboutUsActivity" />
-        <activity android:name="com.fit.bloodmanagment.Activity.DonarActivity" />
-        <activity android:name="com.fit.bloodmanagment.Activity.ReceiverActivity" />
-        <activity android:name="com.fit.bloodmanagment.Activity.BloodBanks" />
-        <activity android:name="com.fit.bloodmanagment.Activity.PrecautionsActivity" />
-        <activity android:name="com.fit.bloodmanagment.Activity.ContactUsActivity" />
-        <activity android:name="com.fit.bloodmanagment.Activity.FeedBackActivity"></activity>
+        <activity android:name=".Activity.AboutUsActivity" />
+        <activity android:name=".Activity.DonarActivity" />
+        <activity android:name=".Activity.ReceiverActivity" />
+        <activity android:name=".Activity.BloodBanks" />
+        <activity android:name=".Activity.PrecautionsActivity" />
+        <activity android:name=".Activity.ContactUsActivity" />
+        <activity android:name=".Activity.FeedBackActivity" />
+        <activity android:name=".UserProfile.SiginInActivity"
+            android:theme="@style/Theme.AppCompat.NoActionBar"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".UserProfile.SignUpActivity"
+            android:theme="@style/Theme.AppCompat.NoActionBar"
+            android:screenOrientation="portrait">
+
+        </activity>
     </application>
 
 </manifest>
