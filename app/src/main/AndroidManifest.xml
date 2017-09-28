@@ -30,7 +30,7 @@
             android:name=".Map.MapsActivity"
             android:label="@string/title_activity_maps"
             android:screenOrientation="portrait" />
-        <activity android:name=".Activity.AboutUsActivity" />
+        <activity android:name=".Activity.AboutUsActivity"/>
         <activity android:name=".Activity.DonarActivity" />
         <activity android:name=".Activity.ReceiverActivity" />
         <activity android:name=".Activity.BloodBanks" />

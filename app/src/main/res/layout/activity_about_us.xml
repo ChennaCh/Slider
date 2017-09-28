@@ -5,17 +5,22 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="center"
+    android:background="#fff"
     tools:context="com.fit.bloodmanagment.Activity.AboutUsActivity">
-
-    <pl.droidsonroids.gif.GifImageView
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_gravity="center"
-        android:scaleType="centerCrop"
-        android:id="@+id/gifimage"
-        android:background="@null"
-        android:src="@drawable/backgrnggif"
-        />
+        android:layout_height="?attr/actionBarSize"
+        app:layout_scrollFlags="scroll|enterAlways"
+        android:titleTextColor="#fff"
+        app:theme="@style/ToolbarStyle"
+        android:background="?attr/colorPrimary"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -24,5 +29,6 @@
         android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
         android:text="@string/AboutUs"
         android:textColor="@color/white"/>
+</LinearLayout>
 
 </RelativeLayout>

@@ -6,6 +6,20 @@
     android:layout_height="match_parent"
     android:gravity="center"
     tools:context="com.fit.bloodmanagment.Activity.DonarActivity">
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        app:layout_scrollFlags="scroll|enterAlways"
+        app:theme="@style/ToolbarStyle"
+        app:titleTextColor="#fff"
+        android:background="?attr/colorPrimary"/>
+
+    <RelativeLayout
+        android:id="@+id/rlbloodbank"
+        android:layout_width="match_parent"
+        android:layout_below="@+id/toolbar"
+        android:layout_height="match_parent">
 
     <pl.droidsonroids.gif.GifImageView
         android:layout_width="match_parent"
@@ -24,5 +38,5 @@
         android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
         android:text="@string/Donar"
         android:textColor="@color/white"/>
-
+</RelativeLayout>
 </RelativeLayout>
