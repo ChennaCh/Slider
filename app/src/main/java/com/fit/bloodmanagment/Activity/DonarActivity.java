@@ -14,7 +14,7 @@ public class DonarActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_donar);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_donar);
         setSupportActionBar(toolbar);
         setTitle(getString(R.string.Donar));
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);

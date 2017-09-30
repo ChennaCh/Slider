@@ -17,7 +17,7 @@ Toolbar mToolbar;
         initToolbar();
     }
     private void initToolbar() {
-        mToolbar = (Toolbar) findViewById(R.id.toolbar);
+        mToolbar = (Toolbar) findViewById(R.id.toolbar_precautions);
         setSupportActionBar(mToolbar);
         setTitle(getString(R.string.Precautions));
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);

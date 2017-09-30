@@ -14,7 +14,7 @@ public class BloodBanks extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_blood_banks);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_blodbanks);
         setSupportActionBar(toolbar);
         setTitle(getString(R.string.BloodBanks));
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
