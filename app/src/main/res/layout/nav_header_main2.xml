@@ -31,7 +31,7 @@
         android:id="@+id/imageView"
         android:layout_width="85dp"
         android:layout_height="85dp"
-        android:src="@color/bg_screen2" />
+        android:src="@drawable/navigationuser" />
     </LinearLayout>
 
     <LinearLayout
