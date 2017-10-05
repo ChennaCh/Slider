@@ -27,14 +27,11 @@
         android:layout_height="wrap_content"
         android:gravity="center">
 
-    <de.hdodenhof.circleimageview.CircleImageView
-        xmlns:app="http://schemas.android.com/apk/res-auto"
+    <ImageView
         android:id="@+id/imageView"
         android:layout_width="85dp"
         android:layout_height="85dp"
-        android:src="@color/bg_screen2"
-        app:civ_border_width="2dp"
-        app:civ_border_color="@color/black"/>
+        android:src="@color/bg_screen2" />
     </LinearLayout>
 
     <LinearLayout
@@ -51,7 +48,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Login"
-            android:textColor="@color/black"
+            android:textColor="@color/white"
             android:background="@null"/>
         <View
             android:layout_width="1dp"
@@ -62,7 +59,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Signup"
-            android:textColor="@color/black"
+            android:textColor="@color/white"
             android:background="@null"/>
 
     </LinearLayout>

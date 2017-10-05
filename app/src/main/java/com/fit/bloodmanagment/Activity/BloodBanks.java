@@ -12,15 +12,19 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Display;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.fit.bloodmanagment.Adapter.BloodbankListAdapter;
 import com.fit.bloodmanagment.Beans.BloodbankBean;
+import com.fit.bloodmanagment.Map.BloodbanksMapActivity;
+import com.fit.bloodmanagment.Map.MapsActivity;
 import com.fit.bloodmanagment.R;
 import com.fit.bloodmanagment.Utils.HttpHandler;
 import com.github.ksoichiro.android.observablescrollview.ObservableRecyclerView;
@@ -162,7 +166,14 @@ public class BloodBanks extends AppCompatActivity implements ObservableScrollVie
                  bloodbankListAdapter = new BloodbankListAdapter(BloodBanks.this,getBloodbankBean);
                 bloodbankrecyle.setAdapter(bloodbankListAdapter);
                 bloodbankrecyle.setLayoutManager(new LinearLayoutManager(BloodBanks.this));
-
+//                bloodbankrecyle.setOnTouchListener(new View.OnTouchListener() {
+//                    @Override
+//                    public boolean onTouch(View v, MotionEvent event) {
+//                        Intent intent=new Intent(BloodBanks.this, BloodbanksMapActivity.class);
+//                        startActivity(intent);
+//                        return true;
+//                    }
+//                });
 //                facultyfeedBackAdapter = new FeedBackAdapter(FacultyViewFeedback.this,facgetFeedbackBeen);
 //                facultyrecyle.setAdapter(facultyfeedBackAdapter);
 //                facultyrecyle.setLayoutManager(new LinearLayoutManager(FacultyViewFeedback.this));
@@ -198,5 +209,9 @@ public class BloodBanks extends AppCompatActivity implements ObservableScrollVie
         onBackPressed();
         return true;
     }
-
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(BloodBanks.this, MapsActivity.class);
+        startActivity(intent);
+    }
 }

@@ -18,6 +18,7 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.fit.bloodmanagment.Activity.SplashActivity;
 import com.fit.bloodmanagment.Map.MapsActivity;
 import com.fit.bloodmanagment.R;
 
@@ -121,7 +122,7 @@ public class WelcomeActivity extends AppCompatActivity {
 
     private void launchHomeScreen() {
         prefManager.setFirstTimeLaunch(false);
-        startActivity(new Intent(WelcomeActivity.this, MapsActivity.class));
+        startActivity(new Intent(WelcomeActivity.this, SplashActivity.class));
         finish();
     }
 

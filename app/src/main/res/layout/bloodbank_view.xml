@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="5dp"
-    card_view:cardBackgroundColor="#ded7d7"
+    card_view:cardBackgroundColor="#fff"
     card_view:cardCornerRadius="5dp">
 
     <LinearLayout
@@ -21,9 +21,9 @@
             android:background="#FF62C7C6"
             android:paddingLeft="10dp"
             android:text="Name"
-            android:textAllCaps="true"
+            android:textStyle="bold"
             android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
-            android:textColor="@color/black" />
+            android:textColor="#ac1c1c" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -79,12 +79,14 @@
                         android:textColor="#142166"
                         android:textSize="15dp" />
 
-                    <ImageView
-                        android:id="@+id/smecmap"
+                    <pl.droidsonroids.gif.GifImageView
                         android:layout_width="50dp"
                         android:layout_height="50dp"
-                        android:background="@drawable/mapicon"
-                        android:clickable="true" />
+                        android:id="@+id/gifmappin"
+                        android:clickable="true"
+                        android:background="@null"
+                        android:src="@drawable/mapiconred"
+                        />
                 </LinearLayout>
             </LinearLayout>
 

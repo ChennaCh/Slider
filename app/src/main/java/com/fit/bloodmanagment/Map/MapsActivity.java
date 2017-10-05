@@ -1,22 +1,33 @@
 package com.fit.bloodmanagment.Map;
 
 import android.Manifest;
+import android.app.Activity;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.media.MediaScannerConnection;
+import android.net.Uri;
 import android.os.Build;
+import android.os.Environment;
+import android.os.Handler;
+import android.provider.MediaStore;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.AlertDialog;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import com.fit.bloodmanagment.Activity.BloodBanks;
 import com.fit.bloodmanagment.Activity.ContactUsActivity;
@@ -27,6 +38,7 @@ import com.fit.bloodmanagment.Activity.ReceiverActivity;
 import com.fit.bloodmanagment.R;
 import com.fit.bloodmanagment.UserProfile.SiginInActivity;
 import com.fit.bloodmanagment.UserProfile.SignUpActivity;
+import com.fit.bloodmanagment.Utils.CameraUtility;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -36,6 +48,11 @@ import com.google.android.gms.maps.model.LatLng;
 
 import com.fit.bloodmanagment.Activity.AboutUsActivity;
 
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback,NavigationView.OnNavigationItemSelectedListener {
 
@@ -46,31 +63,29 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private Button navbtn;
     private Button loginbtn,signupbtn;
     private ImageView profilepic;
-    Bitmap btmp;
-
     int id;
+    private String userChoosenTask;
+    private int REQUEST_CAMERA = 0, SELECT_FILE = 1;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main2);
         navbtn = (Button) findViewById(R.id.navigation_button);
-        profilepic = (ImageView) findViewById(R.id.profile_pic);
-
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapView = mapFragment.getView();
         mapFragment.getMapAsync(this);
-
         final DrawerLayout drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-
         View header  = navigationView.getHeaderView(0);
 
         loginbtn = (Button) header.findViewById(R.id.signin_btn);
         signupbtn = (Button) header.findViewById(R.id.signup_btn);
+        profilepic = (ImageView)header.findViewById(R.id.imageView);
 
         loginbtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -93,6 +108,116 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 drawerLayout.openDrawer(GravityCompat.START);
             }
         });
+
+        profilepic.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+               // showPictureDialog();
+                selectImage();
+            }
+
+        });
+    }
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        switch (requestCode) {
+            case CameraUtility.MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE:
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    if(userChoosenTask.equals("Take Photo"))
+                        cameraIntent();
+                    else if(userChoosenTask.equals("Choose from Library"))
+                        galleryIntent();
+                } else {
+                    //code for deny
+                }
+                break;
+        }
+    }
+    private void selectImage() {
+        final CharSequence[] items = { "Take Photo", "Choose from Library",
+                "Cancel" };
+
+        android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(MapsActivity.this);
+        builder.setTitle("Add Photo!");
+        builder.setItems(items, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int item) {
+                boolean result= CameraUtility.checkPermission(MapsActivity.this);
+
+                if (items[item].equals("Take Photo")) {
+                    userChoosenTask ="Take Photo";
+                    if(result)
+                        cameraIntent();
+
+                } else if (items[item].equals("Choose from Library")) {
+                    userChoosenTask ="Choose from Library";
+                    if(result)
+                        galleryIntent();
+
+                } else if (items[item].equals("Cancel")) {
+                    dialog.dismiss();
+                }
+            }
+        });
+        builder.show();
+    }
+    private void cameraIntent()
+    {
+        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        startActivityForResult(intent, REQUEST_CAMERA);
+    }
+    private void galleryIntent()
+    {
+        Intent intent = new Intent();
+        intent.setType("image/*");
+        intent.setAction(Intent.ACTION_GET_CONTENT);//
+        startActivityForResult(Intent.createChooser(intent, "Select File"),SELECT_FILE);
+    }
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (resultCode == Activity.RESULT_OK) {
+            if (requestCode == SELECT_FILE)
+                onSelectFromGalleryResult(data);
+            else if (requestCode == REQUEST_CAMERA)
+                onCaptureImageResult(data);
+        }
+    }
+    private void onSelectFromGalleryResult(Intent data) {
+
+        Bitmap bm=null;
+        if (data != null) {
+            try {
+                bm = MediaStore.Images.Media.getBitmap(getApplicationContext().getContentResolver(), data.getData());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+        profilepic.setImageBitmap(bm);
+    }
+    private void onCaptureImageResult(Intent data) {
+        Bitmap thumbnail = (Bitmap) data.getExtras().get("data");
+        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+        thumbnail.compress(Bitmap.CompressFormat.JPEG, 90, bytes);
+
+        File destination = new File(Environment.getExternalStorageDirectory(),
+                System.currentTimeMillis() + ".jpg");
+
+        FileOutputStream fo;
+        try {
+            destination.createNewFile();
+            fo = new FileOutputStream(destination);
+            fo.write(bytes.toByteArray());
+            fo.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        profilepic.setImageBitmap(thumbnail);
     }
 
     @SuppressWarnings("StatementWithEmptyBody")
@@ -173,5 +298,13 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             layoutParams.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM, 0);
             layoutParams.setMargins(0, 1200, 30, 30);
         }
+    }
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(Intent.ACTION_MAIN);
+        intent.addCategory(Intent.CATEGORY_HOME);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
+
     }
 }

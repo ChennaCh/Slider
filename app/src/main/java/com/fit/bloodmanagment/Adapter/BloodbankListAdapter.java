@@ -2,14 +2,17 @@ package com.fit.bloodmanagment.Adapter;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.fit.bloodmanagment.Beans.BloodbankBean;
+import com.fit.bloodmanagment.Map.BloodbanksMapActivity;
 import com.fit.bloodmanagment.R;
 
 import java.util.Collections;
@@ -23,14 +26,26 @@ public class BloodbankListAdapter extends RecyclerView.Adapter<RecyclerView.View
 
     Context context;
         List<BloodbankBean> data= Collections.emptyList();
-
+  ImageView mapgifimage;
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
        // View view= Inflater.inflate(R.layout.admin_view_feedback, parent,false);
         View itemView = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.bloodbank_view, parent, false);
+        mapgifimage=(ImageView)itemView.findViewById(R.id.gifmappin);
         MyHolder holder=new MyHolder(itemView);
+
+
+        mapgifimage.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                Intent intent=new Intent(context, BloodbanksMapActivity.class);
+                context.startActivity(intent);
+
+                return true;
+            }
+        });
 //        LayoutInflater mInflater = (LayoutInflater)
 //                context.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
 //        view = mInflater.inflate(R.layout.view_faculty_details, null);
@@ -106,4 +121,6 @@ public class BloodbankListAdapter extends RecyclerView.Adapter<RecyclerView.View
             feedback = (TextView) itemView.findViewById(R.id.get_feedback);
         }
     }
+
+
 }
