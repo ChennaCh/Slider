@@ -16,7 +16,7 @@ public class AboutUsActivity extends AppCompatActivity   {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_about_us);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_aboutus);
         setSupportActionBar(toolbar);
         setTitle(getString(R.string.AboutUs));
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);

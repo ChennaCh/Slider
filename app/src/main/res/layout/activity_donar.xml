@@ -7,7 +7,7 @@
     android:gravity="center"
     tools:context="com.fit.bloodmanagment.Activity.DonarActivity">
     <android.support.v7.widget.Toolbar
-        android:id="@+id/toolbar"
+        android:id="@+id/toolbar_donar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         app:layout_scrollFlags="scroll|enterAlways"
@@ -18,7 +18,7 @@
     <RelativeLayout
         android:id="@+id/rlbloodbank"
         android:layout_width="match_parent"
-        android:layout_below="@+id/toolbar"
+        android:layout_below="@+id/toolbar_donar"
         android:layout_height="match_parent">
 
     <pl.droidsonroids.gif.GifImageView

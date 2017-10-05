@@ -18,7 +18,7 @@ public class FeedBackActivity extends AppCompatActivity {
     }
 
     private void initToolbar() {
-        mToolbar = (Toolbar) findViewById(R.id.toolbar);
+        mToolbar = (Toolbar) findViewById(R.id.toolbar_feedback);
         setSupportActionBar(mToolbar);
         setTitle(getString(R.string.Feedback));
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);

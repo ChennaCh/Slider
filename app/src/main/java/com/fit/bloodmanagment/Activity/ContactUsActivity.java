@@ -19,7 +19,7 @@ public class ContactUsActivity extends AppCompatActivity {
     }
 
     private void initToolbar() {
-        mToolbar = (Toolbar) findViewById(R.id.toolbar);
+        mToolbar = (Toolbar) findViewById(R.id.toolbar_conatactus);
         setSupportActionBar(mToolbar);
         setTitle(getString(R.string.Contactus));
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
