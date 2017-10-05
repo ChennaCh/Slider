@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="center"
+    android:id="@+id/mainrl"
     android:background="#fff">
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"
@@ -16,28 +17,24 @@
         android:background="?attr/colorPrimary"/>
 
     <RelativeLayout
-        android:id="@+id/rlbloodbank"
         android:layout_width="match_parent"
+        android:id="@+id/rlrecycle"
         android:layout_below="@+id/toolbar"
         android:layout_height="match_parent">
-        <pl.droidsonroids.gif.GifImageView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_gravity="center"
-            android:scaleType="centerCrop"
-            android:id="@+id/gifimage"
-            android:background="@null"
-            android:src="@drawable/backgrnggif"
-            />
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textAlignment="center"
-            android:layout_marginTop="250dp"
-            android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
-            android:text="@string/BloodBanks"
-            android:textColor="@color/white"/>
+        <com.github.ksoichiro.android.observablescrollview.ObservableRecyclerView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/bbrecyclerView"
+        android:layout_width="match_parent"
+            android:dividerHeight="1dp"
+        android:layout_height="match_parent"/>
     </RelativeLayout>
+
+    <ProgressBar
+        android:id="@+id/bloodbank_progress"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:visibility="gone"/>
 
 </RelativeLayout>
