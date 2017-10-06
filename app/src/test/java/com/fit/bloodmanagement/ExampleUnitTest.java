@@ -1,4 +1,4 @@
-package info.androidhive.introslider;
+package com.fit.bloodmanagement;
 
 import org.junit.Test;
 
