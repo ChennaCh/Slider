@@ -4,7 +4,7 @@ import android.content.Intent;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 
-import com.fit.bloodmanagment.Activity.BloodBanks;
+import com.fit.bloodmanagment.Activity.BloodBanksActivity;
 import com.fit.bloodmanagment.R;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -48,7 +48,7 @@ public class BloodbanksMapActivity extends FragmentActivity implements OnMapRead
     }
     @Override
     public void onBackPressed() {
-        Intent listintent = new Intent(BloodbanksMapActivity.this, BloodBanks.class);
+        Intent listintent = new Intent(BloodbanksMapActivity.this, BloodBanksActivity.class);
         startActivity(listintent);
     }
 
