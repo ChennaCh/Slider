@@ -2,19 +2,24 @@ package com.fit.bloodmanagment.Map;
 
 import android.Manifest;
 import android.app.Activity;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Build;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.support.design.internal.NavigationMenuView;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
+import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -58,6 +63,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     int id;
     private String userChoosenTask;
     private int REQUEST_CAMERA = 0, SELECT_FILE = 1;
+    public final static String APP_PATH_SD_CARD = "/gallery/";
+    public final static String APP_THUMBNAIL_PATH_SD_CARD = "thumbnails";
+    ImageView hospitalimage,pharmacyimage;
 
 
     @Override
@@ -68,27 +76,37 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
-        mapView = mapFragment.getView();
         mapFragment.getMapAsync(this);
+        LayoutInflater inflater = getLayoutInflater();
+        // RelativeLayout maplayout = (RelativeLayout) inflater.inflate(R.layout.activity_maps, null);
+       // View maplayout = inflater.inflate(R.layout.activity_maps, null);
+       // View v=LayoutInflater.from(getApplicationContext()).inflate(R.layout.activity_maps,null);
+         hospitalimage = (ImageView) findViewById(R.id.hospitalsimage);
+         pharmacyimage=(ImageView)findViewById(R.id.pharmacyimage);
+
         final DrawerLayout drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
         View header  = navigationView.getHeaderView(0);
+        //pharmacyimage=(Button)findViewById(R.id.pharmacyimage);
 
         loginbtn = (Button) header.findViewById(R.id.signin_btn);
         signupbtn = (Button) header.findViewById(R.id.signup_btn);
-        profilepic = (ImageView)header.findViewById(R.id.imageView);
+        profilepic = (ImageView)header.findViewById(R.id.navimageview);
 
         loginbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(MapsActivity.this,SiginInActivity.class));
+
+
             }
         });
         signupbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(MapsActivity.this,SignUpActivity.class));
+
             }
         });
 
@@ -108,6 +126,14 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 selectImage();
             }
 
+        });
+        pharmacyimage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(getApplicationContext(),BloodBanksActivity.class);
+                startActivity(intent);
+
+            }
         });
     }
     @Override
@@ -210,7 +236,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         }
 
         profilepic.setImageBitmap(thumbnail);
+
     }
+
+
 
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
@@ -293,10 +322,16 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     }
     @Override
     public void onBackPressed() {
-        Intent intent = new Intent(Intent.ACTION_MAIN);
-        intent.addCategory(Intent.CATEGORY_HOME);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        startActivity(intent);
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        if(drawer.isDrawerOpen(GravityCompat.START)){
+            drawer.closeDrawer(GravityCompat.START);
+        }
+        else {
+            Intent intent = new Intent(Intent.ACTION_MAIN);
+            intent.addCategory(Intent.CATEGORY_HOME);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent);
+        }
 
     }
 }

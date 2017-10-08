@@ -4,26 +4,45 @@
                 <item
             android:id="@+id/nav_aboutus"
             android:title="@string/AboutUs" />
+    <group android:checkableBehavior="single"
+        android:id="@+id/group1">
         <item
             android:id="@+id/nav_donar"
             android:title="@string/Donar" />
+        </group>
+    <group android:checkableBehavior="single"
+        android:id="@+id/group2">
         <item
             android:id="@+id/nav_receiver"
             android:title="@string/Receiver" />
+        </group>
+    <group android:checkableBehavior="single"
+        android:id="@+id/group3">
         <item
             android:id="@+id/nav_bloodbanks"
             android:title="@string/BloodBanks" />
+        </group>
+    <group android:checkableBehavior="single"
+        android:id="@+id/group4">
         <item
             android:id="@+id/nav_precautions"
             android:title="@string/Precautions" />
+        </group>
+    <group android:checkableBehavior="single"
+        android:id="@+id/group5">
         <item
             android:id="@+id/nav_contactus"
             android:title="@string/Contactus" />
+        </group>
+    <group android:checkableBehavior="single"
+        android:id="@+id/group6">
         <item
             android:id="@+id/nav_feedback"
             android:title="@string/Feedback" />
+        </group>
         <item
             android:id="@+id/nav_logout"
+            android:visible="false"
             android:title="@string/Logout" />
         </group>
 </menu>
