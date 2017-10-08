@@ -15,10 +15,12 @@ public class SiginInActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sigin_in);
-        toolbar = (Toolbar) findViewById(R.id.loginpage_toolbar);
+        toolbar = (Toolbar) findViewById(R.id.signin_toolbar);
+        setTitle(getString(R.string.Signin));
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
+        toolbar.setTitleTextColor(getResources().getColor(android.R.color.white));
 
     }
 

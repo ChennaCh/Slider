@@ -376,7 +376,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     @Override
     public void onMapReady(GoogleMap googleMap) {
          mMap = googleMap;
-        mapprogressbar.setVisibility(View.VISIBLE);
+       // mapprogressbar.setVisibility(View.vis);
         gps = new GPSTracker(MapsActivity.this);
          double latitude = gps.getLatitude();
         double longitude = gps.getLongitude();
@@ -398,7 +398,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 .target(new LatLng(latitude, longitude)).zoom(17).build();
         mMap.animateCamera(CameraUpdateFactory
                 .newCameraPosition(cameraPosition));
-        mapprogressbar.setVisibility(View.GONE);
+
         //currentlocation Pin Position Change by below code
 //        if (mapView != null &&
 //                mapView.findViewById(Integer.parseInt("1")) != null) {
