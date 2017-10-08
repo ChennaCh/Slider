@@ -6,6 +6,8 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.location.Location;
 import android.os.Build;
 import android.os.Environment;
 import android.provider.MediaStore;
@@ -13,13 +15,17 @@ import android.support.design.widget.NavigationView;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import com.fit.bloodmanagment.Activity.BloodBanksActivity;
 import com.fit.bloodmanagment.Activity.ContactUsActivity;
@@ -27,18 +33,28 @@ import com.fit.bloodmanagment.Activity.DonarActivity;
 import com.fit.bloodmanagment.Activity.FeedBackActivity;
 import com.fit.bloodmanagment.Activity.PrecautionsActivity;
 import com.fit.bloodmanagment.Activity.ReceiverActivity;
+import com.fit.bloodmanagment.GooglePlaces.GetNearbyPlacesData;
 import com.fit.bloodmanagment.R;
 import com.fit.bloodmanagment.UserProfile.SiginInActivity;
 import com.fit.bloodmanagment.UserProfile.SignUpActivity;
 import com.fit.bloodmanagment.Utils.CameraUtility;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GoogleApiAvailability;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.location.LocationListener;
+import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 
 import com.fit.bloodmanagment.Activity.AboutUsActivity;
+import com.google.android.gms.maps.model.Marker;
+import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -46,7 +62,10 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
-public class MapsActivity extends FragmentActivity implements OnMapReadyCallback,NavigationView.OnNavigationItemSelectedListener {
+public class MapsActivity extends FragmentActivity implements OnMapReadyCallback,NavigationView.OnNavigationItemSelectedListener,
+        GoogleApiClient.ConnectionCallbacks,
+        GoogleApiClient.OnConnectionFailedListener,
+        LocationListener {
 
     private GoogleMap mMap;
     private GPSTracker gps;
@@ -58,6 +77,17 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     int id;
     private String userChoosenTask;
     private int REQUEST_CAMERA = 0, SELECT_FILE = 1;
+    double latitude;
+    double longitude;
+    private int PROXIMITY_RADIUS = 10000;
+    GoogleApiClient mGoogleApiClient;
+    Location mLastLocation;
+    Marker mCurrLocationMarker;
+    LocationRequest mLocationRequest;
+    String Pharmacy = "pharmacy";
+    String Hospital="hospital";
+    ImageView pharmacyimage,hospitalimage;
+    ProgressBar mapprogressbar;
 
 
     @Override
@@ -74,10 +104,27 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
         View header  = navigationView.getHeaderView(0);
+        mapprogressbar = (ProgressBar) findViewById(R.id.mapprogressbar);
+        mapprogressbar.getIndeterminateDrawable().setColorFilter(0xFFFF0000, android.graphics.PorterDuff.Mode.MULTIPLY);
+        pharmacyimage=(ImageView) findViewById(R.id.pharmacyimage);
+        hospitalimage=(ImageView) findViewById(R.id.hospitalsimage);
+        if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            checkLocationPermission();
+        }
+
+        //Check if Google Play Services Available or not
+        if (!CheckGooglePlayServices()) {
+            Log.d("onCreate", "Finishing test case since Google Play Services are not available");
+            finish();
+        }
+        else {
+            Log.d("onCreate","Google Play Services available.");
+        }
+
 
         loginbtn = (Button) header.findViewById(R.id.signin_btn);
         signupbtn = (Button) header.findViewById(R.id.signup_btn);
-        profilepic = (ImageView)header.findViewById(R.id.imageView);
+        profilepic = (ImageView)header.findViewById(R.id.navimageview);
 
         loginbtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -104,10 +151,42 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         profilepic.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               // showPictureDialog();
+                // showPictureDialog();
                 selectImage();
             }
 
+        });
+
+        pharmacyimage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Log.d("onClick", "Button is Clicked");
+                mMap.clear();
+                String url = getUrl(latitude, longitude, Pharmacy);
+                Object[] DataTransfer = new Object[2];
+                DataTransfer[0] = mMap;
+                DataTransfer[1] = url;
+                Log.d("onClick", url);
+                GetNearbyPlacesData getNearbyPlacesData = new GetNearbyPlacesData();
+                getNearbyPlacesData.execute(DataTransfer);
+                Toast.makeText(MapsActivity.this,"Nearby Pharmacies", Toast.LENGTH_LONG).show();
+
+            }
+        });
+        hospitalimage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //Log.d("onClick", "Button is Clicked");
+                mMap.clear();
+                String url = getUrl(latitude, longitude, Hospital);
+                Object[] DataTransfer = new Object[2];
+                DataTransfer[0] = mMap;
+                DataTransfer[1] = url;
+                Log.d("onClick", url);
+                GetNearbyPlacesData getNearbyPlacesData = new GetNearbyPlacesData();
+                getNearbyPlacesData.execute(DataTransfer);
+                Toast.makeText(MapsActivity.this,"Nearby Hospitals", Toast.LENGTH_LONG).show();
+            }
         });
     }
     @Override
@@ -123,7 +202,50 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     //code for deny
                 }
                 break;
+            case MY_PERMISSIONS_REQUEST_LOCATION: {
+                // If request is cancelled, the result arrays are empty.
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+
+                    // permission was granted. Do the
+                    // contacts-related task you need to do.
+                    if (ContextCompat.checkSelfPermission(this,
+                            Manifest.permission.ACCESS_FINE_LOCATION)
+                            == PackageManager.PERMISSION_GRANTED) {
+
+                        if (mGoogleApiClient == null) {
+                            buildGoogleApiClient();
+                        }
+                        mMap.setMyLocationEnabled(true);
+                    }
+
+                } else {
+
+                    // Permission denied, Disable the functionality that depends on this permission.
+                    Toast.makeText(this, "permission denied", Toast.LENGTH_LONG).show();
+                }
+                return;
+            }
+
+            // other 'case' lines to check for other permissions this app might request.
+            // You can add here other case statements according to your requirement.
         }
+
+
+
+    }
+    //check google play services
+    private boolean CheckGooglePlayServices() {
+        GoogleApiAvailability googleAPI = GoogleApiAvailability.getInstance();
+        int result = googleAPI.isGooglePlayServicesAvailable(this);
+        if(result != ConnectionResult.SUCCESS) {
+            if(googleAPI.isUserResolvableError(result)) {
+                googleAPI.getErrorDialog(this, result,
+                        0).show();
+            }
+            return false;
+        }
+        return true;
     }
     private void selectImage() {
         final CharSequence[] items = { "Take Photo", "Choose from Library",
@@ -253,10 +375,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
-        mMap = googleMap;
-
+         mMap = googleMap;
+        mapprogressbar.setVisibility(View.VISIBLE);
         gps = new GPSTracker(MapsActivity.this);
-        double latitude = gps.getLatitude();
+         double latitude = gps.getLatitude();
         double longitude = gps.getLongitude();
         LatLng mylocaiton = new LatLng(latitude,longitude);
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(mylocaiton,15));
@@ -276,21 +398,150 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 .target(new LatLng(latitude, longitude)).zoom(17).build();
         mMap.animateCamera(CameraUpdateFactory
                 .newCameraPosition(cameraPosition));
-
+        mapprogressbar.setVisibility(View.GONE);
         //currentlocation Pin Position Change by below code
-        if (mapView != null &&
-                mapView.findViewById(Integer.parseInt("1")) != null) {
-            // Get the button view
-            View locationButton = ((View) mapView.findViewById(Integer.parseInt("1")).getParent()).findViewById(Integer.parseInt("2"));
-            // and next place it, on bottom right (as Google Maps app)
-            RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams)
-                    locationButton.getLayoutParams();
-            // position on right bottom
-            layoutParams.addRule(RelativeLayout.ALIGN_PARENT_TOP, 1200);
-            layoutParams.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM, 0);
-            layoutParams.setMargins(0, 1200, 30, 30);
+//        if (mapView != null &&
+//                mapView.findViewById(Integer.parseInt("1")) != null) {
+//            // Get the button view
+//            View locationButton = ((View) mapView.findViewById(Integer.parseInt("1")).getParent()).findViewById(Integer.parseInt("2"));
+//            // and next place it, on bottom right (as Google Maps app)
+//            RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams)
+//                    locationButton.getLayoutParams();
+//            // position on right bottom
+//            layoutParams.addRule(RelativeLayout.ALIGN_PARENT_TOP, 1200);
+//            layoutParams.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM, 0);
+//            layoutParams.setMargins(80, 1200, 30, 30);
+//            //  layoutParams.setMargins(left, top, right, bottom);
+//        }
+        //Initialize Google Play Services
+        if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (ContextCompat.checkSelfPermission(this,
+                    Manifest.permission.ACCESS_FINE_LOCATION)
+                    == PackageManager.PERMISSION_GRANTED) {
+                buildGoogleApiClient();
+                mMap.setMyLocationEnabled(true);
+
+            }
+        }
+        else {
+            buildGoogleApiClient();
+            mMap.setMyLocationEnabled(true);
         }
     }
+
+    protected synchronized void buildGoogleApiClient() {
+        mGoogleApiClient = new GoogleApiClient.Builder(this)
+                .addConnectionCallbacks(this)
+                .addOnConnectionFailedListener(this)
+                .addApi(LocationServices.API)
+                .build();
+        mGoogleApiClient.connect();
+    }
+    @Override
+    public void onConnected(Bundle bundle) {
+        mLocationRequest = new LocationRequest();
+        mLocationRequest.setInterval(1000);
+        mLocationRequest.setFastestInterval(1000);
+        mLocationRequest.setPriority(LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY);
+        if (ContextCompat.checkSelfPermission(this,
+                Manifest.permission.ACCESS_FINE_LOCATION)
+                == PackageManager.PERMISSION_GRANTED) {
+            LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, mLocationRequest, this);
+        }
+    }
+
+    private String getUrl(double latitude, double longitude, String nearbyPlace) {
+
+        StringBuilder googlePlacesUrl = new StringBuilder("https://maps.googleapis.com/maps/api/place/nearbysearch/json?");
+        googlePlacesUrl.append("location=" + latitude + "," + longitude);
+        googlePlacesUrl.append("&radius=" + PROXIMITY_RADIUS);
+        googlePlacesUrl.append("&type=" + nearbyPlace);
+        googlePlacesUrl.append("&sensor=true");
+        googlePlacesUrl.append("&key=" + "AIzaSyATuUiZUkEc_UgHuqsBJa1oqaODI-3mLs0");
+        Log.d("getUrl", googlePlacesUrl.toString());
+        return (googlePlacesUrl.toString());
+    }
+
+    @Override
+    public void onConnectionSuspended(int i) {
+
+    }
+
+    @Override
+    public void onLocationChanged(Location location) {
+        Log.d("onLocationChanged", "entered");
+
+        mLastLocation = location;
+        if (mCurrLocationMarker != null) {
+            mCurrLocationMarker.remove();
+        }
+
+        //Place current location marker
+        latitude = location.getLatitude();
+        longitude = location.getLongitude();
+        LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
+        MarkerOptions markerOptions = new MarkerOptions();
+        markerOptions.position(latLng);
+        markerOptions.title("Current Position");
+        markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_MAGENTA));
+        mCurrLocationMarker = mMap.addMarker(markerOptions);
+
+        //move map camera
+        mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
+        mMap.animateCamera(CameraUpdateFactory.zoomTo(11));
+        Toast.makeText(MapsActivity.this,"Your Current Location", Toast.LENGTH_LONG).show();
+
+        Log.d("onLocationChanged", String.format("latitude:%.3f longitude:%.3f",latitude,longitude));
+
+        //stop location updates
+        if (mGoogleApiClient != null) {
+            LocationServices.FusedLocationApi.removeLocationUpdates(mGoogleApiClient, this);
+            Log.d("onLocationChanged", "Removing Location Updates");
+        }
+        Log.d("onLocationChanged", "Exit");
+
+    }
+
+
+
+    @Override
+    public void onConnectionFailed(ConnectionResult connectionResult) {
+
+    }
+
+    public static final int MY_PERMISSIONS_REQUEST_LOCATION = 99;
+    public boolean checkLocationPermission(){
+        if (ContextCompat.checkSelfPermission(this,
+                Manifest.permission.ACCESS_FINE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED) {
+
+            // Asking user if explanation is needed
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this,
+                    Manifest.permission.ACCESS_FINE_LOCATION)) {
+
+                // Show an explanation to the user *asynchronously* -- don't block
+                // this thread waiting for the user's response! After the user
+                // sees the explanation, try again to request the permission.
+
+                //Prompt the user once explanation has been shown
+                ActivityCompat.requestPermissions(this,
+                        new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
+                        MY_PERMISSIONS_REQUEST_LOCATION);
+
+
+            } else {
+                // No explanation needed, we can request the permission.
+                ActivityCompat.requestPermissions(this,
+                        new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
+                        MY_PERMISSIONS_REQUEST_LOCATION);
+            }
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+
     @Override
     public void onBackPressed() {
         Intent intent = new Intent(Intent.ACTION_MAIN);
@@ -300,3 +551,4 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     }
 }
+

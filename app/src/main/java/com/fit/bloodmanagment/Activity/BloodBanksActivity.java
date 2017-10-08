@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
@@ -69,6 +70,7 @@ public class BloodBanksActivity extends AppCompatActivity implements ObservableS
     }
 
     private void listapi() {
+        bloodbankprogress.setVisibility(View.VISIBLE);
         RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
         String serverURL = API.bburl;
         final StringRequest getRequest = new StringRequest(Request.Method.GET, serverURL,
@@ -97,6 +99,7 @@ public class BloodBanksActivity extends AppCompatActivity implements ObservableS
                                 bloodbankListAdapter = new BloodbankListAdapter(BloodBanksActivity.this,bbdata);
                                 bloodbankrecyle.setAdapter(bloodbankListAdapter);
                                 bloodbankrecyle.setLayoutManager(new LinearLayoutManager(BloodBanksActivity.this));
+                                bloodbankprogress.setVisibility(View.GONE);
                             }
                         } catch (final JSONException e) {
                             Log.e(TAG, "Json parsing error: " + e.getMessage());
