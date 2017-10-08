@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "92119220746",
+    "project_id": "savelifes-1506244437955"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:92119220746:android:68e2f044f4e440ec",
+        "android_client_info": {
+          "package_name": "com.fit.bloodmanagment"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "92119220746-s7fkfbfjlibcjctkl7fpj69d61vvujnd.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.fit.bloodmanagment",
+            "certificate_hash": "ff9c8bd68dfe2c27c7e095f7a4d4352898ca6f98"
+          }
+        },
+        {
+          "client_id": "92119220746-ae8ula4ttdnl61okkimdoqtr79d1cvjh.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBs-zFx6O57EEHZ7vubjtGrAzsoxcAnofc"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 1
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
