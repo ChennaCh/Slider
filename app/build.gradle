@@ -33,8 +33,7 @@ dependencies {
     compile 'com.github.ksoichiro:android-observablescrollview:1.6.0'
     compile 'com.nineoldandroids:library:2.4.0'
     compile 'com.mcxiaoke.volley:library:1.0.17'
+    compile 'com.google.android.gms:play-services-location:11.0.2'
     testCompile 'junit:junit:4.12'
-    compile 'com.google.android.gms:play-services-auth:9.8.0'
 
 }
-
