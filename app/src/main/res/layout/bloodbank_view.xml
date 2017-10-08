@@ -21,9 +21,9 @@
             android:background="#FF62C7C6"
             android:paddingLeft="10dp"
             android:text="Name"
-            android:textStyle="bold"
+            android:textStyle="bold|italic"
             android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
-            android:textColor="#ac1c1c" />
+            android:textColor="#fff" />
 
         <LinearLayout
             android:layout_width="match_parent"

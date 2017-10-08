@@ -40,12 +40,10 @@
         <activity android:name=".Activity.FeedBackActivity" />
         <activity
             android:name=".UserProfile.SiginInActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/Theme.AppCompat.NoActionBar" />
+            android:screenOrientation="portrait" />
         <activity
             android:name=".UserProfile.SignUpActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/Theme.AppCompat.NoActionBar" />
+            android:screenOrientation="portrait" />
         <activity android:name=".Activity.SplashActivity" />
         <activity
             android:name=".Map.BloodbanksMapActivity"

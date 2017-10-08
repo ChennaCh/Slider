@@ -27,11 +27,14 @@
         android:layout_height="wrap_content"
         android:gravity="center">
 
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="85dp"
-        android:layout_height="85dp"
-        android:src="@drawable/navigationuser" />
+        <de.hdodenhof.circleimageview.CircleImageView
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/navimageview"
+            android:layout_width="96dp"
+            android:layout_height="96dp"
+            android:src="@drawable/navigationuser"
+            app:civ_border_width="1dp"
+            app:civ_border_color="#d4c7c7"/>
     </LinearLayout>
 
     <LinearLayout

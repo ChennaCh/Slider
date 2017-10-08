@@ -23,7 +23,7 @@ public class BloodbanksMapActivity extends FragmentActivity implements OnMapRead
         setContentView(R.layout.activity_bloodbanks_map);
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
-                .findFragmentById(R.id.map);
+                .findFragmentById(R.id.bloodbanksmap);
         mapFragment.getMapAsync(this);
     }
 

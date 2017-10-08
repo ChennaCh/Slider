@@ -6,8 +6,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Environment;
 import android.provider.MediaStore;
@@ -21,9 +19,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
 
 import com.fit.bloodmanagment.Activity.BloodBanksActivity;
 import com.fit.bloodmanagment.Activity.ContactUsActivity;
@@ -49,10 +45,6 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.net.URLConnection;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback,NavigationView.OnNavigationItemSelectedListener {
 
@@ -66,9 +58,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     int id;
     private String userChoosenTask;
     private int REQUEST_CAMERA = 0, SELECT_FILE = 1;
-    private TextView profilename,profileemail;
-    private LinearLayout profileLayout,loginLayout;
-    public static  String URL = "";
 
 
     @Override
@@ -86,29 +75,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         navigationView.setNavigationItemSelectedListener(this);
         View header  = navigationView.getHeaderView(0);
 
-        profilename = (TextView) findViewById(R.id.profile_name);
-        profileemail = (TextView) findViewById(R.id.profile_mail);
-        profileLayout = (LinearLayout) findViewById(R.id.login_layout) ;
-        loginLayout = (LinearLayout) findViewById(R.id.user_profile) ;
-
         loginbtn = (Button) header.findViewById(R.id.signin_btn);
         signupbtn = (Button) header.findViewById(R.id.signup_btn);
         profilepic = (ImageView)header.findViewById(R.id.imageView);
-
-//        Intent intent = getIntent().getExtras();
-//        String social = intent.getStringExtra("social");
-
-//        if (social.equals("google")){
-//            String name = intent.getStringExtra("username");
-//            String mail = intent.getStringExtra("usermail");
-//            URL = intent.getStringExtra("prolepic");
-//            profilename.setText(name);
-//            profileemail.setText(mail);
-//
-//            GetXMLTask task = new GetXMLTask();
-//            task.execute(new String[]{ URL });
-//
-//        }
 
         loginbtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -141,63 +110,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         });
     }
-
-    private class GetXMLTask extends AsyncTask<String, Void, Bitmap> {
-        @Override
-        protected Bitmap doInBackground(String... urls) {
-            Bitmap map = null;
-            for (String url : urls) {
-                map = downloadImage(url);
-            }
-            return map;
-        }
-
-        // Sets the Bitmap returned by doInBackground
-        @Override
-        protected void onPostExecute(Bitmap result) {
-            profilepic.setImageBitmap(result);
-        }
-
-        // Creates Bitmap from InputStream and returns it
-        private Bitmap downloadImage(String url) {
-            Bitmap bitmap = null;
-            InputStream stream = null;
-            BitmapFactory.Options bmOptions = new BitmapFactory.Options();
-            bmOptions.inSampleSize = 1;
-
-            try {
-                stream = getHttpConnection(url);
-                bitmap = BitmapFactory.
-                        decodeStream(stream, null, bmOptions);
-                stream.close();
-            } catch (IOException e1) {
-                e1.printStackTrace();
-            }
-            return bitmap;
-        }
-
-        // Makes HttpURLConnection and returns InputStream
-        private InputStream getHttpConnection(String urlString)
-                throws IOException {
-            InputStream stream = null;
-            URL url = new URL(urlString);
-            URLConnection connection = url.openConnection();
-
-            try {
-                HttpURLConnection httpConnection = (HttpURLConnection) connection;
-                httpConnection.setRequestMethod("GET");
-                httpConnection.connect();
-
-                if (httpConnection.getResponseCode() == HttpURLConnection.HTTP_OK) {
-                    stream = httpConnection.getInputStream();
-                }
-            } catch (Exception ex) {
-                ex.printStackTrace();
-            }
-            return stream;
-        }
-    }
-
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
         switch (requestCode) {

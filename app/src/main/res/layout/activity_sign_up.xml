@@ -37,8 +37,7 @@
                 android:id="@+id/username"
                 android:layout_marginLeft="30dp"
                 android:layout_marginRight="30dp"
-                android:drawablePadding="10dp"
-                android:drawableLeft="@drawable/person"
+                android:drawableLeft="@drawable/user"
                 android:padding="10dp"
                 android:hint="Email"/>
         </android.support.design.widget.TextInputLayout>
@@ -52,8 +51,7 @@
                 android:inputType="textPassword"
                 android:layout_marginLeft="30dp"
                 android:layout_marginRight="30dp"
-                android:drawablePadding="10dp"
-                android:drawableLeft="@drawable/password"
+                android:drawableLeft="@drawable/key"
                 android:padding="10dp"
                 android:hint="Password"/>
         </android.support.design.widget.TextInputLayout>
@@ -67,8 +65,7 @@
                 android:inputType="textPassword"
                 android:layout_marginLeft="30dp"
                 android:layout_marginRight="30dp"
-                android:drawablePadding="10dp"
-                android:drawableLeft="@drawable/password"
+                android:drawableLeft="@drawable/key"
                 android:padding="10dp"
                 android:hint="Reenter Password"/>
         </android.support.design.widget.TextInputLayout>
@@ -82,8 +79,7 @@
                 android:inputType="textPassword"
                 android:layout_marginLeft="30dp"
                 android:layout_marginRight="30dp"
-                android:drawableLeft="@drawable/password"
-                android:drawablePadding="10dp"
+                android:drawableLeft="@drawable/key"
                 android:padding="10dp"
                 android:hint="Phone"/>
         </android.support.design.widget.TextInputLayout>

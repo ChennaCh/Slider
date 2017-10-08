@@ -38,9 +38,23 @@
     <string name="Feedback">Feedback</string>
     <string name="Logout">Logout</string>
     <string name="Pharmacy">Pharmacy</string>
+    <string name="Signin">Signin</string>
+    <string name="Signup">Registration</string>
+
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">About US</string>
     <string name="title_activity_maps">Map</string>
     <string name="title_activity_bloodbanks_map">Map</string>
+
+    <string-array name = "spinner_item">
+        <item>O+</item>
+        <item>O-</item>
+        <item>A+</item>
+        <item>A-</item>
+        <item>B+</item>
+        <item>B-</item>
+        <item>AB+</item>
+        <item>AB-</item>
+    </string-array>
 </resources>

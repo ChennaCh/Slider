@@ -20,7 +20,7 @@
         android:orientation="vertical"
         android:gravity="center"
         android:fitsSystemWindows="true"
-        android:background="@color/black"
+        android:background="@drawable/blooddonation"
         android:layout_gravity="center">
 
 
@@ -34,8 +34,7 @@
                 android:id="@+id/username"
                 android:layout_marginLeft="30dp"
                 android:layout_marginRight="30dp"
-                android:drawableLeft="@drawable/person"
-                android:drawablePadding="10dp"
+                android:drawableLeft="@drawable/user"
                 android:padding="10dp"
                 android:textColorHint="@color/white"
                 android:hint="Username"/>
@@ -51,8 +50,7 @@
                 android:inputType="textPassword"
                 android:layout_marginLeft="30dp"
                 android:layout_marginRight="30dp"
-                android:drawableLeft="@drawable/password"
-                android:drawablePadding="10dp"
+                android:drawableLeft="@drawable/key"
                 android:textColorHint="@color/white"
                 android:id="@+id/password"
                 android:padding="10dp"
@@ -86,16 +84,6 @@
 
 
         </LinearLayout>
-
-        <com.google.android.gms.common.SignInButton
-            android:id="@+id/sign_in_button"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="30dp"
-            android:layout_marginRight="30dp"
-            android:layout_marginTop="50dp"
-            android:visibility="visible"
-            tools:visibility="visible" />
 
 
     </LinearLayout>
