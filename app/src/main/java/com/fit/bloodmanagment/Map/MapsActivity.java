@@ -11,7 +11,9 @@ import android.location.Location;
 import android.os.Build;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
@@ -84,8 +86,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     Location mLastLocation;
     Marker mCurrLocationMarker;
     LocationRequest mLocationRequest;
-    String Pharmacy = "pharmacy";
-    String Hospital="hospital";
     ImageView pharmacyimage,hospitalimage;
     ProgressBar mapprogressbar;
 
@@ -95,19 +95,12 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main2);
         navbtn = (Button) findViewById(R.id.navigation_button);
-        // Obtain the SupportMapFragment and get notified when the map is ready to be used.
-        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
-                .findFragmentById(R.id.map);
-        mapView = mapFragment.getView();
-        mapFragment.getMapAsync(this);
         final DrawerLayout drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
         View header  = navigationView.getHeaderView(0);
-        mapprogressbar = (ProgressBar) findViewById(R.id.mapprogressbar);
-        mapprogressbar.getIndeterminateDrawable().setColorFilter(0xFFFF0000, android.graphics.PorterDuff.Mode.MULTIPLY);
-        pharmacyimage=(ImageView) findViewById(R.id.pharmacyimage);
-        hospitalimage=(ImageView) findViewById(R.id.hospitalsimage);
+
+
         if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             checkLocationPermission();
         }
@@ -121,6 +114,15 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             Log.d("onCreate","Google Play Services available.");
         }
 
+        // Obtain the SupportMapFragment and get notified when the map is ready to be used.
+        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
+                .findFragmentById(R.id.map);
+        mapView = mapFragment.getView();
+        mapFragment.getMapAsync(this);
+//        mapprogressbar = (ProgressBar) findViewById(R.id.mapprogressbar);
+//        mapprogressbar.getIndeterminateDrawable().setColorFilter(0xFFFF0000, android.graphics.PorterDuff.Mode.MULTIPLY);
+        pharmacyimage=(ImageView) findViewById(R.id.pharmacyimage);
+        hospitalimage=(ImageView) findViewById(R.id.hospitalsimage);
 
         loginbtn = (Button) header.findViewById(R.id.signin_btn);
         signupbtn = (Button) header.findViewById(R.id.signup_btn);
@@ -157,38 +159,24 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         });
 
-        pharmacyimage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Log.d("onClick", "Button is Clicked");
-                mMap.clear();
-                String url = getUrl(latitude, longitude, Pharmacy);
-                Object[] DataTransfer = new Object[2];
-                DataTransfer[0] = mMap;
-                DataTransfer[1] = url;
-                Log.d("onClick", url);
-                GetNearbyPlacesData getNearbyPlacesData = new GetNearbyPlacesData();
-                getNearbyPlacesData.execute(DataTransfer);
-                Toast.makeText(MapsActivity.this,"Nearby Pharmacies", Toast.LENGTH_LONG).show();
 
-            }
-        });
-        hospitalimage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //Log.d("onClick", "Button is Clicked");
-                mMap.clear();
-                String url = getUrl(latitude, longitude, Hospital);
-                Object[] DataTransfer = new Object[2];
-                DataTransfer[0] = mMap;
-                DataTransfer[1] = url;
-                Log.d("onClick", url);
-                GetNearbyPlacesData getNearbyPlacesData = new GetNearbyPlacesData();
-                getNearbyPlacesData.execute(DataTransfer);
-                Toast.makeText(MapsActivity.this,"Nearby Hospitals", Toast.LENGTH_LONG).show();
-            }
-        });
     }
+
+    //check google play services
+    private boolean CheckGooglePlayServices() {
+        GoogleApiAvailability googleAPI = GoogleApiAvailability.getInstance();
+        int result = googleAPI.isGooglePlayServicesAvailable(this);
+        if(result != ConnectionResult.SUCCESS) {
+            if(googleAPI.isUserResolvableError(result)) {
+                googleAPI.getErrorDialog(this, result,
+                        0).show();
+            }
+            return false;
+        }
+        return true;
+    }
+
+
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
         switch (requestCode) {
@@ -217,6 +205,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                             buildGoogleApiClient();
                         }
                         mMap.setMyLocationEnabled(true);
+
+
                     }
 
                 } else {
@@ -234,19 +224,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
 
     }
-    //check google play services
-    private boolean CheckGooglePlayServices() {
-        GoogleApiAvailability googleAPI = GoogleApiAvailability.getInstance();
-        int result = googleAPI.isGooglePlayServicesAvailable(this);
-        if(result != ConnectionResult.SUCCESS) {
-            if(googleAPI.isUserResolvableError(result)) {
-                googleAPI.getErrorDialog(this, result,
-                        0).show();
-            }
-            return false;
-        }
-        return true;
-    }
+
     private void selectImage() {
         final CharSequence[] items = { "Take Photo", "Choose from Library",
                 "Cancel" };
@@ -375,60 +353,80 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
-         mMap = googleMap;
-       // mapprogressbar.setVisibility(View.vis);
-        gps = new GPSTracker(MapsActivity.this);
-         double latitude = gps.getLatitude();
-        double longitude = gps.getLongitude();
-        LatLng mylocaiton = new LatLng(latitude,longitude);
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(mylocaiton,15));
-        mMap.setOnMyLocationChangeListener(null);
+        mMap = googleMap;
+        googleMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
+       // mMap.setMapType(GoogleMap.);
 
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-            mMap.setMyLocationEnabled(true);
-            mMap.getUiSettings().setMyLocationButtonEnabled(true);
-        }else{
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                requestPermissions(new String[]  {
-                        Manifest.permission.ACCESS_FINE_LOCATION}, MY_PERMISSION_FINE_LOCATION );
-            }
-        }
-        mMap.getUiSettings().setMyLocationButtonEnabled(true);
-        CameraPosition cameraPosition = new CameraPosition.Builder()
-                .target(new LatLng(latitude, longitude)).zoom(17).build();
-        mMap.animateCamera(CameraUpdateFactory
-                .newCameraPosition(cameraPosition));
-
-        //currentlocation Pin Position Change by below code
-//        if (mapView != null &&
-//                mapView.findViewById(Integer.parseInt("1")) != null) {
-//            // Get the button view
-//            View locationButton = ((View) mapView.findViewById(Integer.parseInt("1")).getParent()).findViewById(Integer.parseInt("2"));
-//            // and next place it, on bottom right (as Google Maps app)
-//            RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams)
-//                    locationButton.getLayoutParams();
-//            // position on right bottom
-//            layoutParams.addRule(RelativeLayout.ALIGN_PARENT_TOP, 1200);
-//            layoutParams.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM, 0);
-//            layoutParams.setMargins(80, 1200, 30, 30);
-//            //  layoutParams.setMargins(left, top, right, bottom);
-//        }
         //Initialize Google Play Services
         if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             if (ContextCompat.checkSelfPermission(this,
                     Manifest.permission.ACCESS_FINE_LOCATION)
                     == PackageManager.PERMISSION_GRANTED) {
                 buildGoogleApiClient();
+                setPadding(mapView);
                 mMap.setMyLocationEnabled(true);
-
+                //mMap.setPadding(0, 0, 30, );
+                //mMap.setPadding(left, top, right, bottom);
             }
         }
         else {
             buildGoogleApiClient();
+            setPadding(mapView);
             mMap.setMyLocationEnabled(true);
+           // mMap.setPadding(0, 0, 30, 105);
         }
-    }
 
+
+        pharmacyimage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String Pharmacy = "pharmacy";
+
+                // Log.d("onClick", "Button is Clicked");
+                mMap.clear();
+                if (mCurrLocationMarker != null) {
+                  //  mCurrLocationMarker.remove();
+                    String url = getUrl(latitude, longitude, Pharmacy);
+                    Object[] DataTransfer = new Object[2];
+                    DataTransfer[0] = mMap;
+                    DataTransfer[1] = url;
+                    Log.d("onClick", url);
+                    GetNearbyPlacesData getNearbyPlacesData = new GetNearbyPlacesData();
+                    getNearbyPlacesData.execute(DataTransfer);
+                    Toast.makeText(MapsActivity.this,"Nearby Pharmacies", Toast.LENGTH_LONG).show();
+                }
+
+
+            }
+        });
+        hospitalimage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setProgress(v.VISIBLE);
+                String Hospital="hospital";
+                //Log.d("onClick", "Button is Clicked");
+                mMap.clear();
+                if (mCurrLocationMarker != null) {
+//                    mCurrLocationMarker.remove();
+                    String url = getUrl(latitude, longitude, Hospital);
+                    Object[] DataTransfer = new Object[2];
+                    DataTransfer[0] = mMap;
+                    DataTransfer[1] = url;
+                    Log.d("onClick", url);
+                    GetNearbyPlacesData getNearbyPlacesData = new GetNearbyPlacesData();
+                    getNearbyPlacesData.execute(DataTransfer);
+                    setProgress(v.GONE);
+                    Toast.makeText(MapsActivity.this,"Nearby Hospitals", Toast.LENGTH_LONG).show();
+                }
+
+
+            }
+        });
+    }
+  public void setPadding(View mapView){
+      mMap.setPadding(0,300,0,0);
+      //left,top,right,bottom
+  }
     protected synchronized void buildGoogleApiClient() {
         mGoogleApiClient = new GoogleApiClient.Builder(this)
                 .addConnectionCallbacks(this)
@@ -551,4 +549,3 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     }
 }
-
