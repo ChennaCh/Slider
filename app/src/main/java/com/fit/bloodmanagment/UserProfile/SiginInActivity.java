@@ -57,95 +57,86 @@ public class SiginInActivity extends AppCompatActivity implements View.OnClickLi
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         toolbar.setTitleTextColor(getResources().getColor(android.R.color.white));
-//        //Initializing google api client
-//        mGoogleApiClient = new GoogleApiClient.Builder(getApplicationContext())
-//                .enableAutoManage(this /* FragmentActivity */, this /* OnConnectionFailedListener */)
-//                .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
-//                .build();
-//        //Initializing signinbutton
-//        signInButton = (SignInButton) findViewById(R.id.sign_in_button);
-//        signInButton.setSize(SignInButton.SIZE_WIDE);
-//        signInButton.setScopes(gso.getScopeArray());
-//
-//        //Initializing google signin option
-//        gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-//                .requestEmail()
-//                .build();
-//
-//
-//
-//
-//        //Setting onclick listener to signing button
-//        signInButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                //Calling signin
-//                signIn();
-//
-//            }
-//        });
-//
-//
+        //Initializing google signin option
+        gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestEmail()
+                .build();
+
+        //Initializing signinbutton
+        signInButton = (SignInButton) findViewById(R.id.sign_in_button);
+        signInButton.setSize(SignInButton.SIZE_WIDE);
+        signInButton.setScopes(gso.getScopeArray());
+
+        //Initializing google api client
+        mGoogleApiClient = new GoogleApiClient.Builder(this)
+                .enableAutoManage(this /* FragmentActivity */, this /* OnConnectionFailedListener */)
+                .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
+                .build();
+
+
+        //Setting onclick listener to signing button
+        signInButton.setOnClickListener(this);
+
 
 
 
 
     }
 
-//    //This function will option signing intent
-//    private void signIn() {
-//        //Creating an intent
-//        Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(mGoogleApiClient);
-//
-//        //Starting intent for result
-//        startActivityForResult(signInIntent, RC_SIGN_IN);
-//    }
+    //This function will option signing intent
+    private void signIn() {
+        //Creating an intent
+        Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(mGoogleApiClient);
 
-//
-//    @Override
-//    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-//        super.onActivityResult(requestCode, resultCode, data);
-//        //If signin
-//        if (requestCode == RC_SIGN_IN) {
-//            GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
-//            //Calling a new function to handle signin
-//            handleSignInResult(result);
-//        }
-  //  }
+        //Starting intent for result
+        startActivityForResult(signInIntent, RC_SIGN_IN);
+    }
 
-//    //After the signing we are calling this function
-//    private void handleSignInResult(GoogleSignInResult result) {
-//        //If the login succeed
-//        if (result.isSuccess()) {
-//            //Getting google account
-//            acct = result.getSignInAccount();
-//             Intent intent=new Intent(SiginInActivity.this, MyProfileActivity.class);
-//            intent.putExtra("name",acct.getDisplayName());
-//            intent.putExtra("email",acct.getEmail());
-//             intent.putExtra("image",acct.getPhotoUrl().toString());
-//
-//            startActivity(intent);
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        //If signin
+        if (requestCode == RC_SIGN_IN) {
+            GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
+            //Calling a new function to handle signin
+            handleSignInResult(result);
+        }
+    }
+
+    //After the signing we are calling this function
+    private void handleSignInResult(GoogleSignInResult result) {
+        //If the login succeed
+        if (result.isSuccess()) {
+            //Getting google account
+            acct = result.getSignInAccount();
+             Intent intent=new Intent(SiginInActivity.this, MyProfileActivity.class);
+            intent.putExtra("name",acct.getDisplayName());
+            intent.putExtra("email",acct.getEmail());
+             intent.putExtra("image",acct.getPhotoUrl().toString());
+
+            startActivity(intent);
             //Displaying name and email
-            //textViewName.setText(acct.getDisplayName());
-            //textViewEmail.setText(acct.getEmail());
+            textViewName.setText(acct.getDisplayName());
+            textViewEmail.setText(acct.getEmail());
 
             //Initializing image loader
-//            imageLoader = CustomVolleyRequest.getInstance(this.getApplicationContext())
-//                    .getImageLoader();
-//
-//            imageLoader.get(acct.getPhotoUrl().toString(),
-//                    ImageLoader.getImageListener(profilePhoto,
-//                            R.mipmap.ic_launcher,
-//                            R.mipmap.ic_launcher));
+            imageLoader = CustomVolleyRequest.getInstance(this.getApplicationContext())
+                    .getImageLoader();
 
-//            //Loading image
-//            profilePhoto.setImageUrl(acct.getPhotoUrl().toString(), imageLoader);
+            imageLoader.get(acct.getPhotoUrl().toString(),
+                    ImageLoader.getImageListener(profilePhoto,
+                            R.mipmap.ic_launcher,
+                            R.mipmap.ic_launcher));
 
-//        } else {
-//            //If login fails
-//            Toast.makeText(this, "Login Failed", Toast.LENGTH_LONG).show();
-//        }
-  //  }
+            //Loading image
+            profilePhoto.setImageUrl(acct.getPhotoUrl().toString(), imageLoader);
+
+        } else {
+            //If login fails
+            Toast.makeText(this, "Login Failed", Toast.LENGTH_LONG).show();
+        }
+    }
 
 
 
@@ -159,7 +150,7 @@ public class SiginInActivity extends AppCompatActivity implements View.OnClickLi
     @Override
     public void onClick(View v) {
         //Calling signin
-//                signIn();
+                signIn();
     }
 
     @Override
