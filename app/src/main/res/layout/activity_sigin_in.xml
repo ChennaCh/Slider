@@ -40,40 +40,47 @@
             android:layout_width="match_parent"
             android:layout_marginTop="50dp"
             android:alpha="0.8"
-            android:theme="@style/TextLabel"
+            android:textColorHint="@color/white"
+            android:theme="@style/Theme.AppCompat"
             android:layout_height="wrap_content">
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/username"
+                android:id="@+id/editusername"
                 android:layout_marginLeft="30dp"
                 android:layout_marginRight="30dp"
                 android:drawableLeft="@drawable/person"
                 android:textColor="@color/white"
                 android:padding="10dp"
+                android:ems="10"
                 android:textColorHint="@color/white"
-                android:hint="Username"/>
+                android:hint="Username"
+                android:inputType="text"
+                android:singleLine="true"/>
         </android.support.design.widget.TextInputLayout>
 
         <android.support.design.widget.TextInputLayout
             android:id="@+id/input_layout_password"
             android:layout_width="match_parent"
-            android:theme="@style/TextLabel"
+            android:theme="@style/Theme.AppCompat"
+            android:textColorHint="#fff"
             android:alpha="0.8"
             android:layout_height="wrap_content">
 
             <EditText
-                android:id="@+id/password"
+                android:id="@+id/editpassword"
+                android:maxLength="6"
+                android:ems="10"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="30dp"
                 android:layout_marginRight="30dp"
                 android:drawableLeft="@drawable/password"
                 android:hint="Password"
-                android:inputType="textPassword"
+                android:inputType="numberPassword"
                 android:padding="10dp"
-                android:textColor="@color/white"
-                android:textColorHint="@color/white" />
+                android:textColor="#fff"
+                android:textColorHint="#fff" />
         </android.support.design.widget.TextInputLayout>
 
         <TextView
