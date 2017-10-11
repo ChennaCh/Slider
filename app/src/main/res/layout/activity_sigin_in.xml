@@ -14,23 +14,22 @@
         app:layout_scrollFlags="scroll|enterAlways"
         app:titleTextColor="#fff"
         app:theme="@style/ToolbarStyle"
-        android:background="?attr/colorPrimary"/>
+        android:background="#323138"/>
 
-    <LinearLayout
+
+        <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:gravity="center"
-        android:alpha="0.8"
         android:fitsSystemWindows="true"
-        android:background="@drawable/signinbg"
+        android:background="#323138"
         android:layout_gravity="center">
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:alpha="0.8"
-            android:textColor="@color/white"
+            android:textColor="#FF6AC9BD"
             android:text="Save Life"
             android:textSize="40dp"
             android:textStyle="bold|italic"/>
@@ -99,7 +98,6 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/btn"
                 android:text="Login"
-                android:alpha="0.8"
                 android:textColor="#fff"
                 android:padding="15dp"
                 android:layout_marginTop="40dp"
@@ -113,7 +111,6 @@
             android:layout_marginTop="20dp"
             android:layout_marginLeft="30dp"
             android:layout_marginRight="30dp"
-            android:alpha="0.6"
             android:layout_gravity="center"
             android:orientation="horizontal">
             <View

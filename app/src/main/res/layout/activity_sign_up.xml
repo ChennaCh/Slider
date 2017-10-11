@@ -11,17 +11,16 @@
         android:id="@+id/signup_toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
+        android:background="#323138"
         app:layout_scrollFlags="scroll|enterAlways"
-        app:titleTextColor="#fff"
         app:theme="@style/ToolbarStyle"
-        android:background="?attr/colorPrimary"/>
+        app:titleTextColor="#fff" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_gravity="center"
-        android:alpha="0.8"
-        android:background="@drawable/redbackground"
+        android:background="#323138"
         android:fitsSystemWindows="true"
         android:gravity="center"
         android:orientation="vertical">
@@ -39,8 +38,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:alpha="0.8"
-                    android:textColor="@color/white"
+                    android:textColor="#FF6AC9BD"
                     android:text="Save Life"
                     android:textSize="40dp"
                     android:textStyle="bold|italic"/>
@@ -218,7 +216,6 @@
                     android:layout_marginLeft="30dp"
                     android:layout_marginRight="30dp"
                     android:layout_marginTop="30dp"
-                    android:alpha="0.8"
                     android:background="@drawable/buttonshape"
                     android:padding="15dp"
                     android:text="Register"

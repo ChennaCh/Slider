@@ -36,11 +36,10 @@ import static android.R.id.message;
  */
 
 public class BloodbankListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
-
     Context context;
     BloodBanksActivity bbactivity=new BloodBanksActivity();
-        List<BloodbankBean> data= Collections.emptyList();
-  ImageView mapgifimage,mailgif,callgif;
+    List<BloodbankBean> data= Collections.emptyList();
+    ImageView mapgifimage,mailgif,callgif;
     MyHolder myHolder;
 
     @Override

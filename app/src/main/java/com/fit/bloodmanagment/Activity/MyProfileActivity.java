@@ -29,11 +29,11 @@ public class MyProfileActivity extends Activity {
         textViewName = (TextView) findViewById(R.id.myusername);
         textViewEmail = (TextView) findViewById(R.id.myemail);
         profilePhoto = (NetworkImageView) findViewById(R.id.myimageview);
-        Intent intent = getIntent();
-        Bundle bundle=intent.getExtras();
-        String profilename=bundle.getString("name");
+       // Intent intent = getIntent();
+        Bundle bundle=getIntent().getExtras();
+        String profilename=bundle.getString("username");
         String profileemail=bundle.getString("email");
-        String profileimage=bundle.getString("image");
+        String profileimage=bundle.getString("photo");
 
 
         textViewName.setText(profilename);
