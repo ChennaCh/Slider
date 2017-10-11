@@ -23,10 +23,13 @@ import android.support.v4.widget.DrawerLayout;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.fit.bloodmanagment.Activity.BloodBanksActivity;
@@ -67,8 +70,11 @@ import java.io.IOException;
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback,NavigationView.OnNavigationItemSelectedListener,
         GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener,
-        LocationListener {
-
+        LocationListener,View.OnClickListener {
+    private Boolean isFabOpen = false;
+    private ImageView fab;
+    TextView fab1,fab2,fab3,fab4,fab5,fab6,fab7,fab8;
+    private Animation fab_open,fab_close,rotate_forward,rotate_backward;
     private GoogleMap mMap;
     private GPSTracker gps;
     private final static int MY_PERMISSION_FINE_LOCATION = 101;
@@ -88,6 +94,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     LocationRequest mLocationRequest;
     ImageView pharmacyimage,hospitalimage;
     ProgressBar mapprogressbar;
+
 
 
     @Override
@@ -124,9 +131,30 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         pharmacyimage=(ImageView) findViewById(R.id.pharmacyimage);
         hospitalimage=(ImageView) findViewById(R.id.hospitalsimage);
 
+        fab = (ImageView) findViewById(R.id.fabright);
+        fab1 = (TextView) findViewById(R.id.fab1);
+        fab2 = (TextView) findViewById(R.id.fab2);
+        fab3 = (TextView) findViewById(R.id.fab3);
+        fab4 = (TextView) findViewById(R.id.fab4);
+        fab5 = (TextView) findViewById(R.id.fab5);
+        fab6 = (TextView) findViewById(R.id.fab6);
+        fab7 = (TextView) findViewById(R.id.fab7);
+        fab8 = (TextView) findViewById(R.id.fab8);
+
+        fab_open = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fab_open);
+        fab_close = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.fab_close);
+        rotate_forward = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.rotate_forward);
+        rotate_backward = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.rotate_backward);
+        fab.setOnClickListener(this);
+        fab1.setOnClickListener(this);
+        fab2.setOnClickListener(this);
+
         loginbtn = (Button) header.findViewById(R.id.signin_btn);
         signupbtn = (Button) header.findViewById(R.id.signup_btn);
         profilepic = (ImageView)header.findViewById(R.id.navimageview);
+
+
+
 
         loginbtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -204,6 +232,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                         if (mGoogleApiClient == null) {
                             buildGoogleApiClient();
                         }
+                        setPadding(mapView);
                         mMap.setMyLocationEnabled(true);
 
 
@@ -365,6 +394,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 buildGoogleApiClient();
                 setPadding(mapView);
                 mMap.setMyLocationEnabled(true);
+                mMap.setTrafficEnabled(true);
                 //mMap.setPadding(0, 0, 30, );
                 //mMap.setPadding(left, top, right, bottom);
             }
@@ -373,6 +403,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             buildGoogleApiClient();
             setPadding(mapView);
             mMap.setMyLocationEnabled(true);
+            mMap.setTrafficEnabled(true);
            // mMap.setPadding(0, 0, 30, 105);
         }
 
@@ -538,7 +569,116 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             return true;
         }
     }
+//    @Override
+//    public void onClick(View v) {
+//        int id = v.getId();
+//
+//            if (id == R.id.fabright) {
+//                animateFAB();
+//            }
+//            else if (id == R.id.fab1) {
+//
+//                Log.d("Rekha", "Fab 1");
+//            }
+//            else if (id == R.id.fab2) {
+//
+//                Log.d("Rekha", "Fab 2");
+//            }
+//    }
+@Override
+public void onClick(View v) {
+    int id = v.getId();
+    switch (id){
+        case R.id.fabright:
+            animateFAB();
+            break;
+        case R.id.fab1:
 
+            Log.d("Raj", "Fab 1");
+            break;
+        case R.id.fab2:
+            Log.d("Raj", "Fab 2");
+            break;
+        case R.id.fab3:
+            Log.d("Raj", "Fab 2");
+            break;
+        case R.id.fab4:
+            Log.d("Raj", "Fab 2");
+            break;
+        case R.id.fab5:
+            Log.d("Raj", "Fab 2");
+            break;
+        case R.id.fab6:
+            Log.d("Raj", "Fab 2");
+            break;
+        case R.id.fab7:
+            Log.d("Raj", "Fab 2");
+            break;
+        case R.id.fab8:
+            Log.d("Raj", "Fab 2");
+            break;
+    }
+}
+
+    public void animateFAB(){
+
+        if(isFabOpen){
+            fab.startAnimation(rotate_backward);
+            fab1.startAnimation(fab_close);
+            fab2.startAnimation(fab_close);
+            fab3.startAnimation(fab_close);
+            fab4.startAnimation(fab_close);
+            fab5.startAnimation(fab_close);
+            fab6.startAnimation(fab_close);
+            fab7.startAnimation(fab_close);
+            fab8.startAnimation(fab_close);
+
+            fab1.setClickable(false);
+            fab2.setClickable(false);
+            fab3.setClickable(false);
+            fab4.setClickable(false);
+            fab5.setClickable(false);
+            fab6.setClickable(false);
+            fab7.setClickable(false);
+            fab8.setClickable(false);
+            isFabOpen = false;
+            Log.d("Raj", "close");
+
+        } else {
+
+            fab.startAnimation(rotate_forward);
+
+                fab1.setVisibility(View.VISIBLE);
+                fab2.setVisibility(View.VISIBLE);
+                fab3.setVisibility(View.VISIBLE);
+                fab4.setVisibility(View.VISIBLE);
+                fab5.setVisibility(View.VISIBLE);
+                fab6.setVisibility(View.VISIBLE);
+                fab7.setVisibility(View.VISIBLE);
+                fab8.setVisibility(View.VISIBLE);
+
+
+            fab1.startAnimation(fab_open);
+            fab2.startAnimation(fab_open);
+            fab3.startAnimation(fab_open);
+            fab4.startAnimation(fab_open);
+            fab5.startAnimation(fab_open);
+            fab6.startAnimation(fab_open);
+            fab7.startAnimation(fab_open);
+            fab8.startAnimation(fab_open);
+            fab1.setClickable(true);
+            fab2.setClickable(true);
+            fab3.setClickable(true);
+            fab4.setClickable(true);
+            fab5.setClickable(true);
+            fab6.setClickable(true);
+            fab7.setClickable(true);
+            fab8.setClickable(true);
+            isFabOpen = true;
+            Log.d("Raj","open");
+
+        }
+    }
 
     @Override
     public void onBackPressed() {

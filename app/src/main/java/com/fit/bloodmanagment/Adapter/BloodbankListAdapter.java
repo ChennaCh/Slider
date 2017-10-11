@@ -3,20 +3,29 @@ package com.fit.bloodmanagment.Adapter;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
+import android.telephony.PhoneStateListener;
+import android.telephony.TelephonyManager;
+import android.text.Html;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.fit.bloodmanagment.Activity.BloodBanksActivity;
 import com.fit.bloodmanagment.Beans.BloodbankBean;
 import com.fit.bloodmanagment.Map.BloodbanksMapActivity;
 import com.fit.bloodmanagment.R;
 
 import java.util.Collections;
 import java.util.List;
+
+import static android.R.id.message;
 
 /**
  * Created by admin on 10/4/2017.
@@ -25,8 +34,9 @@ import java.util.List;
 public class BloodbankListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     Context context;
+    BloodBanksActivity bbactivity=new BloodBanksActivity();
         List<BloodbankBean> data= Collections.emptyList();
-  ImageView mapgifimage;
+  ImageView mapgifimage,mailgif,callgif;
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -34,7 +44,13 @@ public class BloodbankListAdapter extends RecyclerView.Adapter<RecyclerView.View
         View itemView = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.bloodbank_view, parent, false);
         mapgifimage=(ImageView)itemView.findViewById(R.id.gifmappin);
-        MyHolder holder=new MyHolder(itemView);
+        mailgif=(ImageView)itemView.findViewById(R.id.gifmail);
+        callgif=(ImageView)itemView.findViewById(R.id.gifcall);
+        // add PhoneStateListener
+        PhoneCallListener phoneListener = new PhoneCallListener();
+        TelephonyManager telephonyManager = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
+        telephonyManager.listen(phoneListener, PhoneStateListener.LISTEN_CALL_STATE);
+        final MyHolder holder=new MyHolder(itemView);
 
 
         mapgifimage.setOnTouchListener(new View.OnTouchListener() {
@@ -46,6 +62,34 @@ public class BloodbankListAdapter extends RecyclerView.Adapter<RecyclerView.View
                 return true;
             }
         });
+        mailgif.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                Intent i = new Intent(Intent.ACTION_SENDTO);
+                i.setType("message/rfc822");
+                i.setData(Uri.parse("mailto:"));
+                i.putExtra(Intent.EXTRA_EMAIL  , new String[]{"recipient@example.com"});
+                i.putExtra(Intent.EXTRA_SUBJECT, "subject of email");
+                i.putExtra(Intent.EXTRA_TEXT   , "body of email");
+                i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                try {
+                    context.startActivity(Intent.createChooser(i, "Send mail..."));
+                } catch (android.content.ActivityNotFoundException ex) {
+                    Toast.makeText(context, "There are no email clients installed.", Toast.LENGTH_SHORT).show();
+                }
+                return true;
+            }
+        });
+        callgif.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+
+
+                return true;
+
+            }
+        });
+
 //        LayoutInflater mInflater = (LayoutInflater)
 //                context.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
 //        view = mInflater.inflate(R.layout.view_faculty_details, null);
@@ -122,5 +166,48 @@ public class BloodbankListAdapter extends RecyclerView.Adapter<RecyclerView.View
         }
     }
 
+    //monitor phone call activities
+    private class PhoneCallListener extends PhoneStateListener {
 
+        private boolean isPhoneCalling = false;
+
+        String LOG_TAG = "LOGGING 123";
+
+        @Override
+        public void onCallStateChanged(int state, String incomingNumber) {
+
+            if (TelephonyManager.CALL_STATE_RINGING == state) {
+                // phone ringing
+                Log.i(LOG_TAG, "RINGING, number: " + incomingNumber);
+            }
+
+            if (TelephonyManager.CALL_STATE_OFFHOOK == state) {
+                // active
+                Log.i(LOG_TAG, "OFFHOOK");
+
+                isPhoneCalling = true;
+            }
+
+            if (TelephonyManager.CALL_STATE_IDLE == state) {
+                // run when class initial and phone call ended,
+                // need detect flag from CALL_STATE_OFFHOOK
+                Log.i(LOG_TAG, "IDLE");
+
+                if (isPhoneCalling) {
+
+                    Log.i(LOG_TAG, "restart app");
+
+                    // restart app
+                    Intent i = context.getPackageManager()
+                            .getLaunchIntentForPackage(
+                                    context.getPackageName());
+                    i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    context.startActivity(i);
+
+                    isPhoneCalling = false;
+                }
+
+            }
+        }
+    }
 }

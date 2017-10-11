@@ -21,9 +21,9 @@
             android:background="#FF62C7C6"
             android:paddingLeft="10dp"
             android:text="Name"
-            android:textStyle="bold|italic"
             android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
-            android:textColor="#fff" />
+            android:textColor="#fff"
+            android:textStyle="bold|italic" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -44,21 +44,59 @@
                 android:layout_marginLeft="15dp"
                 android:orientation="vertical">
 
-                <TextView
-                    android:id="@+id/get_phone"
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:text="Phone"
-                    android:textColor="#074809" />
+                    android:orientation="horizontal"
+                    android:weightSum="2">
 
-                <TextView
-                    android:id="@+id/get_mail"
+                    <TextView
+                        android:id="@+id/get_phone"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_weight="1.80"
+                        android:text="Phone"
+                        android:textColor="#074809" />
+
+                    <pl.droidsonroids.gif.GifImageView
+                        android:id="@+id/gifcall"
+                        android:layout_width="150dp"
+                        android:layout_height="50dp"
+                        android:autoLink="phone"
+                        android:linksClickable="true"
+                        android:layout_gravity="center"
+                        android:background="@null"
+                        android:clickable="true"
+                        android:src="@drawable/phonecalling" />
+                </LinearLayout>
+
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:text="Mail"
-                    android:textColor="#074809" />
+
+                    android:orientation="horizontal"
+                    android:weightSum="2">
+
+                    <TextView
+                        android:id="@+id/get_mail"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_weight="1.80"
+                        android:textIsSelectable="true"
+                        android:text="Mail"
+                        android:textColor="#074809" />
+
+                    <pl.droidsonroids.gif.GifImageView
+                        android:id="@+id/gifmail"
+                        android:layout_width="150dp"
+                        android:layout_height="50dp"
+                        android:layout_gravity="center"
+                        android:background="@null"
+                        android:clickable="true"
+                        android:src="@drawable/bluemail" />
+                </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -68,11 +106,11 @@
 
                     <TextView
                         android:id="@+id/get_feedback"
-                        android:layout_width="0dp"
+                        android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_marginBottom="2dp"
                         android:layout_marginTop="10dp"
-                        android:layout_weight="1.90"
+                        android:layout_weight="1.80"
                         android:maxLines="3"
                         android:text="hello this is text for description"
                         android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
@@ -80,13 +118,13 @@
                         android:textSize="15dp" />
 
                     <pl.droidsonroids.gif.GifImageView
-                        android:layout_width="50dp"
-                        android:layout_height="50dp"
                         android:id="@+id/gifmappin"
-                        android:clickable="true"
+                        android:layout_width="150dp"
+                        android:layout_height="50dp"
+                        android:layout_gravity="center"
                         android:background="@null"
-                        android:src="@drawable/mapiconred"
-                        />
+                        android:clickable="true"
+                        android:src="@drawable/mapiconred" />
                 </LinearLayout>
             </LinearLayout>
 
