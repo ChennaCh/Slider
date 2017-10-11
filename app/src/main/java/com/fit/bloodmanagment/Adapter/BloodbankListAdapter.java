@@ -1,9 +1,13 @@
 package com.fit.bloodmanagment.Adapter;
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.net.Uri;
+import android.os.Build;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.widget.RecyclerView;
 import android.telephony.PhoneStateListener;
 import android.telephony.TelephonyManager;
@@ -37,6 +41,7 @@ public class BloodbankListAdapter extends RecyclerView.Adapter<RecyclerView.View
     BloodBanksActivity bbactivity=new BloodBanksActivity();
         List<BloodbankBean> data= Collections.emptyList();
   ImageView mapgifimage,mailgif,callgif;
+    MyHolder myHolder;
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -46,10 +51,6 @@ public class BloodbankListAdapter extends RecyclerView.Adapter<RecyclerView.View
         mapgifimage=(ImageView)itemView.findViewById(R.id.gifmappin);
         mailgif=(ImageView)itemView.findViewById(R.id.gifmail);
         callgif=(ImageView)itemView.findViewById(R.id.gifcall);
-        // add PhoneStateListener
-        PhoneCallListener phoneListener = new PhoneCallListener();
-        TelephonyManager telephonyManager = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
-        telephonyManager.listen(phoneListener, PhoneStateListener.LISTEN_CALL_STATE);
         final MyHolder holder=new MyHolder(itemView);
 
 
@@ -62,33 +63,32 @@ public class BloodbankListAdapter extends RecyclerView.Adapter<RecyclerView.View
                 return true;
             }
         });
-        mailgif.setOnTouchListener(new View.OnTouchListener() {
+        mailgif.setOnClickListener(new View.OnClickListener() {
             @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                Intent i = new Intent(Intent.ACTION_SENDTO);
-                i.setType("message/rfc822");
-                i.setData(Uri.parse("mailto:"));
-                i.putExtra(Intent.EXTRA_EMAIL  , new String[]{"recipient@example.com"});
-                i.putExtra(Intent.EXTRA_SUBJECT, "subject of email");
-                i.putExtra(Intent.EXTRA_TEXT   , "body of email");
-                i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            public void onClick(View view) {
                 try {
+                    Intent i = new Intent(Intent.ACTION_SENDTO);
+                    i.setType("message/rfc822");
+                    i.setData(Uri.parse("mailto:"+ data.get(myHolder.getAdapterPosition()).getGemail()));
+                    i.putExtra(Intent.EXTRA_EMAIL  , new String[]{"recipient@example.com"});
+                    i.putExtra(Intent.EXTRA_SUBJECT, "subject of email");
+                    i.putExtra(Intent.EXTRA_TEXT   , "body of email");
+                    i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     context.startActivity(Intent.createChooser(i, "Send mail..."));
                 } catch (android.content.ActivityNotFoundException ex) {
                     Toast.makeText(context, "There are no email clients installed.", Toast.LENGTH_SHORT).show();
                 }
-                return true;
             }
         });
-        callgif.setOnTouchListener(new View.OnTouchListener() {
+        callgif.setOnClickListener(new View.OnClickListener() {
             @Override
-            public boolean onTouch(View v, MotionEvent event) {
-
-
-                return true;
-
+            public void onClick(View view) {
+                if(isPermissionGranted()){
+                    call_action();
+                }
             }
         });
+
 
 //        LayoutInflater mInflater = (LayoutInflater)
 //                context.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
@@ -127,7 +127,24 @@ public class BloodbankListAdapter extends RecyclerView.Adapter<RecyclerView.View
 
         return holder;
     }
+    public  boolean isPermissionGranted() {
+        if (Build.VERSION.SDK_INT >= 23) {
+            if (context.checkSelfPermission(android.Manifest.permission.CALL_PHONE)
+                    == PackageManager.PERMISSION_GRANTED) {
+                Log.v("TAG","Permission is granted");
+                return true;
+            } else {
 
+                Log.v("TAG","Permission is revoked");
+                ActivityCompat.requestPermissions((Activity) context, new String[]{Manifest.permission.CALL_PHONE}, 1);
+                return false;
+            }
+        }
+        else { //permission is automatically granted on sdk<23 upon installation
+            Log.v("TAG","Permission is granted");
+            return true;
+        }
+    }
     public BloodbankListAdapter(Context context, List<BloodbankBean> data1){
         this.context=context;
         this.data=data1;
@@ -135,16 +152,13 @@ public class BloodbankListAdapter extends RecyclerView.Adapter<RecyclerView.View
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        MyHolder myHolder= (MyHolder) holder;
+        myHolder= (MyHolder) holder;
         BloodbankBean current = data.get(position);
         myHolder.name.setText(current.getGname());
         //myHolder.department.setText(current.getBranch());
         myHolder.phone.setText(current.getGmobile());
         myHolder.email.setText(current.getGemail());
         myHolder.feedback.setText(current.getGabout());
-
-
-
     }
 
     @Override
@@ -166,48 +180,12 @@ public class BloodbankListAdapter extends RecyclerView.Adapter<RecyclerView.View
         }
     }
 
-    //monitor phone call activities
-    private class PhoneCallListener extends PhoneStateListener {
-
-        private boolean isPhoneCalling = false;
-
-        String LOG_TAG = "LOGGING 123";
-
-        @Override
-        public void onCallStateChanged(int state, String incomingNumber) {
-
-            if (TelephonyManager.CALL_STATE_RINGING == state) {
-                // phone ringing
-                Log.i(LOG_TAG, "RINGING, number: " + incomingNumber);
-            }
-
-            if (TelephonyManager.CALL_STATE_OFFHOOK == state) {
-                // active
-                Log.i(LOG_TAG, "OFFHOOK");
-
-                isPhoneCalling = true;
-            }
-
-            if (TelephonyManager.CALL_STATE_IDLE == state) {
-                // run when class initial and phone call ended,
-                // need detect flag from CALL_STATE_OFFHOOK
-                Log.i(LOG_TAG, "IDLE");
-
-                if (isPhoneCalling) {
-
-                    Log.i(LOG_TAG, "restart app");
-
-                    // restart app
-                    Intent i = context.getPackageManager()
-                            .getLaunchIntentForPackage(
-                                    context.getPackageName());
-                    i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                    context.startActivity(i);
-
-                    isPhoneCalling = false;
-                }
-
-            }
-        }
+    public void call_action(){
+        Intent intent = new Intent(Intent.ACTION_CALL);
+        intent.setData(Uri.parse("tel:" + data.get(myHolder.getAdapterPosition()).getGmobile()));
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        Intent chooser  = Intent.createChooser(intent, "Complete Action using..");
+        context.startActivity(chooser);
+        //context.startActivity(intent);
     }
 }
