@@ -181,7 +181,7 @@ public class BloodbankListAdapter extends RecyclerView.Adapter<RecyclerView.View
     }
 
     public void call_action(){
-        Intent intent = new Intent(Intent.ACTION_CALL);
+        Intent intent = new Intent(Intent.ACTION_DIAL);
         intent.setData(Uri.parse("tel:" + data.get(myHolder.getAdapterPosition()).getGmobile()));
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         Intent chooser  = Intent.createChooser(intent, "Complete Action using..");
