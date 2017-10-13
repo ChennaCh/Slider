@@ -3,6 +3,7 @@ package com.fit.bloodmanagment.Activity;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.TextView;
 
 import com.android.volley.toolbox.ImageLoader;
@@ -30,16 +31,17 @@ public class MyProfileActivity extends Activity {
         textViewEmail = (TextView) findViewById(R.id.myemail);
         profilePhoto = (NetworkImageView) findViewById(R.id.myimageview);
        // Intent intent = getIntent();
-        Bundle bundle=getIntent().getExtras();
-        String profilename=bundle.getString("username");
-        String profileemail=bundle.getString("email");
-        String profileimage=bundle.getString("photo");
+        try {
+            Bundle bundle = getIntent().getExtras();
+            String profilename = bundle.getString("username");
+            String profileemail = bundle.getString("email");
+            String profileimage = bundle.getString("photo");
 
 
-        textViewName.setText(profilename);
-        textViewEmail.setText(profileemail);
+            textViewName.setText(profilename);
+            textViewEmail.setText(profileemail);
 
-        //Initializing image loader
+            //Initializing image loader
             imageLoader = CustomVolleyRequest.getInstance(this.getApplicationContext())
                     .getImageLoader();
 
@@ -51,7 +53,11 @@ public class MyProfileActivity extends Activity {
 //            //Loading image
             profilePhoto.setImageUrl(profileimage, imageLoader);
 
-        // setResult(Integer.parseInt("RESULT_OK"),intent);
+            // setResult(Integer.parseInt("RESULT_OK"),intent);
+        }
+        catch (Exception e){
+            Log.e("Error","Exception");
+        }
 
     }
 }
