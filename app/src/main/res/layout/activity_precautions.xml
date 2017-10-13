@@ -1,41 +1,350 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="center"
+    android:orientation="vertical"
     tools:context="com.fit.bloodmanagment.Activity.PrecautionsActivity">
     <android.support.v7.widget.Toolbar
-        android:id="@+id/toolbar_precautions"
+        android:id="@+id/precautionstoolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         app:layout_scrollFlags="scroll|enterAlways"
         app:titleTextColor="#fff"
         app:theme="@style/ToolbarStyle"
         android:background="?attr/colorPrimary"/>
-
-    <RelativeLayout
-        android:id="@+id/rlbloodbank"
-        android:layout_width="match_parent"
-        android:layout_below="@+id/toolbar_precautions"
-        android:layout_height="match_parent">
-    <pl.droidsonroids.gif.GifImageView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_gravity="center"
-        android:scaleType="centerCrop"
-        android:id="@+id/gifimage"
-        android:background="@null"
-        android:src="@drawable/backgrnggif"
-        />
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textAlignment="center"
-        android:layout_marginTop="250dp"
-        android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
-        android:text="@string/Precautions"
-        android:textColor="@color/white"/>
-</RelativeLayout>
-</RelativeLayout>
+        android:layout_margin="10dp"
+        android:orientation="vertical">
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fillViewport="true">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="10dp"
+            android:orientation="vertical">
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="15dp"
+                android:src="@drawable/bloodtypechart"/>
+
+            <TableLayout
+                android:id="@+id/BloodTypes"
+                android:layout_width="match_parent"
+                android:layout_marginBottom="20dp"
+                android:layout_height="match_parent">
+                <TableRow
+                    android:id="@+id/BT_heading"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:id="@+id/textView13"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="2.5"
+                        android:background="@drawable/cell_shape"
+                        android:gravity="center"
+                        android:padding="5dp"
+                        android:text="Frequency Of Blood Types"
+                        android:textColor="#fff"
+                        android:textStyle="bold" />
+
+
+                </TableRow>
+                <TableRow
+                    android:id="@+id/td1"
+                    android:layout_width="wrap_content"
+                    android:weightSum="2"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:id="@+id/tv1"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="@drawable/cell_shape_data"
+                        android:padding="10dp"
+                        android:text="O+   1 person in 3 "
+                        android:textColor="#000" />
+
+                    <TextView
+                        android:id="@+id/tv2"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="@drawable/cell_shape_data"
+                        android:padding="10dp"
+                        android:text="O-   1 person in 15 "
+                        android:textColor="#000" />
+                </TableRow>
+                <TableRow
+                    android:id="@+id/td2"
+                    android:layout_width="wrap_content"
+                    android:weightSum="2"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:id="@+id/tv3"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="@drawable/cell_shape_data"
+                        android:padding="10dp"
+                        android:text="A+    1 person in 3"
+                        android:textColor="#000" />
+
+                    <TextView
+                        android:id="@+id/tv4"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="@drawable/cell_shape_data"
+                        android:padding="10dp"
+                        android:text="A-    1 person in 16  "
+                        android:textColor="#000" />
+                </TableRow>
+                <TableRow
+                    android:id="@+id/td3"
+                    android:layout_width="wrap_content"
+                    android:weightSum="2"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:id="@+id/tv5"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="@drawable/cell_shape_data"
+                        android:padding="10dp"
+                        android:text="B+    1 person in 12 "
+                        android:textColor="#000" />
+
+                    <TextView
+                        android:id="@+id/tv6"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="@drawable/cell_shape_data"
+                        android:padding="10dp"
+                        android:text="B-    1 person in 67"
+                        android:textColor="#000" />
+                </TableRow>
+                <TableRow
+                    android:id="@+id/td4"
+                    android:layout_width="wrap_content"
+                    android:weightSum="2"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:id="@+id/tv7"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="@drawable/cell_shape_data"
+                        android:padding="10dp"
+                        android:text="AB+  1 person in 29 "
+                        android:textColor="#000" />
+
+                    <TextView
+                        android:id="@+id/tv8"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="@drawable/cell_shape_data"
+                        android:padding="10dp"
+                        android:text="AB-  1 person in 167"
+                        android:textColor="#000" />
+                </TableRow>
+            </TableLayout>
+
+            <TableLayout
+                android:id="@+id/table_blooduse"
+                android:layout_width="match_parent"
+                android:layout_marginBottom="20dp"
+                android:layout_height="match_parent">
+                <TableRow
+                    android:id="@+id/blooduse_heading"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:layout_weight="2.5"
+                        android:background="@drawable/cell_shape"
+                        android:padding="5dp"
+                        android:text="EXAMPLES OF BLOOD USE "
+                        android:textColor="#fff"
+                        android:textStyle="bold" />
+
+
+                </TableRow>
+                <TableRow
+                    android:id="@+id/table_data1"
+                    android:layout_width="wrap_content"
+                    android:weightSum="2"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:id="@+id/textView1"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="@drawable/cell_shape_data"
+                        android:padding="10dp"
+                        android:text="1. Automobile Accident "
+                        android:textColor="#000" />
+
+                    <TextView
+                        android:id="@+id/textView2"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="@drawable/cell_shape_data"
+                        android:padding="10dp"
+                        android:text="50 units of blood "
+                        android:textColor="#000" />
+                </TableRow>
+                <TableRow
+                    android:id="@+id/table_data2"
+                    android:layout_width="wrap_content"
+                    android:weightSum="2"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:id="@+id/textView3"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="@drawable/cell_shape_data"
+                        android:padding="10dp"
+                        android:text="2. Heart Surgery"
+                        android:textColor="#000" />
+
+                    <TextView
+                        android:id="@+id/textView4"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="@drawable/cell_shape_data"
+                        android:padding="10dp"
+                        android:text="6 units of blood / 6 units of platelets "
+                        android:textColor="#000" />
+                </TableRow>
+                <TableRow
+                    android:id="@+id/table_data3"
+                    android:layout_width="wrap_content"
+                    android:weightSum="2"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:id="@+id/textView5"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="@drawable/cell_shape_data"
+                        android:padding="10dp"
+                        android:text="3. Organ Transplant "
+                        android:textColor="#000" />
+
+                    <TextView
+                        android:id="@+id/textView6"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="@drawable/cell_shape_data"
+                        android:padding="10dp"
+                        android:text="40 units of blood / 30 units of platelets "
+                        android:textColor="#000" />
+                </TableRow>
+                <TableRow
+                    android:id="@+id/table_data4"
+                    android:layout_width="wrap_content"
+                    android:weightSum="2"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:id="@+id/textView7"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="@drawable/cell_shape_data"
+                        android:padding="10dp"
+                        android:text="4. 20 bags of cryoprecipitate  "
+                        android:textColor="#000" />
+
+                    <TextView
+                        android:id="@+id/textView8"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="@drawable/cell_shape_data"
+                        android:padding="10dp"
+                        android:text="25 units of fresh frozen plasma "
+                        android:textColor="#000" />
+                </TableRow>
+                <TableRow
+                    android:id="@+id/table_data5"
+                    android:layout_width="wrap_content"
+                    android:weightSum="2"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:id="@+id/textView9"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="@drawable/cell_shape_data"
+                        android:padding="10dp"
+                        android:text="5. Bone Marrow Transplant "
+                        android:textColor="#000" />
+
+                    <TextView
+                        android:id="@+id/textView10"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="@drawable/cell_shape_data"
+                        android:padding="10dp"
+                        android:text="120 units of platelets/ 20 units of blood "
+                        android:textColor="#000" />
+                </TableRow>
+                <TableRow
+                    android:id="@+id/table_data6"
+                    android:layout_width="wrap_content"
+                    android:weightSum="2"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:id="@+id/textView11"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="@drawable/cell_shape_data"
+                        android:padding="10dp"
+                        android:text="6. Burn Victims "
+                        android:textColor="#000" />
+
+                    <TextView
+                        android:id="@+id/textView12"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="@drawable/cell_shape_data"
+                        android:padding="10dp"
+                        android:text="20 units of platelets "
+                        android:textColor="#000" />
+                </TableRow>
+            </TableLayout>
+        </LinearLayout>
+        </ScrollView>
+    </LinearLayout>
+    </LinearLayout>
