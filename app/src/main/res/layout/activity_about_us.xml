@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="center"
-    android:background="#fff"
-    tools:context="com.fit.bloodmanagment.Activity.AboutUsActivity">
+    android:orientation="vertical"
+    android:background="#fff">
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar_aboutus"
         android:layout_width="match_parent"
@@ -16,19 +16,126 @@
         app:theme="@style/ToolbarStyle"
         android:background="?attr/colorPrimary"/>
 
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_margin="10dp"
             android:orientation="vertical">
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textAlignment="center"
-        android:layout_marginTop="250dp"
-        android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
-        android:text="@string/AboutUs"
-        android:textColor="@color/white"/>
-</LinearLayout>
+            <ImageView
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_gravity="center"
+                android:src="@drawable/blood_drop" />
 
-</RelativeLayout>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:gravity="center"
+                android:text="Welcome to Save Life Blood Bank"
+                android:textColor="@color/black"
+                android:textSize="20dp"
+                android:textStyle="italic" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="        The measure of life is not its duration, but its donation. Blood donation will cost you nothing but it will save a life. Spare 15 minutes and save one life. Excuses never save a life but BLOOD DONATION does and find the hero in you." />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="        Blood is meant to Circulate,pass it around. Tears of a mother cannot save her Child. But your Blood can." />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="        At 18 years you grow up.At 18 you drive.At 18 you give blood to keep someone alive.Act as if what you do makes a difference. It does.The purpose of life is not to be happy - but to matter, to be productive, to be useful, to have it make some difference that you have lived at all.Just Smile and give, some one will smile and live." />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="        Every year our nation requires about 5 Crore units of blood, out of which only a meager 2.5 Crore units of blood are available.The gift of blood is the gift of life. There is no substitute for human.
+                The need for blood is constantly increasing the world over. Apart from diseases like dengue, millions lose their lives to natural and man-made disasters. The number of people dying in road accidents is also growing.In India number of voluntary blood donors is still very low,number of voluntary blood donor. Every two seconds someone needs blood. More than 38,000 blood donations are needed every day." />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="        The main motive of our app is no one shouldn't die because of blood scarcity and it is our resposibitlity to maintain the ratio of popualtion and the need of blood." />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="        Instead of  JUNE 14 only,Celebrate World Blood Donor Day on everyday . Donate blood should be have our one of the habbit. So let's use and share this app and be our own helping network. "
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="        A Life May Depend On A Gesture From You, A Bottle Of Blood. The Finest Gesture One Can Make Is To Save Life By Donating Blood."
+                android:textStyle="bold|italic" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:gravity="end"
+                android:text="Regards" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:gravity="end"
+                android:text="Fratello InnoTech"
+                android:textColor="#ac1c1c" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="50dp"
+                android:orientation="horizontal"
+                android:weightSum="3">
+
+                <ImageView
+                    android:id="@+id/acall"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_weight="1"
+                    android:src="@drawable/aboutuscallimage"
+                    android:gravity="center" />
+
+                <ImageView
+                    android:id="@+id/aemail"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_weight="1"
+                    android:src="@drawable/mailimage"
+                    android:gravity="center" />
+
+                <ImageView
+                    android:id="@+id/awebsite"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_weight="1"
+                    android:src="@drawable/aweb"
+                    android:gravity="center" />
+
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

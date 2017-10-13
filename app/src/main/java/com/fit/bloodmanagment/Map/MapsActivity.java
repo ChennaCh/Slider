@@ -6,14 +6,11 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
-import android.graphics.drawable.BitmapDrawable;
 import android.location.Location;
 import android.os.Build;
 import android.os.Environment;
 import android.provider.MediaStore;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
@@ -26,9 +23,9 @@ import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
+import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -36,6 +33,7 @@ import com.fit.bloodmanagment.Activity.BloodBanksActivity;
 import com.fit.bloodmanagment.Activity.ContactUsActivity;
 import com.fit.bloodmanagment.Activity.DonarActivity;
 import com.fit.bloodmanagment.Activity.FeedBackActivity;
+import com.fit.bloodmanagment.Activity.MyProfileActivity;
 import com.fit.bloodmanagment.Activity.PrecautionsActivity;
 import com.fit.bloodmanagment.Activity.ReceiverActivity;
 import com.fit.bloodmanagment.GooglePlaces.GetNearbyPlacesData;
@@ -53,8 +51,6 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.BitmapDescriptorFactory;
-import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 
 import com.fit.bloodmanagment.Activity.AboutUsActivity;
@@ -66,6 +62,9 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.List;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback,NavigationView.OnNavigationItemSelectedListener,
         GoogleApiClient.ConnectionCallbacks,
@@ -76,8 +75,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     TextView fab1,fab2,fab3,fab4,fab5,fab6,fab7,fab8;
     private Animation fab_open,fab_close,rotate_forward,rotate_backward;
     private GoogleMap mMap;
-    private GPSTracker gps;
-    private final static int MY_PERMISSION_FINE_LOCATION = 101;
     View mapView;
     private Button navbtn;
     private Button loginbtn,signupbtn;
@@ -94,6 +91,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     LocationRequest mLocationRequest;
     ImageView pharmacyimage,hospitalimage;
     ProgressBar mapprogressbar;
+    private List<String> myList;  // String list that contains file paths to images
+ private GridView gridview;
+ private String mCurrentPhotoPath;  // File path to the last image captured
+    File destination;
 
 
 
@@ -127,7 +128,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mapView = mapFragment.getView();
         mapFragment.getMapAsync(this);
 //        mapprogressbar = (ProgressBar) findViewById(R.id.mapprogressbar);
-//        mapprogressbar.getIndeterminateDrawable().setColorFilter(0xFFFF0000, android.graphics.PorterDuff.Mode.MULTIPLY);
+//
+//   mapprogressbar.getIndeterminateDrawable().setColorFilter(0xFFFF0000, android.graphics.PorterDuff.Mode.MULTIPLY);
         pharmacyimage=(ImageView) findViewById(R.id.pharmacyimage);
         hospitalimage=(ImageView) findViewById(R.id.hospitalsimage);
 
@@ -286,6 +288,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     {
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         startActivityForResult(intent, REQUEST_CAMERA);
+
     }
     private void galleryIntent()
     {
@@ -293,6 +296,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         intent.setType("image/*");
         intent.setAction(Intent.ACTION_GET_CONTENT);//
         startActivityForResult(Intent.createChooser(intent, "Select File"),SELECT_FILE);
+
     }
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -303,6 +307,12 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 onSelectFromGalleryResult(data);
             else if (requestCode == REQUEST_CAMERA)
                 onCaptureImageResult(data);
+            try {
+                createImageFile();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
         }
     }
     private void onSelectFromGalleryResult(Intent data) {
@@ -323,7 +333,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         ByteArrayOutputStream bytes = new ByteArrayOutputStream();
         thumbnail.compress(Bitmap.CompressFormat.JPEG, 90, bytes);
 
-        File destination = new File(Environment.getExternalStorageDirectory(),
+       destination = new File(Environment.getExternalStorageDirectory(),
                 System.currentTimeMillis() + ".jpg");
 
         FileOutputStream fo;
@@ -340,6 +350,23 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         profilepic.setImageBitmap(thumbnail);
     }
+    private File createImageFile() throws IOException
+    {
+      // Create an image file name
+    // String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format( new Date());
+   // String imageFileName = "JPEG_" + timeStamp + "_" ;
+    File storageDir = Environment.getExternalStoragePublicDirectory(Environment. DIRECTORY_PICTURES);
+    File image = File. createTempFile(
+            String.valueOf(destination),  /* prefix */
+      ".jpg",         /* suffix */
+     storageDir      /* directory */
+     );
+   // Save a file: path for use with ACTION_VIEW intents
+     mCurrentPhotoPath = image.getAbsolutePath();
+        return image;
+
+    }
+
 
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
@@ -366,8 +393,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             Intent intent = new Intent(MapsActivity.this, PrecautionsActivity.class);
             startActivity(intent);
 
-        } else if (id == R.id.nav_contactus) {
-            Intent intent = new Intent(MapsActivity.this, ContactUsActivity.class);
+        } else if (id == R.id.nav_myprofile) {
+            Intent intent = new Intent(MapsActivity.this, MyProfileActivity.class);
             startActivity(intent);
 
         } else if (id == R.id.nav_feedback) {

@@ -21,7 +21,7 @@ public class ContactUsActivity extends AppCompatActivity {
     private void initToolbar() {
         mToolbar = (Toolbar) findViewById(R.id.toolbar_conatactus);
         setSupportActionBar(mToolbar);
-        setTitle(getString(R.string.Contactus));
+        setTitle(getString(R.string.Myprofile));
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         mToolbar.setTitleTextColor(getResources().getColor(android.R.color.white));

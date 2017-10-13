@@ -31,8 +31,8 @@
     <group android:checkableBehavior="single"
         android:id="@+id/group5">
         <item
-            android:id="@+id/nav_contactus"
-            android:title="@string/Contactus" />
+            android:id="@+id/nav_myprofile"
+            android:title="@string/Myprofile" />
         </group>
     <group android:checkableBehavior="single"
         android:id="@+id/group6">
