@@ -344,6 +344,77 @@
                         android:textColor="#000" />
                 </TableRow>
             </TableLayout>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:textStyle="bold"
+                android:textSize="20dp"
+                android:paddingLeft="10dp"
+                android:text="Before Blood Donation" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:paddingLeft="20dp"
+                android:text="1. Ensure that you have slept well for minimum 6 hours.\n
+2. Eat something in last 4 hours.\n
+3.As a donor, it is your responsibility to ensure the quality of blood you’re donating.\n
+4.You must be above 18 years of age.\n
+5.You should not be underweight. Usually donors weighing more than 45-50kg are acceptable.\n
+6.You should not be suffering from any infectious (such as a cold or flu) or chronic diseases (such as diabetes).\n
+7.You should not have taken any intoxicating drugs, orally or otherwise, within 48 hours prior to donating blood.\n
+8.You should not have high blood pressure.\n
+9.You should not be pregnant or menstruating.\n
+10.Your haemoglobin is 12.5 gm% minimum.\n
+12.Donate only when Your last blood donation was 3 months earlier.\n
+13.Must carry any photo with address proof for verification purpose.\n
+14. Do not smoke 2 hours prior to blood donation.\n
+15. Do not consume alcohol at least 24 hours prior to blood donation."/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:textStyle="bold"
+                android:textSize="20dp"
+                android:paddingLeft="10dp"
+                android:text="During Blood Donation" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:paddingLeft="20dp"
+                android:text="1. While the blood is being taken you must keep pressing the sponge provided, which ensure the smooth flow of blood.\n
+2. Please do not get up immediately after donating blood. You must allow the blood flow in the body to normalize by lying down 5 more minutes. This also prevents dizziness.\n
+3. This is followed by little refreshments.\n
+4. Every blood donor, will be issued Voluntary Donor’s Card and Certificate of Appreciation within 15 days.\n
+5. You can resume with your daily work immediately after the Blood Donation.\n
+6. The Blood you donate is tested and separated in to the components before being made available to the patients.\n
+7. Any abnormality found is reported to you if you have chosen to receive the same."/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:textStyle="bold"
+                android:textSize="20dp"
+                android:paddingLeft="10dp"
+                android:text="Post Donation Care" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="50dp"
+                android:paddingLeft="20dp"
+                android:text="1. Eat and drink something before leaving.\n
+2. Have more liquid intakes on the day.\n
+3. Avoid consuming alcohol for 24 hours after donation.\n
+4. Don’t smoke or chew gutka for next 2 hours.\n
+5. If there is bleeding from the punctured site, fold the arm.\n
+6. If fainting or dizziness occurs, lie down on floor with your legs raised with the stool support.\n
+7. You can go to work immediately after donating blood, doctors advise avoidance of intense physical exertion.\n
+8. Resume all normal activities if no symptoms occur.\n
+9. Remove bandage next day.\n
+10. If fainting or dizziness occurs for longer time and does not subside, please seek medical help." />
         </LinearLayout>
         </ScrollView>
     </LinearLayout>

@@ -596,22 +596,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             return true;
         }
     }
-//    @Override
-//    public void onClick(View v) {
-//        int id = v.getId();
-//
-//            if (id == R.id.fabright) {
-//                animateFAB();
-//            }
-//            else if (id == R.id.fab1) {
-//
-//                Log.d("Rekha", "Fab 1");
-//            }
-//            else if (id == R.id.fab2) {
-//
-//                Log.d("Rekha", "Fab 2");
-//            }
-//    }
 @Override
 public void onClick(View v) {
     int id = v.getId();
@@ -620,29 +604,28 @@ public void onClick(View v) {
             animateFAB();
             break;
         case R.id.fab1:
-
-            Log.d("Raj", "Fab 1");
+            Toast.makeText(getApplicationContext(),"selected A+",Toast.LENGTH_SHORT).show();
             break;
         case R.id.fab2:
-            Log.d("Raj", "Fab 2");
+            Toast.makeText(getApplicationContext(),"selected A-",Toast.LENGTH_SHORT).show();
             break;
         case R.id.fab3:
-            Log.d("Raj", "Fab 2");
+            Toast.makeText(getApplicationContext(),"selected B+",Toast.LENGTH_SHORT).show();
             break;
         case R.id.fab4:
-            Log.d("Raj", "Fab 2");
+            Toast.makeText(getApplicationContext(),"selected B-",Toast.LENGTH_SHORT).show();
             break;
         case R.id.fab5:
-            Log.d("Raj", "Fab 2");
+            Toast.makeText(getApplicationContext(),"selected AB+",Toast.LENGTH_SHORT).show();
             break;
         case R.id.fab6:
-            Log.d("Raj", "Fab 2");
+            Toast.makeText(getApplicationContext(),"selected AB-",Toast.LENGTH_SHORT).show();
             break;
         case R.id.fab7:
-            Log.d("Raj", "Fab 2");
+            Toast.makeText(getApplicationContext(),"selected O+",Toast.LENGTH_SHORT).show();
             break;
         case R.id.fab8:
-            Log.d("Raj", "Fab 2");
+            Toast.makeText(getApplicationContext(),"selected O-",Toast.LENGTH_SHORT).show();
             break;
     }
 }

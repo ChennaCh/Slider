@@ -4,6 +4,12 @@
                 <item
             android:id="@+id/nav_aboutus"
             android:title="@string/AboutUs" />
+            <group android:checkableBehavior="single"
+                android:id="@+id/group4">
+                <item
+                    android:id="@+id/nav_precautions"
+                    android:title="@string/Precautions" />
+            </group>
     <group android:checkableBehavior="single"
         android:id="@+id/group1">
         <item
@@ -22,12 +28,7 @@
             android:id="@+id/nav_bloodbanks"
             android:title="@string/BloodBanks" />
         </group>
-    <group android:checkableBehavior="single"
-        android:id="@+id/group4">
-        <item
-            android:id="@+id/nav_precautions"
-            android:title="@string/Precautions" />
-        </group>
+
     <group android:checkableBehavior="single"
         android:id="@+id/group5">
         <item

@@ -34,6 +34,7 @@
                 android:src="@drawable/blood_drop" />
 
             <TextView
+                android:id="@+id/textView14"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
@@ -59,26 +60,25 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:text="        At 18 years you grow up.At 18 you drive.At 18 you give blood to keep someone alive.Act as if what you do makes a difference. It does.The purpose of life is not to be happy - but to matter, to be productive, to be useful, to have it make some difference that you have lived at all.Just Smile and give, some one will smile and live." />
+                android:text="        At 18 years you grow up.At 18 you drive.At 18 you give blood to keep someone alive.The purpose of life is not to be happy - but to matter, to be productive, to be useful, to have it make some difference that you have lived at all. Just Smile and give, some one will smile and live." />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:text="        Every year our nation requires about 5 Crore units of blood, out of which only a meager 2.5 Crore units of blood are available.The gift of blood is the gift of life. There is no substitute for human.
-                The need for blood is constantly increasing the world over. Apart from diseases like dengue, millions lose their lives to natural and man-made disasters. The number of people dying in road accidents is also growing.In India number of voluntary blood donors is still very low,number of voluntary blood donor. Every two seconds someone needs blood. More than 38,000 blood donations are needed every day." />
+                android:text="        Every year our nation requires about 5 Crore units of blood, out of which only a meager 2.5 Crore units of blood are available.The gift of blood is the gift of life. There is no substitute for human.The need for blood is constantly increasing the world over. Apart from diseases like dengue, millions lose their lives to natural and man-made disasters. The number of people dying in road accidents is also growing.In India number of voluntary blood donors is still very low. Every two seconds someone needs blood. More than 38,000 blood donations are needed every day." />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:text="        The main motive of our app is no one shouldn't die because of blood scarcity and it is our resposibitlity to maintain the ratio of popualtion and the need of blood." />
+                android:text="        The main motive of our app is no one shouldn't die because of blood scarcity and it is our resposibitlity to maintain the propotianate ratio of necessity and availability of blood." />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:text="        Instead of  JUNE 14 only,Celebrate World Blood Donor Day on everyday . Donate blood should be have our one of the habbit. So let's use and share this app and be our own helping network. "
+                android:text="        Lets Celebrate Blood Donor Day on everyday and be always ready to help the victims. Make Blood donation should be our one of the habbit. So let's use and share this app and be our own helping network. "
                 android:textStyle="bold" />
 
             <TextView
