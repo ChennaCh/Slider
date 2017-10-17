@@ -2,11 +2,17 @@ package com.fit.bloodmanagment.Map;
 
 import android.Manifest;
 import android.app.Activity;
+import android.app.ProgressDialog;
+import android.content.ActivityNotFoundException;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.Drawable;
 import android.location.Location;
+import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Environment;
 import android.provider.MediaStore;
@@ -38,8 +44,10 @@ import com.fit.bloodmanagment.Activity.MyProfileActivity;
 import com.fit.bloodmanagment.Activity.PrecautionsActivity;
 import com.fit.bloodmanagment.Activity.ReceiverActivity;
 import com.fit.bloodmanagment.Activity.UrgencyActivity;
+import com.fit.bloodmanagment.Beans.ImageHelperBean;
 import com.fit.bloodmanagment.GooglePlaces.GetNearbyPlacesData;
 import com.fit.bloodmanagment.R;
+import com.fit.bloodmanagment.SQliteDatabase.ImageDatabaseHelper;
 import com.fit.bloodmanagment.UserProfile.SiginInActivity;
 import com.fit.bloodmanagment.UserProfile.SignUpActivity;
 import com.fit.bloodmanagment.Utils.CameraUtility;
@@ -64,6 +72,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.List;
 
+import static android.provider.MediaStore.Images.Thumbnails.IMAGE_ID;
+
 public class MainMapActivity extends FragmentActivity implements OnMapReadyCallback,NavigationView.OnNavigationItemSelectedListener,
         GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener,
@@ -75,7 +85,10 @@ public class MainMapActivity extends FragmentActivity implements OnMapReadyCallb
     View mapView;
     private Button navbtn;
     private Button loginbtn,signupbtn;
-    private ImageView profilepic;
+    public static final String IMAGE_ID = "IMG_ID";
+    private final String TAG = "MainMapActivity";
+
+    private ImageDatabaseHelper databaseHelper;
     int id;
     private String userChoosenTask;
     private int REQUEST_CAMERA = 0, SELECT_FILE = 1;
@@ -86,7 +99,7 @@ public class MainMapActivity extends FragmentActivity implements OnMapReadyCallb
     Location mLastLocation;
     Marker mCurrLocationMarker;
     LocationRequest mLocationRequest;
-    ImageView pharmacyimage,hospitalimage,fab,fableft;
+    ImageView pharmacyimage,hospitalimage,fab,fableft,shareimage,rating,profilepic;
     ProgressBar mapprogressbar;
     private List<String> myList;  // String list that contains file paths to images
     private GridView gridview;
@@ -134,7 +147,8 @@ public class MainMapActivity extends FragmentActivity implements OnMapReadyCallb
         donorll=(LinearLayout)findViewById(R.id.donorll);
         pharmacyimage=(ImageView) findViewById(R.id.pharmacyimage);
         hospitalimage=(ImageView) findViewById(R.id.hospitalsimage);
-
+        shareimage=(ImageView)findViewById(R.id.share_app);
+        rating=(ImageView) findViewById(R.id.rating);
         fableft=(ImageView)findViewById(R.id.fableft);
         fab = (ImageView) findViewById(R.id.fabright);
         fab1 = (TextView) findViewById(R.id.fab1);
@@ -153,10 +167,43 @@ public class MainMapActivity extends FragmentActivity implements OnMapReadyCallb
         fab.setOnClickListener(this);
         fab1.setOnClickListener(this);
         fab2.setOnClickListener(this);
+        shareimage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                try {
+                    Intent i = new Intent(Intent.ACTION_SEND);
+                    i.setType("text/plain");
+                    i.putExtra(Intent.EXTRA_SUBJECT, "My application name");
+                    String shareapp = "\nLet me recommend you this application\n\n";
+                    shareapp = shareapp + "https://play.google.com/store/apps/details?id=com.whatsapp&hl=en \n";
+                    i.putExtra(Intent.EXTRA_TEXT, shareapp);
+                    startActivity(Intent.createChooser(i, "Choose One"));
+                } catch(Exception e) {
+                    e.printStackTrace();
+                }
 
+            }
+        });
+        rating.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                    Uri uri = Uri.parse("market://details?id=" + getPackageName());
+                    Intent myAppLinkToMarket = new Intent(Intent.ACTION_VIEW, uri);
+                    try {
+                        startActivity(myAppLinkToMarket);
+                    } catch (ActivityNotFoundException e) {
+                        Toast.makeText(getApplicationContext()," unable to find app in playstore", Toast.LENGTH_LONG).show();
+                    }
+                }
+        });
         loginbtn = (Button) header.findViewById(R.id.signin_btn);
         signupbtn = (Button) header.findViewById(R.id.signup_btn);
         profilepic = (ImageView)header.findViewById(R.id.navimageview);
+        databaseHelper = new ImageDatabaseHelper(this);
+        Drawable dbDrawable = getResources().getDrawable(R.mipmap.ic_launcher);
+        databaseHelper.insetImage(dbDrawable, IMAGE_ID);
+
+        new LoadImageFromDatabaseTask().execute(0);
 
 
 
@@ -183,14 +230,14 @@ public class MainMapActivity extends FragmentActivity implements OnMapReadyCallb
             }
         });
 
-        profilepic.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // showPictureDialog();
-                selectImage();
-            }
-
-        });
+//        profilepic.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                // showPictureDialog();
+//                selectImage();
+//            }
+//
+//        });
         fableftll.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -198,6 +245,38 @@ public class MainMapActivity extends FragmentActivity implements OnMapReadyCallb
             }
         });
 
+    }
+    private class LoadImageFromDatabaseTask extends AsyncTask<Integer, Integer, ImageHelperBean> {
+
+        private final ProgressDialog LoadImageProgressDialog =  new ProgressDialog(MainMapActivity.this);
+
+        protected void onPreExecute() {
+            this.LoadImageProgressDialog.setMessage("Loading Image from Db...");
+            this.LoadImageProgressDialog.show();
+        }
+
+        @Override
+        protected ImageHelperBean doInBackground(Integer... integers) {
+            Log.d("LoadImage : doInBackground", "");
+            return databaseHelper.getImage(IMAGE_ID);
+        }
+
+        protected void onProgressUpdate(Integer... progress) {
+        }
+
+        protected void onPostExecute(ImageHelperBean imageHelper) {
+            Log.d("LoadImage : onPostExecute - ImageID ", imageHelper.getImageId());
+            if (this.LoadImageProgressDialog.isShowing()) {
+                this.LoadImageProgressDialog.dismiss();
+            }
+            setUpImage(imageHelper.getImageByteArray());
+        }
+
+    }
+    private void setUpImage(byte[] bytes) {
+        Log.d(TAG, "Decoding bytes");
+        Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+        profilepic.setImageBitmap(bitmap);
     }
 
     //check google play services
@@ -218,16 +297,16 @@ public class MainMapActivity extends FragmentActivity implements OnMapReadyCallb
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
         switch (requestCode) {
-            case CameraUtility.MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE:
-                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    if(userChoosenTask.equals("Take Photo"))
-                        cameraIntent();
-                    else if(userChoosenTask.equals("Choose from Library"))
-                        galleryIntent();
-                } else {
-                    //code for deny
-                }
-                break;
+//            case CameraUtility.MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE:
+//                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+//                    if(userChoosenTask.equals("Take Photo"))
+//                        cameraIntent();
+//                    else if(userChoosenTask.equals("Choose from Library"))
+//                        galleryIntent();
+//                } else {
+//                    //code for deny
+//                }
+//                break;
             case MY_PERMISSIONS_REQUEST_LOCATION: {
                 // If request is cancelled, the result arrays are empty.
                 if (grantResults.length > 0
@@ -264,116 +343,116 @@ public class MainMapActivity extends FragmentActivity implements OnMapReadyCallb
 
     }
 
-    private void selectImage() {
-        final CharSequence[] items = { "Take Photo", "Choose from Library",
-                "Cancel" };
-
-        android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(MainMapActivity.this);
-        builder.setTitle("Add Photo!");
-        builder.setItems(items, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int item) {
-                boolean result= CameraUtility.checkPermission(MainMapActivity.this);
-
-                if (items[item].equals("Take Photo")) {
-                    userChoosenTask ="Take Photo";
-                    if(result)
-                        cameraIntent();
-                } else if (items[item].equals("Choose from Library")) {
-                    userChoosenTask ="Choose from Library";
-                    if(result)
-                        galleryIntent();
-
-                } else if (items[item].equals("Cancel")) {
-                    dialog.dismiss();
-                }
-            }
-        });
-        builder.show();
-    }
-    private void cameraIntent()
-    {
-        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        startActivityForResult(intent, REQUEST_CAMERA);
-
-    }
-    private void galleryIntent()
-    {
-        Intent intent = new Intent();
-        intent.setType("image/*");
-        intent.setAction(Intent.ACTION_GET_CONTENT);//
-        startActivityForResult(Intent.createChooser(intent, "Select File"),SELECT_FILE);
-
-    }
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        if (resultCode == Activity.RESULT_OK) {
-            if (requestCode == SELECT_FILE)
-                onSelectFromGalleryResult(data);
-            else if (requestCode == REQUEST_CAMERA)
-                onCaptureImageResult(data);
-            try {
-                createImageFile();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-
-        }
-    }
-    private void onSelectFromGalleryResult(Intent data) {
-
-        Bitmap bm=null;
-        if (data != null) {
-            try {
-                bm = MediaStore.Images.Media.getBitmap(getApplicationContext().getContentResolver(), data.getData());
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-
-        profilepic.setImageBitmap(bm);
-    }
-    private void onCaptureImageResult(Intent data) {
-        Bitmap thumbnail = (Bitmap) data.getExtras().get("data");
-        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
-        thumbnail.compress(Bitmap.CompressFormat.JPEG, 90, bytes);
-
-        destination = new File(Environment.getExternalStorageDirectory(),
-                System.currentTimeMillis() + ".jpg");
-
-        FileOutputStream fo;
-        try {
-            destination.createNewFile();
-            fo = new FileOutputStream(destination);
-            fo.write(bytes.toByteArray());
-            fo.close();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        profilepic.setImageBitmap(thumbnail);
-    }
-    private File createImageFile() throws IOException
-    {
-        // Create an image file name
-        // String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format( new Date());
-        // String imageFileName = "JPEG_" + timeStamp + "_" ;
-        File storageDir = Environment.getExternalStoragePublicDirectory(Environment. DIRECTORY_PICTURES);
-        File image = File. createTempFile(
-                String.valueOf(destination),  /* prefix */
-                ".jpg",         /* suffix */
-                storageDir      /* directory */
-        );
-        // Save a file: path for use with ACTION_VIEW intents
-        mCurrentPhotoPath = image.getAbsolutePath();
-        return image;
-
-    }
-
+//    private void selectImage() {
+//        final CharSequence[] items = { "Take Photo", "Choose from Library",
+//                "Cancel" };
+//
+//        android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(MainMapActivity.this);
+//        builder.setTitle("Add Photo!");
+//        builder.setItems(items, new DialogInterface.OnClickListener() {
+//            @Override
+//            public void onClick(DialogInterface dialog, int item) {
+//                boolean result= CameraUtility.checkPermission(MainMapActivity.this);
+//
+//                if (items[item].equals("Take Photo")) {
+//                    userChoosenTask ="Take Photo";
+//                    if(result)
+//                        cameraIntent();
+//                } else if (items[item].equals("Choose from Library")) {
+//                    userChoosenTask ="Choose from Library";
+//                    if(result)
+//                        galleryIntent();
+//
+//                } else if (items[item].equals("Cancel")) {
+//                    dialog.dismiss();
+//                }
+//            }
+//        });
+//        builder.show();
+//    }
+//    private void cameraIntent()
+//    {
+//        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+//        startActivityForResult(intent, REQUEST_CAMERA);
+//
+//    }
+//    private void galleryIntent()
+//    {
+//        Intent intent = new Intent();
+//        intent.setType("image/*");
+//        intent.setAction(Intent.ACTION_GET_CONTENT);//
+//        startActivityForResult(Intent.createChooser(intent, "Select File"),SELECT_FILE);
+//
+//    }
+//    @Override
+//    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+//        super.onActivityResult(requestCode, resultCode, data);
+//
+//        if (resultCode == Activity.RESULT_OK) {
+//            if (requestCode == SELECT_FILE)
+//                onSelectFromGalleryResult(data);
+//            else if (requestCode == REQUEST_CAMERA)
+//                onCaptureImageResult(data);
+//            try {
+//                createImageFile();
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
+//
+//        }
+//    }
+//    private void onSelectFromGalleryResult(Intent data) {
+//
+//        Bitmap bm=null;
+//        if (data != null) {
+//            try {
+//                bm = MediaStore.Images.Media.getBitmap(getApplicationContext().getContentResolver(), data.getData());
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
+//        }
+//
+//        profilepic.setImageBitmap(bm);
+//    }
+//    private void onCaptureImageResult(Intent data) {
+//        Bitmap thumbnail = (Bitmap) data.getExtras().get("data");
+//        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+//        thumbnail.compress(Bitmap.CompressFormat.JPEG, 90, bytes);
+//
+//        destination = new File(Environment.getExternalStorageDirectory(),
+//                System.currentTimeMillis() + ".jpg");
+//
+//        FileOutputStream fo;
+//        try {
+//            destination.createNewFile();
+//            fo = new FileOutputStream(destination);
+//            fo.write(bytes.toByteArray());
+//            fo.close();
+//        } catch (FileNotFoundException e) {
+//            e.printStackTrace();
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//
+//        profilepic.setImageBitmap(thumbnail);
+//    }
+//    private File createImageFile() throws IOException
+//    {
+//        // Create an image file name
+//        // String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format( new Date());
+//        // String imageFileName = "JPEG_" + timeStamp + "_" ;
+//        File storageDir = Environment.getExternalStoragePublicDirectory(Environment. DIRECTORY_PICTURES);
+//        File image = File. createTempFile(
+//                String.valueOf(destination),  /* prefix */
+//                ".jpg",         /* suffix */
+//                storageDir      /* directory */
+//        );
+//        // Save a file: path for use with ACTION_VIEW intents
+//        mCurrentPhotoPath = image.getAbsolutePath();
+//        return image;
+//
+//    }
+//
 
     @SuppressWarnings("StatementWithEmptyBody")
     @Override

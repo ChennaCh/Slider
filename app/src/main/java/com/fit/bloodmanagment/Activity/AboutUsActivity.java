@@ -48,7 +48,7 @@ import java.io.InputStream;
 import java.util.regex.Matcher;
 
 
-public class AboutUsActivity extends Activity implements View.OnClickListener{
+public class AboutUsActivity extends AppCompatActivity implements View.OnClickListener{
     ImageView amail,acall,aweb;
     LinearLayout panel1,panel2,panel3;
     TextView text1,text2,text3;
@@ -62,11 +62,11 @@ public class AboutUsActivity extends Activity implements View.OnClickListener{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_about_us);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_aboutus);
-//        setSupportActionBar(toolbar);
-//        setTitle(getString(R.string.AboutUs));
-//        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-//        getSupportActionBar().setDisplayShowHomeEnabled(true);
-       // toolbar.setTitleTextColor(getResources().getColor(android.R.color.white));
+        setSupportActionBar(toolbar);
+        setTitle(getString(R.string.AboutUs));
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        toolbar.setTitleTextColor(getResources().getColor(android.R.color.white));
          amail=(ImageView)findViewById(R.id.aemail);
         acall=(ImageView)findViewById(R.id.acall);
         aweb=(ImageView)findViewById(R.id.awebsite);
@@ -259,11 +259,11 @@ public class AboutUsActivity extends Activity implements View.OnClickListener{
         }
     }
 
-//    @Override
-//    public boolean onSupportNavigateUp() {
-//        onBackPressed();
-//        return true;
-//    }
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
+    }
 
     public  boolean isPermissionGranted() {
         if (Build.VERSION.SDK_INT >= 23) {
