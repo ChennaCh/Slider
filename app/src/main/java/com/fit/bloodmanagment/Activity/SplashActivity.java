@@ -5,7 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 
-import com.fit.bloodmanagment.Map.MapsActivity;
+import com.fit.bloodmanagment.Map.MainMapActivity;
 import com.fit.bloodmanagment.R;
 
 public class SplashActivity extends Activity {
@@ -18,9 +18,7 @@ public class SplashActivity extends Activity {
             @Override
             public void run() {
 
-//                Intent intent = new Intent(SplashActivity.this,MapsActivity.class);
-//                startActivity(intent);
-                startActivity(new Intent(SplashActivity.this, MapsActivity.class));
+                startActivity(new Intent(SplashActivity.this, MainMapActivity.class));
                 finish();
 
             }

@@ -25,17 +25,19 @@ import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.GridView;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.fit.bloodmanagment.Activity.AboutUsActivity;
 import com.fit.bloodmanagment.Activity.BloodBanksActivity;
-import com.fit.bloodmanagment.Activity.ContactUsActivity;
 import com.fit.bloodmanagment.Activity.DonarActivity;
 import com.fit.bloodmanagment.Activity.FeedBackActivity;
 import com.fit.bloodmanagment.Activity.MyProfileActivity;
 import com.fit.bloodmanagment.Activity.PrecautionsActivity;
 import com.fit.bloodmanagment.Activity.ReceiverActivity;
+import com.fit.bloodmanagment.Activity.UrgencyActivity;
 import com.fit.bloodmanagment.GooglePlaces.GetNearbyPlacesData;
 import com.fit.bloodmanagment.R;
 import com.fit.bloodmanagment.UserProfile.SiginInActivity;
@@ -52,8 +54,6 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
-
-import com.fit.bloodmanagment.Activity.AboutUsActivity;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
@@ -62,16 +62,13 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 
-public class MapsActivity extends FragmentActivity implements OnMapReadyCallback,NavigationView.OnNavigationItemSelectedListener,
+public class MainMapActivity extends FragmentActivity implements OnMapReadyCallback,NavigationView.OnNavigationItemSelectedListener,
         GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener,
         LocationListener,View.OnClickListener {
     private Boolean isFabOpen = false;
-    private ImageView fab;
     TextView fab1,fab2,fab3,fab4,fab5,fab6,fab7,fab8;
     private Animation fab_open,fab_close,rotate_forward,rotate_backward;
     private GoogleMap mMap;
@@ -89,12 +86,13 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     Location mLastLocation;
     Marker mCurrLocationMarker;
     LocationRequest mLocationRequest;
-    ImageView pharmacyimage,hospitalimage;
+    ImageView pharmacyimage,hospitalimage,fab,fableft;
     ProgressBar mapprogressbar;
     private List<String> myList;  // String list that contains file paths to images
- private GridView gridview;
- private String mCurrentPhotoPath;  // File path to the last image captured
+    private GridView gridview;
+    private String mCurrentPhotoPath;  // File path to the last image captured
     File destination;
+    LinearLayout donorll,hospitalll,pharmacyll,fableftll;
 
 
 
@@ -130,9 +128,14 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 //        mapprogressbar = (ProgressBar) findViewById(R.id.mapprogressbar);
 //
 //   mapprogressbar.getIndeterminateDrawable().setColorFilter(0xFFFF0000, android.graphics.PorterDuff.Mode.MULTIPLY);
+        fableftll=(LinearLayout)findViewById(R.id.fableftll);
+        pharmacyll=(LinearLayout)findViewById(R.id.pharmacyll);
+        hospitalll=(LinearLayout)findViewById(R.id.hospitalll);
+        donorll=(LinearLayout)findViewById(R.id.donorll);
         pharmacyimage=(ImageView) findViewById(R.id.pharmacyimage);
         hospitalimage=(ImageView) findViewById(R.id.hospitalsimage);
 
+        fableft=(ImageView)findViewById(R.id.fableft);
         fab = (ImageView) findViewById(R.id.fabright);
         fab1 = (TextView) findViewById(R.id.fab1);
         fab2 = (TextView) findViewById(R.id.fab2);
@@ -161,13 +164,13 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         loginbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(MapsActivity.this,SiginInActivity.class));
+                startActivity(new Intent(MainMapActivity.this,SiginInActivity.class));
             }
         });
         signupbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(MapsActivity.this,SignUpActivity.class));
+                startActivity(new Intent(MainMapActivity.this,SignUpActivity.class));
             }
         });
 
@@ -188,7 +191,12 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             }
 
         });
-
+        fableftll.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(MainMapActivity.this,UrgencyActivity.class));
+            }
+        });
 
     }
 
@@ -260,18 +268,17 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         final CharSequence[] items = { "Take Photo", "Choose from Library",
                 "Cancel" };
 
-        android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(MapsActivity.this);
+        android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(MainMapActivity.this);
         builder.setTitle("Add Photo!");
         builder.setItems(items, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int item) {
-                boolean result= CameraUtility.checkPermission(MapsActivity.this);
+                boolean result= CameraUtility.checkPermission(MainMapActivity.this);
 
                 if (items[item].equals("Take Photo")) {
                     userChoosenTask ="Take Photo";
                     if(result)
                         cameraIntent();
-
                 } else if (items[item].equals("Choose from Library")) {
                     userChoosenTask ="Choose from Library";
                     if(result)
@@ -333,7 +340,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         ByteArrayOutputStream bytes = new ByteArrayOutputStream();
         thumbnail.compress(Bitmap.CompressFormat.JPEG, 90, bytes);
 
-       destination = new File(Environment.getExternalStorageDirectory(),
+        destination = new File(Environment.getExternalStorageDirectory(),
                 System.currentTimeMillis() + ".jpg");
 
         FileOutputStream fo;
@@ -352,17 +359,17 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     }
     private File createImageFile() throws IOException
     {
-      // Create an image file name
-    // String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format( new Date());
-   // String imageFileName = "JPEG_" + timeStamp + "_" ;
-    File storageDir = Environment.getExternalStoragePublicDirectory(Environment. DIRECTORY_PICTURES);
-    File image = File. createTempFile(
-            String.valueOf(destination),  /* prefix */
-      ".jpg",         /* suffix */
-     storageDir      /* directory */
-     );
-   // Save a file: path for use with ACTION_VIEW intents
-     mCurrentPhotoPath = image.getAbsolutePath();
+        // Create an image file name
+        // String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format( new Date());
+        // String imageFileName = "JPEG_" + timeStamp + "_" ;
+        File storageDir = Environment.getExternalStoragePublicDirectory(Environment. DIRECTORY_PICTURES);
+        File image = File. createTempFile(
+                String.valueOf(destination),  /* prefix */
+                ".jpg",         /* suffix */
+                storageDir      /* directory */
+        );
+        // Save a file: path for use with ACTION_VIEW intents
+        mCurrentPhotoPath = image.getAbsolutePath();
         return image;
 
     }
@@ -375,30 +382,27 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         id = item.getItemId();
 
         if (id == R.id.nav_aboutus) {
-            Intent intent = new Intent(MapsActivity.this, AboutUsActivity.class);
+            Intent intent = new Intent(MainMapActivity.this, AboutUsActivity.class);
             startActivity(intent);
 
-        } else if (id == R.id.nav_donar) {
-            Intent intent = new Intent(MapsActivity.this, DonarActivity.class);
+        } else if (id == R.id.nav_donor) {
+            Intent intent = new Intent(MainMapActivity.this, DonarActivity.class);
             startActivity(intent);
 
-        } else if (id == R.id.nav_receiver) {
-            Intent intent = new Intent(MapsActivity.this, ReceiverActivity.class);
-            startActivity(intent);
-        } else if (id == R.id.nav_bloodbanks) {
-            Intent intent = new Intent(MapsActivity.this, BloodBanksActivity.class);
+        }  else if (id == R.id.nav_bloodbanks) {
+            Intent intent = new Intent(MainMapActivity.this, BloodBanksActivity.class);
             startActivity(intent);
 
         } else if (id == R.id.nav_precautions) {
-            Intent intent = new Intent(MapsActivity.this, PrecautionsActivity.class);
+            Intent intent = new Intent(MainMapActivity.this, PrecautionsActivity.class);
             startActivity(intent);
 
         } else if (id == R.id.nav_myprofile) {
-            Intent intent = new Intent(MapsActivity.this, MyProfileActivity.class);
+            Intent intent = new Intent(MainMapActivity.this, MyProfileActivity.class);
             startActivity(intent);
 
-        } else if (id == R.id.nav_feedback) {
-            Intent intent = new Intent(MapsActivity.this, FeedBackActivity.class);
+        } else if (id == R.id.nav_request) {
+            Intent intent = new Intent(MainMapActivity.this, UrgencyActivity.class);
             startActivity(intent);
         }
 
@@ -411,7 +415,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
         googleMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
-       // mMap.setMapType(GoogleMap.);
+        // mMap.setMapType(GoogleMap.);
 
         //Initialize Google Play Services
         if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
@@ -431,11 +435,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             setPadding(mapView);
             mMap.setMyLocationEnabled(true);
             mMap.setTrafficEnabled(true);
-           // mMap.setPadding(0, 0, 30, 105);
+            // mMap.setPadding(0, 0, 30, 105);
         }
 
 
-        pharmacyimage.setOnClickListener(new View.OnClickListener() {
+        pharmacyll.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String Pharmacy = "pharmacy";
@@ -443,7 +447,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 // Log.d("onClick", "Button is Clicked");
                 mMap.clear();
                 if (mCurrLocationMarker != null) {
-                  //  mCurrLocationMarker.remove();
+                    //  mCurrLocationMarker.remove();
                     String url = getUrl(latitude, longitude, Pharmacy);
                     Object[] DataTransfer = new Object[2];
                     DataTransfer[0] = mMap;
@@ -451,13 +455,13 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     Log.d("onClick", url);
                     GetNearbyPlacesData getNearbyPlacesData = new GetNearbyPlacesData();
                     getNearbyPlacesData.execute(DataTransfer);
-                    Toast.makeText(MapsActivity.this,"Nearby Pharmacies", Toast.LENGTH_LONG).show();
+                    Toast.makeText(MainMapActivity.this,"Nearby Pharmacies", Toast.LENGTH_LONG).show();
                 }
 
 
             }
         });
-        hospitalimage.setOnClickListener(new View.OnClickListener() {
+        hospitalll.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 setProgress(v.VISIBLE);
@@ -474,17 +478,17 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     GetNearbyPlacesData getNearbyPlacesData = new GetNearbyPlacesData();
                     getNearbyPlacesData.execute(DataTransfer);
                     setProgress(v.GONE);
-                    Toast.makeText(MapsActivity.this,"Nearby Hospitals", Toast.LENGTH_LONG).show();
+                    Toast.makeText(MainMapActivity.this,"Nearby Hospitals", Toast.LENGTH_LONG).show();
                 }
 
 
             }
         });
     }
-  public void setPadding(View mapView){
-      mMap.setPadding(0,300,0,0);
-      //left,top,right,bottom
-  }
+    public void setPadding(View mapView){
+        mMap.setPadding(0,300,0,0);
+        //left,top,right,bottom
+    }
     protected synchronized void buildGoogleApiClient() {
         mGoogleApiClient = new GoogleApiClient.Builder(this)
                 .addConnectionCallbacks(this)
@@ -545,7 +549,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         //move map camera
         mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
         mMap.animateCamera(CameraUpdateFactory.zoomTo(14));
-        Toast.makeText(MapsActivity.this,"Your Current Location", Toast.LENGTH_LONG).show();
+        Toast.makeText(MainMapActivity.this,"Your Current Location", Toast.LENGTH_LONG).show();
 
         Log.d("onLocationChanged", String.format("latitude:%.3f longitude:%.3f",latitude,longitude));
 
@@ -596,39 +600,39 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             return true;
         }
     }
-@Override
-public void onClick(View v) {
-    int id = v.getId();
-    switch (id){
-        case R.id.fabright:
-            animateFAB();
-            break;
-        case R.id.fab1:
-            Toast.makeText(getApplicationContext(),"selected A+",Toast.LENGTH_SHORT).show();
-            break;
-        case R.id.fab2:
-            Toast.makeText(getApplicationContext(),"selected A-",Toast.LENGTH_SHORT).show();
-            break;
-        case R.id.fab3:
-            Toast.makeText(getApplicationContext(),"selected B+",Toast.LENGTH_SHORT).show();
-            break;
-        case R.id.fab4:
-            Toast.makeText(getApplicationContext(),"selected B-",Toast.LENGTH_SHORT).show();
-            break;
-        case R.id.fab5:
-            Toast.makeText(getApplicationContext(),"selected AB+",Toast.LENGTH_SHORT).show();
-            break;
-        case R.id.fab6:
-            Toast.makeText(getApplicationContext(),"selected AB-",Toast.LENGTH_SHORT).show();
-            break;
-        case R.id.fab7:
-            Toast.makeText(getApplicationContext(),"selected O+",Toast.LENGTH_SHORT).show();
-            break;
-        case R.id.fab8:
-            Toast.makeText(getApplicationContext(),"selected O-",Toast.LENGTH_SHORT).show();
-            break;
+    @Override
+    public void onClick(View v) {
+        int id = v.getId();
+        switch (id){
+            case R.id.fabright:
+                animateFAB();
+                break;
+            case R.id.fab1:
+                Toast.makeText(getApplicationContext(),"selected A+",Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.fab2:
+                Toast.makeText(getApplicationContext(),"selected A-",Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.fab3:
+                Toast.makeText(getApplicationContext(),"selected B+",Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.fab4:
+                Toast.makeText(getApplicationContext(),"selected B-",Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.fab5:
+                Toast.makeText(getApplicationContext(),"selected AB+",Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.fab6:
+                Toast.makeText(getApplicationContext(),"selected AB-",Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.fab7:
+                Toast.makeText(getApplicationContext(),"selected O+",Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.fab8:
+                Toast.makeText(getApplicationContext(),"selected O-",Toast.LENGTH_SHORT).show();
+                break;
+        }
     }
-}
 
     public void animateFAB(){
 
@@ -658,14 +662,14 @@ public void onClick(View v) {
 
             fab.startAnimation(rotate_forward);
 
-                fab1.setVisibility(View.VISIBLE);
-                fab2.setVisibility(View.VISIBLE);
-                fab3.setVisibility(View.VISIBLE);
-                fab4.setVisibility(View.VISIBLE);
-                fab5.setVisibility(View.VISIBLE);
-                fab6.setVisibility(View.VISIBLE);
-                fab7.setVisibility(View.VISIBLE);
-                fab8.setVisibility(View.VISIBLE);
+            fab1.setVisibility(View.VISIBLE);
+            fab2.setVisibility(View.VISIBLE);
+            fab3.setVisibility(View.VISIBLE);
+            fab4.setVisibility(View.VISIBLE);
+            fab5.setVisibility(View.VISIBLE);
+            fab6.setVisibility(View.VISIBLE);
+            fab7.setVisibility(View.VISIBLE);
+            fab8.setVisibility(View.VISIBLE);
 
 
             fab1.startAnimation(fab_open);
@@ -698,4 +702,5 @@ public void onClick(View v) {
         startActivity(intent);
 
     }
+
 }

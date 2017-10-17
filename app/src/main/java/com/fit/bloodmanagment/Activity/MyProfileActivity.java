@@ -11,6 +11,8 @@ import com.android.volley.toolbox.NetworkImageView;
 import com.fit.bloodmanagment.R;
 import com.fit.bloodmanagment.Utils.CustomVolleyRequest;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 
 public class MyProfileActivity extends Activity {
     //TextViews

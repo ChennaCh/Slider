@@ -5,15 +5,18 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.NetworkImageView;
-import com.fit.bloodmanagment.Map.MapsActivity;
+import com.fit.bloodmanagment.Map.MainMapActivity;
 import com.fit.bloodmanagment.R;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.SignInButton;
@@ -97,13 +100,13 @@ public class SignUpActivity extends AppCompatActivity  {
                 phone = etphone.getText().toString();
                 address = etaddress.getText().toString();
                 dateofbirth=DOB.getText().toString();
-                if (!isValidName(name)) {
+                if (name.equals("")) {
                     etname.setError("Enter username");
                 }else if (!isValidEmail(email)){
                     etemail.setError("Enter valid email");
                 }else if (password.isEmpty()){
                     etpassword.setError("Invalid password");
-                }else if (repassward.isEmpty()){
+                }else if (repassward.isEmpty()||repassward.equals(ispwdMismatch())){
                     etre_password.setError("Invalid reenter password");
                 }else if (!isValidMobile(phone)){
                     etphone.setError("Invalid phone number");
@@ -111,8 +114,8 @@ public class SignUpActivity extends AppCompatActivity  {
                     etaddress.setError("Invalid address");
                 }else if (dateofbirth.isEmpty()) {
                     DOB.setError("Invalid date of birth");
-            }else{
-                    Intent intent=new Intent(getApplicationContext(), MapsActivity.class);
+                }else{
+                    Intent intent=new Intent(getApplicationContext(), MainMapActivity.class);
                     startActivity(intent);
                 }
             }
@@ -140,6 +143,12 @@ public class SignUpActivity extends AppCompatActivity  {
         return matcher.matches();
 
     }
+    private boolean ispwdMismatch(){
+        if ((etre_password.getText().toString()!=(etpassword.getText().toString()))) {
+            etre_password.setText("Password Mismatch");
+        }
+        return true;
+    }
 
     private boolean isValidMobile(String mobile) {
         String Mobile_PATTERN = "^+[0-9]{10}$";
@@ -153,5 +162,6 @@ public class SignUpActivity extends AppCompatActivity  {
         onBackPressed();
         return true;
     }
+
 
 }

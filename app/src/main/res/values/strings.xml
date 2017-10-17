@@ -30,13 +30,14 @@
     <!--Navigation Drawer Titles-->
 
     <string name="AboutUs">About Us</string>
-    <string name="Donar">Donar</string>
+    <string name="Donors">Donors</string>
     <string name="Receiver">Receiver</string>
     <string name="BloodBanks">Boold Banks</string>
     <string name="Precautions">Precautions</string>
     <string name="Myprofile">My Profile</string>
     <string name="Shareit">Share It</string>
     <string name="Feedback">Rating</string>
+    <string name="Request">Emergency Request</string>
     <string name="Logout">Logout</string>
     <string name="Pharmacy">Pharmacy</string>
     <string name="Signin">Signin</string>
@@ -58,4 +59,5 @@
         <item>AB+</item>
         <item>AB-</item>
     </string-array>
+    <string name="title_activity_main_map">Map</string>
 </resources>

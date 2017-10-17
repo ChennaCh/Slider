@@ -1,38 +1,41 @@
 {
   "project_info": {
-    "project_number": "92119220746",
-    "project_id": "savelifes-1506244437955"
+    "project_number": "96220717216",
+    "project_id": "ace-server-183009"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:92119220746:android:68e2f044f4e440ec",
+        "mobilesdk_app_id": "1:96220717216:android:68e2f044f4e440ec",
         "android_client_info": {
           "package_name": "com.fit.bloodmanagment"
         }
       },
       "oauth_client": [
         {
-          "client_id": "92119220746-s7fkfbfjlibcjctkl7fpj69d61vvujnd.apps.googleusercontent.com",
+          "client_id": "96220717216-50ci04uvj612nk2mim9dhouj4e33tijp.apps.googleusercontent.com",
+          "client_type": 3
+        },
+        {
+          "client_id": "96220717216-8n0vq6grvtkkrllgd1q7jmd6jgab2j0f.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.fit.bloodmanagment",
-            "certificate_hash": "ff9c8bd68dfe2c27c7e095f7a4d4352898ca6f98"
+            "certificate_hash": "3c6d3c5b5bf982e470351969f8192dfa1016536e"
           }
-        },
-        {
-          "client_id": "92119220746-ae8ula4ttdnl61okkimdoqtr79d1cvjh.apps.googleusercontent.com",
-          "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyBs-zFx6O57EEHZ7vubjtGrAzsoxcAnofc"
+          "current_key": "AIzaSyDaSmhQzNMPS0e0qDgOcPkIofpV3Js7wA8"
         }
       ],
       "services": {
         "analytics_service": {
-          "status": 1
+          "status": 2,
+          "analytics_property": {
+            "tracking_id": "UA-108151829-1"
+          }
         },
         "appinvite_service": {
           "status": 1,

@@ -42,6 +42,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="right"
+                android:id="@+id/notificationll"
                 android:paddingRight="10dp"
                 android:layout_weight="0.4">
 
@@ -49,13 +50,24 @@
                     android:id="@+id/notificatio_bar"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
+                    android:layout_marginRight="15dp"
                     android:layout_gravity="right"
                     android:src="@drawable/ic_notifications_none_black_24dp" />
+                <ImageView
+                    android:id="@+id/notificatio_bar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="right"
+                    android:src="@drawable/feedback" />
+
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:clickable="true"
+                android:id="@+id/sharell"
+                android:background="@drawable/rippleeffect"
                 android:layout_weight="1.3">
 
                 <ImageView
@@ -111,12 +123,15 @@
             android:weightSum="5.0">
 
             <LinearLayout
+                android:id="@+id/fableftll"
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_weight="1.0"
                 android:weightSum="1.0"
                 android:orientation="vertical"
                 android:gravity="bottom"
+                android:clickable="true"
+                android:background="@drawable/rippleeffect"
                 android:layout_marginLeft="10dp">
 
 
@@ -127,7 +142,7 @@
                     android:layout_gravity="center"
                     android:layout_marginBottom="15dp"
                     android:layout_marginTop="10dp"
-                    android:src="@drawable/plusfab" />
+                    android:src="@drawable/siren" />
 
             </LinearLayout>
 
@@ -145,6 +160,9 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1.0"
                     android:orientation="vertical"
+                    android:clickable="true"
+                    android:id="@+id/hospitalll"
+                    android:background="@drawable/rippleeffect"
                     android:weightSum="1.0">
 
                     <ImageView
@@ -173,6 +191,9 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1.0"
                     android:orientation="vertical"
+                    android:id="@+id/donorll"
+                    android:clickable="true"
+                    android:background="@drawable/rippleeffect"
                     android:weightSum="1.0">
 
                     <ImageView
@@ -188,7 +209,7 @@
                         android:layout_height="match_parent"
                         android:layout_weight="0.8"
                         android:gravity="center"
-                        android:text="@string/Donar"
+                        android:text="@string/Donors"
                         android:textColor="@color/colorPrimary"
                         android:textStyle="bold" />
 
@@ -198,6 +219,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1.0"
+                    android:id="@+id/pharmacyll"
+                    android:clickable="true"
+                    android:background="@drawable/rippleeffect"
                     android:orientation="vertical"
                     android:weightSum="1.0">
 
@@ -223,7 +247,7 @@
             </LinearLayout>
             <LinearLayout
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_weight="1.0"
                 android:weightSum="1.0"
                 android:orientation="vertical"
@@ -343,7 +367,7 @@
                     android:layout_gravity="center"
                     android:layout_marginBottom="15dp"
                     android:layout_marginTop="10dp"
-                    android:src="@drawable/close" />
+                    android:src="@drawable/plusfab" />
 
             </LinearLayout>
         </LinearLayout>

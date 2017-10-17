@@ -34,18 +34,23 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:textColor="#FF6AC9BD"
-                    android:text="Save Life"
-                    android:textSize="40dp"
-                    android:textStyle="bold|italic"/>
+
+                <com.android.volley.toolbox.NetworkImageView
+                    xmlns:app="http://schemas.android.com/apk/res-auto"
+                    android:id="@+id/myimageview"
+                    android:layout_width="96dp"
+                    android:layout_height="96dp"
+                    android:layout_marginTop="30dp"
+                    android:layout_gravity="center"
+                    android:background="@drawable/navigationuser"
+                    app:civ_border_width="1dp"
+                    app:civ_border_color="#d4c7c7"/>
+
                 <android.support.design.widget.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:alpha="0.8"
+                    android:layout_marginTop="10dp"
                     android:textColorHint="@color/white"
                     android:theme="@style/Theme.AppCompat">
 
@@ -135,7 +140,7 @@
                         android:layout_marginLeft="30dp"
                         android:layout_marginRight="30dp"
                         android:textColor="@color/white"
-                        android:hint="Phone"
+                        android:hint="0 with Phone number"
                         android:id="@+id/editphone"
                         android:inputType="number"
                         android:maxLength="10"
@@ -169,7 +174,7 @@
 
                     <Spinner
                         android:id="@+id/spinner"
-                        android:layout_width="100dp"
+                        android:layout_width="120dp"
                         android:layout_height="wrap_content"
                         android:layout_marginRight="10dp"
                         android:layout_marginTop="5dp"
@@ -213,69 +218,12 @@
                     android:layout_width="250dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:layout_marginLeft="30dp"
-                    android:layout_marginRight="30dp"
-                    android:layout_marginTop="30dp"
+                    android:layout_margin="30dp"
                     android:background="@drawable/buttonshape"
                     android:padding="15dp"
                     android:text="Register"
                     android:textColor="#fff" />
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginLeft="30dp"
-                    android:layout_marginRight="30dp"
-                    android:layout_marginTop="20dp"
-                    android:alpha="0.6"
-                    android:orientation="horizontal">
-
-                    <View
-                        android:layout_width="60dp"
-                        android:layout_height="1dp"
-                        android:layout_marginTop="10dp"
-                        android:layout_weight="1"
-                        android:background="@color/white" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="2dp"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:paddingLeft="10dp"
-                        android:paddingRight="10dp"
-                        android:text="Or Signin With"
-                        android:textColor="@color/white" />
-
-                    <View
-                        android:layout_width="60dp"
-                        android:layout_height="1dp"
-                        android:layout_marginTop="10dp"
-                        android:layout_weight="1"
-                        android:background="@color/white" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <Button
-                        android:id="@+id/googlesignin"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="30dp"
-                        android:layout_marginRight="30dp"
-                        android:layout_marginTop="20dp"
-                        android:layout_marginBottom="30dp"
-                        android:background="#ac1c1c"
-                        android:drawableLeft="@drawable/google"
-                        android:text="Google"
-                        android:textColor="#fff" />
-
-                </LinearLayout>
             </LinearLayout>
         </ScrollView>
     </LinearLayout>

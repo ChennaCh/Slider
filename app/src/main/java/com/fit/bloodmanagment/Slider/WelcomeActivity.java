@@ -19,7 +19,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.fit.bloodmanagment.Activity.SplashActivity;
-import com.fit.bloodmanagment.Map.MapsActivity;
 import com.fit.bloodmanagment.R;
 
 public class WelcomeActivity extends AppCompatActivity {

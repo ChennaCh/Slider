@@ -7,18 +7,21 @@ import android.support.v7.widget.Toolbar;
 
 import com.fit.bloodmanagment.R;
 
+import static com.fit.bloodmanagment.R.id.toolbar;
 
-public class DonarActivity extends AppCompatActivity {
+public class UrgencyActivity extends AppCompatActivity {
+    Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_donar);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_donar);
+        setContentView(R.layout.activity_urgency);
+        toolbar = (Toolbar) findViewById(R.id.urgency_toolbar);
+        setTitle("Emergency Request");
         setSupportActionBar(toolbar);
-        setTitle(getString(R.string.Donors));
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
+        toolbar.setTitleTextColor(getResources().getColor(android.R.color.white));
     }
     @Override
     public boolean onSupportNavigateUp() {

@@ -23,7 +23,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.fit.bloodmanagment.Adapter.BloodbankListAdapter;
 import com.fit.bloodmanagment.Beans.BloodbankBean;
-import com.fit.bloodmanagment.Map.MapsActivity;
+import com.fit.bloodmanagment.Map.MainMapActivity;
 import com.fit.bloodmanagment.R;
 import com.fit.bloodmanagment.Utils.API;
 import com.github.ksoichiro.android.observablescrollview.ObservableRecyclerView;
@@ -165,7 +165,7 @@ public class BloodBanksActivity extends AppCompatActivity implements ObservableS
     }
     @Override
     public void onBackPressed() {
-        Intent intent = new Intent(BloodBanksActivity.this, MapsActivity.class);
+        Intent intent = new Intent(BloodBanksActivity.this, MainMapActivity.class);
         startActivity(intent);
     }
 

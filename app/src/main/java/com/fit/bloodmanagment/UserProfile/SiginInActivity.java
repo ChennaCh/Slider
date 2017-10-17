@@ -12,7 +12,7 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.fit.bloodmanagment.Activity.MyProfileActivity;
-import com.fit.bloodmanagment.Map.MapsActivity;
+import com.fit.bloodmanagment.Map.MainMapActivity;
 import com.fit.bloodmanagment.R;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -63,7 +63,7 @@ public class SiginInActivity extends AppCompatActivity implements GoogleApiClien
                 } else if (!isValidPassword(password)){
                     edtpass.setError("Invalid password");}
                 else{
-                    Intent it=new Intent(getApplicationContext(), MapsActivity.class);
+                    Intent it=new Intent(getApplicationContext(), MainMapActivity.class);
                     startActivity(it);
                 }
             }
