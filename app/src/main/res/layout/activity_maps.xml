@@ -67,7 +67,6 @@
                 android:layout_height="match_parent"
                 android:clickable="true"
                 android:id="@+id/sharell"
-                android:background="@drawable/rippleeffect"
                 android:layout_weight="1.3">
 
                 <ImageView
@@ -131,7 +130,6 @@
                 android:orientation="vertical"
                 android:gravity="bottom"
                 android:clickable="true"
-                android:background="@drawable/rippleeffect"
                 android:layout_marginLeft="10dp">
 
 
@@ -162,7 +160,6 @@
                     android:orientation="vertical"
                     android:clickable="true"
                     android:id="@+id/hospitalll"
-                    android:background="@drawable/rippleeffect"
                     android:weightSum="1.0">
 
                     <ImageView
@@ -193,7 +190,6 @@
                     android:orientation="vertical"
                     android:id="@+id/donorll"
                     android:clickable="true"
-                    android:background="@drawable/rippleeffect"
                     android:weightSum="1.0">
 
                     <ImageView
@@ -221,7 +217,6 @@
                     android:layout_weight="1.0"
                     android:id="@+id/pharmacyll"
                     android:clickable="true"
-                    android:background="@drawable/rippleeffect"
                     android:orientation="vertical"
                     android:weightSum="1.0">
 
