@@ -40,53 +40,77 @@
                 android:layout_marginTop="10dp"
                 android:gravity="center"
                 android:text="Welcome to Save Life Blood Bank"
-                android:textColor="@color/black"
+                android:textColor="#ca4969"
                 android:textSize="20dp"
-                android:textStyle="italic" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:text="        The measure of life is not its duration, but its donation. Blood donation will cost you nothing but it will save a life. Spare 15 minutes and save one life. Excuses never save a life but BLOOD DONATION does and find the hero in you." />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:text="        Blood is meant to Circulate,pass it around. Tears of a mother cannot save her Child. But your Blood can." />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:text="        At 18 years you grow up.At 18 you drive.At 18 you give blood to keep someone alive.The purpose of life is not to be happy - but to matter, to be productive, to be useful, to have it make some difference that you have lived at all. Just Smile and give, some one will smile and live." />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:text="        Every year our nation requires about 5 Crore units of blood, out of which only a meager 2.5 Crore units of blood are available.The gift of blood is the gift of life. There is no substitute for human.The need for blood is constantly increasing the world over. Apart from diseases like dengue, millions lose their lives to natural and man-made disasters. The number of people dying in road accidents is also growing.In India number of voluntary blood donors is still very low. Every two seconds someone needs blood. More than 38,000 blood donations are needed every day." />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:text="        The main motive of our app is no one shouldn't die because of blood scarcity and it is our resposibitlity to maintain the propotianate ratio of necessity and availability of blood." />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:text="        Lets Celebrate Blood Donor Day on everyday and be always ready to help the victims. Make Blood donation should be our one of the habbit. So let's use and share this app and be our own helping network. "
                 android:textStyle="bold" />
 
             <TextView
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:text="        A Life May Depend On A Gesture From You, A Bottle Of Blood. The Finest Gesture One Can Make Is To Save Life By Donating Blood."
-                android:textStyle="bold|italic" />
+                android:layout_marginTop="20dp"
+                android:textSize="16dp"
+                android:textStyle="italic"
+                android:textColor="#FF4963CA"
+                android:text="     A Life May Depend On A Gesture From You, A Bottle Of Blood. The Finest Gesture One Can Make Is To Save Life By Donating Blood.\n\n     Blood is meant to Circulate, pass it around. The measure of life is not its Duration, but its Donation. Blood donation will cost you nothing but it will save a life. Spare 15 minutes and save one life. Excuses never save a life but BLOOD DONATION does and find the hero in you."/>
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:orientation="vertical">
+                <LinearLayout android:layout_width="fill_parent" android:layout_height="wrap_content" android:orientation="vertical" android:layout_gravity="center">
+                    <TextView android:text="Intro" android:id="@+id/text1" android:padding="5dip" android:background="#d8d8d8" android:textColor="#4963ca" android:textStyle="bold" android:textSize="20dp" android:layout_width="fill_parent" android:layout_height="wrap_content" />
+                    <LinearLayout android:id="@+id/panel1" android:visibility="gone"  android:orientation="vertical" android:layout_width="fill_parent" android:layout_height="wrap_content">
+                        <TextView
+                            android:layout_margin="2dip"
+                            android:text="        Every year our nation requires about 5 Crore units of blood, out of which only a meager 2.5 Crore units of blood are available.The gift of blood is the gift of life. There is no substitute for human.The need for blood is constantly increasing the world over. Apart from diseases like dengue, millions lose their lives to natural and man-made disasters. The number of people dying in road accidents is also growing.In India number of voluntary blood donors is still very low. Every two seconds someone needs blood. More than 38,000 blood donations are needed every day.\n\n        At 18 years you grow up.At 18 you drive.At 18 you give blood to keep someone alive.The purpose of life is not to be happy - but to matter, to be productive, to be useful, to have it make some difference that you have lived at all. Just Smile and give, some one will smile and live.\n\n        Lets Celebrate Blood Donor Day on everyday and be always ready to help the victims. Make Blood donation should be our one of the habbit. So let's use and share this app and be our own helping network.\n"
+                            android:padding="5dip"
+                            android:background="#4963ca"
+                            android:textSize="16dp"
+                            android:textColor="#ffffff"
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content" />
+                    </LinearLayout>
+                </LinearLayout>
+
+
+                <LinearLayout android:layout_marginTop="5dip" android:layout_width="fill_parent" android:layout_height="wrap_content" android:orientation="vertical" android:layout_gravity="center">
+                    <TextView android:text="About Us" android:id="@+id/text2" android:padding="5dip" android:background="#d8d8d8" android:textColor="#4963ca" android:textStyle="bold" android:textSize="20dp"  android:layout_width="fill_parent" android:layout_height="wrap_content" />
+                    <LinearLayout android:id="@+id/panel2" android:visibility="gone" android:orientation="vertical" android:layout_width="fill_parent" android:layout_height="wrap_content">
+                        <TextView
+                            android:layout_margin="2dip"
+                            android:text=" About Team :\n\n      We developed this application with team of 4 who are always passinate to learn new things and believes in action rather than voice.\n\n      We believed that CREATIVITY can solve almost any problem. In this belief, we try to connect the people with blood and humanity through this app.\n\n      The main motive of our app is no one shouldn't die because of blood scarcity and it is our resposibitlity to maintain the propotianate ratio of necessity and availability of blood.
+\n\n About Company :\n\n      FRATELLO INNOTECH is the fastest growing software developement company.The motto has always been timely service, best quality and optimum cost.\n\n      Always keep in touch with the customers through quality, performance, service and assistance. We value the trust and beliefs vested in us by our clients and professional contacts and provide a dedicated service with an honest and direct approach in all our dealings.\n\n      Our Company always encourage the new thoughts and creativity in developing applications to get the better solutions which meet new requirements, unarticulated needs, or existing market needs."
+                            android:padding="5dip"
+                            android:background="#4963ca"
+                            android:textSize="15dp"
+                            android:textColor="#ffffff"
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout android:layout_marginTop="5dip" android:layout_marginBottom="10dp" android:layout_width="fill_parent" android:layout_height="wrap_content" android:orientation="vertical" android:layout_gravity="center">
+                    <TextView android:text="Contact Us" android:id="@+id/text3" android:padding="5dip"  android:background="#d8d8d8" android:textColor="#4963ca" android:textStyle="bold" android:textSize="20dp"  android:layout_width="fill_parent" android:layout_height="wrap_content" />
+                    <LinearLayout android:id="@+id/panel3" android:visibility="gone" android:orientation="vertical" android:layout_width="fill_parent" android:layout_height="wrap_content">
+                        <TextView
+                            android:layout_margin="2dip"
+                            android:text=" Address :\n\n LIG-630, 5th Rd,\n Dharma Reddy Colony Phase I,\n Kukatpally,\n Hyderabad, Telangana 500072.\n\n Phone: 090109 90285.\n"
+                            android:padding="5dip"
+                            android:background="#4963ca"
+                            android:textSize="16dp"
+                            android:textColor="#ffffff"
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content" />
+                        <fragment xmlns:android="http://schemas.android.com/apk/res/android"
+                            xmlns:map="http://schemas.android.com/apk/res-auto"
+                            android:name="com.google.android.gms.maps.MapFragment"
+                            android:id="@+id/mapid"
+                            android:layout_width="600dp"
+                            android:layout_height="250dp" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                </LinearLayout>
 
             <TextView
                 android:layout_width="match_parent"
@@ -103,10 +127,11 @@
                 android:text="Fratello InnoTech"
                 android:textColor="#ac1c1c" />
 
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
+                android:layout_marginTop="20dp"
                 android:layout_marginBottom="50dp"
                 android:orientation="horizontal"
                 android:weightSum="3">
