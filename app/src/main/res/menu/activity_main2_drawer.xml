@@ -42,7 +42,7 @@
             android:id="@+id/nav_myprofile"
             android:icon="@drawable/person"
             android:title="@string/Myprofile"
-            android:visible="false"/>
+           />
         </group>
         <item
             android:id="@+id/nav_logout"

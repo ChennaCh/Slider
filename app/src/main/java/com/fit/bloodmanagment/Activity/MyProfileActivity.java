@@ -29,8 +29,8 @@ public class MyProfileActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_profile);
         //Initializing Views
-        textViewName = (TextView) findViewById(R.id.myusername);
-        textViewEmail = (TextView) findViewById(R.id.myemail);
+        textViewName = (TextView) findViewById(R.id.myPuname);
+        textViewEmail = (TextView) findViewById(R.id.myPmail);
         profilePhoto = (NetworkImageView) findViewById(R.id.myimageview);
        // Intent intent = getIntent();
         try {
