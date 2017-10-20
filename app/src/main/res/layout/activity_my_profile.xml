@@ -8,7 +8,7 @@
     tools:context="com.fit.bloodmanagment.UserProfile.SignUpActivity">
 
     <android.support.v7.widget.Toolbar
-        android:id="@+id/signup_toolbar"
+        android:id="@+id/myprofile_toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         app:layout_scrollFlags="scroll|enterAlways"
@@ -20,7 +20,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_gravity="center"
-        android:background="#323138"
+        android:background="#E57373"
         android:fitsSystemWindows="true"
         android:gravity="center"
         android:orientation="vertical">
@@ -47,7 +47,7 @@
                     app:civ_border_color="#d4c7c7"/>
 
                     <EditText
-                        android:id="@+id/myusername"
+                        android:id="@+id/myPuname"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="30dp"
@@ -63,7 +63,7 @@
 
 
                     <EditText
-                        android:id="@+id/myemail"
+                        android:id="@+id/myPmail"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="30dp"
@@ -76,7 +76,7 @@
 
 
                 <EditText
-                    android:id="@+id/mymobile"
+                    android:id="@+id/myPmobileno"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="30dp"
@@ -89,7 +89,7 @@
 
 
                 <EditText
-                        android:id="@+id/address"
+                        android:id="@+id/myPaddress"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="30dp"
@@ -100,29 +100,36 @@
                         android:hint="Address"
                         android:padding="10dp" />
 
-
-                <LinearLayout
-                    android:layout_width="match_parent"
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="30dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginLeft="30dp"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="30dp"
-                    android:layout_marginRight="30dp"
-                    android:orientation="horizontal">
+                    android:padding="5dp"
+                    android:text="Blood Group :"
+                    android:textColor="@color/white"
+                    android:textSize="20dp" />
 
                     <Spinner
-                        android:id="@+id/spinner"
-                        android:layout_width="100dp"
+                        android:id="@+id/myPspinner"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginRight="10dp"
-                        android:layout_marginTop="5dp"
                         android:popupBackground="@color/bg_screen5"
                         android:backgroundTint="@color/white"
                         android:entries="@array/spinner_item"
                         android:paddingRight="5dp"
                         android:theme="@style/mySpinnerItemStyle" />
-
+                       </LinearLayout>
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginLeft="30dp"
+                        android:layout_marginRight="30dp"
                         android:orientation="horizontal">
 
                         <TextView
@@ -130,12 +137,12 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="5dp"
                             android:text="DOB :"
+                            android:paddingLeft="5dp"
                             android:textColor="@color/white"
                             android:textSize="20dp" />
 
                         <EditText
-                            android:id="@+id/editText"
-                            android:layout_width="match_parent"
+                            android:id="@+id/myPdob"                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="10dp"
                             android:backgroundTint="@color/white"
@@ -145,7 +152,7 @@
                             android:textColor="@color/white"
                             android:textColorHint="@color/white" />
                     </LinearLayout>
-                </LinearLayout>
+
 
 
                 <Button
@@ -159,7 +166,7 @@
                     android:background="@drawable/buttonshape"
                     android:padding="15dp"
                     android:text="Save"
-                    android:textColor="#fff" />
+                    android:textColor="#ac1c1c" />
 
             </LinearLayout>
         </ScrollView>

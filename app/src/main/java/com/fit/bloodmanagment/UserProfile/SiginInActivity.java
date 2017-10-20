@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.fit.bloodmanagment.Activity.MyProfileActivity;
 import com.fit.bloodmanagment.Map.MainMapActivity;
@@ -32,6 +33,7 @@ public class SiginInActivity extends AppCompatActivity implements GoogleApiClien
     Toolbar toolbar;
     EditText edtuser, edtpass;
     String username, password;
+    TextView signup;
     Button login;
     private static final String TAG = SiginInActivity.class.getSimpleName();
     private static final int RC_SIGN_IN = 007;
@@ -51,7 +53,15 @@ public class SiginInActivity extends AppCompatActivity implements GoogleApiClien
         btnSignIn = (SignInButton) findViewById(R.id.sign_in_button);
         edtuser = (EditText) findViewById(R.id.editusername);
         edtpass = (EditText) findViewById(R.id.editpassword);
+        signup=(TextView)findViewById(R.id.signin_signup);
         login=(Button)findViewById(R.id.btn);
+        signup.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i=new Intent(getApplicationContext(),SignUpActivity.class);
+                startActivity(i);
+            }
+        });
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

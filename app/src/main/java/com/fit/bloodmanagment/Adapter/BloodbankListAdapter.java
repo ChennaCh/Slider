@@ -68,7 +68,7 @@ public class BloodbankListAdapter extends RecyclerView.Adapter<RecyclerView.View
                 try {
                     Intent i = new Intent(Intent.ACTION_SENDTO);
                     i.setType("message/rfc822");
-                    i.setData(Uri.parse("mailto:"+ data.get(myHolder.getAdapterPosition()).getGemail()));
+                    i.setData(Uri.parse("mailto:"+ data.get(myHolder.getAdapterPosition()).getBemail()));
                     i.putExtra(Intent.EXTRA_EMAIL  , new String[]{"recipient@example.com"});
                     i.putExtra(Intent.EXTRA_SUBJECT, "subject of email");
                     i.putExtra(Intent.EXTRA_TEXT   , "body of email");
@@ -153,11 +153,13 @@ public class BloodbankListAdapter extends RecyclerView.Adapter<RecyclerView.View
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         myHolder= (MyHolder) holder;
         BloodbankBean current = data.get(position);
-        myHolder.name.setText(current.getGname());
+        myHolder.name.setText(current.getBname());
         //myHolder.department.setText(current.getBranch());
-        myHolder.phone.setText(current.getGmobile());
-        myHolder.email.setText(current.getGemail());
-        myHolder.feedback.setText(current.getGabout());
+        myHolder.mobile.setText(current.getBmobile());
+        myHolder.email.setText(current.getBemail());
+        myHolder.address.setText(current.getBaddress());
+        myHolder.landline.setText(current.getBlandline());
+        myHolder.city.setText(current.getBcity());
     }
 
     @Override
@@ -167,21 +169,22 @@ public class BloodbankListAdapter extends RecyclerView.Adapter<RecyclerView.View
 
     private class MyHolder extends RecyclerView.ViewHolder{
 
-        TextView email,phone,name,feedback;
+        TextView name,mobile,landline,email,address,city;
 
         public MyHolder(View itemView) {
             super(itemView);
             email = (TextView) itemView.findViewById(R.id.get_mail);
-            phone = (TextView) itemView.findViewById(R.id.get_phone);
-            //department = (TextView) itemView.findViewById(R.id.get_department);
+            mobile = (TextView) itemView.findViewById(R.id.get_phone);
+            landline = (TextView) itemView.findViewById(R.id.get_landline);
             name = (TextView) itemView.findViewById(R.id.get_name);
-            feedback = (TextView) itemView.findViewById(R.id.get_feedback);
+            address = (TextView) itemView.findViewById(R.id.get_address);
+            city=(TextView)itemView.findViewById(R.id.get_city);
         }
     }
 
     public void call_action(){
         Intent intent = new Intent(Intent.ACTION_DIAL);
-        intent.setData(Uri.parse("tel:" + data.get(myHolder.getAdapterPosition()).getGmobile()));
+        intent.setData(Uri.parse("tel:" + data.get(myHolder.getAdapterPosition()).getBmobile()));
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         Intent chooser  = Intent.createChooser(intent, "Complete Action using..");
         context.startActivity(chooser);

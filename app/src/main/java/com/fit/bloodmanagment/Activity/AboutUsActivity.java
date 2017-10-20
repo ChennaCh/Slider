@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Point;
 import android.location.Location;
 import android.location.LocationListener;
 import android.net.Uri;
@@ -38,6 +39,7 @@ import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.maps.model.VisibleRegion;
 
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
@@ -111,19 +113,25 @@ public class AboutUsActivity extends AppCompatActivity implements View.OnClickLi
                 startActivity(viewIntent);
             }
         });
-       gmap=((MapFragment)getFragmentManager().findFragmentById(R.id.mapid)).getMap();
+       gmap=((MapFragment)getFragmentManager().findFragmentById(R.id.mapaboutusid)).getMap();
         addMarkertoMap();
     }
 
     private void addMarkertoMap() {
-        LatLng pos=new LatLng(17.4948,78.3975);
-        Marker marker=gmap.addMarker(new MarkerOptions()
+        CameraPosition cameraPosition = new CameraPosition.Builder()
+                .target(new LatLng(17.4948,78.3975))
+                .zoom(17)
+                .bearing(0)
+                .tilt(45)
+                .build();
+
+        gmap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+        gmap.addMarker(new MarkerOptions()
+                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE))
+                .position(new LatLng(17.4948,78.3975))
                 .title("My Location")
-                 .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE))
-                  .position(pos));
-        gmap.moveCamera(CameraUpdateFactory.newLatLng(pos));
-        gmap.animateCamera(CameraUpdateFactory.zoomTo(12));
-        gmap.getUiSettings().isZoomControlsEnabled();
+        );
+
 
 
     }

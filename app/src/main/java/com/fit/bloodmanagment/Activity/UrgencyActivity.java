@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.widget.EditText;
 
 import com.fit.bloodmanagment.R;
 
@@ -11,7 +12,7 @@ import static com.fit.bloodmanagment.R.id.toolbar;
 
 public class UrgencyActivity extends AppCompatActivity {
     Toolbar toolbar;
-
+    EditText  etname,etemail,etphone,etaddress,DOB;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -22,6 +23,11 @@ public class UrgencyActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         toolbar.setTitleTextColor(getResources().getColor(android.R.color.white));
+        etname = (EditText) findViewById(R.id.myUusername);
+        etemail = (EditText) findViewById(R.id.myUemail);
+        etphone = (EditText) findViewById(R.id.myUmobile);
+        etaddress = (EditText) findViewById(R.id.myUaddress);
+
     }
     @Override
     public boolean onSupportNavigateUp() {

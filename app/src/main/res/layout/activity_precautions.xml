@@ -349,13 +349,16 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:textStyle="bold"
-                android:textSize="20dp"
+                android:textSize="18dp"
+                android:background="#FFD8D8D8"
+                android:textColor="#FF4963CA"
                 android:paddingLeft="10dp"
                 android:text="Before Blood Donation" />
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textSize="16dp"
+                android:textColor="#000"
                 android:layout_marginTop="20dp"
                 android:paddingLeft="20dp"
                 android:text="1. Ensure that you have slept well for minimum 6 hours.\n\n
@@ -377,7 +380,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:textStyle="bold"
-                android:textSize="20dp"
+                android:textSize="18dp"
+                android:background="#FFD8D8D8"
+                android:textColor="#FF4963CA"
                 android:paddingLeft="10dp"
                 android:text="During Blood Donation" />
             <TextView
@@ -385,6 +390,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:textSize="16dp"
+                android:textColor="#000"
                 android:paddingLeft="20dp"
                 android:text="1. While the blood is being taken you must keep pressing the sponge provided, which ensure the smooth flow of blood.\n\n
 2. Please do not get up immediately after donating blood. You must allow the blood flow in the body to normalize by lying down 5 more minutes. This also prevents dizziness.\n\n
@@ -398,13 +404,16 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:textStyle="bold"
-                android:textSize="20dp"
+                android:textSize="18dp"
+                android:background="#FFD8D8D8"
+                android:textColor="#FF4963CA"
                 android:paddingLeft="10dp"
                 android:text="Post Donation Care" />
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
+                android:textColor="#000"
                 android:layout_marginBottom="50dp"
                 android:textSize="16dp"
                 android:paddingLeft="20dp"

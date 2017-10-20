@@ -6,5 +6,5 @@ package com.fit.bloodmanagment.Utils;
 
 public class API {
 
-    public static String bburl = "http://www.fratelloinnotech.com/smec/getfaculty.php";
+    public static String bburl = "http://www.fratelloinnotech.com/saveworld/getbloodbanks.php";
 }

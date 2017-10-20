@@ -11,16 +11,16 @@
         android:id="@+id/signup_toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:background="#323138"
         app:layout_scrollFlags="scroll|enterAlways"
+        android:titleTextColor="#fff"
         app:theme="@style/ToolbarStyle"
-        app:titleTextColor="#fff" />
+        android:background="#E57373"/>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_gravity="center"
-        android:background="#323138"
+        android:background="#E57373"
         android:fitsSystemWindows="true"
         android:gravity="center"
         android:orientation="vertical">
@@ -34,200 +34,208 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
-
-                <com.android.volley.toolbox.NetworkImageView
-                    xmlns:app="http://schemas.android.com/apk/res-auto"
-                    android:id="@+id/myimageview"
-                    android:layout_width="96dp"
-                    android:layout_height="96dp"
-                    android:layout_marginTop="30dp"
-                    android:layout_gravity="center"
-                    android:background="@drawable/navigationuser"
-                    app:civ_border_width="1dp"
-                    app:civ_border_color="#d4c7c7"/>
+                <ImageView
+                    android:id="@+id/imageView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="40dp"
+                    android:gravity="center"
+                    android:src="@drawable/registericon" />
 
                 <android.support.design.widget.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:alpha="0.8"
                     android:layout_marginTop="10dp"
                     android:textColorHint="@color/white"
-                    android:theme="@style/Theme.AppCompat">
+                    android:theme="@style/TextLabel">
 
                     <EditText
                         android:id="@+id/editname"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="30dp"
-                        android:textColor="@color/white"
                         android:layout_marginRight="30dp"
                         android:hint="Full Name"
-                        android:singleLine="true"
                         android:inputType="text"
-                        android:padding="10dp" />
+                        android:padding="10dp"
+                        android:textSize="18dp"
+                        android:singleLine="true"
+                        android:textColor="@color/white" />
                 </android.support.design.widget.TextInputLayout>
 
                 <android.support.design.widget.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:alpha="0.8"
                     android:textColorHint="@color/white"
-                    android:theme="@style/Theme.AppCompat">
+                    android:theme="@style/TextLabel">
 
                     <EditText
                         android:id="@+id/editemail"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="30dp"
-                        android:textColor="@color/white"
                         android:layout_marginRight="30dp"
                         android:hint="Email"
-                        android:singleLine="true"
+                        android:textSize="18dp"
                         android:inputType="textEmailAddress"
-                        android:padding="10dp" />
+                        android:padding="10dp"
+                        android:singleLine="true"
+                        android:textColor="@color/white" />
                 </android.support.design.widget.TextInputLayout>
 
                 <android.support.design.widget.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:alpha="0.8"
                     android:textColorHint="@color/white"
-                    android:theme="@style/Theme.AppCompat">
+                    android:theme="@style/TextLabel">
 
                     <EditText
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="30dp"
-                        android:layout_marginRight="30dp"
-                        android:textColor="@color/white"
-                        android:hint="Password"
                         android:id="@+id/editpwd"
-                        android:singleLine="true"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="30dp"
+                        android:layout_marginRight="30dp"
+                        android:hint="Password"
+                        android:textSize="18dp"
                         android:inputType="textPassword"
-                        android:padding="10dp" />
+                        android:padding="10dp"
+                        android:singleLine="true"
+                        android:textColor="@color/white" />
                 </android.support.design.widget.TextInputLayout>
 
                 <android.support.design.widget.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:alpha="0.8"
                     android:textColorHint="@color/white"
-                    android:theme="@style/Theme.AppCompat">
+                    android:theme="@style/TextLabel">
 
                     <EditText
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="30dp"
-                        android:layout_marginRight="30dp"
-                        android:textColor="@color/white"
-                        android:hint="Reenter Password"
-                        android:singleLine="true"
                         android:id="@+id/editrepwd"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="30dp"
+                        android:layout_marginRight="30dp"
+                        android:textSize="18dp"
+                        android:hint="Reenter Password"
                         android:inputType="textPassword"
-                        android:padding="10dp" />
+                        android:padding="10dp"
+                        android:singleLine="true"
+                        android:textColor="@color/white" />
                 </android.support.design.widget.TextInputLayout>
 
                 <android.support.design.widget.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:alpha="0.8"
                     android:textColorHint="@color/white"
-                    android:theme="@style/Theme.AppCompat">
+                    android:theme="@style/TextLabel">
 
                     <EditText
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="30dp"
-                        android:layout_marginRight="30dp"
-                        android:textColor="@color/white"
-                        android:hint="0 with Phone number"
                         android:id="@+id/editphone"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="30dp"
+                        android:layout_marginRight="30dp"
+                        android:hint="Phone number"
                         android:inputType="number"
+                        android:textSize="18dp"
                         android:maxLength="10"
-                        android:padding="10dp" />
+                        android:padding="10dp"
+                        android:textColor="@color/white" />
                 </android.support.design.widget.TextInputLayout>
 
                 <android.support.design.widget.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:alpha="0.8"
                     android:textColorHint="@color/white"
-                    android:theme="@style/Theme.AppCompat">
+                    android:theme="@style/TextLabel">
 
                     <EditText
+                        android:id="@+id/editaddress"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="30dp"
                         android:layout_marginRight="30dp"
-                        android:textColor="@color/white"
                         android:hint="Address"
-                        android:id="@+id/editaddress"
-                        android:padding="10dp" />
+                        android:textSize="18dp"
+                        android:padding="10dp"
+                        android:textColor="@color/white" />
                 </android.support.design.widget.TextInputLayout>
-
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="30dp"
-                    android:layout_marginRight="30dp"
                     android:orientation="horizontal">
 
-                    <Spinner
-                        android:id="@+id/spinner"
-                        android:layout_width="120dp"
+                    <TextView
+                        android:id="@+id/textView15"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginRight="10dp"
+                        android:layout_marginLeft="30dp"
                         android:layout_marginTop="5dp"
-                        android:popupBackground="@color/bg_screen5"
-                        android:backgroundTint="@color/white"
-                        android:entries="@array/spinner_item"
-                        android:paddingRight="5dp"
-                        android:theme="@style/mySpinnerItemStyle" />
+                        android:padding="10dp"
+                        android:text="DOB :"
+                        android:textColor="@color/white"
+                        android:textSize="18dp" />
 
-                    <LinearLayout
+                    <EditText
+                        android:id="@+id/editText"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="5dp"
-                            android:text="DOB :"
-                            android:textColor="@color/white"
-                            android:textSize="20dp" />
-
-                        <EditText
-                            android:id="@+id/editText"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="10dp"
-                            android:backgroundTint="@color/white"
-                            android:gravity="center"
-                            android:hint="MM/DD/YY"
-                            android:paddingLeft="5dp"
-                            android:focusable="false"
-                            android:textColor="@color/white"
-                            android:textColorHint="@color/white" />
-                    </LinearLayout>
+                        android:layout_marginLeft="30dp"
+                        android:layout_marginRight="30dp"
+                        android:backgroundTint="#ac1c1c"
+                        android:focusable="false"
+                        android:gravity="center"
+                        android:hint="MM/DD/YY"
+                        android:paddingLeft="5dp"
+                        android:textSize="18dp"
+                        android:textColor="@color/white"
+                        android:textColorHint="@color/white" />
                 </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/textView16"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="30dp"
+                    android:layout_marginTop="5dp"
+                    android:padding="10dp"
+                    android:text="Blood Group :"
+                    android:textColor="@color/white"
+                    android:textSize="18dp" />
+                <Spinner
+                    android:id="@+id/spinner"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="30dp"
+                    android:layout_marginTop="5dp"
+                    android:backgroundTint="@color/white"
+                    android:entries="@array/spinner_item"
+                    android:popupBackground="@color/bg_screen5"
+                    android:theme="@style/mySpinnerItemStyle" />
+                </LinearLayout>
+
 
 
                 <Button
                     android:id="@+id/regbtn"
                     android:layout_width="250dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="40dp"
                     android:layout_gravity="center"
                     android:layout_margin="30dp"
                     android:background="@drawable/buttonshape"
-                    android:padding="15dp"
                     android:text="Register"
-                    android:textColor="#fff" />
+                    android:textAllCaps="false"
+                    android:textColor="#ac1c1c" />
 
             </LinearLayout>
         </ScrollView>
     </LinearLayout>
-
 
 
 </LinearLayout>

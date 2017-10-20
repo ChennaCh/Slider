@@ -66,16 +66,14 @@ public class ImageDatabaseHelper extends SQLiteOpenHelper {
     public ImageHelperBean getImage(String imageId) {
         SQLiteDatabase db = this.getWritableDatabase();
 
-        Cursor cursor2 = db.query(TABLE_IMAGE,
-                new String[] {COL_ID, IMAGE_ID, IMAGE_BITMAP},IMAGE_ID
-                        +" LIKE '"+imageId+"%'", null, null, null, null);
+        Cursor cursor2 = db.query(TABLE_IMAGE, new String[] {COL_ID, IMAGE_ID, IMAGE_BITMAP},IMAGE_ID +" LIKE '"+imageId+"%'", null, null, null, null);
         ImageHelperBean imageHelper = new ImageHelperBean();
 
         if (cursor2.moveToFirst()) {
-            do {
+            while (cursor2.moveToNext()){
                 imageHelper.setImageId(cursor2.getString(1));
                 imageHelper.setImageByteArray(cursor2.getBlob(2));
-            } while (cursor2.moveToNext());
+            }
         }
 
         cursor2.close();

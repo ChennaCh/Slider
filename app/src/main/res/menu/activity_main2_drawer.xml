@@ -3,17 +3,20 @@
         <group android:checkableBehavior="single">
                 <item
             android:id="@+id/nav_aboutus"
+                    android:icon="@drawable/aboutus"
             android:title="@string/AboutUs" />
             <group android:checkableBehavior="single"
                 android:id="@+id/group1">
                 <item
                     android:id="@+id/nav_precautions"
+                    android:icon="@drawable/precautionicon"
                     android:title="@string/Precautions" />
             </group>
     <group android:checkableBehavior="single"
         android:id="@+id/group2">
         <item
             android:id="@+id/nav_donor"
+            android:icon="@drawable/blood_donor"
             android:title="@string/Donors" />
         </group>
 
@@ -21,12 +24,14 @@
         android:id="@+id/group3">
         <item
             android:id="@+id/nav_bloodbanks"
+            android:icon="@drawable/bloodbanks"
             android:title="@string/BloodBanks" />
         </group>
             <group android:checkableBehavior="single"
                 android:id="@+id/group4">
                 <item
                     android:id="@+id/nav_request"
+                    android:icon="@drawable/emergencyicon"
                     android:title="@string/Request" />
             </group>
 
@@ -35,6 +40,7 @@
         android:id="@+id/group5">
         <item
             android:id="@+id/nav_myprofile"
+            android:icon="@drawable/person"
             android:title="@string/Myprofile"
             android:visible="false"/>
         </group>

@@ -58,7 +58,7 @@
                 android:layout_marginTop="20dp"
                 android:orientation="vertical">
                 <LinearLayout android:layout_width="fill_parent" android:layout_height="wrap_content" android:orientation="vertical" android:layout_gravity="center">
-                    <TextView android:text="Intro" android:id="@+id/text1" android:padding="5dip" android:background="#d8d8d8" android:textColor="#4963ca" android:textStyle="bold" android:textSize="20dp" android:layout_width="fill_parent" android:layout_height="wrap_content" />
+                    <TextView android:text="Intro" android:id="@+id/text1" android:padding="5dip" android:background="#d8d8d8" android:drawableEnd="@drawable/downarrow" android:drawableRight="@drawable/downarrow" android:drawablePadding="10dp" android:textColor="#4963ca" android:textStyle="bold" android:textSize="18dp" android:layout_width="fill_parent" android:layout_height="wrap_content" />
                     <LinearLayout android:id="@+id/panel1" android:visibility="gone"  android:orientation="vertical" android:layout_width="fill_parent" android:layout_height="wrap_content">
                         <TextView
                             android:layout_margin="2dip"
@@ -74,7 +74,7 @@
 
 
                 <LinearLayout android:layout_marginTop="5dip" android:layout_width="fill_parent" android:layout_height="wrap_content" android:orientation="vertical" android:layout_gravity="center">
-                    <TextView android:text="About Us" android:id="@+id/text2" android:padding="5dip" android:background="#d8d8d8" android:textColor="#4963ca" android:textStyle="bold" android:textSize="20dp"  android:layout_width="fill_parent" android:layout_height="wrap_content" />
+
                     <LinearLayout android:id="@+id/panel2" android:visibility="gone" android:orientation="vertical" android:layout_width="fill_parent" android:layout_height="wrap_content">
                         <TextView
                             android:layout_margin="2dip"
@@ -87,10 +87,24 @@
                             android:layout_width="fill_parent"
                             android:layout_height="wrap_content" />
                     </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/text2"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:background="#d8d8d8"
+                        android:drawableEnd="@drawable/downarrow"
+                        android:drawablePadding="10dp"
+                        android:drawableRight="@drawable/downarrow"
+                        android:padding="5dip"
+                        android:text="About Us"
+                        android:textColor="#4963ca"
+                        android:textSize="18dp"
+                        android:textStyle="bold" />
                 </LinearLayout>
 
                 <LinearLayout android:layout_marginTop="5dip" android:layout_marginBottom="10dp" android:layout_width="fill_parent" android:layout_height="wrap_content" android:orientation="vertical" android:layout_gravity="center">
-                    <TextView android:text="Contact Us" android:id="@+id/text3" android:padding="5dip"  android:background="#d8d8d8" android:textColor="#4963ca" android:textStyle="bold" android:textSize="20dp"  android:layout_width="fill_parent" android:layout_height="wrap_content" />
+                    <TextView android:text="Contact Us" android:drawableEnd="@drawable/downarrow" android:drawableRight="@drawable/downarrow" android:drawablePadding="10dp"  android:id="@+id/text3" android:padding="5dip"  android:background="#d8d8d8" android:textColor="#4963ca" android:textStyle="bold" android:textSize="18dp"  android:layout_width="fill_parent" android:layout_height="wrap_content" />
                     <LinearLayout android:id="@+id/panel3" android:visibility="gone" android:orientation="vertical" android:layout_width="fill_parent" android:layout_height="wrap_content">
                         <TextView
                             android:layout_margin="2dip"
@@ -104,9 +118,10 @@
                         <fragment xmlns:android="http://schemas.android.com/apk/res/android"
                             xmlns:map="http://schemas.android.com/apk/res-auto"
                             android:name="com.google.android.gms.maps.MapFragment"
-                            android:id="@+id/mapid"
+                            android:id="@+id/mapaboutusid"
                             android:layout_width="600dp"
                             android:layout_height="250dp" />
+
                     </LinearLayout>
                 </LinearLayout>
 

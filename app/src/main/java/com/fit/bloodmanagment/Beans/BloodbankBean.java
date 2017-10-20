@@ -6,91 +6,88 @@ package com.fit.bloodmanagment.Beans;
 
 public class BloodbankBean {
 
-    String id,gname,gpassword,gmobile,gemail,gbranch,ggender,gqualification,gabout;
+    String bbid,bbname,bbmobile,bblandline,bbemail,bbaddress,bbcity;
 
-    public BloodbankBean(String gid, String gtname, String gtpassword, String gtmobile, String gtemail,
-                          String gtbranch, String gtgender, String gtqualification, String gtabount){
-        this.id = gid;
-        this.gname = gtname;
-        this.gpassword = gtpassword;
-        this.gmobile = gtmobile;
-        this.gemail = gtemail;
-        this.gbranch = gtbranch;
-        this.ggender = gtgender;
-        this.gqualification = gtqualification;
-        this.gabout = gtabount;
+    public BloodbankBean(String bankid, String bankname, String bankmoblie, String banklandline, String bankemail,
+                          String bankaddress, String bankcity){
+        this.bbid = bankid;
+        this.bbname = bankname;
+        this.bbmobile = bankmoblie;
+        this.bblandline = banklandline;
+        this.bbemail = bankemail;
+        this.bbaddress = bankaddress;
+        this.bbcity = bankcity;
+
     }
 
     public String getId() {
-        return id;
+        return bbid;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setId(String Bid) {
+        this.bbid = bbid;
     }
 
-    public String getGbranch() {
-        return gbranch;
+    public String getBname() {
+        return bbname;
     }
 
-    public void setGbranch(String gbranch) {
-        this.gbranch = gbranch;
+    public void setBname(String bbname) {
+        this.bbname = bbname;
     }
 
-    public String getGgender() {
-        return ggender;
+    public String getBmobile() {
+        return bbmobile;
     }
 
-    public void setGgender(String ggender) {
-        this.ggender = ggender;
+    public void setBmobile(String bbmobile) {
+        this.bbmobile = bbmobile;
     }
 
-    public String getGqualification() {
-        return gqualification;
+    public String getBlandline() {
+        return bblandline;
     }
 
-    public void setGqualification(String gqualification) {
-        this.gqualification = gqualification;
+    public void setBlandline(String bblandline) {
+        this.bblandline = bblandline;
     }
 
-    public String getGabout() {
-        return gabout;
+    public String getBemail() {
+        return bbemail;
     }
 
-    public void setGabout(String gabout) {
-        this.gabout = gabout;
+    public void setEemil(String bbemail) {this.bbemail = bbemail; }
+
+    public String getBaddress() {
+        return bbaddress;
     }
 
-    public String getGname() {
-        return gname;
+    public void setBaddress(String bbaddress) {
+        this.bbaddress = bbaddress;
     }
 
-    public void setGname(String gname) {
-        this.gname = gname;
+    public String getBcity() {
+        return bbcity;
     }
 
-    public String getGpassword() {
-        return gpassword;
+    public void setBcity(String bbcity) {
+        this.bbcity = bbcity;
     }
 
-    public void setGpassword(String gpassword) {
-        this.gpassword = gpassword;
-    }
-
-    public String getGmobile() {
-        return gmobile;
-    }
-
-    public void setGmobile(String gmobile) {
-        this.gmobile = gmobile;
-    }
-
-    public String getGemail() {
-        return gemail;
-    }
-
-    public void setGemail(String gemail) {
-        this.gemail = gemail;
-    }
+//    public String getGmobile() {
+//        return gmobile;
+//    }
+//
+//    public void setGmobile(String gmobile) {
+//        this.gmobile = gmobile;
+//    }
+//
+//    public String getGemail() {
+//        return gemail;
+//    }
+//
+//    public void setGemail(String gemail) {
+//        this.gemail = gemail;
+//    }
 
 }

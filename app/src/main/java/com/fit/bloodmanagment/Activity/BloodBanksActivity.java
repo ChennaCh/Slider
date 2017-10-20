@@ -47,9 +47,6 @@ public class BloodBanksActivity extends AppCompatActivity implements ObservableS
     private Activity activity;
     private String TAG = BloodBanksActivity.class.getSimpleName();
     ArrayList<BloodbankBean> bbdata=new ArrayList<>();
-    private static String bburl = "http://www.fratelloinnotech.com/smec/getfaculty.php";
-    private String fbranch;
-    private String getbranch;
     Toolbar toolbar;
     ObservableScrollView mScrollView;
 //    Display display = getWindowManager().getDefaultDisplay();
@@ -89,17 +86,13 @@ public class BloodBanksActivity extends AppCompatActivity implements ObservableS
                                 JSONObject c = contacts.getJSONObject(i);
                                 String id = c.getString("id");
                                 String name = c.getString("name");
-                                String pass = c.getString("password");
-                                String phone = c.getString("mobile");
+                                String mobile = c.getString("mobile");
+                                String landline = c.getString("landline");
                                 String email = c.getString("email");
-                                String branch = c.getString("branch");
-                                String gender = c.getString("gender");
-                                String qualification = c.getString("qualification");
-                                String about = c.getString("about");
-
+                                String address = c.getString("address");
+                                String city = c.getString("city");
 //                        validation(name,pass);
-                                bbdata.add(new BloodbankBean(id,name,pass,phone,email,branch,gender,qualification,about));
-
+                                bbdata.add(new BloodbankBean(id,name,mobile,landline,email,address,city));
                                 bloodbankListAdapter = new BloodbankListAdapter(BloodBanksActivity.this,bbdata);
                                 bloodbankrecyle.setAdapter(bloodbankListAdapter);
                                 bloodbankrecyle.setLayoutManager(new LinearLayoutManager(BloodBanksActivity.this));
