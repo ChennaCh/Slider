@@ -38,7 +38,10 @@
     <string name="Myprofile">My Profile</string>
     <string name="Shareit">Share It</string>
     <string name="Feedback">Rating</string>
-    <string name="Request">Emergency Request</string>
+    <string name="Request">Need for Blood</string>
+    <string name="Viewneeds">View Needs</string>
+    <string name="Faqs">FAQs</string>
+    <string name="PrivacyPolicy">Privacy Policy</string>
     <string name="Logout">Logout</string>
     <string name="Pharmacy">Pharmacy</string>
     <string name="Signin">Signin</string>

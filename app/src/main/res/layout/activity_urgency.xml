@@ -34,12 +34,23 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
+                <pl.droidsonroids.gif.GifImageView
+                    android:id="@+id/gifcall"
+                    android:layout_width="250dp"
+                    android:layout_height="100dp"
+                    android:layout_gravity="center"
+                    android:autoLink="phone"
+                    android:background="@null"
+                    android:clickable="true"
+                    android:linksClickable="true"
+                    android:src="@drawable/quickenquiry" />
+
                 <EditText
                     android:id="@+id/myUusername"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="30dp"
-                    android:layout_marginTop="60dp"
+                    android:layout_marginTop="10dp"
                     android:textColor="@color/white"
                     android:backgroundTint="@color/white"
                     android:textColorHint="@color/white"
@@ -87,6 +98,29 @@
                     android:textColorHint="@color/white"
                     android:hint="Address"
                     android:padding="10dp" />
+                <EditText
+                    android:id="@+id/myUpurpose"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="30dp"
+                    android:layout_marginRight="30dp"
+                    android:textColor="@color/white"
+                    android:backgroundTint="@color/white"
+                    android:textColorHint="@color/white"
+                    android:hint="Purpose"
+                    android:padding="10dp" />
+
+                <EditText
+                    android:id="@+id/myCity"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="30dp"
+                    android:layout_marginRight="30dp"
+                    android:backgroundTint="@color/white"
+                    android:hint="City"
+                    android:padding="10dp"
+                    android:textColor="@color/white"
+                    android:textColorHint="@color/white" />
 
 
                 <LinearLayout
@@ -100,6 +134,7 @@
                         android:layout_height="wrap_content"
                         android:textColor="#fff"
                         android:textSize="20dp"
+                        android:paddingLeft="5dp"
                         android:layout_gravity="center"
                         android:text="Blood Group :"/>
 
@@ -116,6 +151,36 @@
                         android:theme="@style/mySpinnerItemStyle" />
 
                 </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="30dp"
+                    android:layout_marginRight="30dp"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="#fff"
+                        android:textSize="20dp"
+                        android:paddingRight="10dp"
+                        android:layout_gravity="center"
+                        android:text="Required Date :"/>
+
+                    <EditText
+                        android:id="@+id/etrequireddate"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+
+                        android:backgroundTint="#fff"
+                        android:focusable="false"
+                        android:gravity="center"
+                        android:hint="MM/DD/YY"
+                        android:textColor="@color/white"
+                        android:textColorHint="@color/white"
+                        android:textSize="18dp" />
+
+                </LinearLayout>
+
 
 
                 <Button

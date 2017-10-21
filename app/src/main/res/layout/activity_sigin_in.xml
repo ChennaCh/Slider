@@ -53,7 +53,7 @@
                     android:layout_marginLeft="30dp"
                     android:layout_marginRight="30dp"
                     android:ems="10"
-                    android:hint="Email"
+                    android:hint="Email/Mobile"
                     android:inputType="text"
                     android:padding="10dp"
                     android:singleLine="true"

@@ -33,7 +33,6 @@
         <meta-data
             android:name="com.google.android.maps.v2.API_KEY"
             android:value="AIzaSyDaSmhQzNMPS0e0qDgOcPkIofpV3Js7wA8" />
-
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
@@ -64,7 +63,10 @@
         <activity
             android:name=".Map.MainMapActivity"
             android:label="@string/title_activity_main_map" />
-        <activity android:name=".Activity.UrgencyActivity"></activity>
+        <activity android:name=".Activity.UrgencyActivity" />
+        <activity android:name=".Activity.ViewNeedsActivity" />
+        <activity android:name=".Activity.FaqsActivity" />
+        <activity android:name=".Activity.PrivacyPolicyActivity"></activity>
     </application>
 
 </manifest>

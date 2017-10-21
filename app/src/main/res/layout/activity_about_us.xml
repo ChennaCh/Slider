@@ -74,20 +74,6 @@
 
 
                 <LinearLayout android:layout_marginTop="5dip" android:layout_width="fill_parent" android:layout_height="wrap_content" android:orientation="vertical" android:layout_gravity="center">
-
-                    <LinearLayout android:id="@+id/panel2" android:visibility="gone" android:orientation="vertical" android:layout_width="fill_parent" android:layout_height="wrap_content">
-                        <TextView
-                            android:layout_margin="2dip"
-                            android:text=" About Team :\n\n      We developed this application with team of 4 who are always passinate to learn new things and believes in action rather than voice.\n\n      We believed that CREATIVITY can solve almost any problem. In this belief, we try to connect the people with blood and humanity through this app.\n\n      The main motive of our app is no one shouldn't die because of blood scarcity and it is our resposibitlity to maintain the propotianate ratio of necessity and availability of blood.
-\n\n About Company :\n\n      FRATELLO INNOTECH is the fastest growing software developement company.The motto has always been timely service, best quality and optimum cost.\n\n      Always keep in touch with the customers through quality, performance, service and assistance. We value the trust and beliefs vested in us by our clients and professional contacts and provide a dedicated service with an honest and direct approach in all our dealings.\n\n      Our Company always encourage the new thoughts and creativity in developing applications to get the better solutions which meet new requirements, unarticulated needs, or existing market needs."
-                            android:padding="5dip"
-                            android:background="#4963ca"
-                            android:textSize="15dp"
-                            android:textColor="#ffffff"
-                            android:layout_width="fill_parent"
-                            android:layout_height="wrap_content" />
-                    </LinearLayout>
-
                     <TextView
                         android:id="@+id/text2"
                         android:layout_width="fill_parent"
@@ -101,9 +87,23 @@
                         android:textColor="#4963ca"
                         android:textSize="18dp"
                         android:textStyle="bold" />
+                    <LinearLayout android:id="@+id/panel2" android:visibility="gone" android:orientation="vertical" android:layout_width="fill_parent" android:layout_height="wrap_content">
+                        <TextView
+                            android:layout_margin="2dip"
+                            android:text=" About Team :\n\n      We developed this application with team of 4 who are always passinate to learn new things and believes in action rather than voice.\n\n      We believed that CREATIVITY can solve almost any problem. In this belief, we try to connect the people with blood and humanity through this app.\n\n      The main motive of our app is no one shouldn't die because of blood scarcity and it is our resposibitlity to maintain the propotianate ratio of necessity and availability of blood.
+\n\n About Company :\n\n      FRATELLO INNOTECH is the fastest growing software developement company.The motto has always been timely service, best quality and optimum cost.\n\n      Always keep in touch with the customers through quality, performance, service and assistance. We value the trust and beliefs vested in us by our clients and professional contacts and provide a dedicated service with an honest and direct approach in all our dealings.\n\n      Our Company always encourage the new thoughts and creativity in developing applications to get the better solutions which meet new requirements, unarticulated needs, or existing market needs."
+                            android:padding="5dip"
+                            android:background="#4963ca"
+                            android:textSize="15dp"
+                            android:textColor="#ffffff"
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content" />
+                    </LinearLayout>
+
+
                 </LinearLayout>
 
-                <LinearLayout android:layout_marginTop="5dip" android:layout_marginBottom="10dp" android:layout_width="fill_parent" android:layout_height="wrap_content" android:orientation="vertical" android:layout_gravity="center">
+                <LinearLayout android:layout_marginTop="5dip" android:layout_width="fill_parent" android:layout_height="wrap_content" android:orientation="vertical" android:layout_gravity="center">
                     <TextView android:text="Contact Us" android:drawableEnd="@drawable/downarrow" android:drawableRight="@drawable/downarrow" android:drawablePadding="10dp"  android:id="@+id/text3" android:padding="5dip"  android:background="#d8d8d8" android:textColor="#4963ca" android:textStyle="bold" android:textSize="18dp"  android:layout_width="fill_parent" android:layout_height="wrap_content" />
                     <LinearLayout android:id="@+id/panel3" android:visibility="gone" android:orientation="vertical" android:layout_width="fill_parent" android:layout_height="wrap_content">
                         <TextView

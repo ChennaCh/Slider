@@ -6,6 +6,7 @@ import android.app.ProgressDialog;
 import android.content.ActivityNotFoundException;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -16,6 +17,7 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Environment;
+import android.preference.PreferenceManager;
 import android.provider.MediaStore;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.ActivityCompat;
@@ -24,6 +26,7 @@ import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
+import android.util.Base64;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -40,10 +43,14 @@ import android.widget.Toast;
 import com.fit.bloodmanagment.Activity.AboutUsActivity;
 import com.fit.bloodmanagment.Activity.BloodBanksActivity;
 import com.fit.bloodmanagment.Activity.DonarActivity;
+import com.fit.bloodmanagment.Activity.FaqsActivity;
 import com.fit.bloodmanagment.Activity.MyProfileActivity;
 import com.fit.bloodmanagment.Activity.PrecautionsActivity;
+import com.fit.bloodmanagment.Activity.PrivacyPolicyActivity;
 import com.fit.bloodmanagment.Activity.UrgencyActivity;
+import com.fit.bloodmanagment.Activity.ViewNeedsActivity;
 import com.fit.bloodmanagment.Beans.ImageHelperBean;
+import com.fit.bloodmanagment.BuildConfig;
 import com.fit.bloodmanagment.GooglePlaces.GetNearbyPlacesData;
 import com.fit.bloodmanagment.R;
 import com.fit.bloodmanagment.SQliteDatabase.ImageDatabaseHelper;
@@ -104,7 +111,8 @@ public class MainMapActivity extends FragmentActivity implements OnMapReadyCallb
     private String mCurrentPhotoPath;  // File path to the last image captured
     File destination;
     LinearLayout donorll,hospitalll,pharmacyll,fableftll;
-
+    SharedPreferences preferences;
+    String myprefs;
 
 
     @Override
@@ -116,8 +124,8 @@ public class MainMapActivity extends FragmentActivity implements OnMapReadyCallb
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
         View header  = navigationView.getHeaderView(0);
-
-
+        preferences = getSharedPreferences("pref",MODE_PRIVATE);
+        String img_str = preferences.getString("userphoto", BuildConfig.FLAVOR);
         if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             checkLocationPermission();
         }
@@ -393,25 +401,29 @@ public class MainMapActivity extends FragmentActivity implements OnMapReadyCallb
 
         if (resultCode == Activity.RESULT_OK) {
             if (requestCode == SELECT_FILE){
-               // onSelectFromGalleryResult(data);
+                onSelectFromGalleryResult(data);
+//                SharedPreferences shre = PreferenceManager.getDefaultSharedPreferences(this);
+//                SharedPreferences.Editor edit=shre.edit();
+//                edit.putString("imagepath","/sdcard/imh.jpeg");
+//                edit.commit();
                // Drawable dbDrawable = getResources().getDrawable(R.mipmap.ic_launcher);
-                Bitmap bm=null;
-                if (data != null) {
-                    try {
-                        bm = MediaStore.Images.Media.getBitmap(getApplicationContext().getContentResolver(), data.getData());
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                }
-                try {
-                    createImageFile();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                profilepic.setImageBitmap(bm);
-                Drawable drawable = new BitmapDrawable(getResources(), bm);
-                databaseHelper.insetImage(drawable, IMAGE_ID);
-                new LoadImageFromDatabaseTask().execute(0);
+//                Bitmap bm=null;
+//                if (data != null) {
+//                    try {
+//                        bm = MediaStore.Images.Media.getBitmap(getApplicationContext().getContentResolver(), data.getData());
+//                    } catch (IOException e) {
+//                        e.printStackTrace();
+//                    }
+//                }
+//                try {
+//                    createImageFile();
+//                } catch (IOException e) {
+//                    e.printStackTrace();
+//                }
+//                profilepic.setImageBitmap(bm);
+//                Drawable drawable = new BitmapDrawable(getResources(), bm);
+//                databaseHelper.insetImage(drawable, IMAGE_ID);
+//                new LoadImageFromDatabaseTask().execute(0);
 
             }
 
@@ -422,19 +434,37 @@ public class MainMapActivity extends FragmentActivity implements OnMapReadyCallb
         }
     }
 
-//    private void onSelectFromGalleryResult(Intent data) {
-//
-//        Bitmap bm=null;
-//        if (data != null) {
-//            try {
-//                bm = MediaStore.Images.Media.getBitmap(getApplicationContext().getContentResolver(), data.getData());
-//            } catch (IOException e) {
-//                e.printStackTrace();
-//            }
-//        }
-//
-//        profilepic.setImageBitmap(bm);
-//    }
+    private void onSelectFromGalleryResult(Intent data) {
+
+        Bitmap bm=null;
+        if (data != null) {
+            try {
+                bm = MediaStore.Images.Media.getBitmap(getApplicationContext().getContentResolver(), data.getData());
+                Drawable drawable = new BitmapDrawable(getResources(), bm);
+                profilepic.setBackground(drawable);
+//Image to string
+                profilepic.buildDrawingCache();
+                Bitmap bitmap = profilepic.getDrawingCache();
+                ByteArrayOutputStream stream=new ByteArrayOutputStream();
+                bitmap.compress(Bitmap.CompressFormat.PNG, 90, stream);
+                byte[] imageC = stream.toByteArray();
+//String to image
+                String img_str = Base64.encodeToString(imageC, 0);
+//String base = img_str;
+
+                SharedPreferences preferences = getSharedPreferences("pref",MODE_PRIVATE);
+                SharedPreferences.Editor editor = preferences.edit();
+                editor.putString("userphoto",img_str);
+                editor.commit();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+       // profilepic.setImageBitmap(bm);
+
+
+    }
     private void onCaptureImageResult(Intent data) {
         Bitmap thumbnail = (Bitmap) data.getExtras().get("data");
         ByteArrayOutputStream bytes = new ByteArrayOutputStream();
@@ -503,6 +533,15 @@ public class MainMapActivity extends FragmentActivity implements OnMapReadyCallb
 
         } else if (id == R.id.nav_request) {
             Intent intent = new Intent(MainMapActivity.this, UrgencyActivity.class);
+            startActivity(intent);
+        }else if(id ==R.id.nav_viewneeds){
+            Intent intent = new Intent(MainMapActivity.this, ViewNeedsActivity.class);
+            startActivity(intent);
+        }else if(id==R.id.nav_faqs){
+            Intent intent = new Intent(MainMapActivity.this, FaqsActivity.class);
+            startActivity(intent);
+        }else if(id==R.id.nav_privacypolicy){
+            Intent intent = new Intent(MainMapActivity.this, PrivacyPolicyActivity.class);
             startActivity(intent);
         }
 

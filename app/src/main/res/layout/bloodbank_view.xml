@@ -1,15 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.CardView
-    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+<android.support.v7.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginTop="5dp"
-    android:layout_marginLeft="10dp"
-    android:layout_marginRight="10dp"
-    android:layout_marginBottom="5dp"
-    card_view:cardBackgroundColor="#fff"
+   android:layout_margin="20dp"
+
     card_view:cardCornerRadius="5dp">
 
     <LinearLayout
@@ -22,7 +18,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="#FF62C7C6"
-            android:paddingLeft="10dp"
+            android:padding="5dp"
             android:text="Name"
             android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
             android:textColor="#fff"
@@ -38,6 +34,7 @@
                 android:layout_width="60dp"
                 android:layout_height="90dp"
                 android:gravity="center"
+                android:padding="5dp"
                 android:src="@drawable/hospitals" />
 
             <LinearLayout
@@ -58,7 +55,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:layout_weight="1.50"
+                        android:layout_weight="1.60"
                         android:text="Phone"
                         android:textColor="#074809" />
 
@@ -66,17 +63,19 @@
                         android:id="@+id/gifcall"
                         android:layout_width="150dp"
                         android:layout_height="50dp"
-                        android:autoLink="phone"
-                        android:linksClickable="true"
                         android:layout_gravity="center"
+                        android:autoLink="phone"
                         android:background="@null"
                         android:clickable="true"
+                        android:linksClickable="true"
                         android:src="@drawable/phonecalling" />
                 </LinearLayout>
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
+
                     <TextView
                         android:id="@+id/get_landline"
                         android:layout_width="match_parent"
@@ -85,6 +84,7 @@
                         android:text="Landline"
                         android:textColor="#074809" />
                 </LinearLayout>
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -96,10 +96,10 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:layout_weight="1.50"
-                        android:textIsSelectable="true"
+                        android:layout_weight="1.60"
                         android:text="Mail"
-                        android:textColor="#074809" />
+                        android:textColor="#074809"
+                        android:textIsSelectable="true" />
 
                     <pl.droidsonroids.gif.GifImageView
                         android:id="@+id/gifmail"
@@ -123,7 +123,7 @@
                         android:layout_height="match_parent"
                         android:layout_marginBottom="2dp"
                         android:layout_marginTop="10dp"
-                        android:layout_weight="1.50"
+                        android:layout_weight="1.60"
                         android:maxLines="3"
                         android:text="hello this is text for description"
                         android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
@@ -139,14 +139,15 @@
                         android:clickable="true"
                         android:src="@drawable/mapiconred" />
                 </LinearLayout>
+
                 <TextView
                     android:id="@+id/get_city"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
+                    android:layout_marginBottom="10dp"
                     android:text="City"
-                    android:textColor="#074809"
-                    android:layout_marginBottom="10dp"/>
+                    android:textColor="#074809" />
             </LinearLayout>
 
         </LinearLayout>

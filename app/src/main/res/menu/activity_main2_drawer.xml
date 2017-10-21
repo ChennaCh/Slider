@@ -34,14 +34,35 @@
                     android:icon="@drawable/emergencyicon"
                     android:title="@string/Request" />
             </group>
-
+            <group android:checkableBehavior="single"
+                android:id="@+id/group5">
+                <item
+                    android:id="@+id/nav_viewneeds"
+                    android:icon="@drawable/viewneeds"
+                    android:title="@string/Viewneeds" />
+            </group>
+            <group android:checkableBehavior="single"
+                android:id="@+id/group6">
+                <item
+                    android:id="@+id/nav_faqs"
+                    android:icon="@drawable/faqs"
+                    android:title="@string/Faqs" />
+            </group>
+            <group android:checkableBehavior="single"
+                android:id="@+id/group7">
+                <item
+                    android:id="@+id/nav_privacypolicy"
+                    android:icon="@drawable/privacypolicy"
+                    android:title="@string/PrivacyPolicy" />
+            </group>
 
             <group android:checkableBehavior="single"
-        android:id="@+id/group5">
+              android:id="@+id/group8">
         <item
             android:id="@+id/nav_myprofile"
             android:icon="@drawable/person"
             android:title="@string/Myprofile"
+            android:visible="false"
            />
         </group>
         <item

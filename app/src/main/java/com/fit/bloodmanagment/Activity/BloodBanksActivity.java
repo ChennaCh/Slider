@@ -122,18 +122,12 @@ public class BloodBanksActivity extends AppCompatActivity implements ObservableS
     };
         queue.add(getRequest);
     }
-
-
     @Override
     public void onScrollChanged(int scrollY, boolean firstScroll, boolean dragging) {
-
     }
-
     @Override
     public void onDownMotionEvent() {
-
     }
-
     @Override
     public void onUpOrCancelMotionEvent(ScrollState scrollState) {
         ActionBar ab = getSupportActionBar();
@@ -150,7 +144,6 @@ public class BloodBanksActivity extends AppCompatActivity implements ObservableS
             }
         }
     }
-
     @Override
     public boolean onSupportNavigateUp() {
         onBackPressed();
@@ -161,8 +154,4 @@ public class BloodBanksActivity extends AppCompatActivity implements ObservableS
         Intent intent = new Intent(BloodBanksActivity.this, MainMapActivity.class);
         startActivity(intent);
     }
-
-
-
-
 }
