@@ -1,9 +1,693 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context="com.fit.bloodmanagment.Activity.FaqsActivity">
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar_faqs"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        app:layout_scrollFlags="scroll|enterAlways"
+        android:titleTextColor="#fff"
+        app:theme="@style/ToolbarStyle"
+        android:background="?attr/colorPrimary"/>
+<ScrollView
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true">
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:orientation="vertical">
 
-</android.support.constraint.ConstraintLayout>
+        <LinearLayout
+            android:id="@+id/llfaqtxt1"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/faqtext1"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:background="#d8d8d8"
+                android:drawableEnd="@drawable/downarrow"
+                android:drawablePadding="10dp"
+                android:drawableRight="@drawable/downarrow"
+                android:padding="5dip"
+                android:text="What is blood? How much blood does a person have?"
+                android:textColor="#4963ca"
+                android:textSize="18dp"
+                android:textStyle="bold" />
+
+            <LinearLayout
+                android:id="@+id/faqpanel1"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <TextView
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="2dip"
+                    android:background="#4963ca"
+                    android:padding="5dip"
+                    android:text="       Blood is the red coloured fluid flowing continuously in our body's circulatory system. About 1/12th of the body weight of a healthy individual is blood. On an average there are about 5 - 6 litres of blood present.\n"
+                    android:textColor="#ffffff"
+                    android:textSize="16dp" />
+            </LinearLayout>
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:id="@+id/llfaqtxt2"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="5dip"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/faqtext2"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:background="#d8d8d8"
+                android:drawableEnd="@drawable/downarrow"
+                android:drawablePadding="10dp"
+                android:drawableRight="@drawable/downarrow"
+                android:padding="5dip"
+                android:text="What are the functions of the components in blood?"
+                android:textColor="#4963ca"
+                android:textSize="18dp"
+                android:textStyle="bold" />
+
+            <LinearLayout
+                android:id="@+id/faqpanel2"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <TextView
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="2dip"
+                    android:background="#4963ca"
+                    android:padding="5dip"
+                    android:text="        Plasma: acts as a vehicle to carry many substances like glucose, fats, and proteins, enzymes, and hormones etc., in addition to the blood cells.\n\n        Red Cells: carry oxygen from lungs to various body tissues and take back carbon dioxide from the cells and tissues to be thrown out of body in the form of exhaled air.\n\n        White cells: mainly act as body scavengers and guards. They help in the immune system of the body and act as defence forces of the body killing the bacteria or any other organisms entering the body.\n\n        Platelets: help in the clotting and coagulation of blood. We have experienced in our life that whenever we get injured the bleeding stops after a few minutes. This is brought about by a mechanism called clotting of blood in which platelets plays a very vital role.\n"
+                    android:textColor="#ffffff"
+                    android:textSize="15dp" />
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/llfaqtxt3"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="5dip"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/faqtext3"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:background="#d8d8d8"
+                android:drawableEnd="@drawable/downarrow"
+                android:drawablePadding="10dp"
+                android:drawableRight="@drawable/downarrow"
+                android:padding="5dip"
+                android:text="What is haemoglobin?"
+                android:textColor="#4963ca"
+                android:textSize="18dp"
+                android:textStyle="bold" />
+
+            <LinearLayout
+                android:id="@+id/faqpanel3"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <TextView
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="2dip"
+                    android:background="#4963ca"
+                    android:padding="5dip"
+                    android:text="        Haemoglobin is a substance present in the red cells. It is helpful in carrying oxygen and carbon dioxide. On an average, in a healthy male it should be between 14 - 16 gm % and in a female it should be about 12 - 14 gm %. This is also being daily synthesized and the new is replacing the old stock.\n"
+                    android:textColor="#ffffff"
+                    android:textSize="16dp" />
+
+
+
+            </LinearLayout>
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/llfaqtxt4"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="5dip"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/faqtext4"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:background="#d8d8d8"
+                android:drawableEnd="@drawable/downarrow"
+                android:drawablePadding="10dp"
+                android:drawableRight="@drawable/downarrow"
+                android:padding="5dip"
+                android:text="What is a unit of blood?"
+                android:textColor="#4963ca"
+                android:textSize="18dp"
+                android:textStyle="bold" />
+
+            <LinearLayout
+                android:id="@+id/faqpanel4"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <TextView
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="2dip"
+                    android:background="#4963ca"
+                    android:padding="5dip"
+                    android:text="        Blood is collected in plastic bags which contain a watery fluid which prevents blood from getting coagulated. On an average we draw about 450 ml. of blood from a person, depending on the weight of the donor. This blood, plus the amount of anti coagulant present in the bottle or bag, is known as one unit of blood.\n"
+                    android:textColor="#ffffff"
+                    android:textSize="16dp" />
+
+
+
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/llfaqtxt5"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="5dip"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/faqtext5"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:background="#d8d8d8"
+                android:drawableEnd="@drawable/downarrow"
+                android:drawablePadding="10dp"
+                android:drawableRight="@drawable/downarrow"
+                android:padding="5dip"
+                android:text="How long can blood be stored?"
+                android:textColor="#4963ca"
+                android:textSize="18dp"
+                android:textStyle="bold" />
+
+            <LinearLayout
+                android:id="@+id/faqpanel5"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <TextView
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="2dip"
+                    android:background="#4963ca"
+                    android:padding="5dip"
+                    android:text="        Whole blood can be stored up to 35 days, when kept in CPDA anti coagulant solution and refrigerated at 2 - 4 deg C. But the demand is so great that blood hardly ever remains in storage for so long and is used much before expiry.\n"
+                    android:textColor="#ffffff"
+                    android:textSize="16dp" />
+
+
+
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/llfaqtxt6"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="5dip"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/faqtext6"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:background="#d8d8d8"
+                android:drawableEnd="@drawable/downarrow"
+                android:drawablePadding="10dp"
+                android:drawableRight="@drawable/downarrow"
+                android:padding="5dip"
+                android:text="Can we separate blood into its components?"
+                android:textColor="#4963ca"
+                android:textSize="18dp"
+                android:textStyle="bold" />
+
+            <LinearLayout
+                android:id="@+id/faqpanel6"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <TextView
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="2dip"
+                    android:background="#4963ca"
+                    android:padding="5dip"
+                    android:text="        Yes! Now with technical advancements, we can make components of blood and store them. For example, plasma can be separated from whole blood and stored up to one year in frozen state at -80 deg C temperature or below. This is called Fresh Frozen Plasma. Similarly there are other components like Platelet Rich Plasma; Platelet Concentrate (can be stored as a life saving measure upto 5 days now at 22- 24 degrees C in a platelet incubator and agitator); Cryoprecipitate (which is very useful in treating bleeding disorders due to the deficiency of factor VIII and IX); Factor VIII and IX; Albumin, Globulin and many others.\n\n        In most progressive blood banks more than 85 % of the blood collected is converted into components and stored. This is because many patients do not require whole blood. For example, a patient whose haemoglobin is low and is therefore anemic, may just require Packed Cells i.e. only red cells; a patient with burns may need more of plasma than cells; a patient with hemophilia may require only Factor VIII.\n\n        Now with the advent of Cell-separators we can directly draw a particular component from the donor, while rest of the blood constituents go back to the donor.\n"
+                    android:textColor="#ffffff"
+                    android:textSize="16dp" />
+
+
+
+            </LinearLayout>
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/llfaqtxt7"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="5dip"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/faqtext7"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:background="#d8d8d8"
+                android:drawableEnd="@drawable/downarrow"
+                android:drawablePadding="10dp"
+                android:drawableRight="@drawable/downarrow"
+                android:padding="5dip"
+                android:text="In which situations do patients need blood transfusion?"
+                android:textColor="#4963ca"
+                android:textSize="18dp"
+                android:textStyle="bold" />
+
+            <LinearLayout
+                android:id="@+id/faqpanel7"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <TextView
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="2dip"
+                    android:background="#4963ca"
+                    android:padding="5dip"
+                    android:text="         There are many situations in which patients need blood to stay alive:\n   •	A patient needs blood after a major accident in which there is loss of blood.\n
+   •	No major surgery is performed without blood as there is bound to be blood loss.\n
+   •	On an average, for every open heart surgery about 6 units of blood is required.\n
+   •	In miscarriage or childbirth cases the patient may need large amount of blood to be transfused for saving her life and also the child's.\n
+   •	For patients with blood diseases like severe Anaemias especially Aplastic Anaemias, Leucaemias (blood cancer), Haemophilia (bleeding disorder), Thalassemia etc. repeated blood transfusions are the only solution.\n
+   •	In many other situations like poisoning, drug reactions, shock, burns, blood transfusion is the only way to save precious human life\n"
+                    android:textColor="#ffffff"
+                    android:textSize="16dp" />
+
+
+
+            </LinearLayout>
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/llfaqtxt8"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="5dip"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/faqtext8"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:background="#d8d8d8"
+                android:drawableEnd="@drawable/downarrow"
+                android:drawablePadding="10dp"
+                android:drawableRight="@drawable/downarrow"
+                android:padding="5dip"
+                android:text="	What happens to patients in transfusions with incompatible blood (mismatched blood)?"
+                android:textColor="#4963ca"
+                android:textSize="18dp"
+                android:textStyle="bold" />
+
+            <LinearLayout
+                android:id="@+id/faqpanel8"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <TextView
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="2dip"
+                    android:background="#4963ca"
+                    android:padding="5dip"
+                    android:text="         The following symptoms may occur after only a few ml. of blood have been given:\n1. Patient complains of shivering, restlessness, nausea, and vomiting. There is precardial and lumbar pain\n.
+2. Cold, clammy skin with cyanosis. \n
+3. Pulse rate increases, respiratory rate increases. Temperature increases to 38 to 40 deg C. [101 to 105 F].\n
+4. Blood pressure falls and patient passes into a state of shock.\n
+5. Haemoglobinaemia, haemoglobinurea (urine turns red); oliguria (urine becomes scanty or the urinary output is reduced) and anuria (total output of urine becomes 200 ml. a day).\n
+6. Jaundice appears after a few hours and in some cases anuria persists and uremia develops. This may lead to death.\n"
+                    android:textColor="#ffffff"
+                    android:textSize="16dp" />
+
+
+
+            </LinearLayout>
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/llfaqtxt9"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="5dip"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/faqtext9"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:background="#d8d8d8"
+                android:drawableEnd="@drawable/downarrow"
+                android:drawablePadding="10dp"
+                android:drawableRight="@drawable/downarrow"
+                android:padding="5dip"
+                android:text="Who is a healthy donor?"
+                android:textColor="#4963ca"
+                android:textSize="18dp"
+                android:textStyle="bold" />
+
+            <LinearLayout
+                android:id="@+id/faqpanel9"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <TextView
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="2dip"
+                    android:background="#4963ca"
+                    android:padding="5dip"
+                    android:text="        Any person within the age group of 18 - 55 years with a body weight as minimum 45 kgs, and having haemoglobin content as minimum 12.5 gm%.\n"
+                    android:textColor="#ffffff"
+                    android:textSize="16dp" />
+
+
+
+            </LinearLayout>
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/llfaqtxt10"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="5dip"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/faqtext10"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:background="#d8d8d8"
+                android:drawableEnd="@drawable/downarrow"
+                android:drawablePadding="10dp"
+                android:drawableRight="@drawable/downarrow"
+                android:padding="5dip"
+                android:text="How long does the donation take?"
+                android:textColor="#4963ca"
+                android:textSize="18dp"
+                android:textStyle="bold" />
+
+            <LinearLayout
+                android:id="@+id/faqpanel10"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <TextView
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="2dip"
+                    android:background="#4963ca"
+                    android:padding="5dip"
+                    android:text="         The procedure is done by skilled, specially trained technicians and takes three to eight minutes. However, from start to finish (filling form, post donation rest etc) the entire process should take upwards of 35 minutes.\n"
+                    android:textColor="#ffffff"
+                    android:textSize="16dp" />
+
+
+
+            </LinearLayout>
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/llfaqtxt11"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="5dip"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/faqtext11"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:background="#d8d8d8"
+                android:drawableEnd="@drawable/downarrow"
+                android:drawablePadding="10dp"
+                android:drawableRight="@drawable/downarrow"
+                android:padding="5dip"
+                android:text="Does the needle hurt the entire time?"
+                android:textColor="#4963ca"
+                android:textSize="18dp"
+                android:textStyle="bold" />
+
+            <LinearLayout
+                android:id="@+id/faqpanel11"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <TextView
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="2dip"
+                    android:background="#4963ca"
+                    android:padding="5dip"
+                    android:text="        There may be a little sting when the needle is inserted, but there should be no pain during the donation."
+                    android:textColor="#ffffff"
+                    android:textSize="16dp" />
+
+
+
+            </LinearLayout>
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/llfaqtxt12"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="5dip"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/faqtext12"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:background="#d8d8d8"
+                android:drawableEnd="@drawable/downarrow"
+                android:drawablePadding="10dp"
+                android:drawableRight="@drawable/downarrow"
+                android:padding="5dip"
+                android:text="Does the donor suffer from any harmful effects after donating blood donation?"
+                android:textColor="#4963ca"
+                android:textSize="18dp"
+                android:textStyle="bold" />
+
+            <LinearLayout
+                android:id="@+id/faqpanel12"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <TextView
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="2dip"
+                    android:background="#4963ca"
+                    android:padding="5dip"
+                    android:text="         Absolutely not, rather a donor after having given blood voluntarily gets a feeling of great pleasure, peace and bliss. Soon, within a period of 24 - 48 hours, the same amount of new blood gets formed in the body, which helps the donor in many ways. His own body resistance improves, the circulation improves, and he himself feels healthier than before.\n"
+                    android:textColor="#ffffff"
+                    android:textSize="16dp" />
+
+
+
+            </LinearLayout>
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/llfaqtxt13"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="5dip"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/faqtext13"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:background="#d8d8d8"
+                android:drawableEnd="@drawable/downarrow"
+                android:drawablePadding="10dp"
+                android:drawableRight="@drawable/downarrow"
+                android:padding="5dip"
+                android:text="Does a donor need to rest after donating blood?"
+                android:textColor="#4963ca"
+                android:textSize="18dp"
+                android:textStyle="bold" />
+
+            <LinearLayout
+                android:id="@+id/faqpanel13"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <TextView
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="2dip"
+                    android:background="#4963ca"
+                    android:padding="5dip"
+                    android:text="         Yes. The donor needs rest, preferably lying down, so that the amount of blood that has been donated soon gets poured into the circulation from the body pools in a natural way. The donor should take it easy for about 15 - 20 minutes.\n"
+                    android:textColor="#ffffff"
+                    android:textSize="16dp" />
+
+
+
+            </LinearLayout>
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/llfaqtxt14"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="5dip"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/faqtext14"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:background="#d8d8d8"
+                android:drawableEnd="@drawable/downarrow"
+                android:drawablePadding="10dp"
+                android:drawableRight="@drawable/downarrow"
+                android:padding="5dip"
+                android:text="How long will it take for the body to replenish the blood and How frequently a donor can donate blood?"
+                android:textColor="#4963ca"
+                android:textSize="18dp"
+                android:textStyle="bold" />
+
+            <LinearLayout
+                android:id="@+id/faqpanel14"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <TextView
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="2dip"
+                    android:background="#4963ca"
+                    android:padding="5dip"
+                    android:text="        The body replaces blood volume or plasma within 24 hours. Red cells need about four to eight weeks for complete replacement.\n        Three months time between donations is a very safe interval.\n"
+                    android:textColor="#ffffff"
+                    android:textSize="16dp" />
+
+
+
+            </LinearLayout>
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/llfaqtxt15"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="5dip"
+            android:layout_marginBottom="50dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/faqtext15"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:background="#d8d8d8"
+                android:drawableEnd="@drawable/downarrow"
+                android:drawablePadding="10dp"
+                android:drawableRight="@drawable/downarrow"
+                android:padding="5dip"
+                android:text="Do any diseases debar a donor from giving blood?"
+                android:textColor="#4963ca"
+                android:textSize="18dp"
+                android:textStyle="bold" />
+
+            <LinearLayout
+                android:id="@+id/faqpanel15"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <TextView
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="2dip"
+                    android:background="#4963ca"
+                    android:padding="5dip"
+                    android:text="        Yes, if the donor has suffered from any of the under-mentioned diseases: -\n
+     Fever: He should not have suffered from fever for the past 15 days.\n
+     Jaundice: A donor should not have his blood tested positive for AUSTRALIA ANTIGEN.\n
+     Blood transmitted diseases: Like Syphilis, Malaria, Filaria etc. debar a donor from donating blood till he is treated and is free from them.\n
+     Drugs: If a donor is taking drugs like Aspirin, anti-hypertensive, anti-diabetics, hormones, corticosteroids etc., he is unfit to donate blood.\n
+     AIDS: No person having HIV positive can be allowed to donate blood.\n\n"
+                    android:textColor="#ffffff"
+                    android:textSize="16dp" />
+
+
+
+            </LinearLayout>
+        </LinearLayout>
+
+
+    </LinearLayout>
+</ScrollView>
+
+</LinearLayout>

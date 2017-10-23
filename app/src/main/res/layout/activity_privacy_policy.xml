@@ -1,9 +1,65 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context="com.fit.bloodmanagment.Activity.PrivacyPolicyActivity">
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/privacytoolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        app:layout_scrollFlags="scroll|enterAlways"
+        app:titleTextColor="#fff"
+        app:theme="@style/ToolbarStyle"
+        android:background="?attr/colorPrimary"/>
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true">
 
-</android.support.constraint.ConstraintLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="#FFD8D8D8"
+                android:padding="10dp"
+                android:paddingLeft="10dp"
+                android:text="Terms and Conditions"
+                android:textColor="#FF4963CA"
+                android:textSize="18dp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:paddingLeft="20dp"
+                android:text="1. Blood Donors does not claim that potential donors are free from any disease or bodily conditions that prevent them from donating blood at the time when they are contacted for blood donation. \n\n
+2. Blood Donors does not guarantee that a potential donor will agree to donate blood whenever called upon to do so. It is entirely at the discretion of the individual whether or not to donate blood. \n\n
+3.Potential donors registering on this site MUST UNDERSTAND that this site is a public directory and all the information on this site is accessible to EVERYONE. We cannot be held responsible for any dispute, losses or harm arising out of or due to misuse of any information (Eg. Telephone numbers) provided on this site and is not liable to pay any damages thereof. \n\n
+4. Blood Donors is not a blood bank and is not affiliated to any blood bank. \n\n
+5.We cannot be held responsible for any disputes, losses or harm caused to the blood recipient or blood donor or any third party interested in them that arises due to any interaction* between them. * Interaction implies communication by any medium, actual blood donation or transfusion thereof. \n\n
+6.We urge you not to make false registrations/not to register if you do not seriously wish to donate blood. It is a matter of life and death for those in need of blood in an emergency or otherwise.\n\n"
+
+                android:textColor="#000"
+                android:textSize="16dp" />
+        </LinearLayout>
+    </ScrollView>
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/precautionstoolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        app:layout_scrollFlags="scroll|enterAlways"
+        app:titleTextColor="#fff"
+        app:theme="@style/ToolbarStyle"
+        android:background="?attr/colorPrimary"/>
+</LinearLayout>

@@ -17,9 +17,9 @@ import com.android.volley.RequestQueue;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.fit.bloodmanagment.Adapter.DonorListAdapter;
+
 import com.fit.bloodmanagment.Adapter.ViewNeedsListAdapter;
-import com.fit.bloodmanagment.Beans.DonorBean;
+
 import com.fit.bloodmanagment.Beans.ViewNeedsBean;
 import com.fit.bloodmanagment.Map.MainMapActivity;
 import com.fit.bloodmanagment.R;
