@@ -81,17 +81,17 @@ public class ViewNeedsActivity  extends AppCompatActivity implements ObservableS
                             JSONArray contacts = jsonObj.getJSONArray("result");
                             for (int i = 0; i < contacts.length(); i++) {
                                 JSONObject c = contacts.getJSONObject(i);
-                                String id=c.getString("id");
-                                String name = c.getString("name");
-                                String email = c.getString("email");
-                                String mobile = c.getString("mobile");
-                                String address = c.getString("address");
-                                String bloodgroup = c.getString("bloodgroup");
-                                String city=c.getString("city");
-                                String purpose=c.getString("purpose");
-                                String duedate=c.getString("duedate");
+                                String vid=c.getString("id");
+                                String vname = c.getString("name");
+                                String vemail = c.getString("email");
+                                String vmobile = c.getString("mobile");
+                                String vaddress = c.getString("address");
+                                String vbloodgroup = c.getString("bloodgroup");
+                                String vcity=c.getString("city");
+                                String vpurpose=c.getString("purpose");
+                                String vduedate=c.getString("duedate");
                                 // validation(name,pass);
-                                vneedsdata.add(new ViewNeedsBean(id,name,email,mobile,address,bloodgroup,city,purpose,duedate));
+                                vneedsdata.add(new ViewNeedsBean(vid,vname,vemail,vmobile,vaddress,vbloodgroup,vpurpose,vduedate,vcity));
                                 vneedListAdapter = new ViewNeedsListAdapter(ViewNeedsActivity.this,vneedsdata);
                                 vneedrecycle.setAdapter(vneedListAdapter);
                                 vneedrecycle.setLayoutManager(new LinearLayoutManager(ViewNeedsActivity.this));
