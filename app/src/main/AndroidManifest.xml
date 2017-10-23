@@ -66,7 +66,9 @@
         <activity android:name=".Activity.UrgencyActivity" />
         <activity android:name=".Activity.ViewNeedsActivity" />
         <activity android:name=".Activity.FaqsActivity" />
-        <activity android:name=".Activity.PrivacyPolicyActivity"></activity>
+        <activity android:name=".Activity.PrivacyPolicyActivity" />
+        <activity android:name=".Adapter.DonorListAdapter" />
+        <activity android:name=".Adapter.ViewNeedsListAdapter"></activity>
     </application>
 
 </manifest>

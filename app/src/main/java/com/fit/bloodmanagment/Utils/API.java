@@ -12,4 +12,18 @@ public class API {
 //    method: post
 //    columns: fullname,email,password,mobile,gender,address,bloodgroup,age,city
 //    result: success/failure
+
+
+//    login/all donors
+public static String getalldonorsurl="http://www.fratelloinnotech.com/saveworld/getdonors.php";
+//    method: post
+//    columns: fullname,email,password,mobile,gender,address,bloodgroup,age,city
+//    result: records
+
+//    getallrecords:
+//
+   public static String getbloodneedsurl="http://www.fratelloinnotech.com/saveworld/getbloodneeds.php";
+//    method: post
+//    columns: id,name,email,mobile,address,bloodgroup,city,purpose,duedate
+//    result: records
 }
