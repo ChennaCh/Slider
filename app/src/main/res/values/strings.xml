@@ -54,7 +54,6 @@
     <string name="title_activity_bloodbanks_map">Map</string>
 
     <string-array name="spinner_item">
-        <item>--select--</item>
         <item>O+</item>
         <item>O-</item>
         <item>A+</item>

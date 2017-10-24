@@ -113,6 +113,7 @@ public class MainMapActivity extends FragmentActivity implements OnMapReadyCallb
     LinearLayout donorll,hospitalll,pharmacyll,fableftll;
     SharedPreferences preferences;
     String myprefs;
+    public  NavigationView navigationView;
 
 
     @Override
@@ -121,7 +122,7 @@ public class MainMapActivity extends FragmentActivity implements OnMapReadyCallb
         setContentView(R.layout.activity_main2);
         navbtn = (Button) findViewById(R.id.navigation_button);
         final DrawerLayout drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
         View header  = navigationView.getHeaderView(0);
         preferences = getSharedPreferences("pref",MODE_PRIVATE);

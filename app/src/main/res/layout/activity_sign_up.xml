@@ -123,23 +123,25 @@
                         android:textColor="@color/white"
                         android:textSize="18dp" />
                 </android.support.design.widget.TextInputLayout>
-
                 <android.support.design.widget.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textColorHint="@color/white"
                     android:theme="@style/TextLabel">
 
-                    <EditText
-                        android:id="@+id/editaddress"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="30dp"
-                        android:layout_marginRight="30dp"
-                        android:hint="Address"
-                        android:padding="10dp"
-                        android:textColor="@color/white"
-                        android:textSize="18dp" />
+                <EditText
+                    android:id="@+id/signupaddress"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="30dp"
+                    android:layout_marginRight="30dp"
+                    android:hint="Address"
+                    android:inputType="text"
+                    android:padding="10dp"
+                    android:singleLine="true"
+                    android:textColor="@color/white"
+                    android:textColorHint="@color/white"
+                    android:textSize="18dp" />
                 </android.support.design.widget.TextInputLayout>
 
                 <LinearLayout
@@ -277,6 +279,7 @@
                         android:layout_marginTop="5dp"
                         android:backgroundTint="@color/white"
                         android:popupBackground="@color/bg_screen5"
+                        android:entries="@array/spinner_item"
                         android:theme="@style/mySpinnerItemStyle" />
                 </LinearLayout>
 

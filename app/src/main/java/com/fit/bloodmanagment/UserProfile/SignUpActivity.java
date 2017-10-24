@@ -4,6 +4,7 @@ import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.design.widget.NavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
@@ -15,6 +16,7 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -62,7 +64,7 @@ public class SignUpActivity extends AppCompatActivity  {
     RadioButton radiogender;
     Button register;
     Spinner spinnerbloodgroup;
-    String name,email,password,phone,address,age,city,gender,bloodgroup;
+    String fullname,email,password,phone,address,age,city,gender,bloodgroup;
     //Signin button
     private SignInButton signInButton;
     //Signing Options
@@ -79,6 +81,8 @@ public class SignUpActivity extends AppCompatActivity  {
     private ImageLoader imageLoader;
     //Calendar myCalendar = Calendar.getInstance();
     private String TAG = "RegisterActivity";
+    public RadioGroup rgender;
+     MainMapActivity mainmapsactivity=new MainMapActivity();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -93,58 +97,32 @@ public class SignUpActivity extends AppCompatActivity  {
         etemail = (EditText) findViewById(R.id.editemail);
         etpassword = (EditText) findViewById(R.id.editpwd);
         etphone = (EditText) findViewById(R.id.editphone);
-        etaddress = (EditText) findViewById(R.id.editaddress);
+        etaddress =(EditText)findViewById(R.id.signupaddress);
         etage = (EditText) findViewById(R.id.etage);
         spinnerbloodgroup = (Spinner) findViewById(R.id.signupspinner);
         etcity = (EditText) findViewById(R.id.etcity);
-        List<String> categories1 = new ArrayList<String>();
-        categories1.add("O+");
-        categories1.add("O-");
-        categories1.add("A+");
-        categories1.add("A-");
-        categories1.add("B+");
-        categories1.add("B-");
-        categories1.add("AB+");
-        categories1.add("AB-");
-
-        final ArrayAdapter<String> dataAdapter1 = new ArrayAdapter<String>(this, R.layout.custom_text_to_spinner, categories1);
-        dataAdapter1.setDropDownViewResource(R.layout.custom_text_to_spinner);
-        spinnerbloodgroup.setAdapter(dataAdapter1);
-//        final DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
-//
-//            @Override
-//            public void onDateSet(DatePicker view, int year, int monthOfYear,
-//                                  int dayOfMonth) {
-//                // TODO Auto-generated method stub
-//                myCalendar.set(Calendar.YEAR, year);
-//                myCalendar.set(Calendar.MONTH, monthOfYear);
-//                myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-//                updateLabel();
-//            }
-//
-//        };
-//        DOB.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                // TODO Auto-generated method stub
-//                new DatePickerDialog(SignUpActivity.this,date, myCalendar
-//                        .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
-//                        myCalendar.get(Calendar.DAY_OF_MONTH)).show();
-//            }
-//        });
-
+        rgender =  (RadioGroup) findViewById(R.id.radioSex);
         register = (Button) findViewById(R.id.regbtn);
         register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                name = etname.getText().toString();
+                fullname = etname.getText().toString();
                 email = etemail.getText().toString();
                 password = etpassword.getText().toString();
                 phone = etphone.getText().toString();
                 address = etaddress.getText().toString();
                 age = etage.getText().toString();
                 city=etcity.getText().toString();
-                if (name.equals("")) {
+                 //get selected radio button from radioGroup
+                int selectedId = rgender .getCheckedRadioButtonId();
+
+                // find the radio button by returned id
+                RadioButton radioButton = (RadioButton) findViewById(selectedId);
+                gender=radioButton.getText().toString();
+                bloodgroup = spinnerbloodgroup.getSelectedItem().toString();
+               // bloodgroup=((Spinner)findViewById(spinnerbloodgroup.getId())).toString();
+               // gender = ((RadioButton)findViewById(spinnerbloodgroup.getId())).getText().toString();
+                if (fullname.equals("")) {
                     etname.requestFocus();
                     etname.setError("Enter username");
                 } else if (!isValidEmail(email)) {
@@ -156,7 +134,7 @@ public class SignUpActivity extends AppCompatActivity  {
                 } else if (!isValidMobile(phone)) {
                     etphone.requestFocus();
                     etphone.setError("Invalid phone number");
-                } else if (address.isEmpty()) {
+                } else if (address.equals("")) {
                     etaddress.requestFocus();
                     etaddress.setError("Invalid address");
                 } else if (age.equals("")) {
@@ -169,10 +147,17 @@ public class SignUpActivity extends AppCompatActivity  {
                     Intent intent = new Intent(getApplicationContext(), MainMapActivity.class);
                     startActivity(intent);
                 }
-                if (name.trim().length() > 0 && email.trim().length() > 0 && password.trim().length() > 0 && phone.trim().length() > 0 && address.length() > 0 && city.length() > 0 && age.length() > 0) {
-                    registerapicall(name, password, phone, email, address, gender, bloodgroup,age,city);
+                if (fullname.trim().length() > 0 && email.trim().length() > 0 && password.trim().length() > 0 && phone.trim().length() > 0 && address.trim().length() > 0 && city.trim().length() > 0 && age.length() > 0) {
+                    registerapicall(fullname, password, phone, email, address, gender, bloodgroup,age,city);
                 }
                 // registerapicall();
+//                mainmapsactivity.navigationView=(NavigationView) findViewById(R.id.nav_view);
+//                //mainmapsactivity.navigationView.setNavigationItemSelectedListener(this);
+//                View header  =  mainmapsactivity.navigationView.getHeaderView(0);
+////                loginbtn = (Button) header.findViewById(R.id.signin_btn);
+////                signupbtn = (Button) header.findViewById(R.id.signup_btn);
+//                header.findViewById(R.id.signin_btn).setVisibility(View.INVISIBLE);
+//                header.findViewById(R.id.signup_btn).setVisibility(View.INVISIBLE);
             }
         });
     }
@@ -184,11 +169,11 @@ public class SignUpActivity extends AppCompatActivity  {
                     @Override
                     protected Void doInBackground(Object... strings) {
                         List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
-                        nameValuePairs.add(new BasicNameValuePair("name", getname));
+                        nameValuePairs.add(new BasicNameValuePair("fullname", getname));
                         nameValuePairs.add(new BasicNameValuePair("password", getpassword));
                         nameValuePairs.add(new BasicNameValuePair("mobile", getphone));
                         nameValuePairs.add(new BasicNameValuePair("email", getemail));
-                        nameValuePairs.add(new BasicNameValuePair("addresss", getaddress));
+                        nameValuePairs.add(new BasicNameValuePair("addresss",getaddress));
                         nameValuePairs.add(new BasicNameValuePair("gender", getgender));
                         nameValuePairs.add(new BasicNameValuePair("bloodgroup", getbloodgroup));
                         nameValuePairs.add(new BasicNameValuePair("age", getage));

@@ -147,6 +147,7 @@
                         android:popupBackground="@color/bg_screen5"
                         android:backgroundTint="@color/white"
                         android:paddingRight="5dp"
+                        android:entries="@array/spinner_item"
                         android:theme="@style/mySpinnerItemStyle" />
 
                 </LinearLayout>
