@@ -32,7 +32,6 @@ public class ViewNeedsListAdapter extends RecyclerView.Adapter<RecyclerView.View
     Context context;
     //DonarActivity donarActivity=new DonarActivity();
     List<ViewNeedsBean> data= Collections.emptyList();
-    ViewNeedsActivity viewNeedsActivity=new ViewNeedsActivity();
     ImageView mapgifimage,mailgif,callgif;
     ViewNeedsListAdapter.MyHolder myHolder;
 

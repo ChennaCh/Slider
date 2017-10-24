@@ -141,6 +141,7 @@
                         android:textColor="@color/white"
                         android:textSize="18dp" />
                 </android.support.design.widget.TextInputLayout>
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -158,19 +159,20 @@
                         android:textSize="18dp" />
 
                     <EditText
-                        android:id="@+id/editText"
+                        android:id="@+id/etage"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="30dp"
                         android:layout_marginRight="30dp"
-                        android:backgroundTint="#ac1c1c"
-                        android:focusable="false"
-                        android:gravity="center"
-                        android:paddingLeft="5dp"
+                        android:inputType="number"
+                        android:maxLength="2"
+                        android:padding="10dp"
                         android:textColor="@color/white"
                         android:textColorHint="@color/white"
-                        android:textSize="18dp" />
+                        android:textSize="18dp"
+                        android:theme="@style/TextLabel" />
                 </LinearLayout>
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -188,62 +190,63 @@
                         android:textSize="18dp" />
 
                     <EditText
-                        android:id="@+id/editText"
+                        android:id="@+id/etcity"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="30dp"
                         android:layout_marginRight="30dp"
-                        android:backgroundTint="#ac1c1c"
-                        android:focusable="false"
-                        android:gravity="center"
-                        android:paddingLeft="5dp"
+                        android:padding="10dp"
                         android:textColor="@color/white"
                         android:textColorHint="@color/white"
-                        android:textSize="18dp" />
+                        android:textSize="18dp"
+                        android:theme="@style/TextLabel" />
                 </LinearLayout>
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginRight="30dp"
                     android:layout_marginLeft="30dp"
+                    android:layout_marginRight="30dp"
                     android:layout_marginTop="5dp"
                     android:layout_weight="1"
                     android:orientation="horizontal">
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:textColor="#fff"
-                        android:textSize="18dp"
                         android:layout_weight="0.25"
                         android:paddingLeft="10dp"
-                        android:text="Gender :"/>
+                        android:text="Gender :"
+                        android:textColor="#fff"
+                        android:textSize="18dp" />
+
                     <RadioGroup
                         android:id="@+id/radioSex"
                         android:layout_width="wrap_content"
-                        android:orientation="horizontal"
+                        android:layout_height="wrap_content"
                         android:layout_weight="0.75"
-                        android:layout_height="wrap_content" >
+                        android:orientation="horizontal">
 
                         <RadioButton
                             android:id="@+id/radioMale"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_marginRight="20dp"
+                            android:buttonTint="#fff"
+                            android:checked="true"
                             android:text="Male"
                             android:textColor="#fff"
-                            android:buttonTint="#fff"
-                            android:layout_marginRight="20dp"
-                            android:textSize="18dp"
-                            android:checked="true" />
+                            android:textSize="18dp" />
 
                         <RadioButton
                             android:id="@+id/radioFemale"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:textColor="#fff"
-                            android:textSize="18dp"
                             android:buttonTint="#fff"
-                            android:text="Female" />
+                            android:text="Female"
+                            android:textColor="#fff"
+                            android:textSize="18dp" />
 
                     </RadioGroup>
                 </LinearLayout>
@@ -273,7 +276,6 @@
                         android:layout_marginRight="30dp"
                         android:layout_marginTop="5dp"
                         android:backgroundTint="@color/white"
-                        android:entries="@array/spinner_item"
                         android:popupBackground="@color/bg_screen5"
                         android:theme="@style/mySpinnerItemStyle" />
                 </LinearLayout>

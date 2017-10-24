@@ -2,6 +2,7 @@ package com.fit.bloodmanagment.UserProfile;
 
 import android.app.DatePickerDialog;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -9,9 +10,11 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.RadioButton;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -23,6 +26,7 @@ import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.NetworkImageView;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.fit.bloodmanagment.Activity.UrgencyActivity;
 import com.fit.bloodmanagment.Map.MainMapActivity;
 import com.fit.bloodmanagment.R;
 import com.fit.bloodmanagment.Utils.API;
@@ -30,12 +34,23 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.GoogleApiClient;
 
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.NameValuePair;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.regex.Matcher;
@@ -43,10 +58,11 @@ import java.util.regex.Pattern;
 
 public class SignUpActivity extends AppCompatActivity  {
     Toolbar toolbar;
-    EditText  etname,etemail,etpassword,etphone,etaddress,DOB;
+    EditText  etname,etemail,etpassword,etphone,etaddress,etage,etcity;
+    RadioButton radiogender;
     Button register;
-    Spinner bloodgroup;
-    String name,email,password,phone,address,dateofbirth;
+    Spinner spinnerbloodgroup;
+    String name,email,password,phone,address,age,city,gender,bloodgroup;
     //Signin button
     private SignInButton signInButton;
     //Signing Options
@@ -61,13 +77,13 @@ public class SignUpActivity extends AppCompatActivity  {
     private NetworkImageView profilePhoto;
     //Image Loader
     private ImageLoader imageLoader;
-    Calendar myCalendar = Calendar.getInstance();
+    //Calendar myCalendar = Calendar.getInstance();
     private String TAG = "RegisterActivity";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
-        toolbar =(Toolbar) findViewById(R.id.signup_toolbar);
+        toolbar = (Toolbar) findViewById(R.id.signup_toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
@@ -78,30 +94,44 @@ public class SignUpActivity extends AppCompatActivity  {
         etpassword = (EditText) findViewById(R.id.editpwd);
         etphone = (EditText) findViewById(R.id.editphone);
         etaddress = (EditText) findViewById(R.id.editaddress);
-        DOB = (EditText) findViewById(R.id.editText);
-        bloodgroup=(Spinner)findViewById(R.id.signupspinner);
-        final DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
+        etage = (EditText) findViewById(R.id.etage);
+        spinnerbloodgroup = (Spinner) findViewById(R.id.signupspinner);
+        etcity = (EditText) findViewById(R.id.etcity);
+        List<String> categories1 = new ArrayList<String>();
+        categories1.add("O+");
+        categories1.add("O-");
+        categories1.add("A+");
+        categories1.add("A-");
+        categories1.add("B+");
+        categories1.add("B-");
+        categories1.add("AB+");
+        categories1.add("AB-");
 
-            @Override
-            public void onDateSet(DatePicker view, int year, int monthOfYear,
-                                  int dayOfMonth) {
-                // TODO Auto-generated method stub
-                myCalendar.set(Calendar.YEAR, year);
-                myCalendar.set(Calendar.MONTH, monthOfYear);
-                myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-                updateLabel();
-            }
-
-        };
-        DOB.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // TODO Auto-generated method stub
-                new DatePickerDialog(SignUpActivity.this,date, myCalendar
-                        .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
-                        myCalendar.get(Calendar.DAY_OF_MONTH)).show();
-            }
-        });
+        final ArrayAdapter<String> dataAdapter1 = new ArrayAdapter<String>(this, R.layout.custom_text_to_spinner, categories1);
+        dataAdapter1.setDropDownViewResource(R.layout.custom_text_to_spinner);
+        spinnerbloodgroup.setAdapter(dataAdapter1);
+//        final DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
+//
+//            @Override
+//            public void onDateSet(DatePicker view, int year, int monthOfYear,
+//                                  int dayOfMonth) {
+//                // TODO Auto-generated method stub
+//                myCalendar.set(Calendar.YEAR, year);
+//                myCalendar.set(Calendar.MONTH, monthOfYear);
+//                myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+//                updateLabel();
+//            }
+//
+//        };
+//        DOB.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                // TODO Auto-generated method stub
+//                new DatePickerDialog(SignUpActivity.this,date, myCalendar
+//                        .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
+//                        myCalendar.get(Calendar.DAY_OF_MONTH)).show();
+//            }
+//        });
 
         register = (Button) findViewById(R.id.regbtn);
         register.setOnClickListener(new View.OnClickListener() {
@@ -112,44 +142,94 @@ public class SignUpActivity extends AppCompatActivity  {
                 password = etpassword.getText().toString();
                 phone = etphone.getText().toString();
                 address = etaddress.getText().toString();
-                dateofbirth=DOB.getText().toString();
+                age = etage.getText().toString();
+                city=etcity.getText().toString();
                 if (name.equals("")) {
                     etname.requestFocus();
                     etname.setError("Enter username");
-                }else if (!isValidEmail(email)){
+                } else if (!isValidEmail(email)) {
                     etemail.requestFocus();
                     etemail.setError("Enter valid email");
-                }else if (password.isEmpty()){
+                } else if (password.isEmpty()) {
                     etpassword.requestFocus();
                     etpassword.setError("Invalid password");
-                }else if (!isValidMobile(phone)){
+                } else if (!isValidMobile(phone)) {
                     etphone.requestFocus();
                     etphone.setError("Invalid phone number");
-                }else if (address.isEmpty()) {
+                } else if (address.isEmpty()) {
                     etaddress.requestFocus();
                     etaddress.setError("Invalid address");
-                }else if (dateofbirth.isEmpty()) {
-                    DOB.requestFocus();
-                    DOB.setError("Invalid date of birth");
-                }else{
-                    Intent intent=new Intent(getApplicationContext(), MainMapActivity.class);
+                } else if (age.equals("")) {
+                    etage.requestFocus();
+                    etage.setError("Enter valid age");
+                } else if (city.equals("")) {
+                    etcity.requestFocus();
+                    etcity.setError("Enter City");
+                } else {
+                    Intent intent = new Intent(getApplicationContext(), MainMapActivity.class);
                     startActivity(intent);
                 }
-//                if (name.trim().length() > 0 && email.trim().length() > 0 && password.trim().length() > 0 && phone.trim().length()>0 && address.length() >0  ){
-//                    registerapicall(name, password, phone, email, address, bloodgroup,dateofbirth);
-//                }
-               // registerapicall();
+                if (name.trim().length() > 0 && email.trim().length() > 0 && password.trim().length() > 0 && phone.trim().length() > 0 && address.length() > 0 && city.length() > 0 && age.length() > 0) {
+                    registerapicall(name, password, phone, email, address, gender, bloodgroup,age,city);
+                }
+                // registerapicall();
             }
         });
-
     }
 
-    private void updateLabel() {
-        String myFormat = "MM/dd/yy"; //In which you need put here
-        SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
 
-        DOB.setText(sdf.format(myCalendar.getTime()));
-    }
+            private void registerapicall(final String getname, final String getpassword, final String getphone,
+                                         final String getemail, final String getaddress, final String getgender, final String getbloodgroup, final String getage, final String getcity) {
+                class SendPostReqAsyncTask extends AsyncTask<Object, Object, Void> {
+                    @Override
+                    protected Void doInBackground(Object... strings) {
+                        List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+                        nameValuePairs.add(new BasicNameValuePair("name", getname));
+                        nameValuePairs.add(new BasicNameValuePair("password", getpassword));
+                        nameValuePairs.add(new BasicNameValuePair("mobile", getphone));
+                        nameValuePairs.add(new BasicNameValuePair("email", getemail));
+                        nameValuePairs.add(new BasicNameValuePair("addresss", getaddress));
+                        nameValuePairs.add(new BasicNameValuePair("gender", getgender));
+                        nameValuePairs.add(new BasicNameValuePair("bloodgroup", getbloodgroup));
+                        nameValuePairs.add(new BasicNameValuePair("age", getage));
+                        nameValuePairs.add(new BasicNameValuePair("city", getcity));
+                        try {
+                            HttpClient httpClient = new DefaultHttpClient();
+                            HttpPost httpPost = new HttpPost(API.registerUrl);
+                            httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
+                            HttpResponse response = httpClient.execute(httpPost);
+                            HttpEntity entity = response.getEntity();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+
+                        return null;
+                    }
+
+                    @Override
+                    protected void onPostExecute(Void aVoid) {
+                        super.onPostExecute(aVoid);
+                        Toast.makeText(SignUpActivity.this, "Request Send Successfully", Toast.LENGTH_LONG).show();
+                        etname.setText("");
+                        etemail.setText("");
+                        etphone.setText("");
+                        etaddress.setText("");
+                        etcity.setText("");
+                        etage.setText("");
+                        etpassword.setText("");
+                    }
+                }
+                SendPostReqAsyncTask sendPostReqAsyncTask = new SendPostReqAsyncTask();
+                sendPostReqAsyncTask.execute(getname, getpassword, getage, getphone, getemail, getaddress, getbloodgroup, getgender, getcity);
+            }
+
+
+            //    private void updateLabel() {
+//        String myFormat = "MM/dd/yy"; //In which you need put here
+//        SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
+//
+//        DOB.setText(sdf.format(myCalendar.getTime()));
+//    }
 //    private boolean isValidName(String name) {
 //
 //        name = "^[a-zA-Z\\s]{3,30}$";
@@ -158,103 +238,30 @@ public class SignUpActivity extends AppCompatActivity  {
 //        Matcher matcher = pattern.matcher(name);
 //        return matcher.matches();
 //    }
-    private boolean isValidEmail(String email) {
-        String EMAIL_PATTERN = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
-                + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
-        Pattern pattern = Pattern.compile(EMAIL_PATTERN);
-        Matcher matcher = pattern.matcher(email);
-        return matcher.matches();
+            private boolean isValidEmail(String email) {
+                String EMAIL_PATTERN = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
+                        + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
+                Pattern pattern = Pattern.compile(EMAIL_PATTERN);
+                Matcher matcher = pattern.matcher(email);
+                return matcher.matches();
 
-    }
-    private boolean isValidMobile(String mobile) {
-        String Mobile_PATTERN = "^+[0-9]{10}$";
-        Pattern pattern = Pattern.compile(Mobile_PATTERN);
-        Matcher matcher = pattern.matcher(mobile);
-        return matcher.matches();
+            }
 
-    }
-    @Override
-    public boolean onSupportNavigateUp() {
-        onBackPressed();
-        return true;
-    }
+            private boolean isValidMobile(String mobile) {
+                String Mobile_PATTERN = "^+[0-9]{10}$";
+                Pattern pattern = Pattern.compile(Mobile_PATTERN);
+                Matcher matcher = pattern.matcher(mobile);
+                return matcher.matches();
 
-//    private  void registerapicall() {
-//
-//        RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
-//        String serverURL = API.registerUrl;
-//        final StringRequest getRequest = new StringRequest(Request.Method.POST, serverURL,
-//                new com.android.volley.Response.Listener<String>() {
-//                    @Override
-//                    public void onResponse(String response) {
-//
-//                        Log.d("Response", response);
-//                        try {
-//                            JSONObject jsonObject = new JSONObject(response);
-//                            String str_status = jsonObject.getString("result");
-//                            //String str_msg = jsonObject.getString("message");
-//
-//
-//                            if (str_status.equals("fail")) {
-//                                JSONObject Jsonobject = jsonObject.getJSONObject("data");
-//                                String rname = Jsonobject.getString("register_name");
-//                                String remail = Jsonobject.getString("register_email");
-//                                String rpassword = Jsonobject.getString("register_password");
-//                                String rmobile = Jsonobject.getString("register_mobile");
-//                                String raddress = Jsonobject.getString("register_address");
-//                                String rgroup = Jsonobject.getString("register_bg");
-//                                String rdob = Jsonobject.getString("register_dob");
-////                                //Navigating to the another activity
-//                                Intent intent = new Intent(getApplicationContext(), MainMapActivity.class);
-//
-//                                startActivity(intent);
-//                            } else {
-//                                Toast.makeText(getApplicationContext(),"Error while Sign In", Toast.LENGTH_LONG).show();
-//                            }
-//
-//                        } catch (JSONException e) {
-//                            e.printStackTrace();
-//                            Toast.makeText(getApplicationContext(), "" + e, Toast.LENGTH_LONG).show();
-//                        }
-//                    }
-//                },
-//                new com.android.volley.Response.ErrorListener() {
-//                    @Override
-//                    public void onErrorResponse(VolleyError error) {
-//                        // error
-//                        Toast.makeText(getApplicationContext(), "" + error, Toast.LENGTH_LONG).show();
-//                        Log.d(TAG, String.valueOf(error));
-//
-//                    }
-//                }
-//        ){
-//            @Override
-//            protected Map<String, String> getParams() {
-//                Map<String, String> params = new HashMap<String, String>();
-//
-//                //  params.put("imei", device_imei_no);
-//                params.put("regname", name);
-//                params.put("ownername", email);
-//                params.put("phone", phone);
-//                params.put("address", address);
-//                params.put("location", password);
-//                params.put("lat", dateofbirth);
-////                params.put("lng",bloodgroup);
-////                params.put("landmark", landmark);
-////                params.put("working_fulltime",  radio_value);
-////                params.put("city_id", str_IssueTypeId_post);
-////                params.put("working_days", MAIN);
-////                params.put("start_time", strtime);
-////                params.put("end_time", endti);
-//
-//
-//
-//                Log.d("tag",params.toString());
-//                return params;
-//            }
-//        };
-//        queue.add(getRequest);
-//
-//    }
-    }
+            }
+
+            @Override
+            public boolean onSupportNavigateUp() {
+                onBackPressed();
+                return true;
+            }
+}
+
+
+
 
