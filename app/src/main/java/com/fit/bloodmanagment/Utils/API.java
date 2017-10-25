@@ -13,7 +13,7 @@ public class API {
 //    columns: fullname,email,password,mobile,gender,address,bloodgroup,age,city
 //    result: success/failure
 public static String addbloodneedUrl="http://www.fratelloinnotech.com/saveworld/addbloodneed.php";
-
+// name,email,mobile,address,bloodgroup,city,purpose,duedate
 //    login/all donors
 public static String getalldonorsurl="http://www.fratelloinnotech.com/saveworld/getdonors.php";
 //    method: post

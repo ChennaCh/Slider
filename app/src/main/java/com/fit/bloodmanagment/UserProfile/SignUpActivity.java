@@ -173,7 +173,7 @@ public class SignUpActivity extends AppCompatActivity  {
                         nameValuePairs.add(new BasicNameValuePair("password", getpassword));
                         nameValuePairs.add(new BasicNameValuePair("mobile", getphone));
                         nameValuePairs.add(new BasicNameValuePair("email", getemail));
-                        nameValuePairs.add(new BasicNameValuePair("addresss",getaddress));
+                        nameValuePairs.add(new BasicNameValuePair("address",getaddress));
                         nameValuePairs.add(new BasicNameValuePair("gender", getgender));
                         nameValuePairs.add(new BasicNameValuePair("bloodgroup", getbloodgroup));
                         nameValuePairs.add(new BasicNameValuePair("age", getage));

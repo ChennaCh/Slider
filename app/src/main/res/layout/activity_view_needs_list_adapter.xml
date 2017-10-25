@@ -17,6 +17,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="#f21758"
+            android:gravity="center"
             android:padding="5dp"
             android:text="Name"
             android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
@@ -44,6 +45,16 @@
                     android:padding="5dp"
                     android:src="@drawable/blood_drop" />
 
+                <TextView
+                    android:id="@+id/vneed_bloodgroup"
+                    android:layout_width="60dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:padding="5dp"
+                    android:text="AB+"
+                    android:textColor="#ac1c1c"
+                    android:textSize="20dp" />
             </LinearLayout>
 
             <LinearLayout
@@ -170,41 +181,37 @@
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
             android:orientation="horizontal"
-            android:weightSum="3">
-
+            android:weightSum="2">
             <LinearLayout
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:orientation="horizontal">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="left"
-                    android:paddingRight="5dp"
-                    android:text="Required :"
-                    android:textColor="#074809" />
-
-                <TextView
-                    android:id="@+id/vneed_bloodgroup"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="left"
-                    android:text="AB+"
-                    android:textColor="#ac1c1c" />
-            </LinearLayout>
-
+             <TextView
+                 android:layout_width="wrap_content"
+                 android:layout_height="wrap_content"
+                 android:padding="5dp"
+                 android:text="City:"
+                 android:gravity="left"/>
             <TextView
                 android:id="@+id/vneed_city"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
                 android:gravity="center"
                 android:text="City"
                 android:textColor="#074809" />
-
-
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="5dp"
+                    android:text="Due date:"
+                    android:gravity="left"/>
             <TextView
                 android:id="@+id/vneed_duedate"
                 android:layout_width="wrap_content"
@@ -213,6 +220,7 @@
                 android:gravity="center"
                 android:text="23/10/2017"
                 android:textColor="#074809" />
+                </LinearLayout>
         </LinearLayout>
     </LinearLayout>
 

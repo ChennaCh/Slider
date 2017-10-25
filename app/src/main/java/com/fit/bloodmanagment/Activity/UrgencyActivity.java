@@ -132,8 +132,8 @@ public class UrgencyActivity extends AppCompatActivity {
                 }
 
                 if (nname.trim().length() > 0 && naddress.trim().length() > 0 && npurpose.trim().length()>0 &&ncity.trim().length()>0){
-                    //insertToDatabase(nname, nphone, nemail, naddress,npurpose,ncity,nbloodgroup,nrequredate);
-                    apicall();
+                    insertToDatabase(nname, nphone, nemail, naddress,npurpose,ncity,nbloodgroup,nrequredate);
+                    //apicall();
                 }
 
             }
@@ -157,138 +157,139 @@ public class UrgencyActivity extends AppCompatActivity {
 
     };
     private void updateLabel() {
-        String myFormat = "MM/dd/yy"; //In which you need put here
+        String myFormat = "dd/MM/yyyy"; //In which you need put here
         SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
 
         etrequiredate.setText(sdf.format(myCalendar.getTime()));
     }
 
-//    private void insertToDatabase(final String getname, final String getaddress, final String getphone,
-//                                  final String getemail, final String getbloodgroup, final String getpurpose, final String getcity, final String getrequredate) {
-//        class SendPostReqAsyncTask extends AsyncTask<Object, Object, Void> {
-//            @Override
-//            protected Void doInBackground(Object... strings) {
-//                List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
-//                nameValuePairs.add(new BasicNameValuePair("name", getname));
-//               // nameValuePairs.add(new BasicNameValuePair("password", getpass));
-//                nameValuePairs.add(new BasicNameValuePair("mobile", getphone));
-//                nameValuePairs.add(new BasicNameValuePair("email", getemail));
-//                nameValuePairs.add(new BasicNameValuePair("purpose", getpurpose));
-//                nameValuePairs.add(new BasicNameValuePair("bloodgroup", getbloodgroup));
-//                nameValuePairs.add(new BasicNameValuePair("city", getcity));
-//                nameValuePairs.add(new BasicNameValuePair("addresss", getaddress));
-//                nameValuePairs.add(new BasicNameValuePair("date",getrequredate));
-//                try {
-//                    HttpClient httpClient = new DefaultHttpClient();
-//                    HttpPost httpPost = new HttpPost(API.addbloodneedUrl);
-//                    httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
-//                    HttpResponse response = httpClient.execute(httpPost);
-//                    HttpEntity entity = response.getEntity();
-//                } catch (IOException e) {
-//                    e.printStackTrace();
-//                }
-//
-//                return null;
-//            }
-//
-//            @Override
-//            protected void onPostExecute(Void aVoid) {
-//                super.onPostExecute(aVoid);
-//                Toast.makeText(UrgencyActivity.this, "Request Send Successfully", Toast.LENGTH_LONG).show();
-//                etname.setText("");
-//                etemail.setText("");
-//                etphone.setText("");
-//                etaddress.setText("");
-//                etpurpose.setText("");
-//                etcity.setText("");
-//                etrequiredate.setText("");
-//            }
-//        }
-//        SendPostReqAsyncTask sendPostReqAsyncTask = new SendPostReqAsyncTask();
-//        sendPostReqAsyncTask.execute(getname, getphone, getemail, getaddress, getbloodgroup, getpurpose,getcity);
-//    }
-
-    private  void apicall(){
-
-        RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
-        String serverURL = API.addbloodneedUrl;
-        final StringRequest getRequest = new StringRequest(Request.Method.POST, serverURL,
-                new com.android.volley.Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-
-                        Log.d("officerResponse", response);
-                        try {
-                            JSONObject jsonObject = new JSONObject(response);
-                            String str_status = jsonObject.getString("result");
-                            //String str_msg = jsonObject.getString("message");
-
-
-
-                            if (str_status.equals("success")) {
-                                JSONObject Jsonobject = jsonObject.getJSONObject("data");
-//                                String  shop = Jasonobject.getString("shop_name");
-//                                String  owner = Jasonobject.getString("owner_name");
-                               String name=Jsonobject.getString("myname");
-                                String mobile=Jsonobject.getString("mymoblle");
-                                String email=Jsonobject.getString("myemail");
-                                String purpose=Jsonobject.getString("mypurpose");
-                                String bloodgroup=Jsonobject.getString("mybloodgroup");
-                                String city=Jsonobject.getString("mycity");
-                                String addresss=Jsonobject.getString("myaddresss");
-                                String date=Jsonobject.getString("myduedate");
-
-                                //Navigating to the another activity
-                                Intent intent = new Intent(getApplicationContext(), MainMapActivity.class);
-                                startActivity(intent);
-                            } else {
-                                Toast.makeText(getApplicationContext(),"Sent Request Successfully", Toast.LENGTH_LONG).show();
-                            }
-
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                            Toast.makeText(getApplicationContext(), "" + e, Toast.LENGTH_LONG).show();
-                        }
-                    }
-                },
-                new com.android.volley.Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        // error
-                        Toast.makeText(getApplicationContext(), "" + error, Toast.LENGTH_LONG).show();
-                        Log.d("UrgenncyActivity", String.valueOf(error));
-
-                    }
-                }
-        ) {
+    private void insertToDatabase(final String getname,final String getphone,final String getemail,
+                                  final String getaddress, final String getpurpose, final String getcity, final String getbloodgroup, final String getrequiredate) {
+        class SendPostReqAsyncTask extends AsyncTask<Object, Object, Void> {
             @Override
-            protected Map<String, String> getParams() {
-                Map<String, String> params = new HashMap<String, String>();
+            protected Void doInBackground(Object... strings) {
+                // name,email,mobile,address,bloodgroup,city,purpose,duedate
+                List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+                nameValuePairs.add(new BasicNameValuePair("name", getname));
+               // nameValuePairs.add(new BasicNameValuePair("password", getpass));
+                nameValuePairs.add(new BasicNameValuePair("mobile", getphone));
+                nameValuePairs.add(new BasicNameValuePair("email", getemail));
+                nameValuePairs.add(new BasicNameValuePair("purpose", getpurpose));
+                nameValuePairs.add(new BasicNameValuePair("bloodgroup", getbloodgroup));
+                nameValuePairs.add(new BasicNameValuePair("city", getcity));
+                nameValuePairs.add(new BasicNameValuePair("address", getaddress));
+                nameValuePairs.add(new BasicNameValuePair("duedate",getrequiredate));
+                try {
+                    HttpClient httpClient = new DefaultHttpClient();
+                    HttpPost httpPost = new HttpPost(API.addbloodneedUrl);
+                    httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
+                    HttpResponse response = httpClient.execute(httpPost);
+                    HttpEntity entity = response.getEntity();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
 
-                //  params.put("imei", device_imei_no);
-                params.put("myname", nname);
-                params.put("mymobile", nphone);
-                params.put("myemail", nemail);
-                params.put("mypurpose", npurpose);
-                params.put("mybloodgroup", nbloodgroup);
-                params.put("mycity", ncity);
-                params.put("myaddress", naddress);
-                params.put("myduedate", nrequredate);
-//                params.put("working_fulltime",  radio_value);
-//                params.put("city_id", str_IssueTypeId_post);
-//                params.put("working_days", MAIN);
-//                params.put("start_time", strtime);
-//                params.put("end_time", endti);
-
-
-
-                Log.d("tag",params.toString());
-                return params;
+                return null;
             }
-        };
-        queue.add(getRequest);
 
+            @Override
+            protected void onPostExecute(Void aVoid) {
+                super.onPostExecute(aVoid);
+                Toast.makeText(UrgencyActivity.this, "Request Send Successfully", Toast.LENGTH_LONG).show();
+                etname.setText("");
+                etemail.setText("");
+                etphone.setText("");
+                etaddress.setText("");
+                etpurpose.setText("");
+                etcity.setText("");
+                etrequiredate.setText("");
+            }
+        }
+        SendPostReqAsyncTask sendPostReqAsyncTask = new SendPostReqAsyncTask();
+        sendPostReqAsyncTask.execute(getname, getphone, getemail, getaddress,getpurpose,getcity,getbloodgroup,getrequiredate);
     }
+
+//    private  void apicall(){
+//
+//        RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
+//        String serverURL = API.addbloodneedUrl;
+//        final StringRequest getRequest = new StringRequest(Request.Method.POST, serverURL,
+//                new com.android.volley.Response.Listener<String>() {
+//                    @Override
+//                    public void onResponse(String response) {
+//
+//                        Log.d("officerResponse", response);
+//                        try {
+//                            JSONObject jsonObject = new JSONObject(response);
+//                            String str_status = jsonObject.getString("result");
+//                            //String str_msg = jsonObject.getString("message");
+//
+//
+//
+//                            if (str_status.equals("success")) {
+//                                JSONObject Jsonobject = jsonObject.getJSONObject("data");
+////                                String  shop = Jasonobject.getString("shop_name");
+////                                String  owner = Jasonobject.getString("owner_name");
+//                               String name=Jsonobject.getString("myname");
+//                                String mobile=Jsonobject.getString("mymoblle");
+//                                String email=Jsonobject.getString("myemail");
+//                                String purpose=Jsonobject.getString("mypurpose");
+//                                String bloodgroup=Jsonobject.getString("mybloodgroup");
+//                                String city=Jsonobject.getString("mycity");
+//                                String addresss=Jsonobject.getString("myaddresss");
+//                                String date=Jsonobject.getString("myduedate");
+//
+//                                //Navigating to the another activity
+//                                Intent intent = new Intent(getApplicationContext(), MainMapActivity.class);
+//                                startActivity(intent);
+//                            } else {
+//                                Toast.makeText(getApplicationContext(),"Sent Request Successfully", Toast.LENGTH_LONG).show();
+//                            }
+//
+//                        } catch (JSONException e) {
+//                            e.printStackTrace();
+//                            Toast.makeText(getApplicationContext(), "" + e, Toast.LENGTH_LONG).show();
+//                        }
+//                    }
+//                },
+//                new com.android.volley.Response.ErrorListener() {
+//                    @Override
+//                    public void onErrorResponse(VolleyError error) {
+//                        // error
+//                        Toast.makeText(getApplicationContext(), "" + error, Toast.LENGTH_LONG).show();
+//                        Log.d("UrgenncyActivity", String.valueOf(error));
+//
+//                    }
+//                }
+//        ) {
+//            @Override
+//            protected Map<String, String> getParams() {
+//                Map<String, String> params = new HashMap<String, String>();
+//
+//                //  params.put("imei", device_imei_no);
+//                params.put("myname", nname);
+//                params.put("mymobile", nphone);
+//                params.put("myemail", nemail);
+//                params.put("mypurpose", npurpose);
+//                params.put("mybloodgroup", nbloodgroup);
+//                params.put("mycity", ncity);
+//                params.put("myaddress", naddress);
+//                params.put("myduedate", nrequredate);
+////                params.put("working_fulltime",  radio_value);
+////                params.put("city_id", str_IssueTypeId_post);
+////                params.put("working_days", MAIN);
+////                params.put("start_time", strtime);
+////                params.put("end_time", endti);
+//
+//
+//
+//                Log.d("tag",params.toString());
+//                return params;
+//            }
+//        };
+//        queue.add(getRequest);
+//
+//    }
 
 
 
