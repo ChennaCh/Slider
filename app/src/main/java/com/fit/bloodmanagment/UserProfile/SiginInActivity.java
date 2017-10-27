@@ -1,20 +1,37 @@
 package com.fit.bloodmanagment.UserProfile;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+import com.fit.bloodmanagment.Activity.DonarActivity;
 import com.fit.bloodmanagment.Activity.MyProfileActivity;
+import com.fit.bloodmanagment.Adapter.DonorListAdapter;
+import com.fit.bloodmanagment.Beans.DonorBean;
 import com.fit.bloodmanagment.Map.MainMapActivity;
 import com.fit.bloodmanagment.R;
+import com.fit.bloodmanagment.Utils.API;
+import com.fit.bloodmanagment.Utils.HttpHandler;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
@@ -25,6 +42,11 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.OptionalPendingResult;
 import com.google.android.gms.common.api.ResultCallback;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -32,14 +54,17 @@ import java.util.regex.Pattern;
 public class SiginInActivity extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener {
     Toolbar toolbar;
     EditText edtuser, edtpass;
-    String username, password;
-    TextView signup;
+    String strusername, strpassword;
+    TextView signup,setextview;
     Button login;
     private static final String TAG = SiginInActivity.class.getSimpleName();
     private static final int RC_SIGN_IN = 007;
     private SignInButton btnSignIn;
     private GoogleApiClient mGoogleApiClient;
-    private ProgressDialog mProgressDialog;
+    private ProgressBar mProgressDialog;
+    int flag = 0;
+    private Activity activity;
+    //http://www.fratelloinnotech.com/saveworld/getdonors.php
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,7 +79,10 @@ public class SiginInActivity extends AppCompatActivity implements GoogleApiClien
         edtuser = (EditText) findViewById(R.id.editusername);
         edtpass = (EditText) findViewById(R.id.editpassword);
         signup=(TextView)findViewById(R.id.signin_signup);
-        login=(Button)findViewById(R.id.btn);
+        setextview =(TextView)findViewById(R.id.signinsettext);
+        login=(Button)findViewById(R.id.signin);
+        strusername = edtuser.getText().toString();
+        strpassword = edtpass.getText().toString();
         signup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -62,20 +90,31 @@ public class SiginInActivity extends AppCompatActivity implements GoogleApiClien
                 startActivity(i);
             }
         });
+
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                username = edtuser.getText().toString();
-                password = edtpass.getText().toString();
-                if (username.equals("")) {
+                if (strusername.equals("")) {
 //                    Toast.makeText(getApplicationContext(), "", Toast.LENGTH_LONG).show();
-                    edtuser.setError("Invalid Name");
-                } else if (!isValidPassword(password)){
-                    edtpass.setError("Invalid password");}
-                else{
-                    Intent it=new Intent(getApplicationContext(), MainMapActivity.class);
-                    startActivity(it);
+//                    edtuser.setFocusable(true);
+//                    edtuser.setError("Invalid Name");
+                    setextview.setText("Invalid Username and password");
+
+                } else if (!isValidPassword(strpassword)) {
+//                    edtpass.setFocusable(true);
+//                    edtpass.setError("Invalid password");}
+                    setextview.setText("Invalid Username and password");
                 }
+//                else{
+//                    Intent it=new Intent(getApplicationContext(), MainMapActivity.class);
+//                    it.putExtra("email",username);
+//                    startActivity(it);
+//                }
+
+                //new GetContacts1().execute();
+               // listapi();
+
+
             }
         });
 
@@ -135,7 +174,6 @@ public class SiginInActivity extends AppCompatActivity implements GoogleApiClien
         }
     }
 
-
     private boolean isValidPassword(String Password) {
         String Password_pattren = "^+[0-9]{6}$";
         Pattern pattern = Pattern.compile(Password_pattren);
@@ -184,8 +222,6 @@ public class SiginInActivity extends AppCompatActivity implements GoogleApiClien
             });
         }
     }
-
-
 
 //    private void showProgressDialog() {
 //        if (mProgressDialog == null) {

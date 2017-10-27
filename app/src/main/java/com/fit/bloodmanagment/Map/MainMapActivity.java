@@ -4,10 +4,12 @@ import android.Manifest;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.ActivityNotFoundException;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
@@ -71,13 +73,20 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
-
+import java.io.BufferedOutputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+import java.util.Random;
+
+import static android.R.id.edit;
 
 public class MainMapActivity extends FragmentActivity implements OnMapReadyCallback,NavigationView.OnNavigationItemSelectedListener,
         GoogleApiClient.ConnectionCallbacks,
@@ -111,9 +120,15 @@ public class MainMapActivity extends FragmentActivity implements OnMapReadyCallb
     private String mCurrentPhotoPath;  // File path to the last image captured
     File destination;
     LinearLayout donorll,hospitalll,pharmacyll,fableftll;
-    SharedPreferences preferences;
-    String myprefs;
     public  NavigationView navigationView;
+
+    String str_bitmap;
+    SharedPreferences shre;
+    Bitmap thumbnail;
+    private static int RESULT_LOAD_IMAGE = 1;
+    public static final String MyPREFERENCES = "MyPre" ;//file name
+    public static final String  key = "nameKey";
+
 
 
     @Override
@@ -125,8 +140,6 @@ public class MainMapActivity extends FragmentActivity implements OnMapReadyCallb
         navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
         View header  = navigationView.getHeaderView(0);
-        preferences = getSharedPreferences("pref",MODE_PRIVATE);
-        String img_str = preferences.getString("userphoto", BuildConfig.FLAVOR);
         if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             checkLocationPermission();
         }
@@ -206,20 +219,6 @@ public class MainMapActivity extends FragmentActivity implements OnMapReadyCallb
         loginbtn = (Button) header.findViewById(R.id.signin_btn);
         signupbtn = (Button) header.findViewById(R.id.signup_btn);
         profilepic = (ImageView)header.findViewById(R.id.navimageview);
-        // Create the Database helper object
-        databaseHelper = new ImageDatabaseHelper(this);
-
-
-        //Drawable dbDrawable = getResources().getDrawable(R.mipmap.ic_launcher);
-
-
-        //databaseHelper.insetImage(dbDrawable, IMAGE_ID);
-
-        //new LoadImageFromDatabaseTask().execute(0);
-
-
-
-
         loginbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -241,6 +240,14 @@ public class MainMapActivity extends FragmentActivity implements OnMapReadyCallb
                 drawerLayout.openDrawer(GravityCompat.START);
             }
         });
+        shre =  getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
+        if (shre.contains(key))
+        {
+            //save required image
+            String u=shre.getString(key, "");
+            thumbnail=decodeBase64(u);
+            profilepic.setImageBitmap(thumbnail);
+        }
 
         profilepic.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -258,37 +265,23 @@ public class MainMapActivity extends FragmentActivity implements OnMapReadyCallb
         });
 
     }
-    private class LoadImageFromDatabaseTask extends AsyncTask<Integer, Integer, ImageHelperBean> {
 
-        private final ProgressDialog LoadImageProgressDialog =  new ProgressDialog(MainMapActivity.this);
+    public static String encodeTobase64(Bitmap image)
+    {
+        Bitmap immage = image;
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        immage.compress(Bitmap.CompressFormat.PNG, 100, baos);
+        byte[] b = baos.toByteArray();
+        String imageEncoded = Base64.encodeToString(b, Base64.DEFAULT);
 
-        protected void onPreExecute() {
-            this.LoadImageProgressDialog.setMessage("Loading Image from Db...");
-            this.LoadImageProgressDialog.show();
-        }
-
-        @Override
-        protected ImageHelperBean doInBackground(Integer... integers) {
-            Log.d("LoadImage : doInBackground", "");
-            return databaseHelper.getImage(IMAGE_ID);
-        }
-
-        protected void onProgressUpdate(Integer... progress) {
-        }
-
-        protected void onPostExecute(ImageHelperBean imageHelper) {
-            Log.d("LoadImage : onPostExecute - ImageID ", imageHelper.getImageId());
-            if (this.LoadImageProgressDialog.isShowing()) {
-                this.LoadImageProgressDialog.dismiss();
-            }
-            setUpImage(imageHelper.getImageByteArray());
-        }
+        Log.d("Image Log:", imageEncoded);
+        return imageEncoded;
 
     }
-    private void setUpImage(byte[] bytes) {
-        Log.d(TAG, "Decoding bytes");
-        Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
-        profilepic.setImageBitmap(bitmap);
+    public static Bitmap decodeBase64(String input)
+    {
+        byte[] decodedByte = Base64.decode(input, 0);
+        return BitmapFactory.decodeByteArray(decodedByte, 0, decodedByte.length);
     }
 
     //check google play services
@@ -387,6 +380,7 @@ public class MainMapActivity extends FragmentActivity implements OnMapReadyCallb
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         startActivityForResult(intent, REQUEST_CAMERA);
 
+
     }
     private void galleryIntent()
     {
@@ -402,109 +396,80 @@ public class MainMapActivity extends FragmentActivity implements OnMapReadyCallb
 
         if (resultCode == Activity.RESULT_OK) {
             if (requestCode == SELECT_FILE){
-                onSelectFromGalleryResult(data);
-//                SharedPreferences shre = PreferenceManager.getDefaultSharedPreferences(this);
-//                SharedPreferences.Editor edit=shre.edit();
-//                edit.putString("imagepath","/sdcard/imh.jpeg");
-//                edit.commit();
-               // Drawable dbDrawable = getResources().getDrawable(R.mipmap.ic_launcher);
-//                Bitmap bm=null;
-//                if (data != null) {
-//                    try {
-//                        bm = MediaStore.Images.Media.getBitmap(getApplicationContext().getContentResolver(), data.getData());
-//                    } catch (IOException e) {
-//                        e.printStackTrace();
-//                    }
-//                }
-//                try {
-//                    createImageFile();
-//                } catch (IOException e) {
-//                    e.printStackTrace();
-//                }
-//                profilepic.setImageBitmap(bm);
-//                Drawable drawable = new BitmapDrawable(getResources(), bm);
-//                databaseHelper.insetImage(drawable, IMAGE_ID);
-//                new LoadImageFromDatabaseTask().execute(0);
-
+                //onSelectFromGalleryResult(data);
+                Bitmap bm=null;
+                if (data != null) {
+                    try {
+                        bm = MediaStore.Images.Media.getBitmap(getApplicationContext().getContentResolver(), data.getData());
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    profilepic.setImageBitmap(bm);
+                    storeImage(bm);
+                }
             }
 
-            else if (requestCode == REQUEST_CAMERA)
-                onCaptureImageResult(data);
-
-
+            else if (requestCode == REQUEST_CAMERA) {
+                //onCaptureImageResult(data);
+                Bitmap bm = (Bitmap) data.getExtras().get("data");
+                profilepic.setImageBitmap(bm);
+                storeImage(bm);
+            }
         }
     }
 
-    private void onSelectFromGalleryResult(Intent data) {
+    private void storeImage(Bitmap thumbnail) {
+        // Removing image saved earlier in shared prefernces
+        PreferenceManager.getDefaultSharedPreferences(this).edit().clear().apply();
+        createFolder();
+        // this code is use to generate random number and add to file
+        // name so that each file should be different
+        Random generator = new Random();
+        int n = 10000;
+        n = generator.nextInt(n);
+        String fname = "Image-"+ n +".jpg";
 
-        Bitmap bm=null;
-        if (data != null) {
-            try {
-                bm = MediaStore.Images.Media.getBitmap(getApplicationContext().getContentResolver(), data.getData());
-                Drawable drawable = new BitmapDrawable(getResources(), bm);
-                profilepic.setBackground(drawable);
-//Image to string
-                profilepic.buildDrawingCache();
-                Bitmap bitmap = profilepic.getDrawingCache();
-                ByteArrayOutputStream stream=new ByteArrayOutputStream();
-                bitmap.compress(Bitmap.CompressFormat.PNG, 90, stream);
-                byte[] imageC = stream.toByteArray();
-//String to image
-                String img_str = Base64.encodeToString(imageC, 0);
-//String base = img_str;
-
-                SharedPreferences preferences = getSharedPreferences("pref",MODE_PRIVATE);
-                SharedPreferences.Editor editor = preferences.edit();
-                editor.putString("userphoto",img_str);
-                editor.commit();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-
-       // profilepic.setImageBitmap(bm);
-
-
-    }
-    private void onCaptureImageResult(Intent data) {
-        Bitmap thumbnail = (Bitmap) data.getExtras().get("data");
-        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
-        thumbnail.compress(Bitmap.CompressFormat.JPEG, 90, bytes);
-
-        destination = new File(Environment.getExternalStorageDirectory(),
-                System.currentTimeMillis() + ".jpg");
-
-        FileOutputStream fo;
+        // set the file path
+        // sdcard/PictureFolder/ is the folder created in create folder method
+        String filePath = "/sdcard/PictureFolder/"+fname;
+        // the rest of the code is for saving the file to filepath mentioned above
+        FileOutputStream fileOutputStream = null;
         try {
-            destination.createNewFile();
-            fo = new FileOutputStream(destination);
-            fo.write(bytes.toByteArray());
-            fo.close();
+            fileOutputStream = new FileOutputStream(filePath);
         } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
+            // TODO Auto-generated catch block
             e.printStackTrace();
         }
 
-        profilepic.setImageBitmap(thumbnail);
+        BufferedOutputStream bos = new BufferedOutputStream(fileOutputStream);
+
+        //choose another format if PNG doesn't suit you
+        thumbnail.compress(Bitmap.CompressFormat.PNG, 100, bos);
+        SharedPreferences.Editor editor = shre.edit();
+        editor.putString(key,encodeTobase64(thumbnail));
+        editor.commit();
+        try {
+            bos.flush();
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        try {
+            bos.close();
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+
     }
-    private File createImageFile() throws IOException
+    public void createFolder()
     {
-        // Create an image file name
-//         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format( new Date());
-//         String imageFileName = "JPEG_" + timeStamp + "_" ;
-        File storageDir = Environment.getExternalStoragePublicDirectory(Environment. DIRECTORY_PICTURES);
-        File image = File. createTempFile(
-                String.valueOf(destination),  /* prefix */
-                ".jpg",         /* suffix */
-                storageDir      /* directory */
-        );
-        // Save a file: path for use with ACTION_VIEW intents
-        mCurrentPhotoPath = image.getAbsolutePath();
-        return image;
-
+        // here PictureFolder is the folder name you can change it offcourse
+        String RootDir = Environment.getExternalStorageDirectory()
+                + File.separator + "PictureFolder";
+        File RootFile = new File(RootDir);
+        RootFile.mkdir();
     }
-
 
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
