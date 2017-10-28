@@ -85,7 +85,7 @@
                     android:layout_marginRight="30dp"
                     android:ems="10"
                     android:hint="Password"
-                    android:inputType="numberPassword"
+                    android:inputType="textPassword"
                     android:maxLength="6"
                     android:padding="10dp"
                     android:textColor="#ac1c1c"

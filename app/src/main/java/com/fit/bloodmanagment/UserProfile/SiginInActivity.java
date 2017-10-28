@@ -61,7 +61,7 @@ public class SiginInActivity extends AppCompatActivity implements GoogleApiClien
     private static final int RC_SIGN_IN = 007;
     private SignInButton btnSignIn;
     private GoogleApiClient mGoogleApiClient;
-    private ProgressBar mProgressDialog;
+    ProgressBar progressbar;
     int flag = 0;
     private Activity activity;
     //http://www.fratelloinnotech.com/saveworld/getdonors.php
@@ -80,9 +80,9 @@ public class SiginInActivity extends AppCompatActivity implements GoogleApiClien
         edtpass = (EditText) findViewById(R.id.editpassword);
         signup=(TextView)findViewById(R.id.signin_signup);
         setextview =(TextView)findViewById(R.id.signinsettext);
+        strusername=edtuser.getText().toString();
+        strpassword=edtpass.getText().toString();
         login=(Button)findViewById(R.id.signin);
-        strusername = edtuser.getText().toString();
-        strpassword = edtpass.getText().toString();
         signup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -94,25 +94,34 @@ public class SiginInActivity extends AppCompatActivity implements GoogleApiClien
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (strusername.equals("")) {
-//                    Toast.makeText(getApplicationContext(), "", Toast.LENGTH_LONG).show();
-//                    edtuser.setFocusable(true);
-//                    edtuser.setError("Invalid Name");
-                    setextview.setText("Invalid Username and password");
-
-                } else if (!isValidPassword(strpassword)) {
-//                    edtpass.setFocusable(true);
-//                    edtpass.setError("Invalid password");}
-                    setextview.setText("Invalid Username and password");
-                }
-//                else{
-//                    Intent it=new Intent(getApplicationContext(), MainMapActivity.class);
-//                    it.putExtra("email",username);
-//                    startActivity(it);
+                getCredentials();
+                setextview.setText("");
+                SharedPreferences preferences = getSharedPreferences("userdetails",MODE_PRIVATE);
+                SharedPreferences.Editor editor = preferences.edit();
+                String username= edtuser.getText().toString();
+                String pass = edtpass.getText().toString();
+                editor.putString("username",username);
+                editor.putString("password",pass);
+                editor.commit();
+               // Snackbar.make(view, "No network connection.",Snackbar.LENGTH_SHORT).show();
+//                if (strusername.equals("")) {
+////                    Toast.makeText(getApplicationContext(), "", Toast.LENGTH_LONG).show();
+////                    edtuser.setFocusable(true);
+////                    edtuser.setError("Invalid Name");
+//                    setextview.setText("Invalid Username and password");
+//
+//                } else if (strpassword.equals("")) {
+////                    edtpass.setFocusable(true);
+////                    edtpass.setError("Invalid password");}
+//                    setextview.setText("Invalid Username and password");
 //                }
+////                else{
+////                    Intent it=new Intent(getApplicationContext(), MainMapActivity.class);
+////                    it.putExtra("email",username);
+////                    startActivity(it);
+////                }
+//
 
-                //new GetContacts1().execute();
-               // listapi();
 
 
             }
@@ -134,6 +143,66 @@ public class SiginInActivity extends AppCompatActivity implements GoogleApiClien
         });
 
     }
+    private void getCredentials() {
+       // progressbar.setVisibility(View.VISIBLE);
+        RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
+        String serverURL = API.getalldonorsurl;
+        final String loginusername=edtuser.getText().toString();
+        final String loginpwd=edtpass.getText().toString();
+        final StringRequest getRequest = new StringRequest(Request.Method.GET, serverURL,
+                new com.android.volley.Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        try {
+                            flag=0;
+                            JSONObject jsonObj = new JSONObject(response);
+                            JSONArray contacts = jsonObj.getJSONArray("result");
+
+                            for (int i = 0; i < contacts.length(); i++) {
+                                JSONObject c = contacts.getJSONObject(i);
+                                String uname = c.getString("email");
+                                String pwd = c.getString("password");
+                              if(loginusername.equals(uname)&& loginpwd.equals(pwd)){
+                                 flag=1;
+                                  break;
+                              }
+                              else {
+                                  setextview.setText("Invalid Username and Password");
+                              }
+                            }
+                        } catch (final JSONException e) {
+                            Log.e(TAG, "Json parsing error: " + e.getMessage());
+                            e.printStackTrace();
+                        }
+                        if (flag == 1){
+                            Toast.makeText(getApplicationContext(), "Successfully Login", Toast.LENGTH_SHORT).show();
+                            Intent intent=new Intent(getApplicationContext(), MainMapActivity.class);
+                            intent.putExtra("user",loginusername);
+                            startActivity(intent);
+                        }else {
+//                Toast.makeText(getApplicationContext(), "fail", Toast.LENGTH_SHORT).show();
+                            setextview.setText("Invalid Username and Password");
+                        }
+
+                    }
+                },
+                new com.android.volley.Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        // error
+                        Toast.makeText(getApplicationContext(), "" + error, Toast.LENGTH_SHORT).show();
+                    }
+                }
+        ){
+            @Override
+            protected Map<String, String> getParams() {
+                Toast.makeText(activity, "Successful", Toast.LENGTH_SHORT).show();
+                return null;
+            }
+        };
+        queue.add(getRequest);
+    }
+
     private void signIn() {
         Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(mGoogleApiClient);
         startActivityForResult(signInIntent, RC_SIGN_IN);
@@ -200,7 +269,6 @@ public class SiginInActivity extends AppCompatActivity implements GoogleApiClien
     @Override
     public void onStart() {
         super.onStart();
-
         OptionalPendingResult<GoogleSignInResult> opr = Auth.GoogleSignInApi.silentSignIn(mGoogleApiClient);
         if (opr.isDone()) {
             // If the user's cached credentials are valid, the OptionalPendingResult will be "done"

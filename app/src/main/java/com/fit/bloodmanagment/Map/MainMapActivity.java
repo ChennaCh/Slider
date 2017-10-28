@@ -30,6 +30,7 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.util.Base64;
 import android.util.Log;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.Animation;
@@ -73,6 +74,11 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.BufferedOutputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -114,18 +120,12 @@ public class MainMapActivity extends FragmentActivity implements OnMapReadyCallb
     Marker mCurrLocationMarker;
     LocationRequest mLocationRequest;
     ImageView pharmacyimage,hospitalimage,fab,fableft,shareimage,rating,profilepic;
-    ProgressBar mapprogressbar;
-    private List<String> myList;  // String list that contains file paths to images
-    private GridView gridview;
-    private String mCurrentPhotoPath;  // File path to the last image captured
-    File destination;
+    ProgressBar progressBar;
     LinearLayout donorll,hospitalll,pharmacyll,fableftll;
     public  NavigationView navigationView;
 
-    String str_bitmap;
     SharedPreferences shre;
     Bitmap thumbnail;
-    private static int RESULT_LOAD_IMAGE = 1;
     public static final String MyPREFERENCES = "MyPre" ;//file name
     public static final String  key = "nameKey";
 
@@ -168,6 +168,9 @@ public class MainMapActivity extends FragmentActivity implements OnMapReadyCallb
         pharmacyimage=(ImageView) findViewById(R.id.pharmacyimage);
         hospitalimage=(ImageView) findViewById(R.id.hospitalsimage);
         shareimage=(ImageView)findViewById(R.id.share_app);
+        loginbtn = (Button) header.findViewById(R.id.signin_btn);
+        signupbtn = (Button) header.findViewById(R.id.signup_btn);
+        profilepic = (ImageView)header.findViewById(R.id.navimageview);
         rating=(ImageView) findViewById(R.id.rating);
         fableft=(ImageView)findViewById(R.id.fableft);
         fab = (ImageView) findViewById(R.id.fabright);
@@ -187,6 +190,33 @@ public class MainMapActivity extends FragmentActivity implements OnMapReadyCallb
         fab.setOnClickListener(this);
         fab1.setOnClickListener(this);
         fab2.setOnClickListener(this);
+
+        SharedPreferences preferences = getSharedPreferences("userdetails",MODE_PRIVATE);
+        String loginuname = preferences.getString("username",null);
+        String loginpassword=preferences.getString("password",null);
+        if(loginuname==""&& loginpassword==""){
+            Toast.makeText(getApplicationContext(),"Login again",Toast.LENGTH_LONG).show();
+        }else{
+            Toast.makeText(getApplicationContext(),"Successfull login",Toast.LENGTH_LONG).show();
+//            loginbtn.setVisibility(View.INVISIBLE);
+//            signupbtn.setVisibility(View.INVISIBLE);
+//            TextView username=(TextView)header.findViewById(R.id.username);
+//            username.setVisibility(View.VISIBLE);
+            LinearLayout ll =(LinearLayout)header.findViewById(R.id.loginorsignup);
+            ll.setVisibility(View.GONE);
+            LinearLayout ll2=(LinearLayout)header.findViewById(R.id.myloginusername);
+            ll2.setVisibility(View.VISIBLE);
+            TextView username=(TextView)header.findViewById(R.id.username);
+            username.setText(loginuname);
+            Menu menuNav=navigationView.getMenu();
+            MenuItem nav_myprofile = menuNav.findItem(R.id.nav_myprofile);
+            nav_myprofile.setVisible(true);
+            MenuItem nav_logout = menuNav.findItem(R.id.nav_logout);
+            nav_logout.setVisible(true);
+
+        }
+
+
         shareimage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -216,9 +246,6 @@ public class MainMapActivity extends FragmentActivity implements OnMapReadyCallb
                     }
                 }
         });
-        loginbtn = (Button) header.findViewById(R.id.signin_btn);
-        signupbtn = (Button) header.findViewById(R.id.signup_btn);
-        profilepic = (ImageView)header.findViewById(R.id.navimageview);
         loginbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -231,7 +258,6 @@ public class MainMapActivity extends FragmentActivity implements OnMapReadyCallb
                 startActivity(new Intent(MainMapActivity.this,SignUpActivity.class));
             }
         });
-
 
         navbtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -417,7 +443,6 @@ public class MainMapActivity extends FragmentActivity implements OnMapReadyCallb
             }
         }
     }
-
     private void storeImage(Bitmap thumbnail) {
         // Removing image saved earlier in shared prefernces
         PreferenceManager.getDefaultSharedPreferences(this).edit().clear().apply();
