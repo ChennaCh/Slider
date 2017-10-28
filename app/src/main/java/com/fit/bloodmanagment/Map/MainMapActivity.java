@@ -2,6 +2,7 @@ package com.fit.bloodmanagment.Map;
 
 import android.Manifest;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
@@ -190,14 +191,29 @@ public class MainMapActivity extends FragmentActivity implements OnMapReadyCallb
         fab.setOnClickListener(this);
         fab1.setOnClickListener(this);
         fab2.setOnClickListener(this);
-
-        SharedPreferences preferences = getSharedPreferences("userdetails",MODE_PRIVATE);
-        String loginuname = preferences.getString("username",null);
-        String loginpassword=preferences.getString("password",null);
-        if(loginuname==""&& loginpassword==""){
-            Toast.makeText(getApplicationContext(),"Login again",Toast.LENGTH_LONG).show();
+        shre =  getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
+        if (shre.contains(key))
+        {
+            //save required image
+            String u=shre.getString(key, "");
+            thumbnail=decodeBase64(u);
+            profilepic.setImageBitmap(thumbnail);
+        }
+        shre = getSharedPreferences("userdetails",MODE_PRIVATE);
+        String loginuname = shre.getString("username",null);
+        if(loginuname=="" || loginuname==null){
+           // Toast.makeText(getApplicationContext(),"Login again",Toast.LENGTH_LONG).show();
+            LinearLayout ll =(LinearLayout)header.findViewById(R.id.loginorsignup);
+            ll.setVisibility(View.VISIBLE);
+            LinearLayout ll2=(LinearLayout)header.findViewById(R.id.myloginusername);
+            ll2.setVisibility(View.GONE);
+            Menu menuNav=navigationView.getMenu();
+            MenuItem nav_myprofile = menuNav.findItem(R.id.nav_myprofile);
+            nav_myprofile.setVisible(false);
+            MenuItem nav_logout = menuNav.findItem(R.id.nav_logout);
+            nav_logout.setVisible(false);
         }else{
-            Toast.makeText(getApplicationContext(),"Successfull login",Toast.LENGTH_LONG).show();
+          //  Toast.makeText(getApplicationContext(),"Successfull login",Toast.LENGTH_LONG).show();
 //            loginbtn.setVisibility(View.INVISIBLE);
 //            signupbtn.setVisibility(View.INVISIBLE);
 //            TextView username=(TextView)header.findViewById(R.id.username);
@@ -266,14 +282,7 @@ public class MainMapActivity extends FragmentActivity implements OnMapReadyCallb
                 drawerLayout.openDrawer(GravityCompat.START);
             }
         });
-        shre =  getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
-        if (shre.contains(key))
-        {
-            //save required image
-            String u=shre.getString(key, "");
-            thumbnail=decodeBase64(u);
-            profilepic.setImageBitmap(thumbnail);
-        }
+
 
         profilepic.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -534,6 +543,15 @@ public class MainMapActivity extends FragmentActivity implements OnMapReadyCallb
         }else if(id==R.id.nav_privacypolicy){
             Intent intent = new Intent(MainMapActivity.this, PrivacyPolicyActivity.class);
             startActivity(intent);
+        }else if(id==R.id.nav_logout){
+
+            Intent intent = new Intent(getApplicationContext(), MainMapActivity.class);
+            getApplicationContext().getSharedPreferences("userdetails", 0).edit().clear().commit();
+            startActivity(intent);
+
+
+
+
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

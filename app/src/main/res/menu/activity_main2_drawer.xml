@@ -68,6 +68,7 @@
         <item
             android:id="@+id/nav_logout"
             android:visible="false"
+            android:icon="@drawable/lockopen"
             android:title="@string/Logout" />
         </group>
 </menu>

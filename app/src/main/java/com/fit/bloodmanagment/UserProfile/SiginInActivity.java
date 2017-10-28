@@ -96,13 +96,7 @@ public class SiginInActivity extends AppCompatActivity implements GoogleApiClien
             public void onClick(View view) {
                 getCredentials();
                 setextview.setText("");
-                SharedPreferences preferences = getSharedPreferences("userdetails",MODE_PRIVATE);
-                SharedPreferences.Editor editor = preferences.edit();
-                String username= edtuser.getText().toString();
-                String pass = edtpass.getText().toString();
-                editor.putString("username",username);
-                editor.putString("password",pass);
-                editor.commit();
+
                // Snackbar.make(view, "No network connection.",Snackbar.LENGTH_SHORT).show();
 //                if (strusername.equals("")) {
 ////                    Toast.makeText(getApplicationContext(), "", Toast.LENGTH_LONG).show();
@@ -177,7 +171,14 @@ public class SiginInActivity extends AppCompatActivity implements GoogleApiClien
                         if (flag == 1){
                             Toast.makeText(getApplicationContext(), "Successfully Login", Toast.LENGTH_SHORT).show();
                             Intent intent=new Intent(getApplicationContext(), MainMapActivity.class);
-                            intent.putExtra("user",loginusername);
+                            //intent.putExtra("user",loginusername);
+                            SharedPreferences preferences = getSharedPreferences("userdetails",MODE_PRIVATE);
+                            SharedPreferences.Editor editor = preferences.edit();
+                            String username= edtuser.getText().toString();
+                            String pass = edtpass.getText().toString();
+                            editor.putString("username",username);
+                            editor.commit();
+
                             startActivity(intent);
                         }else {
 //                Toast.makeText(getApplicationContext(), "fail", Toast.LENGTH_SHORT).show();
