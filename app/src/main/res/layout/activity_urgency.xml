@@ -174,7 +174,7 @@
                         android:backgroundTint="#fff"
                         android:focusable="false"
                         android:gravity="center"
-                        android:hint="MM/DD/YY"
+                        android:hint="MM/DD/YYYY"
                         android:textColor="@color/white"
                         android:textColorHint="@color/white"
                         android:textSize="18dp" />

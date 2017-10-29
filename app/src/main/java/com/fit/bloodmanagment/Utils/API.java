@@ -12,17 +12,23 @@ public class API {
 //    method: post
 //    columns: fullname,email,password,mobile,gender,address,bloodgroup,age,city
 //    result: success/failure
-public static String addbloodneedUrl="http://www.fratelloinnotech.com/saveworld/addbloodneed.php";
+    public static String addbloodneedUrl="http://www.fratelloinnotech.com/saveworld/addbloodneed.php";
 // name,email,mobile,address,bloodgroup,city,purpose,duedate
 //    login/all donors
-public static String getalldonorsurl="http://www.fratelloinnotech.com/saveworld/getdonors.php";
+    public static String getalldonorsurl="http://www.fratelloinnotech.com/saveworld/getdonors.php";
 //    method: post
 //    columns: fullname,email,password,mobile,gender,address,bloodgroup,age,city
 //    result: records
 
 //    getallrecords:
-//
-   public static String getbloodneedsurl="http://www.fratelloinnotech.com/saveworld/getbloodneeds.php";
+    public static String getMyProfile="http://www.fratelloinnotech.com/saveworld/getprofile.php?email=urmail";
+    //method get
+    //columns:  fullname,email,password,mobile,gender,address,bloodgroup,age,city,status
+    public static String updateProfile="http://www.fratelloinnotech.com/saveworld/updateprofile.php";
+    //method post
+    //columns:  fullname,email,password,mobile,gender,address,bloodgroup,age,city,status
+
+    public static String getbloodneedsurl="http://www.fratelloinnotech.com/saveworld/getbloodneeds.php";
 //    method: post
 //    columns: id,name,email,mobile,address,bloodgroup,city,purpose,duedate
 //    result: records

@@ -193,12 +193,18 @@ public class MainMapActivity extends FragmentActivity implements OnMapReadyCallb
         fab2.setOnClickListener(this);
         shre =  getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
         if (shre.contains(key))
-        {
-            //save required image
+        {//save required image
             String u=shre.getString(key, "");
             thumbnail=decodeBase64(u);
             profilepic.setImageBitmap(thumbnail);
         }
+//        shre =  getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
+//        String path = shre.getString(key, "");
+//        if (path != ""){
+//           // ImageView imageView = (ImageView) findViewById(R.id.imageView1);
+//            profilepic.setImageBitmap(BitmapFactory.decodeFile(path));
+//        }
+
         shre = getSharedPreferences("userdetails",MODE_PRIVATE);
         String loginuname = shre.getString("username",null);
         if(loginuname=="" || loginuname==null){
@@ -439,16 +445,18 @@ public class MainMapActivity extends FragmentActivity implements OnMapReadyCallb
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
-                    profilepic.setImageBitmap(bm);
                     storeImage(bm);
+                    profilepic.setImageBitmap(bm);
+
                 }
             }
 
             else if (requestCode == REQUEST_CAMERA) {
                 //onCaptureImageResult(data);
                 Bitmap bm = (Bitmap) data.getExtras().get("data");
-                profilepic.setImageBitmap(bm);
                 storeImage(bm);
+                profilepic.setImageBitmap(bm);
+
             }
         }
     }
@@ -479,6 +487,7 @@ public class MainMapActivity extends FragmentActivity implements OnMapReadyCallb
 
         //choose another format if PNG doesn't suit you
         thumbnail.compress(Bitmap.CompressFormat.PNG, 100, bos);
+        shre =  getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = shre.edit();
         editor.putString(key,encodeTobase64(thumbnail));
         editor.commit();
