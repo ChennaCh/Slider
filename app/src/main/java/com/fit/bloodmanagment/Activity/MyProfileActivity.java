@@ -77,6 +77,12 @@ public class MyProfileActivity extends Activity {
         etgender=(EditText)findViewById(R.id.myPgender);
         //profilePhoto = (NetworkImageView) findViewById(R.id.myimageview);
         Button updatebtn=(Button)findViewById(R.id.myPsave);
+        textViewEmail.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(getApplicationContext(),"Email cann't be edit",Toast.LENGTH_SHORT).show();
+            }
+        });
         updatebtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
