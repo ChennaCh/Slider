@@ -52,10 +52,10 @@ import static android.support.v7.widget.StaggeredGridLayoutManager.TAG;
 
 public class MyProfileActivity extends Activity {
     //TextViews
-    private EditText etViewName,etPhoneno,etAddress,etAge,etcity,etbloodgroup,etgender;
+    private EditText etViewName,etPhoneno,etAddress,etAge,etcity,etbloodgroup,etgender,etstatus;
     private TextView textViewEmail;
     private NetworkImageView profilePhoto;
-    String fullname,email,password,phone,address,age,city,gender,bloodgroup;
+    String fullname,email,phone,address,age,city,gender,bloodgroup,status;
 
     String RESULT_OK="1";
 
@@ -75,6 +75,7 @@ public class MyProfileActivity extends Activity {
         etcity=(EditText)findViewById(R.id.myPcity);
         etbloodgroup=(EditText)findViewById(R.id.myPbloodgroup);
         etgender=(EditText)findViewById(R.id.myPgender);
+        etstatus=(EditText)findViewById(R.id.myPstatus);
         //profilePhoto = (NetworkImageView) findViewById(R.id.myimageview);
         Button updatebtn=(Button)findViewById(R.id.myPsave);
         textViewEmail.setOnClickListener(new View.OnClickListener() {
@@ -95,9 +96,11 @@ public class MyProfileActivity extends Activity {
                 city=etcity.getText().toString();
                 bloodgroup=etbloodgroup.getText().toString();
                 gender=etgender.getText().toString();
+                status=etstatus.getText().toString();
                 //setProgress(fullname, password, phone, email, address, gender, bloodgroup,age,city);
-                if (fullname.trim().length() > 0 && email.trim().length() > 0 && gender.trim().length() > 0 && bloodgroup.trim().length() > 0 && phone.trim().length() > 0 && address.trim().length() > 0 && city.trim().length() > 0 && age.length() > 0) {
-                    updateProfile(fullname, phone, email, address, gender, bloodgroup, age, city);
+                if (fullname.trim().length() > 0 && email.trim().length() > 0 && gender.trim().length() > 0 && bloodgroup.trim().length() > 0 && phone.trim().length() > 0 && address.trim().length() > 0 && city.trim().length() > 0 && age.length() > 0 && status.length()>0) {
+
+                    updateProfile(fullname, phone, email, address, gender, bloodgroup, age, city,status);
                 }
             }
         });
@@ -164,6 +167,7 @@ public class MyProfileActivity extends Activity {
                                 String bloodgroup = c.getString("bloodgroup");
                                 String age=c.getString("age");
                                 String city=c.getString("city");
+                                String status=c.getString("status");
                                 //String status=c.getString("status");
                                 etViewName.setText(fullname);
                                 textViewEmail.setText(email);
@@ -173,6 +177,7 @@ public class MyProfileActivity extends Activity {
                                 etcity.setText(city);
                                 etbloodgroup.setText(bloodgroup);
                                 etgender.setText(gender);
+                                etstatus.setText(status);
 //                        validation(name,pass);
 //                                donordata.add(new DonorBean(id,fullname,email,password,mobile,gender,address,bloodgroup,age,city));
 //                                donorListAdapter = new DonorListAdapter(DonarActivity.this,donordata);
@@ -206,7 +211,7 @@ public class MyProfileActivity extends Activity {
 
 
     private void updateProfile(final String getname, final String getphone,
-                                 final String getemail, final String getaddress, final String getgender, final String getbloodgroup, final String getage, final String getcity) {
+                                 final String getemail, final String getaddress, final String getgender, final String getbloodgroup, final String getage, final String getcity,final String getstatus) {
         class SendPostReqAsyncTask extends AsyncTask<Object, Object, Void> {
             @Override
             protected Void doInBackground(Object... strings) {
@@ -220,6 +225,7 @@ public class MyProfileActivity extends Activity {
                 nameValuePairs.add(new BasicNameValuePair("bloodgroup", getbloodgroup));
                 nameValuePairs.add(new BasicNameValuePair("age", getage));
                 nameValuePairs.add(new BasicNameValuePair("city", getcity));
+                nameValuePairs.add(new BasicNameValuePair("status",getstatus));
                 try {
                     HttpClient httpClient = new DefaultHttpClient();
                     HttpPost httpPost = new HttpPost(API.updateProfile);
@@ -237,10 +243,12 @@ public class MyProfileActivity extends Activity {
             protected void onPostExecute(Void aVoid) {
                 super.onPostExecute(aVoid);
                 Toast.makeText(MyProfileActivity.this, "Update Profile Successfully", Toast.LENGTH_LONG).show();
+                startActivity(new Intent(getApplicationContext(),MyProfileActivity.class));
+
 
             }
         }
         SendPostReqAsyncTask sendPostReqAsyncTask = new SendPostReqAsyncTask();
-        sendPostReqAsyncTask.execute(getname,getage, getphone, getemail, getaddress, getbloodgroup, getgender, getcity);
+        sendPostReqAsyncTask.execute(getname,getage, getphone, getemail, getaddress, getbloodgroup, getgender, getcity,getstatus);
     }
 }
