@@ -291,7 +291,7 @@
                     android:layout_gravity="center"
                     android:layout_margin="30dp"
                     android:background="@drawable/buttonshape"
-                    android:text="Register"
+                    android:text="Registered as a Donor"
                     android:textAllCaps="false"
                     android:textColor="#ac1c1c" />
 

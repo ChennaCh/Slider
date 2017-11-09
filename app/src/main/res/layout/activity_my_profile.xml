@@ -12,9 +12,9 @@
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         app:layout_scrollFlags="scroll|enterAlways"
-        app:titleTextColor="#fff"
+        android:titleTextColor="#fff"
         app:theme="@style/ToolbarStyle"
-        android:background="?attr/colorPrimary"/>
+        android:background="#E57373"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -33,8 +33,8 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="30dp"
                 android:layout_marginLeft="30dp"
+                android:layout_marginRight="30dp"
                 android:orientation="vertical">
 
                 <TextView
@@ -44,122 +44,135 @@
                     android:layout_marginTop="50dp"
                     android:gravity="center"
                     android:text="My Profile "
-                    android:textStyle="bold|italic"
                     android:textColor="@color/white"
-                    android:textSize="30dp" />
+                    android:textSize="30dp"
+                    android:textStyle="bold|italic" />
 
-                <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:weightSum="1"
-                android:orientation="horizontal">
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:textSize="18dp"
-                    android:layout_weight="0.3"
-                    android:textColor="@color/white"
-                    android:text="Name : "/>
-                    <EditText
-                        android:id="@+id/myPuname"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:textColor="@color/white"
-                        android:text="Rekha"
-                        android:layout_weight="1.7"
-                        android:backgroundTint="@color/white"
-                        android:textColorHint="@color/white" />
-             </LinearLayout>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:weightSum="1"
-                android:orientation="horizontal">
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:textSize="18dp"
-                    android:textColor="@color/white"
-                    android:text="Email :          "/>
-                <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:id="@+id/myPmail"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:textColor="@color/white"
-                        android:backgroundTint="@color/white"
-                        android:textSize="16dp"
-                        android:textColorHint="@color/white"
-                        android:padding="5dp"
-                        android:hint="Email" />
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_below="@+id/myTextView"
-                    android:background="#fff"/>
-            </LinearLayout>
-                </LinearLayout>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:weightSum="1"
-                android:orientation="horizontal">
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:textSize="18dp"
-                    android:layout_weight="0.3"
-                    android:textColor="@color/white"
-                    android:text="Mobile No :"/>
-                <EditText
-                    android:id="@+id/myPmobileno"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:hint="Phone"
-                    android:layout_weight="0.7"
-                    android:padding="10dp"
-                    android:textColor="@color/white"
-                    android:backgroundTint="@color/white"
-                    android:textColorHint="@color/white" />
-              </LinearLayout>
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:weightSum="1"
-                    android:orientation="horizontal">
+                    android:layout_marginTop="20dp"
+                    android:orientation="horizontal"
+                    android:weightSum="1">
+
                     <TextView
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:textSize="18dp"
                         android:layout_weight="0.3"
+                        android:text="Name : "
                         android:textColor="@color/white"
-                        android:text="Group :"/>
+                        android:textSize="18dp" />
+
+                    <EditText
+                        android:id="@+id/myPuname"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1.7"
+                        android:backgroundTint="@color/white"
+                        android:padding="10dp"
+                        android:text="Rekha"
+                        android:textColor="@color/white"
+                        android:textColorHint="@color/white" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:weightSum="1">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:text="Email :         "
+                        android:textColor="@color/white"
+                        android:textSize="18dp" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/myPmail"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:backgroundTint="@color/white"
+                            android:hint="Email"
+                            android:paddingLeft="5dp"
+                            android:textColor="@color/white"
+                            android:textColorHint="@color/white"
+                            android:textSize="18dp" />
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:layout_below="@+id/myTextView"
+                            android:background="#fff" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:weightSum="1">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_weight="0.3"
+                        android:text="Mobile :"
+                        android:textColor="@color/white"
+                        android:textSize="18dp" />
+
+                    <EditText
+                        android:id="@+id/myPmobileno"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.7"
+                        android:backgroundTint="@color/white"
+                        android:hint="Phone"
+                        android:padding="10dp"
+                        android:textColor="@color/white"
+                        android:textColorHint="@color/white" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:weightSum="1">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_weight="0.3"
+                        android:text="Group :"
+                        android:textColor="@color/white"
+                        android:textSize="18dp" />
+
                     <EditText
                         android:id="@+id/myPbloodgroup"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1.7"
-                        android:textColor="@color/white"
                         android:backgroundTint="@color/white"
-                        android:textColorHint="@color/white"
                         android:hint="Blood Group"
-                        android:padding="10dp" />
+                        android:padding="10dp"
+                        android:textColor="@color/white"
+                        android:textColorHint="@color/white" />
                 </LinearLayout>
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:weightSum="1"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:weightSum="1">
 
                     <TextView
                         android:id="@+id/textView17"
@@ -176,17 +189,18 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1.7"
-                        android:textColor="@color/white"
                         android:backgroundTint="@color/white"
-                        android:textColorHint="@color/white"
                         android:hint="Age"
-                        android:padding="10dp" />
+                        android:padding="10dp"
+                        android:textColor="@color/white"
+                        android:textColorHint="@color/white" />
                 </LinearLayout>
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:weightSum="1"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:weightSum="1">
 
                     <TextView
                         android:id="@+id/textView17"
@@ -203,83 +217,92 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1.7"
-                        android:textColor="@color/white"
                         android:backgroundTint="@color/white"
-                        android:textColorHint="@color/white"
                         android:hint="Male/Female"
-                        android:padding="10dp" />
+                        android:padding="10dp"
+                        android:textColor="@color/white"
+                        android:textColorHint="@color/white" />
                 </LinearLayout>
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:weightSum="1"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:weightSum="1">
+
                     <TextView
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:textSize="18dp"
                         android:layout_weight="0.3"
+                        android:text="Address :"
                         android:textColor="@color/white"
-                        android:text="Address :"/>
+                        android:textSize="18dp" />
+
                     <EditText
                         android:id="@+id/myPaddress"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1.7"
-                        android:textColor="@color/white"
                         android:backgroundTint="@color/white"
-                        android:textColorHint="@color/white"
                         android:hint="Address"
-                        android:padding="10dp" />
+                        android:padding="10dp"
+                        android:textColor="@color/white"
+                        android:textColorHint="@color/white" />
                 </LinearLayout>
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:weightSum="1"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:weightSum="1">
+
                     <TextView
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:textSize="18dp"
                         android:layout_weight="0.3"
+                        android:text="City :"
                         android:textColor="@color/white"
-                        android:text="City :"/>
+                        android:textSize="18dp" />
+
                     <EditText
                         android:id="@+id/myPcity"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1.7"
-                        android:textColor="@color/white"
                         android:backgroundTint="@color/white"
-                        android:textColorHint="@color/white"
                         android:hint="City"
-                        android:padding="10dp" />
+                        android:padding="10dp"
+                        android:textColor="@color/white"
+                        android:textColorHint="@color/white" />
                 </LinearLayout>
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:weightSum="1"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:weightSum="1">
+
                     <TextView
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:textSize="18dp"
                         android:layout_weight="0.3"
+                        android:text="Status :"
                         android:textColor="@color/white"
-                        android:text="Status :"/>
+                        android:textSize="18dp" />
+
                     <EditText
                         android:id="@+id/myPstatus"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1.7"
-                        android:textColor="@color/white"
                         android:backgroundTint="@color/white"
-                        android:textColorHint="@color/white"
-                        android:hint="Make 0 to deactivate"
-                        android:padding="10dp" />
+                        android:hint="Make 0 for not be donor"
+                        android:padding="10dp"
+                        android:textColor="@color/white"
+                        android:textColorHint="@color/white" />
                 </LinearLayout>
 
                 <Button
@@ -290,7 +313,7 @@
                     android:layout_margin="30dp"
                     android:background="@drawable/buttonshape"
                     android:padding="15dp"
-                    android:text="Save"
+                    android:text="Update Profile"
                     android:textColor="#ac1c1c" />
 
             </LinearLayout>

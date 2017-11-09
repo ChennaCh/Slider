@@ -5,7 +5,9 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -50,13 +52,13 @@ import de.hdodenhof.circleimageview.CircleImageView;
 import static android.support.v7.widget.StaggeredGridLayoutManager.TAG;
 
 
-public class MyProfileActivity extends Activity {
+public class MyProfileActivity extends AppCompatActivity {
     //TextViews
     private EditText etViewName,etPhoneno,etAddress,etAge,etcity,etbloodgroup,etgender,etstatus;
     private TextView textViewEmail;
     private NetworkImageView profilePhoto;
     String fullname,email,phone,address,age,city,gender,bloodgroup,status;
-
+     Toolbar toolbar;
     String RESULT_OK="1";
 
     //Image Loader
@@ -66,6 +68,12 @@ public class MyProfileActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_profile);
+        toolbar = (Toolbar) findViewById(R.id.myprofile_toolbar);
+        setTitle(getString(R.string.Myprofile));
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        toolbar.setTitleTextColor(getResources().getColor(android.R.color.white));
         //Initializing Views
         etViewName = (EditText) findViewById(R.id.myPuname);
         textViewEmail = (TextView) findViewById(R.id.myPmail);
@@ -250,5 +258,10 @@ public class MyProfileActivity extends Activity {
         }
         SendPostReqAsyncTask sendPostReqAsyncTask = new SendPostReqAsyncTask();
         sendPostReqAsyncTask.execute(getname,getage, getphone, getemail, getaddress, getbloodgroup, getgender, getcity,getstatus);
+    }
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
     }
 }

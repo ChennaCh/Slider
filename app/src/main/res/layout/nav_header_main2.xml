@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/nav_layout"
     android:layout_width="match_parent"
-    android:layout_height="200dp"
+    android:layout_height="220dp"
     android:gravity="bottom"
     android:orientation="vertical"
     android:theme="@style/ThemeOverlay.AppCompat.Dark">
@@ -20,7 +20,10 @@
         android:layout_height="match_parent"
         android:gravity="center"
         android:paddingTop="25dp"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -37,36 +40,61 @@
             app:civ_border_color="#d4c7c7"/>
     </LinearLayout>
 
-    <LinearLayout
-        android:id="@+id/loginorsignup"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:visibility="visible"
-        android:layout_marginTop="10dp"
-        android:orientation="horizontal">
-
-        <Button
-            android:id="@+id/signin_btn"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:id="@+id/loginorsignup"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Login"
-            android:textColor="@color/white"
-            android:background="@null"/>
-        <View
-            android:id="@+id/viewdivider"
-            android:layout_width="1dp"
-            android:layout_height="30dp"
-            android:background="@android:color/white" />
-        <Button
-            android:id="@+id/signup_btn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Signup"
-            android:textColor="@color/white"
-            android:background="@null"/>
+            android:layout_marginTop="10dp"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:visibility="visible">
 
-    </LinearLayout>
+            <Button
+                android:id="@+id/signin_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@null"
+                android:gravity="center"
+                android:text="Login"
+                android:textColor="@color/white" />
+
+            <View
+                android:id="@+id/viewdivider"
+                android:layout_width="1dp"
+                android:layout_height="30dp"
+                android:layout_gravity="center"
+                android:background="@android:color/white" />
+
+            <Button
+                android:id="@+id/signup_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@null"
+                android:gravity="center"
+                android:paddingLeft="20dp"
+                android:text="Register"
+                android:textColor="@color/white" />
+
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/textView19"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:paddingTop="5dp"
+                android:paddingBottom="5dp"
+                android:paddingLeft="5dp"
+                android:text="BE A DONOR - SAVE WORLD"
+                android:textColor="#fff"
+                android:textSize="15dp" />
+        </LinearLayout>
+
         <LinearLayout
             android:id="@+id/myloginusername"
             android:layout_width="match_parent"
