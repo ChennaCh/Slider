@@ -5,13 +5,6 @@
             android:id="@+id/nav_aboutus"
                     android:icon="@drawable/aboutus"
             android:title="@string/AboutUs" />
-            <group android:checkableBehavior="single"
-                android:id="@+id/group1">
-                <item
-                    android:id="@+id/nav_precautions"
-                    android:icon="@drawable/precautionicon"
-                    android:title="@string/Precautions" />
-            </group>
     <group android:checkableBehavior="single"
         android:id="@+id/group2">
         <item
@@ -40,6 +33,13 @@
                     android:id="@+id/nav_viewneeds"
                     android:icon="@drawable/viewneeds"
                     android:title="@string/Viewneeds" />
+            </group>
+            <group android:checkableBehavior="single"
+                android:id="@+id/group1">
+                <item
+                    android:id="@+id/nav_precautions"
+                    android:icon="@drawable/precautionicon"
+                    android:title="@string/Precautions" />
             </group>
             <group android:checkableBehavior="single"
                 android:id="@+id/group6">

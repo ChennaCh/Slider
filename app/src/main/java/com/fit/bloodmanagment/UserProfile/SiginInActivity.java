@@ -2,18 +2,12 @@ package com.fit.bloodmanagment.UserProfile;
 
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -29,19 +23,14 @@ import com.android.volley.RequestQueue;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.fit.bloodmanagment.Activity.DonarActivity;
 import com.fit.bloodmanagment.Activity.MyProfileActivity;
-import com.fit.bloodmanagment.Adapter.DonorListAdapter;
-import com.fit.bloodmanagment.Beans.DonorBean;
 import com.fit.bloodmanagment.Map.MainMapActivity;
 import com.fit.bloodmanagment.R;
 import com.fit.bloodmanagment.Utils.API;
-import com.fit.bloodmanagment.Utils.HttpHandler;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.auth.api.signin.GoogleSignInResult;
-import com.google.android.gms.auth.api.signin.internal.SignInHubActivity;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -55,8 +44,6 @@ import org.json.JSONObject;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import static android.support.v7.widget.StaggeredGridLayoutManager.TAG;
 
 
 public class SiginInActivity extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener {
@@ -166,6 +153,7 @@ public class SiginInActivity extends AppCompatActivity implements GoogleApiClien
                                         //result = (EditText) findViewById(R.id.editTextResult);
                                        // etOutput.setText(userInput.getText());
                                         sendPasswordToMail();
+                                        Toast.makeText(getApplicationContext(),"Send Password successfully",Toast.LENGTH_LONG).show();
 
 
                                     }
@@ -203,13 +191,6 @@ public class SiginInActivity extends AppCompatActivity implements GoogleApiClien
     }
 
     private void sendPasswordToMail() {
-//        SharedPreferences shre = getSharedPreferences("userdetails",MODE_PRIVATE);
-//        String username = shre.getString("username",null);
-
-       // String urmail=username.toString();
-        //String urmail="loginuname";
-        // donorprogress.setVisibility(View.VISIBLE);
-        //userInput = (EditText) dialogView.findViewById(R.id.et_input);
         emailinput=userInput.getText().toString();
         RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
         //String uri = "http://" + address + "/myFolder/page.php?" + value1 + "=" + value2;
@@ -226,38 +207,8 @@ public class SiginInActivity extends AppCompatActivity implements GoogleApiClien
                             for (int i = 0; i < contacts.length(); i++) {
                                 //columns:  fullname,email,password,mobile,gender,address,bloodgroup,age,city,status
                                 JSONObject c = contacts.getJSONObject(i);
-                                String fullname = c.getString("fullname");
                                 String email = c.getString("email");
                                 String password = c.getString("password");
-                                String mobile = c.getString("mobile");
-                                String gender = c.getString("gender");
-                                String address = c.getString("address");
-                                String bloodgroup = c.getString("bloodgroup");
-                                String age=c.getString("age");
-                                String city=c.getString("city");
-                                String status=c.getString("status");
-                                //String status=c.getString("status");
-//                                etViewName.setText(fullname);
-//                                textViewEmail.setText(email);
-//                                etPhoneno.setText(mobile);
-//                                etAddress.setText(address);
-//                                etAge.setText(age);
-//                                etcity.setText(city);
-//                                etbloodgroup.setText(bloodgroup);
-//                                etgender.setText(gender);
-//                                etstatus.setText(status);
-//                        validation(name,pass);
-//                                donordata.add(new DonorBean(id,fullname,email,password,mobile,gender,address,bloodgroup,age,city));
-//                                donorListAdapter = new DonorListAdapter(DonarActivity.this,donordata);
-//                                donorrecycle.setAdapter(donorListAdapter);
-//                                donorrecycle.setLayoutManager(new LinearLayoutManager(DonarActivity.this));
-//                                donorprogress.setVisibility(View.GONE);
-                                Intent intent = new Intent(Intent.ACTION_SEND);//common intent
-                                //intent.setData(Uri.parse("mailto:")+ Uri.encode(address))); // only email apps should handle this
-                               // If you want to add the body and subject, add this
-                                intent.putExtra(Intent.EXTRA_EMAIL  , new String[] {emailinput});
-                                intent.putExtra(Intent.EXTRA_SUBJECT, "Your password is:");
-                                intent.putExtra(Intent.EXTRA_TEXT, password );
                             }
                         } catch (final JSONException e) {
                             Log.e(TAG, "Json parsing error: " + e.getMessage());
