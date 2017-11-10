@@ -1,9 +1,13 @@
 package com.fit.bloodmanagment.UserProfile;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -12,6 +16,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -36,6 +41,7 @@ import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.auth.api.signin.GoogleSignInResult;
+import com.google.android.gms.auth.api.signin.internal.SignInHubActivity;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -50,12 +56,14 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import static android.support.v7.widget.StaggeredGridLayoutManager.TAG;
+
 
 public class SiginInActivity extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener {
     Toolbar toolbar;
-    EditText edtuser, edtpass;
-    String strusername, strpassword;
-    TextView signup,setextview;
+    EditText edtuser, edtpass,userInput;
+    String strusername, strpassword,emailinput;
+    TextView signup,setextview,forgetpwd;
     Button login;
     private static final String TAG = SiginInActivity.class.getSimpleName();
     private static final int RC_SIGN_IN = 007;
@@ -64,6 +72,7 @@ public class SiginInActivity extends AppCompatActivity implements GoogleApiClien
     ProgressBar progressbar;
     int flag = 0;
     private Activity activity;
+    //Context mContext;
     //http://www.fratelloinnotech.com/saveworld/getdonors.php
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,10 +88,12 @@ public class SiginInActivity extends AppCompatActivity implements GoogleApiClien
         edtuser = (EditText) findViewById(R.id.editusername);
         edtpass = (EditText) findViewById(R.id.editpassword);
         signup=(TextView)findViewById(R.id.signin_signup);
+        forgetpwd=(TextView)findViewById(R.id.tvforgetpwd);
         setextview =(TextView)findViewById(R.id.signinsettext);
         strusername=edtuser.getText().toString();
         strpassword=edtpass.getText().toString();
         login=(Button)findViewById(R.id.signin);
+
         signup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -117,6 +128,59 @@ public class SiginInActivity extends AppCompatActivity implements GoogleApiClien
 //
 
 
+            }
+        });
+        forgetpwd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // inflate alert dialog xml
+
+                LayoutInflater li = LayoutInflater.from(SiginInActivity.this);
+                View dialogView = li.inflate(R.layout.custom_dialog, null);
+                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(SiginInActivity.this);
+                // set title
+                //alertDialogBuilder.setTitle("Forget Password?");
+                // set custom dialog icon
+                //alertDialogBuilder.setIcon(R.drawable.ic_launcher);
+                // set custom_dialog.xml to alertdialog builder
+                alertDialogBuilder.setView(dialogView);
+                userInput = (EditText) dialogView.findViewById(R.id.et_input);
+                emailinput=userInput.getText().toString();
+//                if(userInput.equals("")){
+//                    userInput.setFocusable(true);
+//                    userInput.setError("Enter Valid Mail Id");
+//                }
+
+                // set dialog message
+                alertDialogBuilder
+                        .setCancelable(false)
+                        .setPositiveButton("OK",
+                                new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog,int id) {
+                                        if (!isValidEmail(emailinput)||userInput.equals("")) {
+                                            //userInput.requestFocus();
+                                            userInput.setError("Enter valid email");
+                                        }
+                                        // get user input and set it to etOutput
+                                        // edit text
+                                        //result = (EditText) findViewById(R.id.editTextResult);
+                                       // etOutput.setText(userInput.getText());
+                                        sendPasswordToMail();
+
+
+                                    }
+                                })
+                        .setNegativeButton("Cancel",
+                                new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog,
+                                                        int id) {
+                                        dialog.cancel();
+                                    }
+                                });
+                // create alert dialog
+                AlertDialog alertDialog = alertDialogBuilder.create();
+                // show it
+                alertDialog.show();
 
             }
         });
@@ -137,6 +201,98 @@ public class SiginInActivity extends AppCompatActivity implements GoogleApiClien
         });
 
     }
+
+    private void sendPasswordToMail() {
+//        SharedPreferences shre = getSharedPreferences("userdetails",MODE_PRIVATE);
+//        String username = shre.getString("username",null);
+
+       // String urmail=username.toString();
+        //String urmail="loginuname";
+        // donorprogress.setVisibility(View.VISIBLE);
+        //userInput = (EditText) dialogView.findViewById(R.id.et_input);
+        emailinput=userInput.getText().toString();
+        RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
+        //String uri = "http://" + address + "/myFolder/page.php?" + value1 + "=" + value2;
+        //String uri = String.format("http://somesite.com/some_endpoint.php?param1=%1$s&param2=%2$s", num1, num2);
+        String serverURL = String.format("http://www.fratelloinnotech.com/saveworld/sendpassword.php?email="+emailinput);
+        final StringRequest getRequest = new StringRequest(Request.Method.GET, serverURL,
+                new com.android.volley.Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        try {
+                            JSONObject jsonObj = new JSONObject(response);
+                            JSONArray contacts = jsonObj.getJSONArray("result");
+
+                            for (int i = 0; i < contacts.length(); i++) {
+                                //columns:  fullname,email,password,mobile,gender,address,bloodgroup,age,city,status
+                                JSONObject c = contacts.getJSONObject(i);
+                                String fullname = c.getString("fullname");
+                                String email = c.getString("email");
+                                String password = c.getString("password");
+                                String mobile = c.getString("mobile");
+                                String gender = c.getString("gender");
+                                String address = c.getString("address");
+                                String bloodgroup = c.getString("bloodgroup");
+                                String age=c.getString("age");
+                                String city=c.getString("city");
+                                String status=c.getString("status");
+                                //String status=c.getString("status");
+//                                etViewName.setText(fullname);
+//                                textViewEmail.setText(email);
+//                                etPhoneno.setText(mobile);
+//                                etAddress.setText(address);
+//                                etAge.setText(age);
+//                                etcity.setText(city);
+//                                etbloodgroup.setText(bloodgroup);
+//                                etgender.setText(gender);
+//                                etstatus.setText(status);
+//                        validation(name,pass);
+//                                donordata.add(new DonorBean(id,fullname,email,password,mobile,gender,address,bloodgroup,age,city));
+//                                donorListAdapter = new DonorListAdapter(DonarActivity.this,donordata);
+//                                donorrecycle.setAdapter(donorListAdapter);
+//                                donorrecycle.setLayoutManager(new LinearLayoutManager(DonarActivity.this));
+//                                donorprogress.setVisibility(View.GONE);
+                                Intent intent = new Intent(Intent.ACTION_SEND);//common intent
+                                //intent.setData(Uri.parse("mailto:")+ Uri.encode(address))); // only email apps should handle this
+                               // If you want to add the body and subject, add this
+                                intent.putExtra(Intent.EXTRA_EMAIL  , new String[] {emailinput});
+                                intent.putExtra(Intent.EXTRA_SUBJECT, "Your password is:");
+                                intent.putExtra(Intent.EXTRA_TEXT, password );
+                            }
+                        } catch (final JSONException e) {
+                            Log.e(TAG, "Json parsing error: " + e.getMessage());
+                            e.printStackTrace();
+                        }
+
+                    }
+                },
+                new com.android.volley.Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        // error
+                        Toast.makeText(getApplicationContext(), "" + error, Toast.LENGTH_SHORT).show();
+                    }
+                }
+        ){
+            @Override
+            protected Map<String, String> getParams() {
+                Toast.makeText(getApplicationContext(), "Successful", Toast.LENGTH_SHORT).show();
+                return null;
+            }
+        };
+        queue.add(getRequest);
+    }
+
+
+    private boolean isValidEmail(String email) {
+        String EMAIL_PATTERN = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
+                + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
+        Pattern pattern = Pattern.compile(EMAIL_PATTERN);
+        Matcher matcher = pattern.matcher(email);
+        return matcher.matches();
+
+    }
+
     private void getCredentials() {
        // progressbar.setVisibility(View.VISIBLE);
         RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
