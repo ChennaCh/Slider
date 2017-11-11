@@ -32,9 +32,9 @@ import com.fit.bloodmanagment.Activity.UrgencyActivity;
 import com.fit.bloodmanagment.Map.MainMapActivity;
 import com.fit.bloodmanagment.R;
 import com.fit.bloodmanagment.Utils.API;
-import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+
 import com.google.android.gms.common.SignInButton;
-import com.google.android.gms.common.api.GoogleApiClient;
+
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -68,9 +68,9 @@ public class SignUpActivity extends AppCompatActivity  {
     //Signin button
     private SignInButton signInButton;
     //Signing Options
-    private GoogleSignInOptions gso;
+    //private GoogleSignInOptions gso;
     //google api client
-    private GoogleApiClient mGoogleApiClient;
+    //private GoogleApiClient mGoogleApiClient;
     //Signin constant to check the activity result
     private int RC_SIGN_IN = 100;
     //TextViews

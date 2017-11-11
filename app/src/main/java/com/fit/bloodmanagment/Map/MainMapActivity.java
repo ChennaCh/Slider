@@ -264,7 +264,7 @@ public class MainMapActivity extends FragmentActivity implements OnMapReadyCallb
                     try {
                         startActivity(myAppLinkToMarket);
                     } catch (ActivityNotFoundException e) {
-                        Toast.makeText(getApplicationContext()," unable to find app in playstore", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext()," unable to find application in playstore", Toast.LENGTH_LONG).show();
                     }
                 }
         });
@@ -381,7 +381,7 @@ public class MainMapActivity extends FragmentActivity implements OnMapReadyCallb
                 return;
             }
 
-            // other 'case' lines to check for other permissions this app might request.
+            // other 'case' lines to check for other permissions this application might request.
             // You can add here other case statements according to your requirement.
         }
 
