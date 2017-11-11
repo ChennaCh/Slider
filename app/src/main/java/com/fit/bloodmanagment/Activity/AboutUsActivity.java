@@ -51,7 +51,7 @@ import java.io.InputStream;
 import java.util.regex.Matcher;
 
 
-public class AboutUsActivity extends AppCompatActivity implements View.OnClickListener{
+public class AboutUsActivity extends AppCompatActivity implements View.OnClickListener,OnMapReadyCallback {
     ImageView amail,acall,aweb;
     LinearLayout panel1,panel2,panel3;
     TextView text1,text2,text3;
@@ -114,18 +114,17 @@ public class AboutUsActivity extends AppCompatActivity implements View.OnClickLi
                 startActivity(viewIntent);
             }
         });
-       //gmap=((MapFragment)getFragmentManager().findFragmentById(R.id.mapaboutusid)).getMapAsync(this);
-        //gmap = ((SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.mapaboutusid)).getMapAsync(this);
-        ((SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.mapaboutusid)).getMapAsync(new OnMapReadyCallback() {
-            @Override
-            public void onMapReady(GoogleMap googleMap) {
-                gmap  = googleMap;
-                addMarkertoMap();
 
-            }
+        MapFragment mapFragment = (MapFragment) getFragmentManager().findFragmentById(R.id.mapaboutusid);
+        mapFragment.getMapAsync(this);
 
-
-        });
+    }
+    @Override
+    public void onMapReady(GoogleMap googleMap) {
+        gmap = googleMap;
+        // Enabling MyLocation Layer of Google Map
+        googleMap.setMyLocationEnabled(true);
+        addMarkertoMap();
     }
 
     private void addMarkertoMap() {
