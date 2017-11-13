@@ -56,6 +56,7 @@ public class BloodbankListAdapter extends RecyclerView.Adapter<RecyclerView.View
         mapgifimage.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
+
                 Intent intent=new Intent(context, BloodbanksMapActivity.class);
                 context.startActivity(intent);
 

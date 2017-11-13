@@ -64,4 +64,6 @@
         <item>AB-</item>
     </string-array>
     <string name="title_activity_main_map">Map</string>
+    <string name="title_activity_donorlist_map">Map</string>
+    <string name="title_activity_view_needs_map">Map</string>
 </resources>

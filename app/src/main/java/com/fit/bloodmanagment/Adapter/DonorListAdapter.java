@@ -23,6 +23,7 @@ import com.fit.bloodmanagment.Activity.DonarActivity;
 import com.fit.bloodmanagment.Beans.BloodbankBean;
 import com.fit.bloodmanagment.Beans.DonorBean;
 import com.fit.bloodmanagment.Map.BloodbanksMapActivity;
+import com.fit.bloodmanagment.Map.DonorlistMapActivity;
 import com.fit.bloodmanagment.R;
 
 import java.util.Collections;
@@ -49,7 +50,7 @@ public class DonorListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         mapgifimage.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-                Intent intent=new Intent(context, BloodbanksMapActivity.class);
+                Intent intent=new Intent(context,DonorlistMapActivity.class);
                 context.startActivity(intent);
 
                 return true;

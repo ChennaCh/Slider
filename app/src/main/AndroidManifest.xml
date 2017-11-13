@@ -35,7 +35,6 @@
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
-
         <service android:name=".service.MyFirebaseInstanceIDService">
             <intent-filter>
                 <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
@@ -81,7 +80,25 @@
         <activity android:name=".Activity.FaqsActivity" />
         <activity android:name=".Activity.PrivacyPolicyActivity" />
         <activity android:name=".Adapter.DonorListAdapter" />
-        <activity android:name=".Adapter.ViewNeedsListAdapter"></activity>
+        <activity android:name=".Adapter.ViewNeedsListAdapter" />
+        <!--
+             The API key for Google Maps-based APIs is defined as a string resource.
+             (See the file "res/values/google_maps_api.xml").
+             Note that the API key is linked to the encryption key used to sign the APK.
+             You need a different API key for each encryption key, including the release key that is used to
+             sign the APK for publishing.
+             You can define the keys for the debug and release targets in src/debug/ and src/release/. 
+        -->
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="@string/google_maps_key" />
+
+        <activity
+            android:name=".Map.DonorlistMapActivity"
+            android:label="@string/title_activity_donorlist_map" />
+        <activity
+            android:name=".Map.ViewNeedsMapActivity"
+            android:label="@string/title_activity_view_needs_map"></activity>
     </application>
 
 </manifest>

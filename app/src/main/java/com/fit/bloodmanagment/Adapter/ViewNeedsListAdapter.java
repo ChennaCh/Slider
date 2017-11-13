@@ -22,6 +22,7 @@ import android.widget.Toast;
 import com.fit.bloodmanagment.Activity.ViewNeedsActivity;
 import com.fit.bloodmanagment.Beans.ViewNeedsBean;
 import com.fit.bloodmanagment.Map.BloodbanksMapActivity;
+import com.fit.bloodmanagment.Map.ViewNeedsMapActivity;
 import com.fit.bloodmanagment.R;
 
 import java.util.Collections;
@@ -48,9 +49,8 @@ public class ViewNeedsListAdapter extends RecyclerView.Adapter<RecyclerView.View
         mapgifimage.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-                Intent intent=new Intent(context, BloodbanksMapActivity.class);
+                Intent intent=new Intent(context, ViewNeedsMapActivity.class);
                 context.startActivity(intent);
-
                 return true;
             }
         });

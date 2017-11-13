@@ -116,7 +116,6 @@ public class BloodBanksActivity extends AppCompatActivity implements ObservableS
         @Override
         protected Map<String, String> getParams() {
             Toast.makeText(activity, "Successful", Toast.LENGTH_SHORT).show();
-
             return null;
         }
     };
