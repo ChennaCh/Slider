@@ -28,6 +28,8 @@
     <color name="white">#ffffff</color>
     <color name="black">#000000</color>
 
+    <color name="blue">#374ba4</color>
+
 
     <array name="array_dot_active">
         <item>@color/dot_light_screen1</item>

@@ -1,5 +1,6 @@
 package com.fit.bloodmanagment.Slider;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
@@ -19,10 +20,12 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.fit.bloodmanagment.Activity.SplashActivity;
+import com.fit.bloodmanagment.Permissions.AbsRuntimePermission;
 import com.fit.bloodmanagment.R;
 
-public class WelcomeActivity extends AppCompatActivity {
+public class WelcomeActivity extends AbsRuntimePermission {
 
+    private static final int REQUEST_PERMISSION = 10;
     private ViewPager viewPager;
     private MyViewPagerAdapter myViewPagerAdapter;
     private LinearLayout dotsLayout;
@@ -90,10 +93,16 @@ public class WelcomeActivity extends AppCompatActivity {
                     // move to next screen
                     viewPager.setCurrentItem(current);
                 } else {
+
                     launchHomeScreen();
                 }
             }
         });
+    }
+
+    @Override
+    public void onPermissionsGranted(int requestCode) {
+
     }
 
     private void addBottomDots(int currentPage) {
@@ -121,7 +130,10 @@ public class WelcomeActivity extends AppCompatActivity {
 
     private void launchHomeScreen() {
         prefManager.setFirstTimeLaunch(false);
-        startActivity(new Intent(WelcomeActivity.this, SplashActivity.class));
+       // startActivity(new Intent(WelcomeActivity.this, SplashActivity.class));
+        Intent intent=new Intent(WelcomeActivity.this,SplashActivity.class);
+
+        startActivity(intent);
         finish();
     }
 
@@ -135,7 +147,13 @@ public class WelcomeActivity extends AppCompatActivity {
             // changing the next button text 'NEXT' / 'GOT IT'
             if (position == layouts.length - 1) {
                 // last page. make button text to GOT IT
-                btnNext.setText(getString(R.string.start));
+                btnNext.setText(getString(R.string.finish));
+                requestAppPermissions(new String[]{
+                                Manifest.permission.ACCESS_FINE_LOCATION,
+                                Manifest.permission.READ_EXTERNAL_STORAGE
+                        },
+
+                        R.string.msg,REQUEST_PERMISSION);
 //                btnSkip.setVisibility(View.GONE);
             } else {
                 // still pages are left
