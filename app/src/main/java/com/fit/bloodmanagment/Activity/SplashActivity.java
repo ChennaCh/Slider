@@ -12,7 +12,7 @@ import com.fit.bloodmanagment.R;
 
 public class SplashActivity extends AbsRuntimePermission {
 
-    private final int SPLASH_DISPLAY_LENGTH = 2500;
+    private final int SPLASH_DISPLAY_LENGTH = 3000;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
