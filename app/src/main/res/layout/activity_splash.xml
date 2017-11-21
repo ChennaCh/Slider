@@ -1,22 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
-    android:background="#e53c38"
+    android:background="#fff"
     android:theme="@style/AppTheme"
     android:gravity="center"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    >
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:textColor="#fff"
-        android:text="Gift The Life"
-        android:textStyle="italic"
-        android:textSize="50dp"
+        android:textColor="#e53c38"
+        android:text="SAVE WORLD"
+        android:textStyle="bold"
+        android:textSize="40dp"
+        android:fontFamily="monospace"
+        android:drawableLeft="@drawable/bloodbottle"
         android:layout_gravity="center"/>
-
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="BE A DONOR - GIFT THE LIFE"
+        android:gravity="center"
+        android:textStyle="bold"
+        android:textColor="#e53c38"
+        android:textSize="20dp"/>
+</LinearLayout>
     <pl.droidsonroids.gif.GifImageView
         android:layout_width="300dp"
         android:layout_height="300dp"
