@@ -51,6 +51,7 @@ public class DonorListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 Intent intent=new Intent(context,DonorlistMapActivity.class);
+
                 context.startActivity(intent);
 
                 return true;

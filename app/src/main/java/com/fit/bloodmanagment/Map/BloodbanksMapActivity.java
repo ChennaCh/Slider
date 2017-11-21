@@ -1,6 +1,11 @@
 package com.fit.bloodmanagment.Map;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.location.Address;
+import android.location.Location;
+import android.location.LocationManager;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v4.app.FragmentActivity;
@@ -12,13 +17,22 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import java.util.Scanner;
+
+import static com.fit.bloodmanagment.Map.MainMapActivity.MYLOCATIONPREF;
+import static com.fit.bloodmanagment.Map.MainMapActivity.mylatlongkey;
+
 public class BloodbanksMapActivity extends FragmentActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;
+    SharedPreferences shre;
+    Double clat,clang,alat,alang;
+    Marker mCurrLocationMarker;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,11 +56,57 @@ public class BloodbanksMapActivity extends FragmentActivity implements OnMapRead
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
+        shre = getSharedPreferences(MYLOCATIONPREF, Context.MODE_PRIVATE);
+        String currentloc=shre.getString(mylatlongkey,null);
+        //double currentlatlong = Double.parseDouble(currentloc);
 
-        // Add a marker in Sydney and move the camera
-        LatLng sydney = new LatLng(-34, 151);
-        mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+        //double addresslatlong = Double.parseDouble(address);
+        Scanner scanner = new Scanner(currentloc);
+        scanner.useDelimiter("[^\\d,]");
+        while (scanner.hasNextDouble() || scanner.hasNext()) {
+            if (scanner.hasNextDouble()) {
+                if (clat == null) {
+                   clat = scanner.nextDouble(); // First setting the latitude
+                } else {
+                    clang = scanner.nextDouble(); // Then longitude and stopping
+                    break;
+                }
+            } else {
+                scanner.next();
+            }
+        }
+        LatLng latLng = new LatLng(clat,clang);
+        MarkerOptions markerOptions = new MarkerOptions();
+        markerOptions.position(latLng);
+        markerOptions.title("Current Position");
+        markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_MAGENTA));
+        mCurrLocationMarker = mMap.addMarker(markerOptions);
+        shre=getSharedPreferences("ADDRESSLOCATION", Context.MODE_PRIVATE);
+        String address=shre.getString("address",null);
+        Scanner addressscanner = new Scanner(address);
+        addressscanner.useDelimiter("[^\\d,]");
+        while (addressscanner.hasNextDouble() || scanner.hasNext()) {
+            if (addressscanner.hasNextDouble()) {
+                if (alat == null) {
+                    alat = addressscanner.nextDouble(); // First setting the latitude
+                } else {
+                    alang = addressscanner.nextDouble(); // Then longitude and stopping
+                    break;
+                }
+            } else {
+                addressscanner.next();
+            }
+        }
+
+        LatLng addresslatlang=new LatLng(alat,alang);
+        MarkerOptions addressmarkerOptions = new MarkerOptions();
+        addressmarkerOptions.position(addresslatlang);
+        addressmarkerOptions.title("Destination");
+        addressmarkerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_MAGENTA));
+        mCurrLocationMarker = mMap.addMarker(addressmarkerOptions);
+
+
+
   //      GeocodingLocation locationAddress = new GeocodingLocation();
 //        locationAddress.getAddressFromLocation(address,getApplicationContext(), new GeocoderHandler());
 //        //LatLng path = new LatLng(locationAddress.);

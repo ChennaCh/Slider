@@ -124,10 +124,12 @@ public class MainMapActivity extends FragmentActivity implements OnMapReadyCallb
     ProgressBar progressBar;
     LinearLayout donorll,hospitalll,pharmacyll,fableftll;
     public  NavigationView navigationView;
-
+    LatLng latLng;
     SharedPreferences shre;
     Bitmap thumbnail;
     public static final String MyPREFERENCES = "MyPre" ;//file name
+    public static final String MYLOCATIONPREF="MyLocationPrefereces";
+    public static final String mylatlongkey="mylatlong";
     public static final String  key = "nameKey";
 
 
@@ -198,13 +200,6 @@ public class MainMapActivity extends FragmentActivity implements OnMapReadyCallb
             thumbnail=decodeBase64(u);
             profilepic.setImageBitmap(thumbnail);
         }
-//        shre =  getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
-//        String path = shre.getString(key, "");
-//        if (path != ""){
-//           // ImageView imageView = (ImageView) findViewById(R.id.imageView1);
-//            profilepic.setImageBitmap(BitmapFactory.decodeFile(path));
-//        }
-
         shre = getSharedPreferences("userdetails",MODE_PRIVATE);
         String loginuname = shre.getString("username",null);
         if(loginuname=="" || loginuname==null){
@@ -237,7 +232,8 @@ public class MainMapActivity extends FragmentActivity implements OnMapReadyCallb
             nav_logout.setVisible(true);
 
         }
-
+        shre =  getSharedPreferences(MYLOCATIONPREF, Context.MODE_PRIVATE);
+        String location=shre.getString(mylatlongkey,String.valueOf(latLng));
 
         shareimage.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -696,7 +692,7 @@ public class MainMapActivity extends FragmentActivity implements OnMapReadyCallb
         //Place current location marker
         latitude = location.getLatitude();
         longitude = location.getLongitude();
-        LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
+         latLng = new LatLng(location.getLatitude(), location.getLongitude());
         MarkerOptions markerOptions = new MarkerOptions();
         markerOptions.position(latLng);
         markerOptions.title("Current Position");
@@ -706,7 +702,11 @@ public class MainMapActivity extends FragmentActivity implements OnMapReadyCallb
         //move map camera
         mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
         mMap.animateCamera(CameraUpdateFactory.zoomTo(14));
-        Toast.makeText(MainMapActivity.this,"Your Current Location", Toast.LENGTH_LONG).show();
+        shre =  getSharedPreferences(MYLOCATIONPREF, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = shre.edit();
+        editor.putString(mylatlongkey,String.valueOf(latLng));
+        editor.commit();
+        //Toast.makeText(MainMapActivity.this,"Your Current Location", Toast.LENGTH_LONG).show();
 
         Log.d("onLocationChanged", String.format("latitude:%.3f longitude:%.3f",latitude,longitude));
 

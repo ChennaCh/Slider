@@ -4,7 +4,10 @@ import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.location.Address;
+import android.location.Geocoder;
 import android.net.Uri;
 import android.os.Build;
 import android.support.v4.app.ActivityCompat;
@@ -25,11 +28,16 @@ import com.fit.bloodmanagment.Activity.BloodBanksActivity;
 import com.fit.bloodmanagment.Beans.BloodbankBean;
 import com.fit.bloodmanagment.Map.BloodbanksMapActivity;
 import com.fit.bloodmanagment.R;
+import com.google.android.gms.maps.model.LatLng;
 
+import java.io.IOException;
 import java.util.Collections;
 import java.util.List;
 
 import static android.R.id.message;
+import static android.content.Context.MODE_PRIVATE;
+import static com.fit.bloodmanagment.Map.MainMapActivity.MYLOCATIONPREF;
+import static com.fit.bloodmanagment.Map.MainMapActivity.mylatlongkey;
 
 /**
  * Created by admin on 10/4/2017.
@@ -40,6 +48,7 @@ public class BloodbankListAdapter extends RecyclerView.Adapter<RecyclerView.View
     BloodBanksActivity bbactivity=new BloodBanksActivity();
     List<BloodbankBean> data= Collections.emptyList();
     ImageView mapgifimage,mailgif,callgif;
+    SharedPreferences shre;
     MyHolder myHolder;
 
     @Override
@@ -56,10 +65,34 @@ public class BloodbankListAdapter extends RecyclerView.Adapter<RecyclerView.View
         mapgifimage.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-
                 Intent intent=new Intent(context, BloodbanksMapActivity.class);
-                context.startActivity(intent);
+                String s;
+                s=data.get(myHolder.getAdapterPosition()).getBaddress();
+                Geocoder coder = new Geocoder(context);
+                List<Address> address;
+                LatLng p1 = null;
+                try {
+                    // May throw an IOException
+                    address = coder.getFromLocationName(s,5);
+                    if (address == null) {
+                        Toast.makeText(context,"LatLong can't found",Toast.LENGTH_LONG).show();
+                    }
+                    Address location = address.get(0);
+                    location.getLatitude();
+                    location.getLongitude();
+                    p1 = new LatLng(location.getLatitude(), location.getLongitude());
 
+                    shre = context.getSharedPreferences("ADDRESSLOCATION", Context.MODE_PRIVATE);
+                    SharedPreferences.Editor editor = shre.edit();
+                    editor.putString("address",String.valueOf(p1));
+                    editor.commit();
+                    // intent.setData(Uri.parse("tel:" + data.get(myHolder.getAdapterPosition()).getBaddress()));
+                    context.startActivity(intent);
+                }
+                catch (IOException ex) {
+
+                    ex.printStackTrace();
+                }
                 return true;
             }
         });
