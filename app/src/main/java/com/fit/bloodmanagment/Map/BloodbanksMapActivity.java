@@ -1,38 +1,52 @@
 package com.fit.bloodmanagment.Map;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Location;
 import android.location.LocationManager;
+import android.os.Build;
 import android.os.Handler;
 import android.os.Message;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
+import android.view.View;
 
 import com.fit.bloodmanagment.Activity.BloodBanksActivity;
 import com.fit.bloodmanagment.R;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.location.LocationListener;
+import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
-
 import java.util.Scanner;
-
 import static com.fit.bloodmanagment.Map.MainMapActivity.MYLOCATIONPREF;
 import static com.fit.bloodmanagment.Map.MainMapActivity.mylatlongkey;
 
-public class BloodbanksMapActivity extends FragmentActivity implements OnMapReadyCallback {
+public class BloodbanksMapActivity extends FragmentActivity implements OnMapReadyCallback{
 
-    private GoogleMap mMap;
+   // private GoogleMap mMap;
     SharedPreferences shre;
     Double clat,clang,alat,alang;
     Marker mCurrLocationMarker;
+    GoogleApiClient mGoogleApiClient;
+    GoogleMap gmap;
+    View mapView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +55,7 @@ public class BloodbanksMapActivity extends FragmentActivity implements OnMapRead
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.bloodbanksmap);
+        mapView = mapFragment.getView();
         mapFragment.getMapAsync(this);
     }
 
@@ -55,79 +70,69 @@ public class BloodbanksMapActivity extends FragmentActivity implements OnMapRead
      */
     @Override
     public void onMapReady(GoogleMap googleMap) {
-        mMap = googleMap;
+        //mMap = googleMap;
+        googleMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
+        // mMap.setMapType(GoogleMap.);
         shre = getSharedPreferences(MYLOCATIONPREF, Context.MODE_PRIVATE);
         String currentloc=shre.getString(mylatlongkey,null);
-        //double currentlatlong = Double.parseDouble(currentloc);
-
-        //double addresslatlong = Double.parseDouble(address);
         Scanner scanner = new Scanner(currentloc);
         scanner.useDelimiter("[^\\d,]");
         while (scanner.hasNextDouble() || scanner.hasNext()) {
             if (scanner.hasNextDouble()) {
                 if (clat == null) {
-                   clat = scanner.nextDouble(); // First setting the latitude
+                    clat = scanner.nextDouble(); // First setting the latitude
                 } else {
                     clang = scanner.nextDouble(); // Then longitude and stopping
                     break;
                 }
+                LatLng latLng = new LatLng(clat,clang);
+//            googleMap.addMarker(new MarkerOptions().position(latLng)
+//                .title("Current Position"));
+//        googleMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
+                MarkerOptions markerOptions = new MarkerOptions();
+                markerOptions.position(latLng);
+                markerOptions.title("Current Position");
+                markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_MAGENTA));
+                mCurrLocationMarker = googleMap.addMarker(markerOptions);
+                googleMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
+                googleMap.animateCamera(CameraUpdateFactory.zoomTo(14));
             } else {
                 scanner.next();
             }
         }
-        LatLng latLng = new LatLng(clat,clang);
-        MarkerOptions markerOptions = new MarkerOptions();
-        markerOptions.position(latLng);
-        markerOptions.title("Current Position");
-        markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_MAGENTA));
-        mCurrLocationMarker = mMap.addMarker(markerOptions);
-        shre=getSharedPreferences("ADDRESSLOCATION", Context.MODE_PRIVATE);
-        String address=shre.getString("address",null);
-        Scanner addressscanner = new Scanner(address);
-        addressscanner.useDelimiter("[^\\d,]");
-        while (addressscanner.hasNextDouble() || scanner.hasNext()) {
-            if (addressscanner.hasNextDouble()) {
-                if (alat == null) {
-                    alat = addressscanner.nextDouble(); // First setting the latitude
-                } else {
-                    alang = addressscanner.nextDouble(); // Then longitude and stopping
-                    break;
-                }
-            } else {
-                addressscanner.next();
-            }
-        }
 
-        LatLng addresslatlang=new LatLng(alat,alang);
-        MarkerOptions addressmarkerOptions = new MarkerOptions();
-        addressmarkerOptions.position(addresslatlang);
-        addressmarkerOptions.title("Destination");
-        addressmarkerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_MAGENTA));
-        mCurrLocationMarker = mMap.addMarker(addressmarkerOptions);
+
+//        shre=getSharedPreferences("ADDRESSLOCATION", Context.MODE_PRIVATE);
+//        String address=shre.getString("address",null);
+//        Scanner addressscanner = new Scanner(address);
+//        addressscanner.useDelimiter("[^\\d,]");
+//        while (addressscanner.hasNextDouble() || scanner.hasNext()) {
+//            if (addressscanner.hasNextDouble()) {
+//                if (alat == null) {
+//                    alat = addressscanner.nextDouble(); // First setting the latitude
+//                } else {
+//                    alang = addressscanner.nextDouble(); // Then longitude and stopping
+//                    break;
+//                }
+//            } else {
+//                addressscanner.next();
+//            }
+//            LatLng addresslatlang=new LatLng(alat,alang);
+//            MarkerOptions addressmarkerOptions = new MarkerOptions();
+//            addressmarkerOptions.position(addresslatlang);
+//            addressmarkerOptions.title("Destination");
+//            addressmarkerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_MAGENTA));
+//            mCurrLocationMarker = googleMap.addMarker(addressmarkerOptions);
+//            googleMap.moveCamera(CameraUpdateFactory.newLatLng(addresslatlang));
+//            googleMap.animateCamera(CameraUpdateFactory.zoomTo(14));
+//        }
 
 
 
-  //      GeocodingLocation locationAddress = new GeocodingLocation();
-//        locationAddress.getAddressFromLocation(address,getApplicationContext(), new GeocoderHandler());
-//        //LatLng path = new LatLng(locationAddress.);
-//        Marker marker = mMap.addMarker(new MarkerOptions()
-//                .position(path)
-//                .draggable(true));
     }
-    private class GeocoderHandler extends Handler {
-        @Override
-        public void handleMessage(Message message) {
-            String locationAddress;
-            switch (message.what) {
-                case 1:
-                    Bundle bundle = message.getData();
-                    locationAddress = bundle.getString("address");
-                    break;
-                default:
-                    locationAddress = null;
-            }
-            //latLongTV.setText(locationAddress);
-        }
+    public void setPadding(View mapView){
+        gmap.setPadding(0,300,0,0);
+        //left,top,right,bottom
     }
     @Override
     public void onBackPressed() {

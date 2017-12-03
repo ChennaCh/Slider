@@ -26,6 +26,7 @@ import com.fit.bloodmanagment.Map.BloodbanksMapActivity;
 import com.fit.bloodmanagment.Map.DonorlistMapActivity;
 import com.fit.bloodmanagment.R;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -150,5 +151,11 @@ public class DonorListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         Intent chooser  = Intent.createChooser(intent, "Complete Action using..");
         context.startActivity(chooser);
         //context.startActivity(intent);
+    }
+    public void setFilter(ArrayList<DonorBean> newList){
+            ArrayList arraylist=new ArrayList<>();
+        arraylist.addAll(newList);
+        notifyDataSetChanged();
+
     }
 }
