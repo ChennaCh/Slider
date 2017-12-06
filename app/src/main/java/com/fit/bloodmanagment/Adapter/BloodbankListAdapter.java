@@ -26,11 +26,13 @@ import android.widget.Toast;
 
 import com.fit.bloodmanagment.Activity.BloodBanksActivity;
 import com.fit.bloodmanagment.Beans.BloodbankBean;
+import com.fit.bloodmanagment.Beans.DonorBean;
 import com.fit.bloodmanagment.Map.BloodbanksMapActivity;
 import com.fit.bloodmanagment.R;
 import com.google.android.gms.maps.model.LatLng;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -223,5 +225,11 @@ public class BloodbankListAdapter extends RecyclerView.Adapter<RecyclerView.View
         Intent chooser  = Intent.createChooser(intent, "Complete Action using..");
         context.startActivity(chooser);
         //context.startActivity(intent);
+    }
+    public void setFilter(ArrayList<BloodbankBean> newbbList){
+        ArrayList arraylist=new ArrayList<>();
+        arraylist.addAll(newbbList);
+        notifyDataSetChanged();
+
     }
 }

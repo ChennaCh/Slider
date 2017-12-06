@@ -141,6 +141,13 @@
                 android:gravity="end"
                 android:text="Fratello InnoTech"
                 android:textColor="#ac1c1c" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:gravity="end"
+                android:text="+91-9010990285"
+                android:textColor="#ac1c1c" />
 
 
             <LinearLayout

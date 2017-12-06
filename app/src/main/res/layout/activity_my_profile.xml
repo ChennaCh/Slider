@@ -262,7 +262,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:layout_weight="0.3"
-                        android:text="City :"
+                        android:text="Location :"
                         android:textColor="@color/white"
                         android:textSize="18dp" />
 
@@ -299,11 +299,21 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1.7"
                         android:backgroundTint="@color/white"
-                        android:hint="Make 0 for not be donor"
+                        android:hint="Make 0 to hide your profile"
                         android:padding="10dp"
                         android:textColor="@color/white"
                         android:textColorHint="@color/white" />
+
                 </LinearLayout>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="5dp"
+                    android:gravity="left"
+                    android:textSize="10dp"
+                    android:textColor="@color/white"
+                    android:text="Note :Make status to 0 to hide your profile in donars list"
+                    />
 
                 <Button
                     android:id="@+id/myPsave"

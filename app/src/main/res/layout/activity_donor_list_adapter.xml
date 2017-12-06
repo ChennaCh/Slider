@@ -192,7 +192,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="left"
                 android:padding="10dp"
-                android:text="City :"
+                android:text="Loc :"
                 android:paddingRight="5dp"
                 android:textColor="#074809" />
             <TextView
