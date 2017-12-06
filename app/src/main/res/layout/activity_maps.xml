@@ -95,7 +95,7 @@
                 android:layout_height="match_parent"
                 android:paddingLeft="15dp"
                 android:layout_weight="0.3"
-                android:drawableLeft="@drawable/hospital"
+
                 android:drawablePadding="10dp"
                 android:hint="Search"
                 android:backgroundTint="@android:color/transparent"
