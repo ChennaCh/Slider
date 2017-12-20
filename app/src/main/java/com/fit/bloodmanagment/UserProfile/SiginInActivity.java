@@ -75,7 +75,7 @@ public class SiginInActivity extends AppCompatActivity{
         strusername=edtuser.getText().toString();
         strpassword=edtpass.getText().toString();
         login=(Button)findViewById(R.id.signin);
-
+        setextview.setText("");
         signup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -87,8 +87,27 @@ public class SiginInActivity extends AppCompatActivity{
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                getCredentials();
+                final String loginusername=edtuser.getText().toString();
+                final String loginpwd=edtpass.getText().toString();
                 setextview.setText("");
+                if(loginusername.equals(""))
+                {
+                    //Toast.makeText(getApplicationContext(),"username",Toast.LENGTH_LONG).show();
+                    setextview.setText("Please enter UserName");
+                    edtuser.setFocusable(true);
+
+                }
+                else if(loginpwd.equals(""))
+                {
+                    // Toast.makeText(getApplicationContext(),"username",Toast.LENGTH_LONG).show();
+
+                    setextview.setText("Please enter Password");
+                    edtpass.setFocusable(true);
+
+                }
+                else
+                getCredentials();
+               // setextview.setText("");
 
                // Snackbar.make(view, "No network connection.",Snackbar.LENGTH_SHORT).show();
 //                if (strusername.equals("")) {
@@ -245,6 +264,10 @@ public class SiginInActivity extends AppCompatActivity{
         String serverURL = API.getalldonorsurl;
         final String loginusername=edtuser.getText().toString();
         final String loginpwd=edtpass.getText().toString();
+
+
+
+
         final StringRequest getRequest = new StringRequest(Request.Method.GET, serverURL,
                 new com.android.volley.Response.Listener<String>() {
                     @Override

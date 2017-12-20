@@ -62,6 +62,7 @@ public class DonarActivity extends AppCompatActivity implements ObservableScroll
     private String TAG = DonarActivity.class.getSimpleName();
     ArrayList<DonorBean> donordata=new ArrayList<>();
     Toolbar toolbar;
+    String sq=null;
     ObservableScrollView mScrollView;
 //    Display display = getWindowManager().getDefaultDisplay();
 //    Point size = new Point();
@@ -76,6 +77,10 @@ public class DonarActivity extends AppCompatActivity implements ObservableScroll
         setTitle(getString(R.string.Donors));
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
+
+        sq = getIntent().getStringExtra("sq");
+
+
         donorprogress = (ProgressBar) findViewById(R.id.donor_progress);
         donorprogress.getIndeterminateDrawable().setColorFilter(0xFFFF0000, android.graphics.PorterDuff.Mode.MULTIPLY);
         donorrecycle = (ObservableRecyclerView) findViewById(R.id.donorrecyclerView);
@@ -111,10 +116,16 @@ public class DonarActivity extends AppCompatActivity implements ObservableScroll
                                 String city=c.getString("city");
 //                        validation(name,pass);
                                 donordata.add(new DonorBean(id,fullname,email,password,mobile,gender,address,bloodgroup,age,city));
+                               if(sq == null){
                                 donorListAdapter = new DonorListAdapter(DonarActivity.this,donordata);
                                 donorrecycle.setAdapter(donorListAdapter);
                                 donorrecycle.setLayoutManager(new LinearLayoutManager(DonarActivity.this));
                                 donorprogress.setVisibility(View.GONE);
+                               }
+                                else
+                               {
+                                   showdata(sq);
+                               }
                             }
                         } catch (final JSONException e) {
                             Log.e(TAG, "Json parsing error: " + e.getMessage());
@@ -186,7 +197,7 @@ public class DonarActivity extends AppCompatActivity implements ObservableScroll
         EditText editText = ((EditText) searchView.findViewById(android.support.v7.appcompat.R.id.search_src_text));
         editText.setHintTextColor(getResources().getColor(R.color.white));
         editText.setTextColor(getResources().getColor(R.color.white));
-        searchView.setQueryHint("Search by location");
+        searchView.setQueryHint("Search by location or BloodGroup");
         //searchView.setBackgroundColor(Color.WHITE);
         searchView.setOnQueryTextListener(this);
         return true;
@@ -203,7 +214,8 @@ public class DonarActivity extends AppCompatActivity implements ObservableScroll
         ArrayList<DonorBean> newList=new ArrayList<>();
         for(DonorBean reqdonors : donordata){
             String location= reqdonors.getDcity().toLowerCase();
-            if(location.contains(newText)){
+            String bgroup = reqdonors.getDbloodgroup().toLowerCase();
+            if(location.contains(newText.toLowerCase()) || bgroup.contains(newText.toLowerCase())){
               newList.add(reqdonors);
             }
         }
@@ -212,5 +224,23 @@ public class DonarActivity extends AppCompatActivity implements ObservableScroll
         donorrecycle.setAdapter(donorListAdapter);
        donorrecycle.setLayoutManager(new LinearLayoutManager(DonarActivity.this));
         return true;
+    }
+
+    public void showdata(String sq1)
+    {
+        sq1=sq1.toLowerCase();
+        ArrayList<DonorBean> newList=new ArrayList<>();
+        for(DonorBean reqdonors : donordata){
+            String location= reqdonors.getDcity().toLowerCase();
+            String bgroup = reqdonors.getDbloodgroup().toLowerCase();
+            if(location.contains(sq1.toLowerCase()) || bgroup.contains(sq1.toLowerCase())){
+                newList.add(reqdonors);
+            }
+        }
+        donorListAdapter = new DonorListAdapter(DonarActivity.this,newList);
+        donorListAdapter.setFilter(newList);
+        donorrecycle.setAdapter(donorListAdapter);
+        donorrecycle.setLayoutManager(new LinearLayoutManager(DonarActivity.this));
+        donorprogress.setVisibility(View.GONE);
     }
 }

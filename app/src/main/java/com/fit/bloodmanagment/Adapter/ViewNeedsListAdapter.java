@@ -46,39 +46,7 @@ public class ViewNeedsListAdapter extends RecyclerView.Adapter<RecyclerView.View
         callgif=(ImageView)itemView.findViewById(R.id.vneedgifcall);
         final ViewNeedsListAdapter.MyHolder holder=new ViewNeedsListAdapter.MyHolder(itemView);
 
-        mapgifimage.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                Intent intent=new Intent(context, ViewNeedsMapActivity.class);
-                context.startActivity(intent);
-                return true;
-            }
-        });
-        mailgif.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                try {
-                    Intent i = new Intent(Intent.ACTION_SENDTO);
-                    i.setType("message/rfc822");
-                    i.setData(Uri.parse("mailto:"+ data.get(myHolder.getAdapterPosition()).getNemail()));
-                    i.putExtra(Intent.EXTRA_EMAIL  , new String[]{"recipient@example.com"});
-                    i.putExtra(Intent.EXTRA_SUBJECT, "subject of email");
-                    i.putExtra(Intent.EXTRA_TEXT   , "body of email");
-                    i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    context.startActivity(Intent.createChooser(i, "Send mail..."));
-                } catch (android.content.ActivityNotFoundException ex) {
-                    Toast.makeText(context, "There are no email clients installed.", Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
-        callgif.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if(isPermissionGranted()){
-                    call_action();
-                }
-            }
-        });
+
 
         return holder;
     }
@@ -106,7 +74,7 @@ public class ViewNeedsListAdapter extends RecyclerView.Adapter<RecyclerView.View
     }
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+    public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
         myHolder= (ViewNeedsListAdapter.MyHolder) holder;
         ViewNeedsBean current = data.get(position);
         myHolder.name.setText(current.getNname());
@@ -118,6 +86,53 @@ public class ViewNeedsListAdapter extends RecyclerView.Adapter<RecyclerView.View
         myHolder.bloodgroup.setText(current.getNbloodgroup());
         myHolder.city.setText(current.getNcity());
         myHolder.vduedate.setText(current.getNduedate());
+
+
+        mailgif.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                try {
+                    String mail =  data.get(position).getNemail();
+                    //  Toast.makeText(context, "mail."+mail, Toast.LENGTH_SHORT).show();
+
+
+                    Intent i = new Intent(Intent.ACTION_SENDTO);
+                    i.setType("message/rfc822");
+                    i.setData(Uri.parse("mailto:"+ mail));
+                    // i.putExtra(Intent.EXTRA_EMAIL  , new String[]{"recipient@example.com"});
+                    i.putExtra(Intent.EXTRA_SUBJECT, "Urgent Requirement of Blood");
+                    i.putExtra(Intent.EXTRA_TEXT   , "hi, Please send the complete details about blood avaible status");
+                    i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    context.startActivity(Intent.createChooser(i, "Send mail..."));
+                } catch (android.content.ActivityNotFoundException ex) {
+                    Toast.makeText(context, "There are no email clients installed.", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+        callgif.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(isPermissionGranted()){
+                    String mobile =  data.get(position).getNmobile();
+                    Intent intent = new Intent(Intent.ACTION_CALL);
+                    intent.setData(Uri.parse("tel:" + mobile));
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    Intent chooser  = Intent.createChooser(intent, "Complete Action using..");
+                    context.startActivity(chooser);
+                }
+            }
+        });
+
+        mapgifimage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(context, BloodbanksMapActivity.class);
+                String s=data.get(position).getNaddress();
+                intent.putExtra("addr",s);
+                context.startActivity(intent);
+            }
+        });
     }
 
     @Override
@@ -142,12 +157,5 @@ public class ViewNeedsListAdapter extends RecyclerView.Adapter<RecyclerView.View
         }
     }
 
-    public void call_action(){
-        Intent intent = new Intent(Intent.ACTION_DIAL);
-        intent.setData(Uri.parse("tel:" + data.get(myHolder.getAdapterPosition()).getNmobile()));
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        Intent chooser  = Intent.createChooser(intent, "Complete Action using..");
-        context.startActivity(chooser);
-        //context.startActivity(intent);
-    }
+
 }

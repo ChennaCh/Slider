@@ -20,6 +20,7 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewParent;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -64,65 +65,9 @@ public class BloodbankListAdapter extends RecyclerView.Adapter<RecyclerView.View
         final MyHolder holder=new MyHolder(itemView);
 
 
-        mapgifimage.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                Intent intent=new Intent(context, BloodbanksMapActivity.class);
-                String s;
-                s=data.get(myHolder.getAdapterPosition()).getBaddress();
-                Geocoder coder = new Geocoder(context);
-                List<Address> address;
-                LatLng p1 = null;
-                try {
-                    // May throw an IOException
-                    address = coder.getFromLocationName(s,5);
-                    if (address == null) {
-                        Toast.makeText(context,"LatLong can't found",Toast.LENGTH_LONG).show();
-                    }
-                    Address location = address.get(0);
-                    location.getLatitude();
-                    location.getLongitude();
-                    p1 = new LatLng(location.getLatitude(), location.getLongitude());
 
-                    shre = context.getSharedPreferences("ADDRESSLOCATION", Context.MODE_PRIVATE);
-                    SharedPreferences.Editor editor = shre.edit();
-                    editor.putString("address",String.valueOf(p1));
-                    editor.commit();
-                    // intent.setData(Uri.parse("tel:" + data.get(myHolder.getAdapterPosition()).getBaddress()));
-                    context.startActivity(intent);
-                }
-                catch (IOException ex) {
 
-                    ex.printStackTrace();
-                }
-                return true;
-            }
-        });
-        mailgif.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                try {
-                    Intent i = new Intent(Intent.ACTION_SENDTO);
-                    i.setType("message/rfc822");
-                    i.setData(Uri.parse("mailto:"+ data.get(myHolder.getAdapterPosition()).getBemail()));
-                    i.putExtra(Intent.EXTRA_EMAIL  , new String[]{"recipient@example.com"});
-                    i.putExtra(Intent.EXTRA_SUBJECT, "subject of email");
-                    i.putExtra(Intent.EXTRA_TEXT   , "body of email");
-                    i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    context.startActivity(Intent.createChooser(i, "Send mail..."));
-                } catch (android.content.ActivityNotFoundException ex) {
-                    Toast.makeText(context, "There are no email clients installed.", Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
-        callgif.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if(isPermissionGranted()){
-                    call_action();
-                }
-            }
-        });
+
 
 
 //        LayoutInflater mInflater = (LayoutInflater)
@@ -186,7 +131,7 @@ public class BloodbankListAdapter extends RecyclerView.Adapter<RecyclerView.View
     }
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+    public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
         myHolder= (MyHolder) holder;
         BloodbankBean current = data.get(position);
         myHolder.name.setText(current.getBname());
@@ -196,6 +141,51 @@ public class BloodbankListAdapter extends RecyclerView.Adapter<RecyclerView.View
         myHolder.address.setText(current.getBaddress());
         myHolder.landline.setText(current.getBlandline());
         myHolder.city.setText(current.getBcity());
+        mailgif.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                try {
+                    String mail =  data.get(position).getBemail();
+                  //  Toast.makeText(context, "mail."+mail, Toast.LENGTH_SHORT).show();
+
+
+                    Intent i = new Intent(Intent.ACTION_SENDTO);
+                    i.setType("message/rfc822");
+                    i.setData(Uri.parse("mailto:"+ mail));
+                   // i.putExtra(Intent.EXTRA_EMAIL  , new String[]{"recipient@example.com"});
+                    i.putExtra(Intent.EXTRA_SUBJECT, "Urgent Requirement of Blood");
+                    i.putExtra(Intent.EXTRA_TEXT   , "hi, Please send the complete details about blood avaible status");
+                    i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    context.startActivity(Intent.createChooser(i, "Send mail..."));
+                } catch (android.content.ActivityNotFoundException ex) {
+                    Toast.makeText(context, "There are no email clients installed.", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+        callgif.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(isPermissionGranted()){
+                    String mobile =  data.get(position).getBmobile();
+                    Intent intent = new Intent(Intent.ACTION_CALL);
+                    intent.setData(Uri.parse("tel:" + mobile));
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    Intent chooser  = Intent.createChooser(intent, "Complete Action using..");
+                    context.startActivity(chooser);
+                }
+            }
+        });
+
+        mapgifimage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(context, BloodbanksMapActivity.class);
+                String s=data.get(position).getBaddress();
+                intent.putExtra("addr",s);
+                context.startActivity(intent);
+            }
+        });
     }
 
     @Override
@@ -218,14 +208,7 @@ public class BloodbankListAdapter extends RecyclerView.Adapter<RecyclerView.View
         }
     }
 
-    public void call_action(){
-        Intent intent = new Intent(Intent.ACTION_DIAL);
-        intent.setData(Uri.parse("tel:" + data.get(myHolder.getAdapterPosition()).getBmobile()));
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        Intent chooser  = Intent.createChooser(intent, "Complete Action using..");
-        context.startActivity(chooser);
-        //context.startActivity(intent);
-    }
+
     public void setFilter(ArrayList<BloodbankBean> newbbList){
         ArrayList arraylist=new ArrayList<>();
         arraylist.addAll(newbbList);

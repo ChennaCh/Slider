@@ -135,6 +135,11 @@ public class UrgencyActivity extends AppCompatActivity {
                     insertToDatabase(nname, nphone, nemail, naddress,npurpose,ncity,nbloodgroup,nrequredate);
                     //apicall();
                 }
+                else
+                {
+                    Toast.makeText(getApplicationContext(),"Please fill all the details",Toast.LENGTH_LONG).show();
+
+                }
 
             }
 

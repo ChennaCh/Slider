@@ -86,18 +86,20 @@
             android:elevation="3dp"
             android:weightSum="2.0"
             android:orientation="horizontal"
-            android:layout_marginTop="10dp"
-            android:layout_marginLeft="25dp"
-            android:layout_marginRight="25dp">
+            android:layout_marginTop="5dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="50dp">
 
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:id="@+id/mainsearch"
                 android:paddingLeft="15dp"
                 android:layout_weight="0.3"
                 android:drawableLeft="@drawable/bloods"
                 android:drawablePadding="10dp"
-                android:hint="Search"
+                android:textSize="10dp"
+                android:hint="Search By Location or Blood Group"
                 android:backgroundTint="@android:color/transparent"
                 android:cursorVisible="false" />
 
@@ -109,6 +111,7 @@
                 android:layout_weight="1.7"
                 android:padding="10dp"
                 android:src="@drawable/search_icon"/>
+
 
         </LinearLayout>
 
@@ -198,6 +201,7 @@
                         android:layout_gravity="center"
                         android:layout_weight="0.2"
                         android:padding="5dp"
+                        android:id="@+id/donormain"
                         android:src="@drawable/donaricon" />
 
                     <TextView

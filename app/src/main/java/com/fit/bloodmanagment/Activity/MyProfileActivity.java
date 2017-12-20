@@ -110,6 +110,10 @@ public class MyProfileActivity extends AppCompatActivity {
 
                     updateProfile(fullname, phone, email, address, gender, bloodgroup, age, city,status);
                 }
+                else
+                {
+                    Toast.makeText(getApplicationContext(),"Please fill all the details",Toast.LENGTH_LONG).show();
+                }
             }
         });
        // Intent intent = getIntent();
