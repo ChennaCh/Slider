@@ -29,12 +29,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:background="#FFD8D8D8"
+                android:background="#9C0002"
                 android:padding="10dp"
                 android:paddingLeft="10dp"
                 android:text="Terms and Conditions"
-                android:textColor="#FF4963CA"
+                android:textColor="#ffffff"
                 android:textSize="18dp"
+                android:gravity="center"
                 android:textStyle="bold" />
 
             <TextView

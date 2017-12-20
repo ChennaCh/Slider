@@ -123,32 +123,33 @@ public class SignUpActivity extends AppCompatActivity  {
                // bloodgroup=((Spinner)findViewById(spinnerbloodgroup.getId())).toString();
                // gender = ((RadioButton)findViewById(spinnerbloodgroup.getId())).getText().toString();
                 if (fullname.equals("")) {
-                    etname.requestFocus();
+                   // etname.requestFocus();
                     etname.setError("Enter username");
                 } else if (!isValidEmail(email)) {
-                    etemail.requestFocus();
+                   // etemail.requestFocus();
                     etemail.setError("Enter valid email");
                 } else if (password.isEmpty()) {
-                    etpassword.requestFocus();
+                   // etpassword.requestFocus();
                     etpassword.setError("Invalid password");
                 } else if (!isValidMobile(phone)) {
-                    etphone.requestFocus();
+                   // etphone.requestFocus();
                     etphone.setError("Invalid phone number");
                 } else if (address.equals("")) {
-                    etaddress.requestFocus();
+                    //etaddress.requestFocus();
                     etaddress.setError("Invalid address");
                 } else if (age.equals("")) {
-                    etage.requestFocus();
+                   // etage.requestFocus();
                     etage.setError("Enter valid age");
                 } else if (city.equals("")) {
-                    etcity.requestFocus();
+                   // etcity.requestFocus();
                     etcity.setError("Enter City");
-                } else {
-                    Intent intent = new Intent(getApplicationContext(), MainMapActivity.class);
-                    startActivity(intent);
                 }
-                if (fullname.trim().length() > 0 && email.trim().length() > 0 && password.trim().length() > 0 && phone.trim().length() > 0 && address.trim().length() > 0 && city.trim().length() > 0 && age.length() > 0) {
+                else if (fullname.trim().length() > 0 && email.trim().length() > 0 && password.trim().length() > 0 && phone.trim().length() > 0 && address.trim().length() > 0 && city.trim().length() > 0 && age.length() > 0) {
                     registerapicall(fullname, password, phone, email, address, gender, bloodgroup,age,city);
+                }
+                else
+                {
+                    Toast.makeText(getApplicationContext(),"Error in Registration",Toast.LENGTH_LONG).show();
                 }
                 // registerapicall();
 //                mainmapsactivity.navigationView=(NavigationView) findViewById(R.id.nav_view);
