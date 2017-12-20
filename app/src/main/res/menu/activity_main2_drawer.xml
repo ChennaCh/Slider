@@ -5,12 +5,21 @@
             android:id="@+id/nav_aboutus"
                     android:icon="@drawable/aboutus"
             android:title="@string/AboutUs" />
+
+            <group android:checkableBehavior="single"
+                android:id="@+id/groupnew">
+                <item
+                    android:id="@+id/nav_donoradd"
+                    android:icon="@drawable/aboutus"
+                    android:title="Be a Donor" />
+            </group>
+
     <group android:checkableBehavior="single"
         android:id="@+id/group2">
         <item
             android:id="@+id/nav_donor"
             android:icon="@drawable/blood_donor"
-            android:title="@string/Donors" />
+            android:title="View Donors" />
         </group>
 
     <group android:checkableBehavior="single"

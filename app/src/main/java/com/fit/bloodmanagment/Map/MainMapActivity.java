@@ -140,7 +140,7 @@ public class MainMapActivity extends FragmentActivity implements OnMapReadyCallb
     Marker mCurrLocationMarker;
     LocationRequest mLocationRequest;
     EditText mainsearch;
-    ImageView pharmacyimage,hospitalimage,fab,fableft,shareimage,rating,profilepic,searchimage,donormain;
+    ImageView pharmacyimage,hospitalimage,fab,fableft,shareimage,rating,profilepic,searchimage,donormain,dadd,notificatio_bar;
     ProgressBar progressBar;
     LinearLayout donorll,hospitalll,pharmacyll,fableftll;
     public  NavigationView navigationView;
@@ -191,6 +191,8 @@ public class MainMapActivity extends FragmentActivity implements OnMapReadyCallb
         pharmacyimage=(ImageView) findViewById(R.id.pharmacyimage);
         hospitalimage=(ImageView) findViewById(R.id.hospitalsimage);
         searchimage = (ImageView) findViewById(R.id.searchimage);
+        dadd = (ImageView) findViewById(R.id.dadd);
+        notificatio_bar = (ImageView) findViewById(R.id.notificatio_bar);
         shareimage=(ImageView)findViewById(R.id.share_app);
         donormain = (ImageView)findViewById(R.id.donormain);
         loginbtn = (Button) header.findViewById(R.id.signin_btn);
@@ -271,6 +273,21 @@ public class MainMapActivity extends FragmentActivity implements OnMapReadyCallb
             }
         });
 
+        dadd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(getApplicationContext(),SignUpActivity.class);
+                startActivity(i);
+            }
+        });
+
+        notificatio_bar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(getApplicationContext(),UrgencyActivity.class);
+                startActivity(i);
+            }
+        });
 
         searchimage.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -355,7 +372,7 @@ public class MainMapActivity extends FragmentActivity implements OnMapReadyCallb
         fableftll.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(MainMapActivity.this,UrgencyActivity.class));
+                startActivity(new Intent(MainMapActivity.this,SignUpActivity.class));
             }
         });
 
@@ -578,7 +595,12 @@ public class MainMapActivity extends FragmentActivity implements OnMapReadyCallb
             Intent intent = new Intent(MainMapActivity.this, AboutUsActivity.class);
             startActivity(intent);
 
-        } else if (id == R.id.nav_donor) {
+        }else if (id == R.id.nav_donoradd) {
+            Intent intent = new Intent(MainMapActivity.this, SignUpActivity.class);
+            startActivity(intent);
+
+        }
+        else if (id == R.id.nav_donor) {
             Intent intent = new Intent(MainMapActivity.this, DonarActivity.class);
             startActivity(intent);
 

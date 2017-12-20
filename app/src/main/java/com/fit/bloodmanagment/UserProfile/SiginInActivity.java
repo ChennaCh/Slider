@@ -66,7 +66,7 @@ public class SiginInActivity extends AppCompatActivity{
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         toolbar.setTitleTextColor(getResources().getColor(android.R.color.white));
-        btnSignIn = (SignInButton) findViewById(R.id.sign_in_button);
+       // btnSignIn = (SignInButton) findViewById(R.id.sign_in_button);
         edtuser = (EditText) findViewById(R.id.editusername);
         edtpass = (EditText) findViewById(R.id.editpassword);
         signup=(TextView)findViewById(R.id.signin_signup);
