@@ -272,6 +272,8 @@ public class SiginInActivity extends AppCompatActivity{
                 new com.android.volley.Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
+                        String username="Guest";
+                        String uname="";
                         try {
                             flag=0;
                             JSONObject jsonObj = new JSONObject(response);
@@ -279,15 +281,16 @@ public class SiginInActivity extends AppCompatActivity{
 
                             for (int i = 0; i < contacts.length(); i++) {
                                 JSONObject c = contacts.getJSONObject(i);
-                                String uname = c.getString("email");
+                                uname = c.getString("email");
                                 String pwd = c.getString("password");
-                              if(loginusername.equals(uname)&& loginpwd.equals(pwd)){
+                                String mob =  c.getString("mobile");
+
+                              if((loginusername.equals(mob)||loginusername.equals(uname))&& loginpwd.equals(pwd)){
                                  flag=1;
+                                  username = c.getString("fullname");
                                   break;
                               }
-                              else {
-                                  setextview.setText("Invalid Username and Password");
-                              }
+
                             }
                         } catch (final JSONException e) {
                             Log.e(TAG, "Json parsing error: " + e.getMessage());
@@ -299,9 +302,10 @@ public class SiginInActivity extends AppCompatActivity{
                             //intent.putExtra("user",loginusername);
                             SharedPreferences preferences = getSharedPreferences("userdetails",MODE_PRIVATE);
                             SharedPreferences.Editor editor = preferences.edit();
-                            String username= edtuser.getText().toString();
-                            String pass = edtpass.getText().toString();
-                            editor.putString("username",username);
+                           // String username= edtuser.getText().toString();
+                           // String pass = edtpass.getText().toString();
+                            editor.putString("username",uname);
+                            editor.putString("fullname",username);
                             editor.commit();
 
                             startActivity(intent);

@@ -232,7 +232,7 @@ public class MainMapActivity extends FragmentActivity implements OnMapReadyCallb
             profilepic.setImageBitmap(thumbnail);
         }
         shre = getSharedPreferences("userdetails",MODE_PRIVATE);
-        String loginuname = shre.getString("username",null);
+        String loginuname = shre.getString("fullname",null);
         if(loginuname=="" || loginuname==null){
            // Toast.makeText(getApplicationContext(),"Login again",Toast.LENGTH_LONG).show();
             LinearLayout ll =(LinearLayout)header.findViewById(R.id.loginorsignup);

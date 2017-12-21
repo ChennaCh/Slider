@@ -46,6 +46,7 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.w3c.dom.Text;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -65,6 +66,7 @@ public class SignUpActivity extends AppCompatActivity  {
     Button register;
     Spinner spinnerbloodgroup;
     String fullname,email,password,phone,address,age,city,gender,bloodgroup;
+    TextView regerror;
     //Signin button
     private SignInButton signInButton;
     //Signing Options
@@ -103,9 +105,12 @@ public class SignUpActivity extends AppCompatActivity  {
         etcity = (EditText) findViewById(R.id.etcity);
         rgender =  (RadioGroup) findViewById(R.id.radioSex);
         register = (Button) findViewById(R.id.regbtn);
+        regerror = (TextView) findViewById(R.id.regerror);
+        regerror.setText("");
         register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                regerror.setText("");
                 fullname = etname.getText().toString();
                 email = etemail.getText().toString();
                 password = etpassword.getText().toString();
@@ -123,26 +128,25 @@ public class SignUpActivity extends AppCompatActivity  {
                // bloodgroup=((Spinner)findViewById(spinnerbloodgroup.getId())).toString();
                // gender = ((RadioButton)findViewById(spinnerbloodgroup.getId())).getText().toString();
                 if (fullname.equals("")) {
-                   // etname.requestFocus();
-                    etname.setError("Enter username");
+                    regerror.setText("Please Enter UserName");
                 } else if (!isValidEmail(email)) {
                    // etemail.requestFocus();
-                    etemail.setError("Enter valid email");
+                    regerror.setText("Please Enter valid email");
                 } else if (password.isEmpty()) {
                    // etpassword.requestFocus();
-                    etpassword.setError("Invalid password");
+                    regerror.setText("Please Enter password");
                 } else if (!isValidMobile(phone)) {
                    // etphone.requestFocus();
-                    etphone.setError("Invalid phone number");
+                    regerror.setText("Please Enter Valid Phone Number");
                 } else if (address.equals("")) {
                     //etaddress.requestFocus();
-                    etaddress.setError("Invalid address");
+                    regerror.setText("Please Enter Address");
                 } else if (age.equals("")) {
                    // etage.requestFocus();
-                    etage.setError("Enter valid age");
+                    regerror.setText("Please Enter Age");
                 } else if (city.equals("")) {
                    // etcity.requestFocus();
-                    etcity.setError("Enter City");
+                    regerror.setText("Please Enter Location");
                 }
                 else if (fullname.trim().length() > 0 && email.trim().length() > 0 && password.trim().length() > 0 && phone.trim().length() > 0 && address.trim().length() > 0 && city.trim().length() > 0 && age.length() > 0) {
                     registerapicall(fullname, password, phone, email, address, gender, bloodgroup,age,city);
@@ -195,7 +199,7 @@ public class SignUpActivity extends AppCompatActivity  {
                     @Override
                     protected void onPostExecute(Void aVoid) {
                         super.onPostExecute(aVoid);
-                        Toast.makeText(SignUpActivity.this, "Request Send Successfully", Toast.LENGTH_LONG).show();
+                        Toast.makeText(SignUpActivity.this, "For your generosity, I thank you", Toast.LENGTH_LONG).show();
                         etname.setText("");
                         etemail.setText("");
                         etphone.setText("");

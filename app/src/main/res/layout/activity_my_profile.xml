@@ -71,7 +71,7 @@
                         android:layout_weight="1.7"
                         android:backgroundTint="@color/white"
                         android:padding="10dp"
-                        android:text="Rekha"
+                        android:text="user"
                         android:textColor="@color/white"
                         android:textColorHint="@color/white" />
                 </LinearLayout>

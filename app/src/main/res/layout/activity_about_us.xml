@@ -39,7 +39,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:gravity="center"
-                android:text="Welcome to Save World Blood Bank"
+                android:text="Welcome to Save World App"
                 android:textColor="#ca4969"
                 android:textSize="20dp"
                 android:textStyle="bold" />
@@ -108,7 +108,7 @@
                     <LinearLayout android:id="@+id/panel3" android:visibility="gone" android:orientation="vertical" android:layout_width="fill_parent" android:layout_height="wrap_content">
                         <TextView
                             android:layout_margin="2dip"
-                            android:text=" Address :\n\n LIG-630, 5th Rd,\n Dharma Reddy Colony Phase I,\n Kukatpally,\n Hyderabad, Telangana 500072.\n\n Phone: 090109 90285.\n"
+                            android:text=" Address :\n\n LIG-630, KPHB Road No - 5,\n Dharma Reddy Colony Phase I,\n Kukatpally,\n Hyderabad, Telangana 500072.\n\n Phone: +91-90109 90285.\n"
                             android:padding="5dip"
                             android:background="#9C0002"
                             android:textSize="16dp"

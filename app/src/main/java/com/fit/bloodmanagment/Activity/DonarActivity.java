@@ -215,7 +215,7 @@ public class DonarActivity extends AppCompatActivity implements ObservableScroll
         for(DonorBean reqdonors : donordata){
             String location= reqdonors.getDcity().toLowerCase();
             String bgroup = reqdonors.getDbloodgroup().toLowerCase();
-            if(location.contains(newText.toLowerCase()) || bgroup.contains(newText.toLowerCase())){
+            if(location.contains(newText.toLowerCase()) || bgroup.equalsIgnoreCase(newText.toLowerCase())){
               newList.add(reqdonors);
             }
         }
@@ -233,7 +233,7 @@ public class DonarActivity extends AppCompatActivity implements ObservableScroll
         for(DonorBean reqdonors : donordata){
             String location= reqdonors.getDcity().toLowerCase();
             String bgroup = reqdonors.getDbloodgroup().toLowerCase();
-            if(location.contains(sq1.toLowerCase()) || bgroup.contains(sq1.toLowerCase())){
+            if(location.contains(sq1.toLowerCase()) || bgroup.equalsIgnoreCase(sq1.toLowerCase())){
                 newList.add(reqdonors);
             }
         }

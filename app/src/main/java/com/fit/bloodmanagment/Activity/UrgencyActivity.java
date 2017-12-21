@@ -106,16 +106,17 @@ public class UrgencyActivity extends AppCompatActivity {
                     etname.requestFocus();
                     etname.setError("Please Enter UserName");
 
-                }else if (nphone.length()< 10){
+                }else if (!nemail.matches(emailPattern1)){
+                    etemail.requestFocus();
+                    etemail.setError("Please Enter valid MailId");
+
+                }
+                else if (nphone.length()< 10){
                     etphone.requestFocus();
                     etphone.setError("Enter 10 digits Number");
 
                 }
-                else if (!nemail.matches(emailPattern1)){
-                    etemail.requestFocus();
-                    etemail.setError("Please Enter valid MailId");
-
-                }else if (naddress.equals("")){
+                else if (naddress.equals("")){
                     etaddress.requestFocus();
                     etaddress.setError("Please Enter Address");
 

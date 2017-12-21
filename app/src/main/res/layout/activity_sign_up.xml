@@ -264,7 +264,15 @@
                         android:entries="@array/spinner_item"
                         android:theme="@style/mySpinnerItemStyle" />
                 </LinearLayout>
-
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/regerror"
+                    android:padding="10dp"
+                    android:textSize="16dp"
+                    android:text=""
+                    android:gravity="center"
+                    android:textColor="#fff700"/>
 
                 <Button
                     android:id="@+id/regbtn"

@@ -101,9 +101,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="10dp"
+                android:textSize="16dp"
                 android:text=""
                 android:gravity="center"
-                android:textColor="#ffe500" />
+                android:textColor="#fff700" />
             <Button
                 android:id="@+id/signin"
                 android:layout_width="250dp"
