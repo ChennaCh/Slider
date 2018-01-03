@@ -2,13 +2,22 @@ package com.fit.bloodmanagment.Activity;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.support.v4.content.res.ResourcesCompat;
+import android.support.v4.graphics.drawable.DrawableCompat;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
@@ -18,8 +27,10 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
+import com.fit.bloodmanagment.Adapter.BloodbankListAdapter;
 import com.fit.bloodmanagment.Adapter.ViewNeedsListAdapter;
 
+import com.fit.bloodmanagment.Beans.BloodbankBean;
 import com.fit.bloodmanagment.Beans.ViewNeedsBean;
 import com.fit.bloodmanagment.Map.MainMapActivity;
 import com.fit.bloodmanagment.R;
@@ -37,7 +48,7 @@ import java.util.ArrayList;
 import java.util.Map;
 
 
-public class ViewNeedsActivity  extends AppCompatActivity implements ObservableScrollViewCallbacks {
+public class ViewNeedsActivity  extends AppCompatActivity implements ObservableScrollViewCallbacks,SearchView.OnQueryTextListener {
 
     private ObservableRecyclerView vneedrecycle;
     private ViewNeedsListAdapter vneedListAdapter;
@@ -152,5 +163,45 @@ public class ViewNeedsActivity  extends AppCompatActivity implements ObservableS
     public void onBackPressed() {
         Intent intent = new Intent(ViewNeedsActivity.this, MainMapActivity.class);
         startActivity(intent);
+    }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        //MenuInflater inflater = getMenuInflater();
+        getMenuInflater().inflate(R.menu.search_menu, menu);
+        MenuItem menuItem=menu.findItem(R.id.action_search);
+        SearchView searchView= (SearchView) MenuItemCompat.getActionView(menuItem);
+        Drawable drawable = ResourcesCompat.getDrawable(getResources(), R.drawable.search_icon, null);
+        drawable = DrawableCompat.wrap(drawable);
+        DrawableCompat.setTint(drawable, Color.WHITE);
+        //ab.setHomeAsUpIndicator(drawable);
+        EditText editText = ((EditText) searchView.findViewById(android.support.v7.appcompat.R.id.search_src_text));
+        editText.setHintTextColor(getResources().getColor(R.color.white));
+        editText.setTextColor(getResources().getColor(R.color.white));
+        searchView.setQueryHint("Search by blood group");
+        //searchView.setBackgroundColor(Color.WHITE);
+        searchView.setOnQueryTextListener(this);
+        return true;
+    }
+
+    @Override
+    public boolean onQueryTextSubmit(String query) {
+        return false;
+    }
+
+    @Override
+    public boolean onQueryTextChange(String newText) {
+        newText=newText.toLowerCase();
+        ArrayList<ViewNeedsBean> newbbList=new ArrayList<>();
+        for(ViewNeedsBean reqbb : vneedsdata){
+            String bg= reqbb.getNbloodgroup().toLowerCase();
+            if(bg.contains(newText)){
+                newbbList.add(reqbb);
+            }
+        }
+        vneedListAdapter = new ViewNeedsListAdapter(ViewNeedsActivity.this,newbbList);
+        vneedListAdapter.setFilter(newbbList);
+        vneedrecycle.setAdapter(vneedListAdapter);
+        vneedrecycle.setLayoutManager(new LinearLayoutManager(ViewNeedsActivity.this));
+        return true;
     }
 }

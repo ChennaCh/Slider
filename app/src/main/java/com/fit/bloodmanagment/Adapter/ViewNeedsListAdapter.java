@@ -20,11 +20,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.fit.bloodmanagment.Activity.ViewNeedsActivity;
+import com.fit.bloodmanagment.Beans.BloodbankBean;
 import com.fit.bloodmanagment.Beans.ViewNeedsBean;
 import com.fit.bloodmanagment.Map.BloodbanksMapActivity;
 import com.fit.bloodmanagment.Map.ViewNeedsMapActivity;
 import com.fit.bloodmanagment.R;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -157,5 +159,10 @@ public class ViewNeedsListAdapter extends RecyclerView.Adapter<RecyclerView.View
         }
     }
 
+    public void setFilter(ArrayList<ViewNeedsBean> newbbList){
+        ArrayList arraylist=new ArrayList<>();
+        arraylist.addAll(newbbList);
+        notifyDataSetChanged();
 
+    }
 }

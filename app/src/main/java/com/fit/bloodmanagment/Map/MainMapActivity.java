@@ -244,6 +244,10 @@ public class MainMapActivity extends FragmentActivity implements OnMapReadyCallb
             nav_myprofile.setVisible(false);
             MenuItem nav_logout = menuNav.findItem(R.id.nav_logout);
             nav_logout.setVisible(false);
+            MenuItem nav_beadonor = menuNav.findItem(R.id.nav_donoradd);
+            nav_beadonor.setVisible(true);
+
+            //nav_donoradd
         }else{
           //  Toast.makeText(getApplicationContext(),"Successfull login",Toast.LENGTH_LONG).show();
 //            loginbtn.setVisibility(View.INVISIBLE);
@@ -261,6 +265,8 @@ public class MainMapActivity extends FragmentActivity implements OnMapReadyCallb
             nav_myprofile.setVisible(true);
             MenuItem nav_logout = menuNav.findItem(R.id.nav_logout);
             nav_logout.setVisible(true);
+            MenuItem nav_beadonor = menuNav.findItem(R.id.nav_donoradd);
+            nav_beadonor.setVisible(false);
 
         }
         shre =  getSharedPreferences(MYLOCATIONPREF, Context.MODE_PRIVATE);
@@ -372,7 +378,7 @@ public class MainMapActivity extends FragmentActivity implements OnMapReadyCallb
         fableftll.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(MainMapActivity.this,SignUpActivity.class));
+                startActivity(new Intent(MainMapActivity.this,UrgencyActivity.class));
             }
         });
 
