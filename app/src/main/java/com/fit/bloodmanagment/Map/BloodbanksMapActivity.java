@@ -54,11 +54,12 @@ public class BloodbanksMapActivity extends FragmentActivity implements OnMapRead
     Marker mCurrLocationMarker;
     LocationRequest mLocationRequest;
     String location2;
+    TextView distancetv;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bloodbanks_map);
-
+        distancetv=(TextView)findViewById(R.id.distancetv);
         location2 = getIntent().getStringExtra("addr");
         //Toast.makeText(getApplicationContext(),location2,Toast.LENGTH_LONG).show();
         if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
@@ -193,8 +194,8 @@ public class BloodbanksMapActivity extends FragmentActivity implements OnMapRead
         targetLocation.setLongitude(latLng.longitude);
 
         float dis = location.distanceTo(targetLocation);
-        Toast.makeText(getApplicationContext(),"Total Distance is : "+Math.round((dis/1000)*100.0f)/100.0+" kms",Toast.LENGTH_LONG).show();
-
+        //Toast.makeText(getApplicationContext(),"Total Distance is : "+Math.round((dis/1000)*100.0f)/100.0+" kms",Toast.LENGTH_LONG).show();
+       distancetv.setText("Total Distance in kms: "+Math.round((dis/1000)*100.0f)/100.0);
 
 
 
