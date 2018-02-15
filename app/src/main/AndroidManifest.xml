@@ -84,7 +84,8 @@
 
         <activity
             android:name=".Map.MainMapActivity"
-            android:label="@string/title_activity_main_map" />
+            android:label="@string/title_activity_main_map"
+            android:launchMode="singleTask"/>
         <activity android:name=".Activity.UrgencyActivity" />
         <activity android:name=".Activity.ViewNeedsActivity" />
         <activity android:name=".Activity.FaqsActivity" />
