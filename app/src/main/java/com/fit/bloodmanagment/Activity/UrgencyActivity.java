@@ -2,6 +2,7 @@ package com.fit.bloodmanagment.Activity;
 
 import android.app.Activity;
 import android.app.DatePickerDialog;
+import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.AsyncTask;
@@ -44,6 +45,7 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -60,7 +62,10 @@ public class UrgencyActivity extends AppCompatActivity {
     Calendar myCalendar = Calendar.getInstance();
     //DatePickerDialog datePickerDialog=new DatePickerDialog();
     private String nname, nemail, nphone,naddress,npurpose,ncity,nbloodgroup,nrequredate;
-
+    private int day;
+    private int month;
+    private int year;
+    static final int DATE_PICKER_ID = 1111;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -84,9 +89,14 @@ public class UrgencyActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 // TODO Auto-generated method stub
-                new DatePickerDialog(UrgencyActivity.this,date, myCalendar
-                        .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
-                        myCalendar.get(Calendar.DAY_OF_MONTH)).show();
+//                new DatePickerDialog(UrgencyActivity.this,date, myCalendar
+//                        .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
+//                        myCalendar.get(Calendar.DAY_OF_MONTH)).show();
+                myCalendar = Calendar.getInstance();
+                day = myCalendar.get(Calendar.DAY_OF_MONTH);
+                month = myCalendar.get(Calendar.MONTH);
+                year = myCalendar.get(Calendar.YEAR);
+                showDialog(DATE_PICKER_ID);
 
             }
         });
@@ -158,25 +168,48 @@ public class UrgencyActivity extends AppCompatActivity {
 
 
     }
-    final DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
+    @Override
+    protected Dialog onCreateDialog(int id) {
+        switch (id) {
+            case DATE_PICKER_ID:
+                // create a new DatePickerDialog with values you want to show
 
-        @Override
-        public void onDateSet(DatePicker view, int year, int monthOfYear,
-                              int dayOfMonth) {
-            // TODO Auto-generated method stub
-            myCalendar.set(Calendar.YEAR, year);
-            myCalendar.set(Calendar.MONTH, monthOfYear);
-            myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-            view.setMinDate(System.currentTimeMillis() - 10000);
-            updateLabel();
+                DatePickerDialog datePickerDialog = new DatePickerDialog(this, datePickerListener, year, month, day);
+                myCalendar = Calendar.getInstance();
+                myCalendar.add(Calendar.DATE, +1); // Add 0 days to Calendar
+                Date newDate = myCalendar.getTime();
+                datePickerDialog.getDatePicker().setMinDate(newDate.getTime()-(newDate.getTime()%(24*60*60*1000)));
+                return datePickerDialog;
         }
-
-    };
-    private void updateLabel() {
-        String myFormat = "dd/MM/yyyy"; //In which you need put here
-        SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
-        etrequiredate.setText(sdf.format(myCalendar.getTime()));
+        return null;
     }
+    private DatePickerDialog.OnDateSetListener datePickerListener = new DatePickerDialog.OnDateSetListener() {
+        // the callback received when the user "sets" the Date in the
+        // DatePickerDialog
+        public void onDateSet(DatePicker view, int selectedYear, int selectedMonth, int selectedDay) {
+
+            etrequiredate.setText(selectedDay + "/" + (selectedMonth + 1) + "/" + selectedYear);
+        }
+    };
+//    final DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
+//
+//        @Override
+//        public void onDateSet(DatePicker view, int year, int monthOfYear,
+//                              int dayOfMonth) {
+//            // TODO Auto-generated method stub
+//            myCalendar.set(Calendar.YEAR, year);
+//            myCalendar.set(Calendar.MONTH, monthOfYear);
+//            myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+//            view.setMinDate(System.currentTimeMillis() - 10000);
+//            updateLabel();
+//        }
+//
+//    };
+//    private void updateLabel() {
+//        String myFormat = "dd/MM/yyyy"; //In which you need put here
+//        SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
+//        etrequiredate.setText(sdf.format(myCalendar.getTime()));
+//    }
 
     private void insertToDatabase(final String getname,final String getphone,final String getemail,
                                   final String getaddress, final String getpurpose, final String getcity, final String getbloodgroup, final String getrequiredate) {
