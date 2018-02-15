@@ -28,8 +28,10 @@ import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.NetworkImageView;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.fit.bloodmanagment.Activity.MyProfileActivity;
 import com.fit.bloodmanagment.Activity.UrgencyActivity;
 import com.fit.bloodmanagment.Map.MainMapActivity;
+import com.fit.bloodmanagment.Network.ConnectivityReceiver;
 import com.fit.bloodmanagment.R;
 import com.fit.bloodmanagment.Utils.API;
 
@@ -58,6 +60,8 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import static com.fit.bloodmanagment.Network.Conn.displayMobileDataSettingsDialog;
 
 public class SignUpActivity extends AppCompatActivity  {
     Toolbar toolbar;
@@ -110,6 +114,7 @@ public class SignUpActivity extends AppCompatActivity  {
         register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 regerror.setText("");
                 fullname = etname.getText().toString();
                 email = etemail.getText().toString();
@@ -149,6 +154,10 @@ public class SignUpActivity extends AppCompatActivity  {
                     regerror.setText("Please Enter Location");
                 }
                 else if (fullname.trim().length() > 0 && email.trim().length() > 0 && password.trim().length() > 0 && phone.trim().length() > 0 && address.trim().length() > 0 && city.trim().length() > 0 && age.length() > 0) {
+                    if(ConnectivityReceiver.isConnected()==false){
+                        //checkConnection();
+                        displayMobileDataSettingsDialog(SignUpActivity.this);
+                    }
                     registerapicall(fullname, password, phone, email, address, gender, bloodgroup,age,city);
                 }
                 else

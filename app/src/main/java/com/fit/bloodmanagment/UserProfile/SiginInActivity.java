@@ -25,6 +25,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.fit.bloodmanagment.Activity.MyProfileActivity;
 import com.fit.bloodmanagment.Map.MainMapActivity;
+import com.fit.bloodmanagment.Network.ConnectivityReceiver;
 import com.fit.bloodmanagment.R;
 import com.fit.bloodmanagment.Utils.API;
 import com.google.android.gms.common.ConnectionResult;
@@ -39,6 +40,8 @@ import org.json.JSONObject;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import static com.fit.bloodmanagment.Network.Conn.displayMobileDataSettingsDialog;
 
 
 public class SiginInActivity extends AppCompatActivity{
@@ -105,29 +108,13 @@ public class SiginInActivity extends AppCompatActivity{
                     edtpass.setFocusable(true);
 
                 }
-                else
-                getCredentials();
-               // setextview.setText("");
-
-               // Snackbar.make(view, "No network connection.",Snackbar.LENGTH_SHORT).show();
-//                if (strusername.equals("")) {
-////                    Toast.makeText(getApplicationContext(), "", Toast.LENGTH_LONG).show();
-////                    edtuser.setFocusable(true);
-////                    edtuser.setError("Invalid Name");
-//                    setextview.setText("Invalid Username and password");
-//
-//                } else if (strpassword.equals("")) {
-////                    edtpass.setFocusable(true);
-////                    edtpass.setError("Invalid password");}
-//                    setextview.setText("Invalid Username and password");
-//                }
-////                else{
-////                    Intent it=new Intent(getApplicationContext(), MainMapActivity.class);
-////                    it.putExtra("email",username);
-////                    startActivity(it);
-////                }
-//
-
+                else {
+                    if(ConnectivityReceiver.isConnected()==false){
+                        //checkConnection();
+                        displayMobileDataSettingsDialog(SiginInActivity.this);
+                    }
+                    getCredentials();
+                }
 
             }
         });
@@ -235,7 +222,7 @@ public class SiginInActivity extends AppCompatActivity{
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         // error
-                        Toast.makeText(getApplicationContext(), "" + error, Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), "No Network Connection", Toast.LENGTH_SHORT).show();
                     }
                 }
         ){

@@ -23,7 +23,9 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.fit.bloodmanagment.Map.MainMapActivity;
+import com.fit.bloodmanagment.Network.ConnectivityReceiver;
 import com.fit.bloodmanagment.R;
+import com.fit.bloodmanagment.UserProfile.SiginInActivity;
 import com.fit.bloodmanagment.UserProfile.SignUpActivity;
 import com.fit.bloodmanagment.Utils.API;
 
@@ -47,6 +49,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+import static com.fit.bloodmanagment.Network.Conn.displayMobileDataSettingsDialog;
 import static com.fit.bloodmanagment.R.id.toolbar;
 
 public class UrgencyActivity extends AppCompatActivity {
@@ -135,6 +138,10 @@ public class UrgencyActivity extends AppCompatActivity {
                 }
 
                 if (nname.trim().length() > 0 && naddress.trim().length() > 0 && npurpose.trim().length()>0 &&ncity.trim().length()>0){
+                    if(ConnectivityReceiver.isConnected()==false){
+                        //checkConnection();
+                        displayMobileDataSettingsDialog(UrgencyActivity.this);
+                    }
                     insertToDatabase(nname, nphone, nemail, naddress,npurpose,ncity,nbloodgroup,nrequredate);
                     //apicall();
                 }

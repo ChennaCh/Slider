@@ -13,11 +13,13 @@ import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
+import android.location.LocationManager;
 import android.media.Image;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -26,6 +28,7 @@ import android.os.Environment;
 import android.preference.PreferenceManager;
 import android.provider.MediaStore;
 import android.support.design.widget.NavigationView;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
@@ -69,6 +72,9 @@ import com.fit.bloodmanagment.Beans.ImageHelperBean;
 import com.fit.bloodmanagment.BuildConfig;
 import com.fit.bloodmanagment.GooglePlaces.GetNearByDonors;
 import com.fit.bloodmanagment.GooglePlaces.GetNearbyPlacesData;
+import com.fit.bloodmanagment.Network.Conn;
+import com.fit.bloodmanagment.Network.ConnectivityReceiver;
+import com.fit.bloodmanagment.Network.MyApplication;
 import com.fit.bloodmanagment.R;
 import com.fit.bloodmanagment.SQliteDatabase.ImageDatabaseHelper;
 import com.fit.bloodmanagment.UserProfile.SiginInActivity;
@@ -111,29 +117,27 @@ import java.util.Map;
 import java.util.Random;
 
 import static android.R.id.edit;
+import static com.fit.bloodmanagment.Network.Conn.displayMobileDataSettingsDialog;
 
 public class MainMapActivity extends FragmentActivity implements OnMapReadyCallback,NavigationView.OnNavigationItemSelectedListener,
         GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener,
-        LocationListener,View.OnClickListener {
+        LocationListener,View.OnClickListener,ConnectivityReceiver.ConnectivityReceiverListener{
     private Boolean isFabOpen = false;
     TextView fab1,fab2,fab3,fab4,fab5,fab6,fab7,fab8;
     private Animation fab_open,fab_close,rotate_forward,rotate_backward;
     private GoogleMap mMap;
     View mapView;
-    private Button navbtn;
-    private Button loginbtn,signupbtn;
+    private Button navbtn,loginbtn,signupbtn;
     public static final String IMAGE_ID = "IMG_ID";
     private final String TAG = "MainMapActivity";
     private Activity activity;
     ArrayList<DonorBean> donordata=new ArrayList<>();
-
     private ImageDatabaseHelper databaseHelper;
     int id;
     private String userChoosenTask;
     private int REQUEST_CAMERA = 0, SELECT_FILE = 1;
-    double latitude;
-    double longitude;
+    double latitude,longitude;
     private int PROXIMITY_RADIUS = 10000;
     GoogleApiClient mGoogleApiClient;
     Location mLastLocation;
@@ -226,6 +230,14 @@ public class MainMapActivity extends FragmentActivity implements OnMapReadyCallb
         fab6.setOnClickListener(this);
         fab7.setOnClickListener(this);
         fab8.setOnClickListener(this);
+        final LocationManager manager = (LocationManager) getSystemService( Context.LOCATION_SERVICE );
+        if ( !manager.isProviderEnabled( LocationManager.GPS_PROVIDER ) ) {
+            buildAlertMessageNoGps();
+        }
+        checkConnection();
+        if(ConnectivityReceiver.isConnected()==false){
+            displayMobileDataSettingsDialog(this);
+        }
         shre =  getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
         if (shre.contains(key))
         {//save required image
@@ -251,11 +263,6 @@ public class MainMapActivity extends FragmentActivity implements OnMapReadyCallb
 
             //nav_donoradd
         }else{
-          //  Toast.makeText(getApplicationContext(),"Successfull login",Toast.LENGTH_LONG).show();
-//            loginbtn.setVisibility(View.INVISIBLE);
-//            signupbtn.setVisibility(View.INVISIBLE);
-//            TextView username=(TextView)header.findViewById(R.id.username);
-//            username.setVisibility(View.VISIBLE);
             LinearLayout ll =(LinearLayout)header.findViewById(R.id.loginorsignup);
             ll.setVisibility(View.GONE);
             LinearLayout ll2=(LinearLayout)header.findViewById(R.id.myloginusername);
@@ -317,7 +324,6 @@ public class MainMapActivity extends FragmentActivity implements OnMapReadyCallb
             }
         });
 
-
         shareimage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -335,6 +341,7 @@ public class MainMapActivity extends FragmentActivity implements OnMapReadyCallb
 
             }
         });
+
         rating.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -368,7 +375,6 @@ public class MainMapActivity extends FragmentActivity implements OnMapReadyCallb
             }
         });
 
-
         profilepic.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -377,6 +383,7 @@ public class MainMapActivity extends FragmentActivity implements OnMapReadyCallb
             }
 
         });
+
         fableftll.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -463,9 +470,6 @@ public class MainMapActivity extends FragmentActivity implements OnMapReadyCallb
             // other 'case' lines to check for other permissions this application might request.
             // You can add here other case statements according to your requirement.
         }
-
-
-
     }
 
     private void selectImage() {
@@ -499,8 +503,6 @@ public class MainMapActivity extends FragmentActivity implements OnMapReadyCallb
     {
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         startActivityForResult(intent, REQUEST_CAMERA);
-
-
     }
     private void galleryIntent()
     {
@@ -582,7 +584,6 @@ public class MainMapActivity extends FragmentActivity implements OnMapReadyCallb
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
-
     }
     public void createFolder()
     {
@@ -637,14 +638,9 @@ public class MainMapActivity extends FragmentActivity implements OnMapReadyCallb
             Intent intent = new Intent(MainMapActivity.this, PrivacyPolicyActivity.class);
             startActivity(intent);
         }else if(id==R.id.nav_logout){
-
             Intent intent = new Intent(getApplicationContext(), MainMapActivity.class);
             getApplicationContext().getSharedPreferences("userdetails", 0).edit().clear().commit();
             startActivity(intent);
-
-
-
-
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -683,20 +679,29 @@ public class MainMapActivity extends FragmentActivity implements OnMapReadyCallb
         pharmacyll.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String Pharmacy = "pharmacy";
+                try {
+                if(ConnectivityReceiver.isConnected()==false){
+                    checkConnection();
+                    //displayMobileDataSettingsDialog(MainMapActivity.this);
+                }
+                    String Pharmacy = "pharmacy";
 
-                // Log.d("onClick", "Button is Clicked");
-                mMap.clear();
-                if (mCurrLocationMarker != null) {
-                    //  mCurrLocationMarker.remove();
-                    String url = getUrl(latitude, longitude, Pharmacy);
-                    Object[] DataTransfer = new Object[2];
-                    DataTransfer[0] = mMap;
-                    DataTransfer[1] = url;
-                    Log.d("onClick", url);
-                    GetNearbyPlacesData getNearbyPlacesData = new GetNearbyPlacesData();
-                    getNearbyPlacesData.execute(DataTransfer);
-                    Toast.makeText(MainMapActivity.this,"Nearby Pharmacies", Toast.LENGTH_LONG).show();
+                    // Log.d("onClick", "Button is Clicked");
+                    mMap.clear();
+                    if (mCurrLocationMarker != null) {
+                        //  mCurrLocationMarker.remove();
+                        String url = getUrl(latitude, longitude, Pharmacy);
+                        Object[] DataTransfer = new Object[2];
+                        DataTransfer[0] = mMap;
+                        DataTransfer[1] = url;
+                        Log.d("onClick", url);
+                        GetNearbyPlacesData getNearbyPlacesData = new GetNearbyPlacesData();
+                        getNearbyPlacesData.execute(DataTransfer);
+                        Toast.makeText(MainMapActivity.this, "Nearby Pharmacies", Toast.LENGTH_LONG).show();
+                    }
+                }
+                catch (Exception e){
+                    Log.e("ERROR","EXCEPTION");
                 }
 
 
@@ -705,10 +710,15 @@ public class MainMapActivity extends FragmentActivity implements OnMapReadyCallb
         hospitalll.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(ConnectivityReceiver.isConnected()==false){
+                    checkConnection();
+                    //displayMobileDataSettingsDialog(MainMapActivity.this);
+                }
                 setProgress(v.VISIBLE);
                 //ProgressDialog loading;
                 //loading = ProgressDialog.show(MainMapActivity.this, "Uploading...", null,true,true);
                 String Hospital="hospital";
+
                 //Log.d("onClick", "Button is Clicked");
                 mMap.clear();
                 //mCurrLocationMarker = mMap.addMarker(markerOptions);;
@@ -769,7 +779,6 @@ public class MainMapActivity extends FragmentActivity implements OnMapReadyCallb
 
     @Override
     public void onConnectionSuspended(int i) {
-
     }
 
     @Override
@@ -780,7 +789,6 @@ public class MainMapActivity extends FragmentActivity implements OnMapReadyCallb
         if (mCurrLocationMarker != null) {
             mCurrLocationMarker.remove();
         }
-
         //Place current location marker
         latitude = location.getLatitude();
         longitude = location.getLongitude();
@@ -790,7 +798,6 @@ public class MainMapActivity extends FragmentActivity implements OnMapReadyCallb
         markerOptions.title("Current Position");
        // markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_MAGENTA));
         mCurrLocationMarker = mMap.addMarker(markerOptions);
-
         //move map camera
         mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
         mMap.animateCamera(CameraUpdateFactory.zoomTo(12));
@@ -799,9 +806,7 @@ public class MainMapActivity extends FragmentActivity implements OnMapReadyCallb
         editor.putString(mylatlongkey,String.valueOf(latLng));
         editor.commit();
         //Toast.makeText(MainMapActivity.this,"Your Current Location", Toast.LENGTH_LONG).show();
-
         Log.d("onLocationChanged", String.format("latitude:%.3f longitude:%.3f",latitude,longitude));
-
         //stop location updates
         if (mGoogleApiClient != null) {
             LocationServices.FusedLocationApi.removeLocationUpdates(mGoogleApiClient, this);
@@ -823,15 +828,12 @@ public class MainMapActivity extends FragmentActivity implements OnMapReadyCallb
         if (ContextCompat.checkSelfPermission(this,
                 Manifest.permission.ACCESS_FINE_LOCATION)
                 != PackageManager.PERMISSION_GRANTED) {
-
             // Asking user if explanation is needed
             if (ActivityCompat.shouldShowRequestPermissionRationale(this,
                     Manifest.permission.ACCESS_FINE_LOCATION)) {
-
                 // Show an explanation to the user *asynchronously* -- don't block
                 // this thread waiting for the user's response! After the user
                 // sees the explanation, try again to request the permission.
-
                 //Prompt the user once explanation has been shown
                 ActivityCompat.requestPermissions(this,
                         new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
@@ -963,64 +965,9 @@ public class MainMapActivity extends FragmentActivity implements OnMapReadyCallb
     public void showdonorsonmap()
     {
         String Pharmacy = "pharmacy";
-
-        // Log.d("onClick", "Button is Clicked");
         mMap.clear();
-
-//            //  mCurrLocationMarker.remove();
-//            String url = getUrl(latitude, longitude, Pharmacy);
-//            Object[] DataTransfer = new Object[2];
-//            DataTransfer[0] = mMap;
-//            DataTransfer[1] = url;
-//            Log.d("onClick", url);
-//           // GetNearByDonors getNearbyPlacesData = new GetNearByDonors();
-//           // getNearbyPlacesData.execute(DataTransfer);
-//            //Toast.makeText(MainMapActivity.this,"Nearby Pharmacies", Toast.LENGTH_LONG).show();
             listapi();
-           // showNearbyPlaces();
     }
-
-    private void showNearbyPlaces() {
-        Toast.makeText(getApplicationContext(),"hi"+donordata.size(),Toast.LENGTH_LONG).show();
-        for (int i = 0; i < donordata.size(); i++) {
-            Log.d("onPostExecute","Entered into showing locations");
-            MarkerOptions markerOptions = new MarkerOptions();
-            DonorBean donor = donordata.get(i);
-
-            String addr = donor.getDaddress();
-            String mob  = donor.getDmobile();
-            String name = donor.getDfullname();
-            String bgrop = donor.getDbloodgroup();
-
-            Geocoder coder = new Geocoder(getApplicationContext());
-            List<Address> address = null;
-            Address location = null;
-            try {
-                address = coder.getFromLocationName(addr, 5);
-
-                location=address.get(0);
-
-            }
-            catch(Exception e)
-            {
-                e.printStackTrace();
-            }
-
-            LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
-
-            markerOptions.position(latLng);
-            markerOptions.title(name + " : " + bgrop +" : "+mob+" : "+addr);
-            Toast.makeText(getApplicationContext(), "hi"+addr+bgrop+mob+name, Toast.LENGTH_SHORT).show();
-
-            mMap.addMarker(markerOptions);
-            markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED));
-            //move map camera
-            mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
-            mMap.animateCamera(CameraUpdateFactory.zoomTo(12));
-        }
-    }
-
-
     private void listapi() {
        // Toast.makeText(getApplicationContext(),"first",Toast.LENGTH_SHORT).show();
 
@@ -1102,5 +1049,60 @@ public class MainMapActivity extends FragmentActivity implements OnMapReadyCallb
         };
         queue.add(getRequest);
     }
+    @Override
+    protected void onResume() {
+        super.onResume();
 
+        // register connection status listener
+        MyApplication.getInstance().setConnectivityListener(this);
+    }
+
+
+    @Override
+    public void onNetworkConnectionChanged(boolean isConnected) {
+        showSnack(isConnected);
+    }
+    private void checkConnection() {
+        boolean isConnected = ConnectivityReceiver.isConnected();
+        showSnack(isConnected);
+    }
+    // Showing the status in Snackbar
+    private void showSnack(boolean isConnected) {
+        String message;
+        int color;
+        if (isConnected) {
+            message = "Good! Connected to Internet";
+            color = Color.WHITE;
+        } else {
+            message = "Sorry! Not connected to internet";
+            color = Color.RED;
+        }
+
+        Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content),message , Snackbar.LENGTH_LONG);
+        // snackbar.show();
+//        Snackbar snackbar = Snackbar
+//                .make(findViewById(R.id.fab), message, Snackbar.LENGTH_LONG);
+
+        View sbView = snackbar.getView();
+        TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
+        textView.setTextColor(color);
+        snackbar.show();
+    }
+    private void buildAlertMessageNoGps() {
+        final AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage("Your GPS seems to be disabled, do you want to enable it?")
+                .setCancelable(false)
+                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    public void onClick(@SuppressWarnings("unused") final DialogInterface dialog, @SuppressWarnings("unused") final int id) {
+                        startActivity(new Intent(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS));
+                    }
+                })
+                .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    public void onClick(final DialogInterface dialog, @SuppressWarnings("unused") final int id) {
+                        dialog.cancel();
+                    }
+                });
+        final AlertDialog alert = builder.create();
+        alert.show();
+    }
 }

@@ -39,13 +39,17 @@ protected String doInBackground(Object... params) {
 
 @Override
 protected void onPostExecute(String result) {
-        Log.d("GooglePlacesReadTask", "onPostExecute Entered");
-        List<HashMap<String, String>> nearbyPlacesList = null;
-        DataParser dataParser = new DataParser();
-        nearbyPlacesList =  dataParser.parse(result);
-        ShowNearbyPlaces(nearbyPlacesList);
-        Log.d("GooglePlacesReadTask", "onPostExecute Exit");
+        try {
+                Log.d("GooglePlacesReadTask", "onPostExecute Entered");
+                List<HashMap<String, String>> nearbyPlacesList = null;
+                DataParser dataParser = new DataParser();
+                nearbyPlacesList =  dataParser.parse(result);
+                ShowNearbyPlaces(nearbyPlacesList);
+                Log.d("GooglePlacesReadTask", "onPostExecute Exit");
+        }catch (Exception e){
+          Log.e("ERROR","EXCEPTION");
         }
+      }
 
 private void ShowNearbyPlaces(List<HashMap<String, String>> nearbyPlacesList) {
         for (int i = 0; i < nearbyPlacesList.size(); i++) {

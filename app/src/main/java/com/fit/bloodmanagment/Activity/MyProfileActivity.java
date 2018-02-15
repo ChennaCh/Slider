@@ -25,6 +25,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.fit.bloodmanagment.Adapter.DonorListAdapter;
 import com.fit.bloodmanagment.Beans.DonorBean;
+import com.fit.bloodmanagment.Network.ConnectivityReceiver;
 import com.fit.bloodmanagment.R;
 import com.fit.bloodmanagment.UserProfile.SignUpActivity;
 import com.fit.bloodmanagment.Utils.API;
@@ -50,6 +51,7 @@ import java.util.Map;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 import static android.support.v7.widget.StaggeredGridLayoutManager.TAG;
+import static com.fit.bloodmanagment.Network.Conn.displayMobileDataSettingsDialog;
 
 
 public class MyProfileActivity extends AppCompatActivity {
@@ -95,6 +97,10 @@ public class MyProfileActivity extends AppCompatActivity {
         updatebtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if(ConnectivityReceiver.isConnected()==false){
+                    //checkConnection();
+                    displayMobileDataSettingsDialog(MyProfileActivity.this);
+                }
                 fullname = etViewName.getText().toString();
                 email = textViewEmail.getText().toString();
                 //password = etpassword.getText().toString();
@@ -132,6 +138,10 @@ public class MyProfileActivity extends AppCompatActivity {
 
 
     private void getMyProfile() {
+        if(ConnectivityReceiver.isConnected()==false){
+            //checkConnection();
+            displayMobileDataSettingsDialog(MyProfileActivity.this);
+        }
         SharedPreferences shre = getSharedPreferences("userdetails",MODE_PRIVATE);
         String username = shre.getString("username",null);
         String urmail=username.toString();
@@ -190,7 +200,7 @@ public class MyProfileActivity extends AppCompatActivity {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         // error
-                        Toast.makeText(getApplicationContext(), "" + error, Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), "No Network Connection", Toast.LENGTH_SHORT).show();
                     }
                 }
         ){
