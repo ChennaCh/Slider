@@ -81,6 +81,8 @@
                     android:layout_marginLeft="30dp"
                     android:layout_marginRight="30dp"
                     android:hint="Phone"
+                    android:maxLength="10"
+                    android:inputType="number"
                     android:padding="10dp"
                     android:textColor="@color/white"
                     android:backgroundTint="@color/white"

@@ -55,6 +55,7 @@ public class UrgencyActivity extends AppCompatActivity {
     Spinner bloodgroupspinner;
     Button sendrequestbtn;
     Calendar myCalendar = Calendar.getInstance();
+    //DatePickerDialog datePickerDialog=new DatePickerDialog();
     private String nname, nemail, nphone,naddress,npurpose,ncity,nbloodgroup,nrequredate;
 
     @Override
@@ -83,6 +84,7 @@ public class UrgencyActivity extends AppCompatActivity {
                 new DatePickerDialog(UrgencyActivity.this,date, myCalendar
                         .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
                         myCalendar.get(Calendar.DAY_OF_MONTH)).show();
+
             }
         });
 
@@ -158,6 +160,7 @@ public class UrgencyActivity extends AppCompatActivity {
             myCalendar.set(Calendar.YEAR, year);
             myCalendar.set(Calendar.MONTH, monthOfYear);
             myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+            view.setMinDate(System.currentTimeMillis() - 10000);
             updateLabel();
         }
 
@@ -165,7 +168,6 @@ public class UrgencyActivity extends AppCompatActivity {
     private void updateLabel() {
         String myFormat = "dd/MM/yyyy"; //In which you need put here
         SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
-
         etrequiredate.setText(sdf.format(myCalendar.getTime()));
     }
 
@@ -214,95 +216,6 @@ public class UrgencyActivity extends AppCompatActivity {
         SendPostReqAsyncTask sendPostReqAsyncTask = new SendPostReqAsyncTask();
         sendPostReqAsyncTask.execute(getname, getphone, getemail, getaddress,getpurpose,getcity,getbloodgroup,getrequiredate);
     }
-
-//    private  void apicall(){
-//
-//        RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
-//        String serverURL = API.addbloodneedUrl;
-//        final StringRequest getRequest = new StringRequest(Request.Method.POST, serverURL,
-//                new com.android.volley.Response.Listener<String>() {
-//                    @Override
-//                    public void onResponse(String response) {
-//
-//                        Log.d("officerResponse", response);
-//                        try {
-//                            JSONObject jsonObject = new JSONObject(response);
-//                            String str_status = jsonObject.getString("result");
-//                            //String str_msg = jsonObject.getString("message");
-//
-//
-//
-//                            if (str_status.equals("success")) {
-//                                JSONObject Jsonobject = jsonObject.getJSONObject("data");
-////                                String  shop = Jasonobject.getString("shop_name");
-////                                String  owner = Jasonobject.getString("owner_name");
-//                               String name=Jsonobject.getString("myname");
-//                                String mobile=Jsonobject.getString("mymoblle");
-//                                String email=Jsonobject.getString("myemail");
-//                                String purpose=Jsonobject.getString("mypurpose");
-//                                String bloodgroup=Jsonobject.getString("mybloodgroup");
-//                                String city=Jsonobject.getString("mycity");
-//                                String addresss=Jsonobject.getString("myaddresss");
-//                                String date=Jsonobject.getString("myduedate");
-//
-//                                //Navigating to the another activity
-//                                Intent intent = new Intent(getApplicationContext(), MainMapActivity.class);
-//                                startActivity(intent);
-//                            } else {
-//                                Toast.makeText(getApplicationContext(),"Sent Request Successfully", Toast.LENGTH_LONG).show();
-//                            }
-//
-//                        } catch (JSONException e) {
-//                            e.printStackTrace();
-//                            Toast.makeText(getApplicationContext(), "" + e, Toast.LENGTH_LONG).show();
-//                        }
-//                    }
-//                },
-//                new com.android.volley.Response.ErrorListener() {
-//                    @Override
-//                    public void onErrorResponse(VolleyError error) {
-//                        // error
-//                        Toast.makeText(getApplicationContext(), "" + error, Toast.LENGTH_LONG).show();
-//                        Log.d("UrgenncyActivity", String.valueOf(error));
-//
-//                    }
-//                }
-//        ) {
-//            @Override
-//            protected Map<String, String> getParams() {
-//                Map<String, String> params = new HashMap<String, String>();
-//
-//                //  params.put("imei", device_imei_no);
-//                params.put("myname", nname);
-//                params.put("mymobile", nphone);
-//                params.put("myemail", nemail);
-//                params.put("mypurpose", npurpose);
-//                params.put("mybloodgroup", nbloodgroup);
-//                params.put("mycity", ncity);
-//                params.put("myaddress", naddress);
-//                params.put("myduedate", nrequredate);
-////                params.put("working_fulltime",  radio_value);
-////                params.put("city_id", str_IssueTypeId_post);
-////                params.put("working_days", MAIN);
-////                params.put("start_time", strtime);
-////                params.put("end_time", endti);
-//
-//
-//
-//                Log.d("tag",params.toString());
-//                return params;
-//            }
-//        };
-//        queue.add(getRequest);
-//
-//    }
-
-
-
-
-
-
-
     @Override
     public boolean onSupportNavigateUp() {
         onBackPressed();

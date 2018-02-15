@@ -142,11 +142,13 @@ public class MainMapActivity extends FragmentActivity implements OnMapReadyCallb
     EditText mainsearch;
     ImageView pharmacyimage,hospitalimage,fab,fableft,shareimage,rating,profilepic,searchimage,donormain,dadd,notificatio_bar;
     ProgressBar progressBar;
+    ProgressDialog progrssdialog;
     LinearLayout donorll,hospitalll,pharmacyll,fableftll;
     public  NavigationView navigationView;
     LatLng latLng;
     SharedPreferences shre;
     Bitmap thumbnail;
+    MarkerOptions markerOptions;
     public static final String MyPREFERENCES = "MyPre" ;//file name
     public static final String MYLOCATIONPREF="MyLocationPrefereces";
     public static final String mylatlongkey="mylatlong";
@@ -704,9 +706,12 @@ public class MainMapActivity extends FragmentActivity implements OnMapReadyCallb
             @Override
             public void onClick(View v) {
                 setProgress(v.VISIBLE);
+                //ProgressDialog loading;
+                //loading = ProgressDialog.show(MainMapActivity.this, "Uploading...", null,true,true);
                 String Hospital="hospital";
                 //Log.d("onClick", "Button is Clicked");
                 mMap.clear();
+                //mCurrLocationMarker = mMap.addMarker(markerOptions);;
                 if (mCurrLocationMarker != null) {
 //                    mCurrLocationMarker.remove();
                     String url = getUrl(latitude, longitude, Hospital);
@@ -716,6 +721,7 @@ public class MainMapActivity extends FragmentActivity implements OnMapReadyCallb
                     Log.d("onClick", url);
                     GetNearbyPlacesData getNearbyPlacesData = new GetNearbyPlacesData();
                     getNearbyPlacesData.execute(DataTransfer);
+                    //loading.dismiss();
                     setProgress(v.GONE);
                     Toast.makeText(MainMapActivity.this,"Nearby Hospitals", Toast.LENGTH_LONG).show();
                 }
@@ -779,7 +785,7 @@ public class MainMapActivity extends FragmentActivity implements OnMapReadyCallb
         latitude = location.getLatitude();
         longitude = location.getLongitude();
          latLng = new LatLng(location.getLatitude(), location.getLongitude());
-        MarkerOptions markerOptions = new MarkerOptions();
+         markerOptions = new MarkerOptions();
         markerOptions.position(latLng);
         markerOptions.title("Current Position");
        // markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_MAGENTA));
@@ -1083,7 +1089,8 @@ public class MainMapActivity extends FragmentActivity implements OnMapReadyCallb
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         // error
-                        Toast.makeText(getApplicationContext(), "" + error, Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(getApplicationContext(), "" + error, Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), "NO Network Connection", Toast.LENGTH_SHORT).show();
                     }
                 }
         ){

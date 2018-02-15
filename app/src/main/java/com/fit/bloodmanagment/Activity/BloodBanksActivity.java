@@ -115,7 +115,7 @@ public class BloodBanksActivity extends AppCompatActivity implements ObservableS
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         // error
-                        Toast.makeText(getApplicationContext(), "" + error, Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), "No Network Connection", Toast.LENGTH_LONG).show();
                     }
                 }
                 ){

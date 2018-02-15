@@ -60,7 +60,7 @@ public class MyProfileActivity extends AppCompatActivity {
     String fullname,email,phone,address,age,city,gender,bloodgroup,status;
      Toolbar toolbar;
     String RESULT_OK="1";
-
+    Button updatebtn;
     //Image Loader
     private ImageLoader imageLoader;
 
@@ -85,7 +85,7 @@ public class MyProfileActivity extends AppCompatActivity {
         etgender=(EditText)findViewById(R.id.myPgender);
         etstatus=(EditText)findViewById(R.id.myPstatus);
         //profilePhoto = (NetworkImageView) findViewById(R.id.myimageview);
-        Button updatebtn=(Button)findViewById(R.id.myPsave);
+         updatebtn=(Button)findViewById(R.id.myPsave);
         textViewEmail.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -116,30 +116,12 @@ public class MyProfileActivity extends AppCompatActivity {
                 }
             }
         });
-       // Intent intent = getIntent();
+
         try {
             Bundle bundle = getIntent().getExtras();
             String profilename = bundle.getString("username");
             String profileemail = bundle.getString("email");
-            //String profileimage = bundle.getString("photo");
 
-
-           // etViewName.setText(profilename);
-            //textViewEmail.setText(profileemail);
-
-            //Initializing image loader
-//            imageLoader = CustomVolleyRequest.getInstance(this.getApplicationContext())
-//                    .getImageLoader();
-//
-//            imageLoader.get(profileimage,
-//                    ImageLoader.getImageListener(profilePhoto,
-//                            R.mipmap.ic_launcher,
-//                            R.mipmap.ic_launcher));
-
-//            //Loading image
-           // profilePhoto.setImageUrl(profileimage, imageLoader);
-
-            // setResult(Integer.parseInt("RESULT_OK"),intent);
         }
         catch (Exception e){
             Log.e("Error","Exception");
@@ -256,6 +238,7 @@ public class MyProfileActivity extends AppCompatActivity {
                 super.onPostExecute(aVoid);
                 Toast.makeText(MyProfileActivity.this, "Update Profile Successfully", Toast.LENGTH_LONG).show();
                 startActivity(new Intent(getApplicationContext(),MyProfileActivity.class));
+                finish();
 
 
             }
