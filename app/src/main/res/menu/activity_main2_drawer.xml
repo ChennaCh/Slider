@@ -10,7 +10,7 @@
                 android:id="@+id/groupnew">
                 <item
                     android:id="@+id/nav_donoradd"
-                    android:icon="@drawable/aboutus"
+                    android:icon="@drawable/donormain"
                     android:title="Be a Donor" />
             </group>
 
