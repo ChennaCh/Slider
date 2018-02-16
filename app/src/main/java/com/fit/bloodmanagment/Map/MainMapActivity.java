@@ -146,7 +146,7 @@ public class MainMapActivity extends FragmentActivity implements OnMapReadyCallb
     EditText mainsearch;
     ImageView pharmacyimage,hospitalimage,fab,fableft,shareimage,rating,profilepic,searchimage,donormain,dadd,notificatio_bar;
     ProgressBar progressBar;
-    ProgressDialog progrssdialog;
+    ProgressDialog progressdialog;
     LinearLayout donorll,hospitalll,pharmacyll,fableftll;
     public  NavigationView navigationView;
     LatLng latLng;
@@ -684,12 +684,15 @@ public class MainMapActivity extends FragmentActivity implements OnMapReadyCallb
                     checkConnection();
                     //displayMobileDataSettingsDialog(MainMapActivity.this);
                 }
+                   // progressdialog = new ProgressDialog(MainMapActivity.this,R.style.MyAlertDialogStyle);
                     String Pharmacy = "pharmacy";
 
                     // Log.d("onClick", "Button is Clicked");
                     mMap.clear();
                     if (mCurrLocationMarker != null) {
                         //  mCurrLocationMarker.remove();
+//                        progressdialog.setMessage("loading");
+//                        progressdialog.show();
                         String url = getUrl(latitude, longitude, Pharmacy);
                         Object[] DataTransfer = new Object[2];
                         DataTransfer[0] = mMap;
@@ -697,6 +700,7 @@ public class MainMapActivity extends FragmentActivity implements OnMapReadyCallb
                         Log.d("onClick", url);
                         GetNearbyPlacesData getNearbyPlacesData = new GetNearbyPlacesData();
                         getNearbyPlacesData.execute(DataTransfer);
+                       // progressdialog.dismiss();
                         Toast.makeText(MainMapActivity.this, "Nearby Pharmacies", Toast.LENGTH_LONG).show();
                     }
                 }

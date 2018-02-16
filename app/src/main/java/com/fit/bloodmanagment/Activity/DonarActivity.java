@@ -64,8 +64,7 @@ public class DonarActivity extends AppCompatActivity implements ObservableScroll
     Toolbar toolbar;
     String sq=null;
     ObservableScrollView mScrollView;
-//    Display display = getWindowManager().getDefaultDisplay();
-//    Point size = new Point();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,16 +76,17 @@ public class DonarActivity extends AppCompatActivity implements ObservableScroll
         setTitle(getString(R.string.Donors));
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-
         sq = getIntent().getStringExtra("sq");
-
-
         donorprogress = (ProgressBar) findViewById(R.id.donor_progress);
         donorprogress.getIndeterminateDrawable().setColorFilter(0xFFFF0000, android.graphics.PorterDuff.Mode.MULTIPLY);
         donorrecycle = (ObservableRecyclerView) findViewById(R.id.donorrecyclerView);
         donorrecycle.setScrollViewCallbacks(this);
 //        new BloodbankAsyncFetch().execute();
+
+
         listapi();
+
+
     }
 
 
@@ -243,4 +243,5 @@ public class DonarActivity extends AppCompatActivity implements ObservableScroll
         donorrecycle.setLayoutManager(new LinearLayoutManager(DonarActivity.this));
         donorprogress.setVisibility(View.GONE);
     }
+
 }
