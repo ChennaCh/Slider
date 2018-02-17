@@ -57,8 +57,7 @@ public class SiginInActivity extends AppCompatActivity{
     ProgressBar progressbar;
     int flag = 0;
     private Activity activity;
-    //Context mContext;
-    //http://www.fratelloinnotech.com/saveworld/getdonors.php
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -126,19 +125,9 @@ public class SiginInActivity extends AppCompatActivity{
                 LayoutInflater li = LayoutInflater.from(SiginInActivity.this);
                 View dialogView = li.inflate(R.layout.custom_dialog, null);
                 AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(SiginInActivity.this);
-                // set title
-                //alertDialogBuilder.setTitle("Forget Password?");
-                // set custom dialog icon
-                //alertDialogBuilder.setIcon(R.drawable.ic_launcher);
-                // set custom_dialog.xml to alertdialog builder
                 alertDialogBuilder.setView(dialogView);
                 userInput = (EditText) dialogView.findViewById(R.id.et_input);
                 emailinput=userInput.getText().toString();
-//                if(userInput.equals("")){
-//                    userInput.setFocusable(true);
-//                    userInput.setError("Enter Valid Mail Id");
-//                }
-
                 // set dialog message
                 alertDialogBuilder
                         .setCancelable(false)
@@ -149,10 +138,6 @@ public class SiginInActivity extends AppCompatActivity{
                                             //userInput.requestFocus();
                                             userInput.setError("Enter valid email");
                                         }
-                                        // get user input and set it to etOutput
-                                        // edit text
-                                        //result = (EditText) findViewById(R.id.editTextResult);
-                                       // etOutput.setText(userInput.getText());
                                         sendPasswordToMail();
                                         Toast.makeText(getApplicationContext(),"Send Password successfully",Toast.LENGTH_LONG).show();
 
@@ -173,22 +158,6 @@ public class SiginInActivity extends AppCompatActivity{
 
             }
         });
-
-//        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-//                .requestEmail()
-//                .build();
-//
-//        mGoogleApiClient = new GoogleApiClient.Builder(this)
-//                .enableAutoManage(this,this)
-//                .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
-//                .build();
-//        btnSignIn.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                signIn();
-//            }
-//        });
-//
     }
 
     private void sendPasswordToMail() {
@@ -251,9 +220,6 @@ public class SiginInActivity extends AppCompatActivity{
         String serverURL = API.getalldonorsurl;
         final String loginusername=edtuser.getText().toString();
         final String loginpwd=edtpass.getText().toString();
-
-
-
 
         final StringRequest getRequest = new StringRequest(Request.Method.GET, serverURL,
                 new com.android.volley.Response.Listener<String>() {
@@ -320,46 +286,6 @@ public class SiginInActivity extends AppCompatActivity{
         queue.add(getRequest);
     }
 
-//    private void signIn() {
-//        Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(mGoogleApiClient);
-//        startActivityForResult(signInIntent, RC_SIGN_IN);
-//    }
-//    private void handleSignInResult(GoogleSignInResult result) {
-//        Log.d(TAG, "handleSignInResult:" + result.isSuccess());
-//        if (result.isSuccess()) {
-//            // Signed in successfully, show authenticated UI.
-//            GoogleSignInAccount acct = result.getSignInAccount();
-//
-//            Log.e(TAG, "display name: " + acct.getDisplayName());
-//
-//            String personName = acct.getDisplayName();
-//            String personPhotoUrl = acct.getPhotoUrl().toString();
-//            String email = acct.getEmail();
-//
-//            Log.e(TAG, "Name: " + personName + ", email: " + email
-//                    + ", Image: " + personPhotoUrl);
-//            Intent myIntent = new Intent(SiginInActivity.this, MyProfileActivity.class);
-//            myIntent.putExtra("username", personName);
-//            myIntent.putExtra("email",email);
-//            myIntent.putExtra("photo",personPhotoUrl);
-//            startActivity(myIntent);
-//
-////            txtName.setText(personName);
-////            txtEmail.setText(email);
-////            Glide.with(getApplicationContext()).load(personPhotoUrl)
-////                    .thumbnail(0.5f)
-////                    .crossFade()
-////                    .diskCacheStrategy(DiskCacheStrategy.ALL)
-////                    .into(imgProfilePic);
-////
-////            updateUI(true);
-////        } else {
-////            // Signed out, show unauthenticated UI.
-////            updateUI(false);
-////        }
-//        }
-//    }
-
     private boolean isValidPassword(String Password) {
         String Password_pattren = "^+[0-9]{6}$";
         Pattern pattern = Pattern.compile(Password_pattren);
@@ -367,64 +293,6 @@ public class SiginInActivity extends AppCompatActivity{
         return matcher.matches();
 
     }
-//    @Override
-//    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-//        super.onActivityResult(requestCode, resultCode, data);
-//
-//        // Result returned from launching the Intent from GoogleSignInApi.getSignInIntent(...);
-//        if (requestCode == RC_SIGN_IN) {
-//            GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
-//            handleSignInResult(result);
-//        }
-//    }
-//    @Override
-//    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
-//        // An unresolvable error has occurred and Google APIs (including Sign-In) will not
-//        // be available.
-//        Log.d(TAG, "onConnectionFailed:" + connectionResult);
-//    }
-//    @Override
-//    public void onStart() {
-//        super.onStart();
-//        OptionalPendingResult<GoogleSignInResult> opr = Auth.GoogleSignInApi.silentSignIn(mGoogleApiClient);
-//        if (opr.isDone()) {
-//            // If the user's cached credentials are valid, the OptionalPendingResult will be "done"
-//            // and the GoogleSignInResult will be available instantly.
-//            Log.d(TAG, "Got cached sign-in");
-//            GoogleSignInResult result = opr.get();
-//            handleSignInResult(result);
-//        } else {
-//            // If the user has not previously signed in on this device or the sign-in has expired,
-//            // this asynchronous branch will attempt to sign in the user silently.  Cross-device
-//            // single sign-on will occur in this branch.
-//           // showProgressDialog();
-//            opr.setResultCallback(new ResultCallback<GoogleSignInResult>() {
-//                @Override
-//                public void onResult(GoogleSignInResult googleSignInResult) {
-//                   // hideProgressDialog();
-//                    handleSignInResult(googleSignInResult);
-//                }
-//            });
-//        }
-//    }
-
-//    private void showProgressDialog() {
-//        if (mProgressDialog == null) {
-//            mProgressDialog = new ProgressDialog(this);
-//            mProgressDialog.setMessage(getString(R.string.loading));
-//            mProgressDialog.setIndeterminate(true);
-//        }
-//
-//        mProgressDialog.show();
-//    }
-
-
-
-//    private void hideProgressDialog() {
-//        if (mProgressDialog != null && mProgressDialog.isShowing()) {
-//            mProgressDialog.hide();
-//        }
-//    }
 
     @Override
     public boolean onSupportNavigateUp() {

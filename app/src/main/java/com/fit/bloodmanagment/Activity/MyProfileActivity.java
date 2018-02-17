@@ -182,12 +182,7 @@ public class MyProfileActivity extends AppCompatActivity {
                                 etbloodgroup.setText(bloodgroup);
                                 etgender.setText(gender);
                                 etstatus.setText(status);
-//                        validation(name,pass);
-//                                donordata.add(new DonorBean(id,fullname,email,password,mobile,gender,address,bloodgroup,age,city));
-//                                donorListAdapter = new DonorListAdapter(DonarActivity.this,donordata);
-//                                donorrecycle.setAdapter(donorListAdapter);
-//                                donorrecycle.setLayoutManager(new LinearLayoutManager(DonarActivity.this));
-//                                donorprogress.setVisibility(View.GONE);
+
                             }
                         } catch (final JSONException e) {
                             Log.e(TAG, "Json parsing error: " + e.getMessage());

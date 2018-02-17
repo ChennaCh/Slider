@@ -191,25 +191,7 @@ public class UrgencyActivity extends AppCompatActivity {
             etrequiredate.setText(selectedDay + "/" + (selectedMonth + 1) + "/" + selectedYear);
         }
     };
-//    final DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
-//
-//        @Override
-//        public void onDateSet(DatePicker view, int year, int monthOfYear,
-//                              int dayOfMonth) {
-//            // TODO Auto-generated method stub
-//            myCalendar.set(Calendar.YEAR, year);
-//            myCalendar.set(Calendar.MONTH, monthOfYear);
-//            myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-//            view.setMinDate(System.currentTimeMillis() - 10000);
-//            updateLabel();
-//        }
-//
-//    };
-//    private void updateLabel() {
-//        String myFormat = "dd/MM/yyyy"; //In which you need put here
-//        SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
-//        etrequiredate.setText(sdf.format(myCalendar.getTime()));
-//    }
+
 
     private void insertToDatabase(final String getname,final String getphone,final String getemail,
                                   final String getaddress, final String getpurpose, final String getcity, final String getbloodgroup, final String getrequiredate) {

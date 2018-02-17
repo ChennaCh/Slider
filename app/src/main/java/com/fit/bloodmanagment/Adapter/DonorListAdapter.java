@@ -46,10 +46,6 @@ public class DonorListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         mailgif=(ImageView)itemView.findViewById(R.id.donorgifmail);
         callgif=(ImageView)itemView.findViewById(R.id.donorgifcall);
         final DonorListAdapter.MyHolder holder=new DonorListAdapter.MyHolder(itemView);
-
-
-
-
         return holder;
     }
     public  boolean isPermissionGranted() {
@@ -156,8 +152,6 @@ public class DonorListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
             age=(TextView)itemView.findViewById(R.id.donor_age);
         }
     }
-
-
     public void setFilter(ArrayList<DonorBean> newList){
             ArrayList arraylist=new ArrayList<>();
         arraylist.addAll(newList);

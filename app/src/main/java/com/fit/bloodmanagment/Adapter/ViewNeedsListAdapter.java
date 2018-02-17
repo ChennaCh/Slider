@@ -47,9 +47,6 @@ public class ViewNeedsListAdapter extends RecyclerView.Adapter<RecyclerView.View
         mailgif=(ImageView)itemView.findViewById(R.id.vneedgifmail);
         callgif=(ImageView)itemView.findViewById(R.id.vneedgifcall);
         final ViewNeedsListAdapter.MyHolder holder=new ViewNeedsListAdapter.MyHolder(itemView);
-
-
-
         return holder;
     }
     public  boolean isPermissionGranted() {
@@ -141,10 +138,8 @@ public class ViewNeedsListAdapter extends RecyclerView.Adapter<RecyclerView.View
     public int getItemCount() {
         return data.size();
     }
-
     private class MyHolder extends RecyclerView.ViewHolder{
-
-        TextView name,mobile,email,address,vpurpose,city,bloodgroup,vduedate;
+    TextView name,mobile,email,address,vpurpose,city,bloodgroup,vduedate;
 
         public MyHolder(View itemView) {
             super(itemView);

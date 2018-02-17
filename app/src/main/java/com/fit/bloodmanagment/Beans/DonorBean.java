@@ -31,8 +31,6 @@ public class DonorBean {
 
     }
 
-
-
     public String getDid() {
         return did;
     }

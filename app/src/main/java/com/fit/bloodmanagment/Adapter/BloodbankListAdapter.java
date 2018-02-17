@@ -63,48 +63,6 @@ public class BloodbankListAdapter extends RecyclerView.Adapter<RecyclerView.View
         mailgif=(ImageView)itemView.findViewById(R.id.gifmail);
         callgif=(ImageView)itemView.findViewById(R.id.gifcall);
         final MyHolder holder=new MyHolder(itemView);
-
-
-
-
-
-
-
-//        LayoutInflater mInflater = (LayoutInflater)
-//                context.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
-//        view = mInflater.inflate(R.layout.view_faculty_details, null);
-
-       // ViewHolder holder;
-      //  holder = new ViewHolder();
-
-//        holder.name = (TextView) itemView.findViewById(R.id.get_name);
-//       // holder.branch = (TextView) view.findViewById(R.id.facu_branch);
-//        holder.phone = (TextView) itemView.findViewById(R.id.get_phone);
-//        holder.email = (TextView) itemView.findViewById(R.id.get_mail);
-//        holder.feedback = (TextView) itemView.findViewById(R.id.get_feedback);
-//        if (adapterItems.get(postion).getGname() != null){
-//            holder.name.setText(adapterItems.get(postion).getGname());
-//        }
-//        if (adapterItems.get(postion).getGmobile() != null){
-//            holder.mobile.setText(adapterItems.get(postion).getGmobile());
-//        }
-//        if (adapterItems.get(postion).getGbranch() != null){
-//            holder.branch.setText(adapterItems.get(postion).getGbranch());
-//        }
-//        if (adapterItems.get(postion).getGqualification() != null){
-//            holder.qualificaion.setText(adapterItems.get(postion).getGqualification());
-//        }
-//        if (adapterItems.get(postion).getGgender() != null){
-//            String ch= adapterItems.get(postion).getGgender().toString();
-//            if (ch.equals("MALE") || ch.equals("male")){
-//                holder.getimage.setImageResource(R.drawable.men);
-//            }
-//            else {
-//                holder.getimage.setImageResource(R.drawable.women);
-//            }
-//        }
-
-
         return holder;
     }
     public  boolean isPermissionGranted() {

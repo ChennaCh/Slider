@@ -73,11 +73,6 @@ public class SignUpActivity extends AppCompatActivity  {
     TextView regerror;
     //Signin button
     private SignInButton signInButton;
-    //Signing Options
-    //private GoogleSignInOptions gso;
-    //google api client
-    //private GoogleApiClient mGoogleApiClient;
-    //Signin constant to check the activity result
     private int RC_SIGN_IN = 100;
     //TextViews
     private TextView textViewName;
@@ -164,14 +159,6 @@ public class SignUpActivity extends AppCompatActivity  {
                 {
                     Toast.makeText(getApplicationContext(),"Error in Registration",Toast.LENGTH_LONG).show();
                 }
-                // registerapicall();
-//                mainmapsactivity.navigationView=(NavigationView) findViewById(R.id.nav_view);
-//                //mainmapsactivity.navigationView.setNavigationItemSelectedListener(this);
-//                View header  =  mainmapsactivity.navigationView.getHeaderView(0);
-////                loginbtn = (Button) header.findViewById(R.id.signin_btn);
-////                signupbtn = (Button) header.findViewById(R.id.signup_btn);
-//                header.findViewById(R.id.signin_btn).setVisibility(View.INVISIBLE);
-//                header.findViewById(R.id.signup_btn).setVisibility(View.INVISIBLE);
             }
         });
     }
@@ -222,21 +209,6 @@ public class SignUpActivity extends AppCompatActivity  {
                 sendPostReqAsyncTask.execute(getname, getpassword, getage, getphone, getemail, getaddress, getbloodgroup, getgender, getcity);
             }
 
-
-            //    private void updateLabel() {
-//        String myFormat = "MM/dd/yy"; //In which you need put here
-//        SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
-//
-//        DOB.setText(sdf.format(myCalendar.getTime()));
-//    }
-//    private boolean isValidName(String name) {
-//
-//        name = "^[a-zA-Z\\s]{3,30}$";
-//
-//        Pattern pattern = Pattern.compile(name);
-//        Matcher matcher = pattern.matcher(name);
-//        return matcher.matches();
-//    }
             private boolean isValidEmail(String email) {
                 String EMAIL_PATTERN = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
                         + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";

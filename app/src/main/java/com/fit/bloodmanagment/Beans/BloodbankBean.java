@@ -74,20 +74,4 @@ public class BloodbankBean {
         this.bbcity = bbcity;
     }
 
-//    public String getGmobile() {
-//        return gmobile;
-//    }
-//
-//    public void setGmobile(String gmobile) {
-//        this.gmobile = gmobile;
-//    }
-//
-//    public String getGemail() {
-//        return gemail;
-//    }
-//
-//    public void setGemail(String gemail) {
-//        this.gemail = gemail;
-//    }
-
 }
