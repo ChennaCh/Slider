@@ -71,6 +71,8 @@ public class ViewNeedsListAdapter extends RecyclerView.Adapter<RecyclerView.View
         this.context=context;
         this.data=data1;
     }
+public ViewNeedsListAdapter()
+{}
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {

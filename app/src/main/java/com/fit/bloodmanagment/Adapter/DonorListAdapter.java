@@ -71,6 +71,10 @@ public class DonorListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         this.data=data1;
     }
 
+    public DonorListAdapter()
+    {
+
+    }
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
         myHolder= (DonorListAdapter.MyHolder) holder;
