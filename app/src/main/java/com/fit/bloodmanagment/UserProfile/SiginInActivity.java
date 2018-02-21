@@ -122,42 +122,89 @@ public class SiginInActivity extends AppCompatActivity{
             @Override
             public void onClick(View view) {
                 // inflate alert dialog xml
+                 showAlertDialog();
+//                LayoutInflater li = LayoutInflater.from(SiginInActivity.this);
+//                final View dialogView = li.inflate(R.layout.custom_dialog, null);
+//                userInput = (EditText) dialogView.findViewById(R.id.et_input);
+//                emailinput=userInput.getText().toString();
+//                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(SiginInActivity.this);
+//                alertDialogBuilder.setView(dialogView);
+//                // set dialog message
+//                alertDialogBuilder
+//                        .setCancelable(false)
+//                        .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+//                                    public void onClick(DialogInterface dialog,int id) {
+//                                        if (!isValidEmail(emailinput)||userInput.equals("")) {
+//                                            userInput.setError("Enter valid email");
+//                                            userInput.setFocusable(true);
+//                                        }
+//
+//                                        else {
+//                                            sendPasswordToMail();
+//                                            Toast.makeText(getApplicationContext(), "Send Password successfully", Toast.LENGTH_LONG).show();
+//                                        }
+//
+//                                    }
+//                                })
+//                        .setNegativeButton("Cancel",
+//                                new DialogInterface.OnClickListener() {
+//                                    public void onClick(DialogInterface dialog,
+//                                                        int id) {
+//                                        dialog.cancel();
+//                                    }
+//                                });
+//                // create alert dialog
+//                AlertDialog alertDialog = alertDialogBuilder.create();
+//                // show it
+//                alertDialog.show();
+//
+            }
+       });
+    }
 
-                LayoutInflater li = LayoutInflater.from(SiginInActivity.this);
-                final View dialogView = li.inflate(R.layout.custom_dialog, null);
-                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(SiginInActivity.this);
-                alertDialogBuilder.setView(dialogView);
-                // set dialog message
-                alertDialogBuilder
-                        .setCancelable(false)
-                        .setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                                    public void onClick(DialogInterface dialog,int id) {
-                                        userInput = (EditText) dialogView.findViewById(R.id.et_input);
-                                        emailinput=userInput.getText().toString();
-                                        if (!isValidEmail(emailinput)||userInput.equals("")) {
-                                            userInput.setError("Enter valid email");
-                                            userInput.setFocusable(true);
-                                        }else {
+    private void showAlertDialog() {
+        View view = getLayoutInflater().inflate(R.layout.custom_dialog, null);
+        userInput = (EditText) view.findViewById(R.id.et_input);
+
+        final AlertDialog alertDialog = new AlertDialog.Builder(SiginInActivity.this)
+                .setView(view)
+                .setPositiveButton("Ok", null)
+                .setNegativeButton("Cancel", null)
+                .create();
+
+        alertDialog.setOnShowListener(new DialogInterface.OnShowListener() {
+            @Override
+            public void onShow(final DialogInterface dialog) {
+
+                Button buttonPositive = ((AlertDialog) dialog).getButton(DialogInterface.BUTTON_POSITIVE);
+                buttonPositive.setOnClickListener(new View.OnClickListener() {
+
+                    @Override
+                    public void onClick(View view) {
+                        emailinput=userInput.getText().toString();
+                        if (emailinput.equals("")) {
+                            userInput.setError("Enter valid email");
+                            userInput.setFocusable(true);
+                            } else {
                                             sendPasswordToMail();
                                             Toast.makeText(getApplicationContext(), "Send Password successfully", Toast.LENGTH_LONG).show();
+                                            dialog.cancel();
                                         }
+                    }
+                    });
 
-                                    }
-                                })
-                        .setNegativeButton("Cancel",
-                                new DialogInterface.OnClickListener() {
-                                    public void onClick(DialogInterface dialog,
-                                                        int id) {
-                                        dialog.cancel();
-                                    }
-                                });
-                // create alert dialog
-                AlertDialog alertDialog = alertDialogBuilder.create();
-                // show it
-                alertDialog.show();
+                    Button buttonNegative = ((AlertDialog) dialog).getButton(DialogInterface.BUTTON_NEGATIVE);
+            buttonNegative.setOnClickListener(new View.OnClickListener() {
 
-            }
-        });
+                        @Override
+                        public void onClick(View view) {
+                            // Do something when button negative clicked
+                            dialog.cancel();
+                        }
+                    });
+                }
+            });
+        alertDialog.show();
     }
 
     private void sendPasswordToMail() {
