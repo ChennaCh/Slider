@@ -332,7 +332,7 @@ public class MainMapActivity extends FragmentActivity implements OnMapReadyCallb
                     i.setType("text/plain");
                     i.putExtra(Intent.EXTRA_SUBJECT, "My application name");
                     String shareapp = "\nLet me recommend you this application\n\n";
-                    shareapp = shareapp + "https://play.google.com/store/apps/details?id=com.whatsapp&hl=en \n";
+                    shareapp = shareapp + "https://play.google.com/store/apps/details?id=com.fit.bloodmanagement";
                     i.putExtra(Intent.EXTRA_TEXT, shareapp);
                     startActivity(Intent.createChooser(i, "Choose One"));
                 } catch(Exception e) {
