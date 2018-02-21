@@ -78,6 +78,7 @@ public class SiginInActivity extends AppCompatActivity{
         strpassword=edtpass.getText().toString();
         login=(Button)findViewById(R.id.signin);
         setextview.setText("");
+
         signup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -123,24 +124,23 @@ public class SiginInActivity extends AppCompatActivity{
                 // inflate alert dialog xml
 
                 LayoutInflater li = LayoutInflater.from(SiginInActivity.this);
-                View dialogView = li.inflate(R.layout.custom_dialog, null);
+                final View dialogView = li.inflate(R.layout.custom_dialog, null);
                 AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(SiginInActivity.this);
                 alertDialogBuilder.setView(dialogView);
-                userInput = (EditText) dialogView.findViewById(R.id.et_input);
-                emailinput=userInput.getText().toString();
                 // set dialog message
                 alertDialogBuilder
                         .setCancelable(false)
-                        .setPositiveButton("OK",
-                                new DialogInterface.OnClickListener() {
+                        .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                                     public void onClick(DialogInterface dialog,int id) {
+                                        userInput = (EditText) dialogView.findViewById(R.id.et_input);
+                                        emailinput=userInput.getText().toString();
                                         if (!isValidEmail(emailinput)||userInput.equals("")) {
-                                            //userInput.requestFocus();
                                             userInput.setError("Enter valid email");
+                                            userInput.setFocusable(true);
+                                        }else {
+                                            sendPasswordToMail();
+                                            Toast.makeText(getApplicationContext(), "Send Password successfully", Toast.LENGTH_LONG).show();
                                         }
-                                        sendPasswordToMail();
-                                        Toast.makeText(getApplicationContext(),"Send Password successfully",Toast.LENGTH_LONG).show();
-
 
                                     }
                                 })
