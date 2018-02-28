@@ -46,6 +46,7 @@ import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
+import org.apache.http.util.EntityUtils;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.w3c.dom.Text;
@@ -68,6 +69,7 @@ public class SignUpActivity extends AppCompatActivity  {
     EditText  etname,etemail,etpassword,etphone,etaddress,etage,etcity;
     RadioButton radiogender;
     Button register;
+    String rescode;
     Spinner spinnerbloodgroup;
     String fullname,email,password,phone,address,age,city,gender,bloodgroup;
     TextView regerror;
@@ -166,9 +168,9 @@ public class SignUpActivity extends AppCompatActivity  {
 
             private void registerapicall(final String getname, final String getpassword, final String getphone,
                                          final String getemail, final String getaddress, final String getgender, final String getbloodgroup, final String getage, final String getcity) {
-                class SendPostReqAsyncTask extends AsyncTask<Object, Object, Void> {
+                class SendPostReqAsyncTask extends AsyncTask<Object, Object, String> {
                     @Override
-                    protected Void doInBackground(Object... strings) {
+                    protected String doInBackground(Object... strings) {
                         List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
                         nameValuePairs.add(new BasicNameValuePair("fullname", getname));
                         nameValuePairs.add(new BasicNameValuePair("password", getpassword));
@@ -185,24 +187,42 @@ public class SignUpActivity extends AppCompatActivity  {
                             httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
                             HttpResponse response = httpClient.execute(httpPost);
                             HttpEntity entity = response.getEntity();
+                            rescode = EntityUtils.toString(entity);
+                           // int rescode1 =  response.getStatusLine().getStatusCode();
+                            //rescode = res;
+
+
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
 
-                        return null;
+                        return rescode;
                     }
 
                     @Override
-                    protected void onPostExecute(Void aVoid) {
-                        super.onPostExecute(aVoid);
-                        Toast.makeText(SignUpActivity.this, "For your generosity, I thank you", Toast.LENGTH_LONG).show();
-                        etname.setText("");
-                        etemail.setText("");
-                        etphone.setText("");
-                        etaddress.setText("");
-                        etcity.setText("");
-                        etage.setText("");
-                        etpassword.setText("");
+                    protected void onPostExecute(String code) {
+                        super.onPostExecute(code);
+                        try {
+                            JSONObject res=new JSONObject(code);
+                            String op=res.getString("result");
+                            if(op.equals("success")) {
+                                Toast.makeText(SignUpActivity.this, "For your generosity, I thank you", Toast.LENGTH_LONG).show();
+                                etname.setText("");
+                                etemail.setText("");
+                                etphone.setText("");
+                                etaddress.setText("");
+                                etcity.setText("");
+                                etage.setText("");
+                                etpassword.setText("");
+                            }
+                            else
+                            {
+                                Toast.makeText(SignUpActivity.this, "Sorry! Email already exists, Registration not success", Toast.LENGTH_LONG).show();
+                                //etemail.setError("Email already exists");
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
                     }
                 }
                 SendPostReqAsyncTask sendPostReqAsyncTask = new SendPostReqAsyncTask();

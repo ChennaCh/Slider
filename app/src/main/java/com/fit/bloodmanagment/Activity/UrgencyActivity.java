@@ -38,6 +38,7 @@ import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
+import org.apache.http.util.EntityUtils;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -59,6 +60,7 @@ public class UrgencyActivity extends AppCompatActivity {
     EditText  etname,etemail,etphone,etaddress,etpurpose,etcity,etrequiredate;
     Spinner bloodgroupspinner;
     Button sendrequestbtn;
+    String rescode;
     Calendar myCalendar = Calendar.getInstance();
     //DatePickerDialog datePickerDialog=new DatePickerDialog();
     private String nname, nemail, nphone,naddress,npurpose,ncity,nbloodgroup,nrequredate;
@@ -195,9 +197,9 @@ public class UrgencyActivity extends AppCompatActivity {
 
     private void insertToDatabase(final String getname,final String getphone,final String getemail,
                                   final String getaddress, final String getpurpose, final String getcity, final String getbloodgroup, final String getrequiredate) {
-        class SendPostReqAsyncTask extends AsyncTask<Object, Object, Void> {
+        class SendPostReqAsyncTask extends AsyncTask<Object, Object, String> {
             @Override
-            protected Void doInBackground(Object... strings) {
+            protected String doInBackground(Object... strings) {
                 // name,email,mobile,address,bloodgroup,city,purpose,duedate
                 List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
                 nameValuePairs.add(new BasicNameValuePair("name", getname));
@@ -215,24 +217,39 @@ public class UrgencyActivity extends AppCompatActivity {
                     httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
                     HttpResponse response = httpClient.execute(httpPost);
                     HttpEntity entity = response.getEntity();
+                    rescode = EntityUtils.toString(entity);
+
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
 
-                return null;
+                return rescode;
             }
 
             @Override
-            protected void onPostExecute(Void aVoid) {
-                super.onPostExecute(aVoid);
-                Toast.makeText(UrgencyActivity.this, "Request Send Successfully", Toast.LENGTH_LONG).show();
-                etname.setText("");
-                etemail.setText("");
-                etphone.setText("");
-                etaddress.setText("");
-                etpurpose.setText("");
-                etcity.setText("");
-                etrequiredate.setText("");
+            protected void onPostExecute(String code) {
+                super.onPostExecute(code);
+                try {
+                    JSONObject res=new JSONObject(code);
+                    String op=res.getString("result");
+                    if(op.equals("success")) {
+                        Toast.makeText(UrgencyActivity.this, "Request Send Successfully", Toast.LENGTH_LONG).show();
+                        etname.setText("");
+                        etemail.setText("");
+                        etphone.setText("");
+                        etaddress.setText("");
+                        etpurpose.setText("");
+                        etcity.setText("");
+                        etrequiredate.setText("");
+                    }
+                    else
+                    {
+                        Toast.makeText(UrgencyActivity.this, "Sorry! Request Not Send successfully", Toast.LENGTH_LONG).show();
+                        //etemail.setError("Email already exists");
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
             }
         }
         SendPostReqAsyncTask sendPostReqAsyncTask = new SendPostReqAsyncTask();
