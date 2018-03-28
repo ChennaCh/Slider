@@ -1022,7 +1022,7 @@ public class MainMapActivity extends FragmentActivity implements OnMapReadyCallb
                                     markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED));
                                     //move map camera
                                     mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
-                                    mMap.animateCamera(CameraUpdateFactory.zoomTo(12));
+                                    mMap.animateCamera(CameraUpdateFactory.zoomTo(10));
                                 }
                             }
                         } catch (final JSONException e) {
