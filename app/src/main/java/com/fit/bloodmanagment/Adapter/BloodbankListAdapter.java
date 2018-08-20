@@ -50,7 +50,7 @@ public class BloodbankListAdapter extends RecyclerView.Adapter<RecyclerView.View
     Context context;
     BloodBanksActivity bbactivity=new BloodBanksActivity();
     List<BloodbankBean> data= Collections.emptyList();
-    ImageView mapgifimage,mailgif,callgif;
+    //ImageView mapgifimage,mailgif,callgif;
     SharedPreferences shre;
     MyHolder myHolder;
 
@@ -59,9 +59,9 @@ public class BloodbankListAdapter extends RecyclerView.Adapter<RecyclerView.View
        // View view= Inflater.inflate(R.layout.admin_view_feedback, parent,false);
         View itemView = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.bloodbank_view, parent, false);
-        mapgifimage=(ImageView)itemView.findViewById(R.id.gifmappin);
-        mailgif=(ImageView)itemView.findViewById(R.id.gifmail);
-        callgif=(ImageView)itemView.findViewById(R.id.gifcall);
+//        mapgifimage=(ImageView)itemView.findViewById(R.id.gifmappin);
+//        mailgif=(ImageView)itemView.findViewById(R.id.gifmail);
+//        callgif=(ImageView)itemView.findViewById(R.id.gifcall);
         final MyHolder holder=new MyHolder(itemView);
         return holder;
     }
@@ -101,43 +101,42 @@ public class BloodbankListAdapter extends RecyclerView.Adapter<RecyclerView.View
         myHolder.address.setText(current.getBaddress());
         myHolder.landline.setText(current.getBlandline());
         myHolder.city.setText(current.getBcity());
-        mailgif.setOnClickListener(new View.OnClickListener() {
+        myHolder.mailgif.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 try {
                     String mail =  data.get(position).getBemail();
-                  //  Toast.makeText(context, "mail."+mail, Toast.LENGTH_SHORT).show();
-
-
-                    Intent i = new Intent(Intent.ACTION_SENDTO);
-                    i.setType("message/rfc822");
-                    i.setData(Uri.parse("mailto:"+ mail));
-                   // i.putExtra(Intent.EXTRA_EMAIL  , new String[]{"recipient@example.com"});
-                    i.putExtra(Intent.EXTRA_SUBJECT, "Urgent Requirement of Blood");
-                    i.putExtra(Intent.EXTRA_TEXT   , "hi, Please send the complete details about blood avaible status");
-                    i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    context.startActivity(Intent.createChooser(i, "Send mail..."));
+                    Toast.makeText(context, mail, Toast.LENGTH_SHORT).show();
+//                    Intent i = new Intent(Intent.ACTION_SENDTO);
+//                    i.setType("message/rfc822");
+//                    i.setData(Uri.parse("mailto:"+ mail));
+//                   // i.putExtra(Intent.EXTRA_EMAIL  , new String[]{"recipient@example.com"});
+//                    i.putExtra(Intent.EXTRA_SUBJECT, "Urgent Requirement of Blood");
+//                    i.putExtra(Intent.EXTRA_TEXT   , "hi, Please send the complete details about blood avaible status");
+//                    i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//                    context.startActivity(Intent.createChooser(i, "Send mail..."));
                 } catch (android.content.ActivityNotFoundException ex) {
                     Toast.makeText(context, "There are no email clients installed.", Toast.LENGTH_SHORT).show();
                 }
             }
         });
 
-        callgif.setOnClickListener(new View.OnClickListener() {
+        myHolder.callgif.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if(isPermissionGranted()){
                     String mobile =  data.get(position).getBmobile();
-                    Intent intent = new Intent(Intent.ACTION_CALL);
-                    intent.setData(Uri.parse("tel:" + mobile));
-                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    Intent chooser  = Intent.createChooser(intent, "Complete Action using..");
-                    context.startActivity(chooser);
+                    Toast.makeText(context, mobile, Toast.LENGTH_SHORT).show();
+//                    Intent intent = new Intent(Intent.ACTION_CALL);
+//                    intent.setData(Uri.parse("tel:" + mobile));
+//                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//                    Intent chooser  = Intent.createChooser(intent, "Complete Action using..");
+//                    context.startActivity(chooser);
                 }
             }
         });
 
-        mapgifimage.setOnClickListener(new View.OnClickListener() {
+        myHolder.mapgifimage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent=new Intent(context, BloodbanksMapActivity.class);
@@ -156,6 +155,7 @@ public class BloodbankListAdapter extends RecyclerView.Adapter<RecyclerView.View
     private class MyHolder extends RecyclerView.ViewHolder{
 
         TextView name,mobile,landline,email,address,city;
+        ImageView mapgifimage,mailgif,callgif;
 
         public MyHolder(View itemView) {
             super(itemView);
@@ -165,6 +165,9 @@ public class BloodbankListAdapter extends RecyclerView.Adapter<RecyclerView.View
             name = (TextView) itemView.findViewById(R.id.get_name);
             address = (TextView) itemView.findViewById(R.id.get_address);
             city=(TextView)itemView.findViewById(R.id.get_city);
+            mapgifimage=(ImageView)itemView.findViewById(R.id.gifmappin);
+            mailgif=(ImageView)itemView.findViewById(R.id.gifmail);
+            callgif=(ImageView)itemView.findViewById(R.id.gifcall);
         }
     }
 

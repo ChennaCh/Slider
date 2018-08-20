@@ -39,7 +39,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:gravity="center"
-                android:text="Welcome to Save World App"
+                android:text="Welcome to Blood Donors App"
                 android:textColor="#ca4969"
                 android:textSize="20dp"
                 android:textStyle="bold" />

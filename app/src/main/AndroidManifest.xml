@@ -15,7 +15,6 @@
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
-
     <!-- To use account credentials -->
     <uses-permission android:name="android.permission.USE_CREDENTIALS" />
 
@@ -32,6 +31,7 @@
                 <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
             </intent-filter>
         </receiver>
+
         <activity android:name=".Slider.WelcomeActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -106,6 +106,8 @@
         <activity
             android:name=".Map.ViewNeedsMapActivity"
             android:label="@string/title_activity_view_needs_map" />
+        <activity android:name=".Activity.AddBloodCamp" />
+        <activity android:name=".Activity.ViewBloodActivity"></activity>
     </application>
 
 </manifest>

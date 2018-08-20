@@ -28,6 +28,7 @@
             android:id="@+id/nav_bloodbanks"
             android:icon="@drawable/bloodbanks"
             android:title="@string/BloodBanks" />
+
         </group>
             <group android:checkableBehavior="single"
                 android:id="@+id/group4">
@@ -35,6 +36,20 @@
                     android:id="@+id/nav_request"
                     android:icon="@drawable/emergencyicon"
                     android:title="@string/Request" />
+            </group>
+            <group android:checkableBehavior="single"
+                android:id="@+id/group9">
+                <item
+                    android:id="@+id/nav_addbloodcamp"
+                    android:icon="@drawable/bloodcamp"
+                    android:title="Add Blood Camp" />
+            </group>
+            <group android:checkableBehavior="single"
+                android:id="@+id/group10">
+                <item
+                    android:id="@+id/nav_viewbloodcamp"
+                    android:icon="@drawable/viewneeds"
+                    android:title="View Blood Camp" />
             </group>
             <group android:checkableBehavior="single"
                 android:id="@+id/group5">
@@ -71,8 +86,7 @@
             android:id="@+id/nav_myprofile"
             android:icon="@drawable/person"
             android:title="@string/Myprofile"
-            android:visible="false"
-           />
+            android:visible="false" />
         </group>
         <item
             android:id="@+id/nav_logout"

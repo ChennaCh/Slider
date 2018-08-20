@@ -98,6 +98,9 @@
             android:layout_marginRight="50dp">
 
             <EditText
+                android:inputType="text"
+                android:imeOptions="actionSearch"
+                android:singleLine="true"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:id="@+id/mainsearch"
@@ -105,10 +108,10 @@
                 android:layout_weight="0.3"
                 android:drawableLeft="@drawable/bloods"
                 android:drawablePadding="10dp"
-                android:textSize="11dp"
+                android:textSize="12sp"
                 android:hint="Search By Location or Blood Group"
                 android:backgroundTint="@android:color/transparent"
-                android:cursorVisible="false" />
+                android:cursorVisible="true" />
 
             <ImageView
                 android:id="@+id/searchimage"
@@ -127,7 +130,6 @@
             android:layout_height="match_parent"
             android:layout_marginBottom="50dp"
             android:gravity="bottom"
-
             android:orientation="horizontal"
             android:paddingBottom="5dp"
             android:weightSum="5.0">

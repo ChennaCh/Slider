@@ -38,11 +38,13 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.util.Base64;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.GridView;
@@ -58,6 +60,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.fit.bloodmanagment.Activity.AboutUsActivity;
+import com.fit.bloodmanagment.Activity.AddBloodCamp;
 import com.fit.bloodmanagment.Activity.BloodBanksActivity;
 import com.fit.bloodmanagment.Activity.DonarActivity;
 import com.fit.bloodmanagment.Activity.FaqsActivity;
@@ -65,6 +68,7 @@ import com.fit.bloodmanagment.Activity.MyProfileActivity;
 import com.fit.bloodmanagment.Activity.PrecautionsActivity;
 import com.fit.bloodmanagment.Activity.PrivacyPolicyActivity;
 import com.fit.bloodmanagment.Activity.UrgencyActivity;
+import com.fit.bloodmanagment.Activity.ViewBloodActivity;
 import com.fit.bloodmanagment.Activity.ViewNeedsActivity;
 import com.fit.bloodmanagment.Adapter.DonorListAdapter;
 import com.fit.bloodmanagment.Beans.DonorBean;
@@ -157,8 +161,6 @@ public class MainMapActivity extends FragmentActivity implements OnMapReadyCallb
     public static final String MYLOCATIONPREF="MyLocationPrefereces";
     public static final String mylatlongkey="mylatlong";
     public static final String  key = "nameKey";
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -304,6 +306,28 @@ public class MainMapActivity extends FragmentActivity implements OnMapReadyCallb
             }
         });
 
+        mainsearch.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
+                if (i == EditorInfo.IME_ACTION_SEARCH) {
+                    String name=mainsearch.getText().toString().trim();
+                    if(name.equals(""))
+                    {
+                        Toast.makeText(MainMapActivity.this, "Searchbox can't be empty", Toast.LENGTH_SHORT).show();
+                    }
+                    else
+                    {
+                    Toast.makeText(MainMapActivity.this, "Results for "+name, Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(getApplicationContext(),DonarActivity.class);
+                    intent.putExtra("sq",name);
+                    startActivity(intent);
+                    return true;
+                }
+                }
+                return false;
+            }
+        });
+
         searchimage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -319,7 +343,6 @@ public class MainMapActivity extends FragmentActivity implements OnMapReadyCallb
                     Intent i = new Intent(getApplicationContext(),DonarActivity.class);
                     i.putExtra("sq",name);
                     startActivity(i);
-
                 }
             }
         });
@@ -640,6 +663,13 @@ public class MainMapActivity extends FragmentActivity implements OnMapReadyCallb
         }else if(id==R.id.nav_logout){
             Intent intent = new Intent(getApplicationContext(), MainMapActivity.class);
             getApplicationContext().getSharedPreferences("userdetails", 0).edit().clear().commit();
+            startActivity(intent);
+        }else if(id==R.id.nav_addbloodcamp){
+            Intent intent = new Intent(MainMapActivity.this, AddBloodCamp.class);
+            startActivity(intent);
+        }
+        else if(id==R.id.nav_viewbloodcamp){
+            Intent intent = new Intent(MainMapActivity.this, ViewBloodActivity.class);
             startActivity(intent);
         }
 

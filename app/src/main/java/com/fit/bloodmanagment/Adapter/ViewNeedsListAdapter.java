@@ -35,7 +35,6 @@ public class ViewNeedsListAdapter extends RecyclerView.Adapter<RecyclerView.View
     Context context;
     //DonarActivity donarActivity=new DonarActivity();
     List<ViewNeedsBean> data= Collections.emptyList();
-    ImageView mapgifimage,mailgif,callgif;
     ViewNeedsListAdapter.MyHolder myHolder;
 
     @Override
@@ -43,9 +42,6 @@ public class ViewNeedsListAdapter extends RecyclerView.Adapter<RecyclerView.View
         // View view= Inflater.inflate(R.layout.admin_view_feedback, parent,false);
         View itemView = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.activity_view_needs_list_adapter, parent, false);
-        mapgifimage=(ImageView)itemView.findViewById(R.id.vneedgifmap);
-        mailgif=(ImageView)itemView.findViewById(R.id.vneedgifmail);
-        callgif=(ImageView)itemView.findViewById(R.id.vneedgifcall);
         final ViewNeedsListAdapter.MyHolder holder=new ViewNeedsListAdapter.MyHolder(itemView);
         return holder;
     }
@@ -89,7 +85,7 @@ public ViewNeedsListAdapter()
         myHolder.vduedate.setText(current.getNduedate());
 
 
-        mailgif.setOnClickListener(new View.OnClickListener() {
+        myHolder.mailgif.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 try {
@@ -111,7 +107,7 @@ public ViewNeedsListAdapter()
             }
         });
 
-        callgif.setOnClickListener(new View.OnClickListener() {
+        myHolder.callgif.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if(isPermissionGranted()){
@@ -125,7 +121,7 @@ public ViewNeedsListAdapter()
             }
         });
 
-        mapgifimage.setOnClickListener(new View.OnClickListener() {
+        myHolder.mapgifimage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent=new Intent(context, BloodbanksMapActivity.class);
@@ -142,6 +138,7 @@ public ViewNeedsListAdapter()
     }
     private class MyHolder extends RecyclerView.ViewHolder{
     TextView name,mobile,email,address,vpurpose,city,bloodgroup,vduedate;
+        ImageView mapgifimage,mailgif,callgif;
 
         public MyHolder(View itemView) {
             super(itemView);
@@ -153,6 +150,9 @@ public ViewNeedsListAdapter()
             city=(TextView)itemView.findViewById(R.id.vneed_city);
             vpurpose=(TextView)itemView.findViewById(R.id.vneed_purpose);
             vduedate=(TextView)itemView.findViewById(R.id.vneed_duedate);
+            mapgifimage=(ImageView)itemView.findViewById(R.id.vneedgifmap);
+            mailgif=(ImageView)itemView.findViewById(R.id.vneedgifmail);
+            callgif=(ImageView)itemView.findViewById(R.id.vneedgifcall);
         }
     }
 

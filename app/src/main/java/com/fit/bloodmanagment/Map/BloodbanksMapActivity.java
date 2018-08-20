@@ -230,7 +230,7 @@ public class BloodbanksMapActivity extends FragmentActivity implements OnMapRead
         }
     }
 
-    private String getUrl(LatLng origin, LatLng dest) {
+        private String getUrl(LatLng origin, LatLng dest) {
 
         // Origin of route
         String str_origin = "origin=" + origin.latitude + "," + origin.longitude;

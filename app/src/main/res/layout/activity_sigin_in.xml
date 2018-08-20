@@ -185,7 +185,7 @@
 
            <TextView
                 android:id="@+id/sign_in_button"
-               android:text="Be a Donor - Save World"
+               android:text="Be a Donor - Save Life"
                android:textColor="#ffffff"
                android:textSize="20dp"
                android:textStyle="bold"

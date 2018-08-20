@@ -97,7 +97,7 @@ public class BloodBanksActivity extends AppCompatActivity implements ObservableS
                                 String email = c.getString("email");
                                 String address = c.getString("address");
                                 String city = c.getString("city");
-//                        validation(name,pass);
+//                              validation(name,pass);
                                 bbdata.add(new BloodbankBean(id,name,mobile,landline,email,address,city));
                                 bloodbankListAdapter = new BloodbankListAdapter(BloodBanksActivity.this,bbdata);
                                 bloodbankrecyle.setAdapter(bloodbankListAdapter);

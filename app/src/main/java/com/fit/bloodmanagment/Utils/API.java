@@ -19,4 +19,8 @@ public class API {
 
     public static String getbloodneedsurl="http://www.fratelloinnotech.com/saveworld/getbloodneeds.php";
 
+    public static String addbloddcampurl="http://www.fratelloinnotech.com/saveworld/addcamp.php";
+
+    public static String viewbloodcampurl="http://www.fratelloinnotech.com/saveworld/viewcamps.php";
+
 }

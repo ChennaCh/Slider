@@ -34,7 +34,6 @@ public class DonorListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     Context context;
     DonarActivity donarActivity=new DonarActivity();
     List<DonorBean> data= Collections.emptyList();
-    ImageView mapgifimage,mailgif,callgif;
     DonorListAdapter.MyHolder myHolder;
 
     @Override
@@ -42,9 +41,7 @@ public class DonorListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         // View view= Inflater.inflate(R.layout.admin_view_feedback, parent,false);
         View itemView = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.activity_donor_list_adapter, parent, false);
-        mapgifimage=(ImageView)itemView.findViewById(R.id.donorgifmap);
-        mailgif=(ImageView)itemView.findViewById(R.id.donorgifmail);
-        callgif=(ImageView)itemView.findViewById(R.id.donorgifcall);
+
         final DonorListAdapter.MyHolder holder=new DonorListAdapter.MyHolder(itemView);
         return holder;
     }
@@ -78,7 +75,7 @@ public class DonorListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
         myHolder= (DonorListAdapter.MyHolder) holder;
-        DonorBean current = data.get(position);
+        final DonorBean current = data.get(position);
         myHolder.name.setText(current.getDfullname());
         //myHolder.department.setText(current.getBranch());
         myHolder.mobile.setText(current.getDmobile());
@@ -88,14 +85,12 @@ public class DonorListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         myHolder.city.setText(current.getDcity());
         myHolder.age.setText(current.getDage());
 
-        mailgif.setOnClickListener(new View.OnClickListener() {
+        myHolder.mailgif.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 try {
                     String mail =  data.get(position).getDemail();
-                    //  Toast.makeText(context, "mail."+mail, Toast.LENGTH_SHORT).show();
-
-
+                    // Toast.makeText(context, "mail."+mail, Toast.LENGTH_SHORT).show();
                     Intent i = new Intent(Intent.ACTION_SENDTO);
                     i.setType("message/rfc822");
                     i.setData(Uri.parse("mailto:"+ mail));
@@ -110,11 +105,12 @@ public class DonorListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
             }
         });
 
-        callgif.setOnClickListener(new View.OnClickListener() {
+        myHolder.callgif.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if(isPermissionGranted()){
-                    String mobile =  data.get(position).getDmobile();
+                    String mobile =  current.getDmobile();
+                    //Toast.makeText(view.getContext(),mobile,Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(Intent.ACTION_CALL);
                     intent.setData(Uri.parse("tel:" + mobile));
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -124,7 +120,7 @@ public class DonorListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
             }
         });
 
-        mapgifimage.setOnClickListener(new View.OnClickListener() {
+        myHolder.mapgifimage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent=new Intent(context, BloodbanksMapActivity.class);
@@ -144,6 +140,7 @@ public class DonorListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     private class MyHolder extends RecyclerView.ViewHolder{
 
         TextView name,mobile,email,address,city,bloodgroup,age;
+        ImageView mapgifimage,mailgif,callgif;
 
         public MyHolder(View itemView) {
             super(itemView);
@@ -154,6 +151,9 @@ public class DonorListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
             address = (TextView) itemView.findViewById(R.id.donor_address);
             city=(TextView)itemView.findViewById(R.id.donor_city);
             age=(TextView)itemView.findViewById(R.id.donor_age);
+            mapgifimage=(ImageView)itemView.findViewById(R.id.donorgifmap);
+            mailgif=(ImageView)itemView.findViewById(R.id.donorgifmail);
+            callgif=(ImageView)itemView.findViewById(R.id.donorgifcall);
         }
     }
     public void setFilter(ArrayList<DonorBean> newList){
