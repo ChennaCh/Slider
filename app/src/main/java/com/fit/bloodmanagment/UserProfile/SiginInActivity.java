@@ -334,7 +334,7 @@ public class SiginInActivity extends AppCompatActivity{
     }
 
     private boolean isValidPassword(String Password) {
-        String Password_pattren = "^+[0-9]{6}$";
+        String Password_pattren = "^+[0-9]{50}$";
         Pattern pattern = Pattern.compile(Password_pattren);
         Matcher matcher = pattern.matcher(Password);
         return matcher.matches();
