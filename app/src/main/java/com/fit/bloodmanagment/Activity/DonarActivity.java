@@ -52,6 +52,7 @@ import com.github.ksoichiro.android.observablescrollview.ScrollState;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.Map;
@@ -68,6 +69,7 @@ public class DonarActivity extends AppCompatActivity implements ObservableScroll
     Toolbar toolbar;
     String sq=null;
     ObservableScrollView mScrollView;
+    TextView errormsg;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,6 +77,7 @@ public class DonarActivity extends AppCompatActivity implements ObservableScroll
         setContentView(R.layout.activity_donar);
         toolbar = (Toolbar) findViewById(R.id.toolbar_donor);
         setSupportActionBar(toolbar);
+        errormsg = (TextView) findViewById(R.id.displayerror);
         mScrollView = (ObservableScrollView) findViewById(R.id.scrollable);
         setTitle(getString(R.string.Donors));
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -240,6 +243,7 @@ public class DonarActivity extends AppCompatActivity implements ObservableScroll
                 newList.add(reqdonors);
             }
         }
+
         donorListAdapter = new DonorListAdapter(DonarActivity.this,newList);
         donorListAdapter.setFilter(newList);
         donorrecycle.setAdapter(donorListAdapter);

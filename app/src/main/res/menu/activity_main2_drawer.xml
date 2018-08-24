@@ -22,11 +22,20 @@
             android:title="View Donors" />
         </group>
 
+            <group android:checkableBehavior="single"
+                android:id="@+id/group11">
+                <item
+                    android:id="@+id/add_bloodbanks"
+                    android:icon="@drawable/bloodbanks"
+                    android:title="@string/ADDBloodBanks" />
+
+            </group>
+
     <group android:checkableBehavior="single"
         android:id="@+id/group3">
         <item
             android:id="@+id/nav_bloodbanks"
-            android:icon="@drawable/bloodbanks"
+            android:icon="@drawable/viewneeds"
             android:title="@string/BloodBanks" />
 
         </group>

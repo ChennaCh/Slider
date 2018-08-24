@@ -36,7 +36,9 @@
     <string name="Donors">Donors</string>
     <string name="Receiver">Receiver</string>
     <string name="Hospitals">Hospitals</string>
-    <string name="BloodBanks">Blood Banks</string>
+    <string name="BloodBanks">View Blood Banks</string>
+    <string name="ADDBloodBanks">Add Blood Banks</string>
+
     <string name="Precautions">Precautions</string>
     <string name="Myprofile">My Profile</string>
     <string name="Shareit">Share It</string>
