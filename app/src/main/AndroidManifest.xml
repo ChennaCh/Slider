@@ -107,7 +107,8 @@
             android:name=".Map.ViewNeedsMapActivity"
             android:label="@string/title_activity_view_needs_map" />
         <activity android:name=".Activity.AddBloodCamp" />
-        <activity android:name=".Activity.ViewBloodActivity"></activity>
+        <activity android:name=".Activity.ViewBloodActivity" />
+        <activity android:name=".Activity.AddBloodBanksActivity"></activity>
     </application>
 
 </manifest>

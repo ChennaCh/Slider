@@ -12,6 +12,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.res.ResourcesCompat;
 import android.support.v4.graphics.drawable.DrawableCompat;
 import android.support.v4.view.MenuItemCompat;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -39,10 +40,13 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.fit.bloodmanagment.Adapter.BloodbankListAdapter;
 import com.fit.bloodmanagment.Beans.BloodbankBean;
+import com.fit.bloodmanagment.Beans.ObservableRecyclerView;
 import com.fit.bloodmanagment.Beans.ViewBloodCamp;
 import com.fit.bloodmanagment.Map.MainMapActivity;
 import com.fit.bloodmanagment.R;
 import com.fit.bloodmanagment.Utils.API;
+import com.github.ksoichiro.android.observablescrollview.ObservableScrollViewCallbacks;
+import com.github.ksoichiro.android.observablescrollview.ScrollState;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -53,14 +57,15 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class ViewBloodActivity extends AppCompatActivity implements SearchView.OnQueryTextListener {
+public class ViewBloodActivity extends AppCompatActivity implements ObservableScrollViewCallbacks,SearchView.OnQueryTextListener {
     Toolbar toolbar;
-    RecyclerView recyclerView;
+    ObservableRecyclerView recyclerView;
     ViewBloodAdapter viewBloodAdapter;
     List<ViewBloodCamp> data = new ArrayList<>();
     private String TAG = ViewBloodActivity.class.getSimpleName();
 
     ProgressBar progressBar;
+    TextView errormsg;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,8 +77,13 @@ public class ViewBloodActivity extends AppCompatActivity implements SearchView.O
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         toolbar.setTitleTextColor(getResources().getColor(android.R.color.white));
-        recyclerView = (RecyclerView) findViewById(R.id.viewcamps);
+        recyclerView = (ObservableRecyclerView) findViewById(R.id.viewcamps);
         progressBar = (ProgressBar) findViewById(R.id.progress);
+        recyclerView.setScrollViewCallbacks(this);
+        recyclerView.setEmptyView(errormsg);
+        errormsg = (TextView) findViewById(R.id.displayerror);
+        errormsg.setText("No Location found :(");
+
         getshops();
     }
 
@@ -178,11 +188,41 @@ public class ViewBloodActivity extends AppCompatActivity implements SearchView.O
     public boolean onQueryTextChange(String newText) {
         String text = newText.toLowerCase();
         if(text.length()==0){
+            errormsg.setVisibility(View.GONE);
+            recyclerView.setVisibility(View.VISIBLE);
             getshops();
-        }else{
+        }
+        else{
             viewBloodAdapter.filter(text);
         }
-        return false;
+        return true;
+    }
+
+    @Override
+    public void onScrollChanged(int scrollY, boolean firstScroll, boolean dragging) {
+
+    }
+
+    @Override
+    public void onDownMotionEvent() {
+
+    }
+
+    @Override
+    public void onUpOrCancelMotionEvent(ScrollState scrollState) {
+        ActionBar ab = getSupportActionBar();
+        if (ab == null) {
+            return;
+        }
+        if (scrollState == ScrollState.UP) {
+            if (ab.isShowing()) {
+                ab.hide();
+            }
+        } else if (scrollState == ScrollState.DOWN) {
+            if (!ab.isShowing()) {
+                ab.show();
+            }
+        }
     }
 
 
@@ -262,8 +302,20 @@ public class ViewBloodActivity extends AppCompatActivity implements SearchView.O
                     filterdNames.add(s);
                 }
             }
-            //calling a method of the adapter class and passing the filtered list
-            viewBloodAdapter.filterList(filterdNames);
+            if(filterdNames.isEmpty()){
+                recyclerView.setVisibility(View.GONE);
+                errormsg.setVisibility(View.VISIBLE);
+                progressBar.setVisibility(View.GONE);
+            }else {
+                errormsg.setVisibility(View.GONE);
+                recyclerView.setVisibility(View.VISIBLE);
+                //calling a method of the adapter class and passing the filtered list
+                viewBloodAdapter.filterList(filterdNames);
+                viewBloodAdapter = new ViewBloodAdapter(data, getApplicationContext());
+                LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL, false);
+                recyclerView.setLayoutManager(linearLayoutManager);
+                recyclerView.setAdapter(viewBloodAdapter);
+            }
         }
         //This method will filter the list
         //here we are passing the filtered data

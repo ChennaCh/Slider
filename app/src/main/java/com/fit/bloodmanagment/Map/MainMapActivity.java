@@ -60,6 +60,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.fit.bloodmanagment.Activity.AboutUsActivity;
+import com.fit.bloodmanagment.Activity.AddBloodBanksActivity;
 import com.fit.bloodmanagment.Activity.AddBloodCamp;
 import com.fit.bloodmanagment.Activity.BloodBanksActivity;
 import com.fit.bloodmanagment.Activity.DonarActivity;
@@ -636,7 +637,11 @@ public class MainMapActivity extends FragmentActivity implements OnMapReadyCallb
             Intent intent = new Intent(MainMapActivity.this, DonarActivity.class);
             startActivity(intent);
 
-        }  else if (id == R.id.nav_bloodbanks) {
+        }  else if (id == R.id.add_bloodbanks) {
+            Intent intent = new Intent(MainMapActivity.this, AddBloodBanksActivity.class);
+            startActivity(intent);
+
+        } else if (id == R.id.nav_bloodbanks) {
             Intent intent = new Intent(MainMapActivity.this, BloodBanksActivity.class);
             startActivity(intent);
 
@@ -823,6 +828,9 @@ public class MainMapActivity extends FragmentActivity implements OnMapReadyCallb
         if (mCurrLocationMarker != null) {
             mCurrLocationMarker.remove();
         }
+
+        showdonorsonmap();
+
         //Place current location marker
         latitude = location.getLatitude();
         longitude = location.getLongitude();

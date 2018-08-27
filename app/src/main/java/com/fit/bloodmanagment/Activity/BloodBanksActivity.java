@@ -19,6 +19,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -45,16 +46,18 @@ import java.util.ArrayList;
 import java.util.Map;
 
 
-public class BloodBanksActivity extends AppCompatActivity implements ObservableScrollViewCallbacks ,SearchView.OnQueryTextListener{
+public class BloodBanksActivity extends AppCompatActivity implements ObservableScrollViewCallbacks ,SearchView.OnQueryTextListener {
 
-    private ObservableRecyclerView bloodbankrecyle;
+    private com.fit.bloodmanagment.Beans.ObservableRecyclerView bloodbankrecyle;
     private BloodbankListAdapter bloodbankListAdapter;
     ProgressBar bloodbankprogress;
     private Activity activity;
     private String TAG = BloodBanksActivity.class.getSimpleName();
-    ArrayList<BloodbankBean> bbdata=new ArrayList<>();
+    ArrayList<BloodbankBean> bbdata = new ArrayList<>();
     Toolbar toolbar;
     ObservableScrollView mScrollView;
+    TextView errormsg;
+
 //    Display display = getWindowManager().getDefaultDisplay();
 //    Point size = new Point();
 
@@ -70,8 +73,10 @@ public class BloodBanksActivity extends AppCompatActivity implements ObservableS
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         bloodbankprogress = (ProgressBar) findViewById(R.id.bloodbank_progress);
         bloodbankprogress.getIndeterminateDrawable().setColorFilter(0xFFFF0000, android.graphics.PorterDuff.Mode.MULTIPLY);
-        bloodbankrecyle = (ObservableRecyclerView) findViewById(R.id.bbrecyclerView);
+        bloodbankrecyle = (com.fit.bloodmanagment.Beans.ObservableRecyclerView) findViewById(R.id.bbrecyclerView);
         bloodbankrecyle.setScrollViewCallbacks(this);
+        errormsg = (TextView) findViewById(R.id.displayerror);
+        errormsg.setText("No Blood Bank found :(");
 //        new BloodbankAsyncFetch().execute();
         listapi();
     }
@@ -98,8 +103,8 @@ public class BloodBanksActivity extends AppCompatActivity implements ObservableS
                                 String address = c.getString("address");
                                 String city = c.getString("city");
 //                              validation(name,pass);
-                                bbdata.add(new BloodbankBean(id,name,mobile,landline,email,address,city));
-                                bloodbankListAdapter = new BloodbankListAdapter(BloodBanksActivity.this,bbdata);
+                                bbdata.add(new BloodbankBean(id, name, mobile, landline, email, address, city));
+                                bloodbankListAdapter = new BloodbankListAdapter(BloodBanksActivity.this, bbdata);
                                 bloodbankrecyle.setAdapter(bloodbankListAdapter);
                                 bloodbankrecyle.setLayoutManager(new LinearLayoutManager(BloodBanksActivity.this));
                                 bloodbankprogress.setVisibility(View.GONE);
@@ -109,8 +114,8 @@ public class BloodBanksActivity extends AppCompatActivity implements ObservableS
                             e.printStackTrace();
                         }
 
-        }
-    },
+                    }
+                },
                 new com.android.volley.Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
@@ -118,21 +123,24 @@ public class BloodBanksActivity extends AppCompatActivity implements ObservableS
                         Toast.makeText(getApplicationContext(), "No Network Connection", Toast.LENGTH_LONG).show();
                     }
                 }
-                ){
-        @Override
-        protected Map<String, String> getParams() {
-            Toast.makeText(activity, "Successful", Toast.LENGTH_SHORT).show();
-            return null;
-        }
-    };
+        ) {
+            @Override
+            protected Map<String, String> getParams() {
+                Toast.makeText(activity, "Successful", Toast.LENGTH_SHORT).show();
+                return null;
+            }
+        };
         queue.add(getRequest);
     }
+
     @Override
     public void onScrollChanged(int scrollY, boolean firstScroll, boolean dragging) {
     }
+
     @Override
     public void onDownMotionEvent() {
     }
+
     @Override
     public void onUpOrCancelMotionEvent(ScrollState scrollState) {
         ActionBar ab = getSupportActionBar();
@@ -149,11 +157,13 @@ public class BloodBanksActivity extends AppCompatActivity implements ObservableS
             }
         }
     }
+
     @Override
     public boolean onSupportNavigateUp() {
         onBackPressed();
         return true;
     }
+
     @Override
     public void onBackPressed() {
         Intent intent = new Intent(BloodBanksActivity.this, MainMapActivity.class);
@@ -164,8 +174,8 @@ public class BloodBanksActivity extends AppCompatActivity implements ObservableS
     public boolean onCreateOptionsMenu(Menu menu) {
         //MenuInflater inflater = getMenuInflater();
         getMenuInflater().inflate(R.menu.search_menu, menu);
-        MenuItem menuItem=menu.findItem(R.id.action_search);
-        SearchView searchView= (SearchView) MenuItemCompat.getActionView(menuItem);
+        MenuItem menuItem = menu.findItem(R.id.action_search);
+        SearchView searchView = (SearchView) MenuItemCompat.getActionView(menuItem);
         Drawable drawable = ResourcesCompat.getDrawable(getResources(), R.drawable.search_icon, null);
         drawable = DrawableCompat.wrap(drawable);
         DrawableCompat.setTint(drawable, Color.WHITE);
@@ -186,18 +196,26 @@ public class BloodBanksActivity extends AppCompatActivity implements ObservableS
 
     @Override
     public boolean onQueryTextChange(String newText) {
-        newText=newText.toLowerCase();
-        ArrayList<BloodbankBean> newbbList=new ArrayList<>();
-        for(BloodbankBean reqbb : bbdata){
-            String location= reqbb.getBcity().toLowerCase();
-            if(location.contains(newText)){
+        newText = newText.toLowerCase();
+        ArrayList<BloodbankBean> newbbList = new ArrayList<>();
+        for (BloodbankBean reqbb : bbdata) {
+            String location = reqbb.getBcity().toLowerCase();
+            if (location.contains(newText)) {
                 newbbList.add(reqbb);
             }
         }
-        bloodbankListAdapter = new BloodbankListAdapter(BloodBanksActivity.this,newbbList);
-        bloodbankListAdapter.setFilter(newbbList);
-        bloodbankrecyle.setAdapter(bloodbankListAdapter);
-        bloodbankrecyle.setLayoutManager(new LinearLayoutManager(BloodBanksActivity.this));
-        return true;
-    }
-}
+        if (newbbList.isEmpty()) {
+            bloodbankrecyle.setVisibility(View.GONE);
+            errormsg.setVisibility(View.VISIBLE);
+            bloodbankprogress.setVisibility(View.GONE);
+        } else {
+            errormsg.setVisibility(View.GONE);
+            bloodbankrecyle.setVisibility(View.VISIBLE);
+            bloodbankListAdapter = new BloodbankListAdapter(BloodBanksActivity.this, newbbList);
+            bloodbankListAdapter.setFilter(newbbList);
+            bloodbankrecyle.setAdapter(bloodbankListAdapter);
+            bloodbankrecyle.setLayoutManager(new LinearLayoutManager(BloodBanksActivity.this));
+        }
+            return true;
+        }
+        }

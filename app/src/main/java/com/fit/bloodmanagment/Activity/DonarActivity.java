@@ -1,12 +1,14 @@
 package com.fit.bloodmanagment.Activity;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.content.res.ResourcesCompat;
 import android.support.v4.graphics.drawable.DrawableCompat;
 import android.support.v4.view.MenuItemCompat;
@@ -18,6 +20,7 @@ import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.text.SpannableString;
 import android.text.style.ForegroundColorSpan;
+import android.util.AttributeSet;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -60,7 +63,7 @@ import java.util.Map;
 
 public class DonarActivity extends AppCompatActivity implements ObservableScrollViewCallbacks,SearchView.OnQueryTextListener {
 
-    private ObservableRecyclerView donorrecycle;
+    com.fit.bloodmanagment.Beans.ObservableRecyclerView donorrecycle;
     private DonorListAdapter donorListAdapter;
     ProgressBar donorprogress;
     private Activity activity;
@@ -78,6 +81,7 @@ public class DonarActivity extends AppCompatActivity implements ObservableScroll
         toolbar = (Toolbar) findViewById(R.id.toolbar_donor);
         setSupportActionBar(toolbar);
         errormsg = (TextView) findViewById(R.id.displayerror);
+        errormsg.setText("No Donor found :(");
         mScrollView = (ObservableScrollView) findViewById(R.id.scrollable);
         setTitle(getString(R.string.Donors));
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -85,13 +89,12 @@ public class DonarActivity extends AppCompatActivity implements ObservableScroll
         sq = getIntent().getStringExtra("sq");
         donorprogress = (ProgressBar) findViewById(R.id.donor_progress);
         donorprogress.getIndeterminateDrawable().setColorFilter(0xFFFF0000, android.graphics.PorterDuff.Mode.MULTIPLY);
-        donorrecycle = (ObservableRecyclerView) findViewById(R.id.donorrecyclerView);
+        donorrecycle = (com.fit.bloodmanagment.Beans.ObservableRecyclerView) findViewById(R.id.donorrecyclerView);
         donorrecycle.setScrollViewCallbacks(this);
 //        new BloodbankAsyncFetch().execute();
+        donorrecycle.setEmptyView(errormsg);
 
-
-        listapi();
-
+            listapi();
 
     }
 
@@ -122,8 +125,8 @@ public class DonarActivity extends AppCompatActivity implements ObservableScroll
                                 String city=c.getString("city");
 //                        validation(name,pass);
                                 donordata.add(new DonorBean(id,fullname,email,password,mobile,gender,address,bloodgroup,age,city));
-                               if(sq == null){
-                                donorListAdapter = new DonorListAdapter(DonarActivity.this,donordata);
+                                if(sq == null){
+                                    donorListAdapter = new DonorListAdapter(DonarActivity.this,donordata);
                                 donorrecycle.setAdapter(donorListAdapter);
                                 donorrecycle.setLayoutManager(new LinearLayoutManager(DonarActivity.this));
                                 donorprogress.setVisibility(View.GONE);
@@ -225,29 +228,44 @@ public class DonarActivity extends AppCompatActivity implements ObservableScroll
               newList.add(reqdonors);
             }
         }
-        donorListAdapter = new DonorListAdapter(DonarActivity.this,newList);
-        donorListAdapter.setFilter(newList);
-        donorrecycle.setAdapter(donorListAdapter);
-        donorrecycle.setLayoutManager(new LinearLayoutManager(DonarActivity.this));
+        if(newList.isEmpty()){
+            donorrecycle.setVisibility(View.GONE);
+            errormsg.setVisibility(View.VISIBLE);
+            donorprogress.setVisibility(View.GONE);
+        }else {
+            errormsg.setVisibility(View.GONE);
+            donorrecycle.setVisibility(View.VISIBLE);
+            donorListAdapter = new DonorListAdapter(DonarActivity.this, newList);
+            donorListAdapter.setFilter(newList);
+            donorrecycle.setAdapter(donorListAdapter);
+            donorrecycle.setLayoutManager(new LinearLayoutManager(DonarActivity.this));
+            donorprogress.setVisibility(View.GONE);
+        }
         return true;
     }
 
-    public void showdata(String sq1)
-    {
-        sq1=sq1.toLowerCase();
-        ArrayList<DonorBean> newList=new ArrayList<>();
-        for(DonorBean reqdonors : donordata){
-            String location= reqdonors.getDcity().toLowerCase();
+    public void showdata(String sq1) {
+        sq1 = sq1.toLowerCase();
+        ArrayList<DonorBean> newList = new ArrayList<>();
+        for (DonorBean reqdonors : donordata) {
+            String location = reqdonors.getDcity().toLowerCase();
             String bgroup = reqdonors.getDbloodgroup().toLowerCase();
-            if(location.contains(sq1.toLowerCase()) || bgroup.equalsIgnoreCase(sq1.toLowerCase())){
+            if (location.contains(sq1.toLowerCase()) || bgroup.equalsIgnoreCase(sq1.toLowerCase())) {
                 newList.add(reqdonors);
             }
         }
-
-        donorListAdapter = new DonorListAdapter(DonarActivity.this,newList);
-        donorListAdapter.setFilter(newList);
-        donorrecycle.setAdapter(donorListAdapter);
-        donorrecycle.setLayoutManager(new LinearLayoutManager(DonarActivity.this));
-        donorprogress.setVisibility(View.GONE);
+        if(newList.isEmpty()){
+            donorrecycle.setVisibility(View.GONE);
+            errormsg.setVisibility(View.VISIBLE);
+            donorprogress.setVisibility(View.GONE);
+        }else {
+            errormsg.setVisibility(View.GONE);
+            donorrecycle.setVisibility(View.VISIBLE);
+            donorListAdapter = new DonorListAdapter(DonarActivity.this, newList);
+            donorListAdapter.setFilter(newList);
+            donorrecycle.setAdapter(donorListAdapter);
+            donorrecycle.setLayoutManager(new LinearLayoutManager(DonarActivity.this));
+            donorprogress.setVisibility(View.GONE);
+        }
     }
 }

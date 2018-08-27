@@ -19,6 +19,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -50,7 +51,7 @@ import java.util.Map;
 
 public class ViewNeedsActivity  extends AppCompatActivity implements ObservableScrollViewCallbacks,SearchView.OnQueryTextListener {
 
-    private ObservableRecyclerView vneedrecycle;
+    private com.fit.bloodmanagment.Beans.ObservableRecyclerView vneedrecycle;
     private ViewNeedsListAdapter vneedListAdapter;
     ProgressBar vneedprogress;
     private Activity activity;
@@ -58,6 +59,8 @@ public class ViewNeedsActivity  extends AppCompatActivity implements ObservableS
     ArrayList<ViewNeedsBean> vneedsdata=new ArrayList<>();
     Toolbar toolbar;
     ObservableScrollView mScrollView;
+    TextView errormsg;
+
 //    Display display = getWindowManager().getDefaultDisplay();
 //    Point size = new Point();
 
@@ -73,8 +76,11 @@ public class ViewNeedsActivity  extends AppCompatActivity implements ObservableS
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         vneedprogress = (ProgressBar) findViewById(R.id.viewneeds_progress);
         vneedprogress.getIndeterminateDrawable().setColorFilter(0xFFFF0000, android.graphics.PorterDuff.Mode.MULTIPLY);
-        vneedrecycle = (ObservableRecyclerView) findViewById(R.id.viewneedsrecyclerView);
+        vneedrecycle = (com.fit.bloodmanagment.Beans.ObservableRecyclerView) findViewById(R.id.viewneedsrecyclerView);
         vneedrecycle.setScrollViewCallbacks(this);
+        errormsg = (TextView) findViewById(R.id.displayerror);
+        errormsg.setText("No Needy found :(");
+
 //        new BloodbankAsyncFetch().execute();
         listapi();
     }
@@ -198,10 +204,18 @@ public class ViewNeedsActivity  extends AppCompatActivity implements ObservableS
                 newbbList.add(reqbb);
             }
         }
-        vneedListAdapter = new ViewNeedsListAdapter(ViewNeedsActivity.this,newbbList);
-        vneedListAdapter.setFilter(newbbList);
-        vneedrecycle.setAdapter(vneedListAdapter);
-        vneedrecycle.setLayoutManager(new LinearLayoutManager(ViewNeedsActivity.this));
+        if (newbbList.isEmpty()) {
+            vneedrecycle.setVisibility(View.GONE);
+            errormsg.setVisibility(View.VISIBLE);
+            vneedprogress.setVisibility(View.GONE);
+        } else {
+            errormsg.setVisibility(View.GONE);
+            vneedrecycle.setVisibility(View.VISIBLE);
+            vneedListAdapter = new ViewNeedsListAdapter(ViewNeedsActivity.this, newbbList);
+            vneedListAdapter.setFilter(newbbList);
+            vneedrecycle.setAdapter(vneedListAdapter);
+            vneedrecycle.setLayoutManager(new LinearLayoutManager(ViewNeedsActivity.this));
+        }
         return true;
     }
 }

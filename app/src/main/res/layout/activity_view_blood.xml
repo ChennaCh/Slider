@@ -25,10 +25,21 @@
         android:id="@+id/rlrecycle"
         android:layout_below="@+id/viewcamp_toolbar"
         android:layout_height="match_parent">
-   <android.support.v7.widget.RecyclerView
+   <com.fit.bloodmanagment.Beans.ObservableRecyclerView
        android:layout_width="match_parent"
        android:layout_height="match_parent"
        android:id="@+id/viewcamps">
-   </android.support.v7.widget.RecyclerView>
+   </com.fit.bloodmanagment.Beans.ObservableRecyclerView>
+        <TextView
+            android:visibility="gone"
+            android:id="@+id/displayerror"
+            android:gravity="center"
+            android:textStyle="bold"
+            android:textSize="18sp"
+            android:textColor="#fff"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text=""/>
     </RelativeLayout>
 </RelativeLayout>

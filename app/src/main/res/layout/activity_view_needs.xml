@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="center"
+    android:background="#E57373"
     tools:context="com.fit.bloodmanagment.Activity.ViewNeedsActivity">
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar_viewneeds"
@@ -21,7 +22,7 @@
         android:layout_below="@+id/toolbar_viewneeds"
         android:layout_height="match_parent">
 
-        <com.github.ksoichiro.android.observablescrollview.ObservableRecyclerView
+        <com.fit.bloodmanagment.Beans.ObservableRecyclerView
             xmlns:android="http://schemas.android.com/apk/res/android"
             android:id="@+id/viewneedsrecyclerView"
             android:layout_width="match_parent"
@@ -35,5 +36,15 @@
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         android:visibility="gone"/>
-
+    <TextView
+        android:visibility="gone"
+        android:id="@+id/displayerror"
+        android:gravity="center"
+        android:textStyle="bold"
+        android:textSize="18sp"
+        android:textColor="#fff"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:text=""/>
 </RelativeLayout>
