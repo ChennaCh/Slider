@@ -23,6 +23,6 @@ public class API {
 
     public static String viewbloodcampurl="http://www.fratelloinnotech.com/saveworld/viewcamps.php";
 
-    public static String addbloodbankurl="http://www.fratelloinnotech.com/saveworld/";
+    public static String addbloodbankurl="http://www.fratelloinnotech.com/saveworld/addbloodbank.php";
 
 }

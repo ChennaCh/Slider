@@ -72,9 +72,9 @@ public class AddBloodBanksActivity extends AppCompatActivity {
                 } else if (!isValidMobile(blmobile)) {
                     // etphone.requestFocus();
                     err.setText("Please Enter Valid Phone Number");
-                } else if (!isNumberValid(blland)) {
-                    // etemail.requestFocus();
-                    err.setText("Please Enter Valid Land Number");
+//                } else if (!isNumberValid(blland)) {
+//                    // etemail.requestFocus();
+//                    err.setText("Please Enter Valid Land Number");
                 }else if (bladdres.equals("")) {
                     //etaddress.requestFocus();
                     err.setText("Please Enter Address");
@@ -109,10 +109,15 @@ public class AddBloodBanksActivity extends AppCompatActivity {
                     String res = jsonObject.getString("result");//result should be matched with url link response ie,{"result":"success"}
                     if (res.equals("success")) //array key
                     {
-                        Toast.makeText(getApplicationContext(), "Added Blood Bank: "+res, Toast.LENGTH_SHORT).show();
-
+                        Toast.makeText(getApplicationContext(), "Blood Bank added successfully", Toast.LENGTH_SHORT).show();
+                        name.setText("");
+                        mob.setText("");
+                        landnum.setText("");
+                        email.setText("");
+                        addre.setText("");
+                        city.setText("");
                     } else {
-                        Toast.makeText(getApplicationContext(), "Sorry error in adding, we apologize", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), "Sorry!.. error in adding, we apologize", Toast.LENGTH_SHORT).show();
                     }
 
                 } catch (Exception e) {
@@ -140,12 +145,12 @@ public class AddBloodBanksActivity extends AppCompatActivity {
 
                 Map<String, String> data = new HashMap<String, String>();//to bind group of data
                 //to insert data from edit feilds into table feilds
-                data.put("", blname);
-                data.put("", blmobile);
-                data.put("", blland);
-                data.put("", blemail);
-                data.put("", bladdres);
-                data.put("", blcity);
+                data.put("name", blname);
+                data.put("mobile", blmobile);
+                data.put("landline", blland);
+                data.put("email", blemail);
+                data.put("address", bladdres);
+                data.put("city", blcity);
                 return data;
             }
         };
@@ -175,8 +180,8 @@ public class AddBloodBanksActivity extends AppCompatActivity {
         return matcher.matches();
 
     }
-    private boolean isNumberValid(String number){
-        return Pattern.matches("/^[0-9]\\d{2,4}-\\d{6,8}$/\n", number);
-    }
+//    private boolean isNumberValid(String number){
+//        return Pattern.matches("/^[0-9]\\d{2,4}-\\d{6,8}$/\n", number);
+//    }
 
 }
