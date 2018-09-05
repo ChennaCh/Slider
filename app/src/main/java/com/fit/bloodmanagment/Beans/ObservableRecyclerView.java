@@ -10,6 +10,7 @@ import android.view.View;
 public class ObservableRecyclerView extends com.github.ksoichiro.android.observablescrollview.ObservableRecyclerView {
     private Context mContext;
     //The empty view which is shown when the data is empty
+    //hello
     private View emptyView;
     public ObservableRecyclerView(Context context) {
         super(context);
