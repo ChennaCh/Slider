@@ -91,8 +91,6 @@ public ViewNeedsListAdapter()
                 try {
                     String mail =  data.get(position).getNemail();
                     //  Toast.makeText(context, "mail."+mail, Toast.LENGTH_SHORT).show();
-
-
                     Intent i = new Intent(Intent.ACTION_SENDTO);
                     i.setType("message/rfc822");
                     i.setData(Uri.parse("mailto:"+ mail));

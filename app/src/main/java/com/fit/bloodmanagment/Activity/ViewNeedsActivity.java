@@ -165,11 +165,11 @@ public class ViewNeedsActivity  extends AppCompatActivity implements ObservableS
         onBackPressed();
         return true;
     }
-    @Override
-    public void onBackPressed() {
-        Intent intent = new Intent(ViewNeedsActivity.this, MainMapActivity.class);
-        startActivity(intent);
-    }
+//    @Override
+//    public void onBackPressed() {
+//        Intent intent = new Intent(ViewNeedsActivity.this, MainMapActivity.class);
+//        startActivity(intent);
+//    }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         //MenuInflater inflater = getMenuInflater();

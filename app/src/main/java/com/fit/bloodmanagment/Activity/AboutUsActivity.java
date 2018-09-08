@@ -51,12 +51,13 @@ import java.io.InputStream;
 import java.util.regex.Matcher;
 
 
-public class AboutUsActivity extends AppCompatActivity implements View.OnClickListener,OnMapReadyCallback {
-    ImageView amail,acall,aweb;
-    LinearLayout panel1,panel2,panel3;
-    TextView text1,text2,text3;
+public class AboutUsActivity extends AppCompatActivity implements View.OnClickListener, OnMapReadyCallback {
+    ImageView amail, acall, aweb;
+    LinearLayout panel1, panel2, panel3;
+    TextView text1, text2, text3;
     View openLayout;
     GoogleMap gmap;
+
     //String YOUR_API_KEY="AIzaSyDxBBCTnbdc_-7x2gYolw2UD9-k0difgQ8";
     //protected static final String STATIC_MAP_API_ENDPOINT = "http://maps.google.com/maps/api/staticmap?/center=17.49,78.39&maptype=roadmap&zoom=15&size=600x400";
     //http://maps.google.com/maps/api/staticmap?center=53,51&maptype=satellite&zoom=17&size=640x300&sensor=false
@@ -70,9 +71,9 @@ public class AboutUsActivity extends AppCompatActivity implements View.OnClickLi
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         toolbar.setTitleTextColor(getResources().getColor(android.R.color.white));
-         amail=(ImageView)findViewById(R.id.aemail);
-        acall=(ImageView)findViewById(R.id.acall);
-        aweb=(ImageView)findViewById(R.id.awebsite);
+        amail = (ImageView) findViewById(R.id.aemail);
+        acall = (ImageView) findViewById(R.id.acall);
+        aweb = (ImageView) findViewById(R.id.awebsite);
         panel1 = (LinearLayout) findViewById(R.id.panel1);
         panel2 = (LinearLayout) findViewById(R.id.panel2);
         panel3 = (LinearLayout) findViewById(R.id.panel3);
@@ -90,7 +91,7 @@ public class AboutUsActivity extends AppCompatActivity implements View.OnClickLi
                     i.setType("message/rfc822");
                     i.setData(Uri.parse("mailto:sateesh.itech@gmail.com"));
                     i.putExtra(Intent.EXTRA_SUBJECT, "subject of email");
-                    i.putExtra(Intent.EXTRA_TEXT   , "body of email");
+                    i.putExtra(Intent.EXTRA_TEXT, "body of email");
                     i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     startActivity(Intent.createChooser(i, "Send mail..."));
                 } catch (android.content.ActivityNotFoundException ex) {
@@ -101,7 +102,7 @@ public class AboutUsActivity extends AppCompatActivity implements View.OnClickLi
         acall.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(isPermissionGranted()){
+                if (isPermissionGranted()) {
                     call_action();
                 }
             }
@@ -110,7 +111,7 @@ public class AboutUsActivity extends AppCompatActivity implements View.OnClickLi
             @Override
             public void onClick(View view) {
                 Intent viewIntent =
-                        new Intent("android.intent.action.VIEW",Uri.parse("http://www.fratelloinnotech.com/"));
+                        new Intent("android.intent.action.VIEW", Uri.parse("http://www.fratelloinnotech.com/"));
                 startActivity(viewIntent);
             }
         });
@@ -119,10 +120,21 @@ public class AboutUsActivity extends AppCompatActivity implements View.OnClickLi
         mapFragment.getMapAsync(this);
 
     }
+
     @Override
     public void onMapReady(GoogleMap googleMap) {
         gmap = googleMap;
         // Enabling MyLocation Layer of Google Map
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            return;
+        }
         googleMap.setMyLocationEnabled(true);
         addMarkertoMap();
     }

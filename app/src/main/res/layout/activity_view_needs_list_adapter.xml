@@ -65,6 +65,7 @@
                 android:orientation="vertical">
 
                 <LinearLayout
+                    android:layout_gravity="center"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
@@ -72,16 +73,17 @@
 
                     <TextView
                         android:id="@+id/vneed_phone"
-                        android:layout_width="match_parent"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:layout_weight="1.50"
+                        android:layout_weight="1.20"
                         android:text="Phone"
                         android:textColor="#074809" />
 
                     <pl.droidsonroids.gif.GifImageView
                         android:id="@+id/vneedgifcall"
-                        android:layout_width="150dp"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
                         android:layout_height="50dp"
                         android:layout_gravity="center"
                         android:autoLink="phone"
@@ -92,24 +94,26 @@
                 </LinearLayout>
 
                 <LinearLayout
-                    android:layout_width="247dp"
+                    android:layout_gravity="center"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
                     android:weightSum="2">
 
                     <TextView
                         android:id="@+id/vneed_mail"
-                        android:layout_width="match_parent"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:layout_weight="1.50"
+                        android:layout_weight="1.2"
                         android:text="Mail"
                         android:textColor="#074809"
                         android:textIsSelectable="true" />
 
                     <pl.droidsonroids.gif.GifImageView
                         android:id="@+id/vneedgifmail"
-                        android:layout_width="150dp"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
                         android:layout_height="50dp"
                         android:layout_gravity="center"
                         android:background="@null"
@@ -127,11 +131,11 @@
 
                     <TextView
                         android:id="@+id/vneed_address"
-                        android:layout_width="match_parent"
+                        android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_marginBottom="2dp"
                         android:layout_marginTop="10dp"
-                        android:layout_weight="1.50"
+                        android:layout_weight="1.20"
                         android:maxLines="3"
                         android:text="hello this is text for description"
                         android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
@@ -140,7 +144,8 @@
 
                     <pl.droidsonroids.gif.GifImageView
                         android:id="@+id/vneedgifmap"
-                        android:layout_width="150dp"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
                         android:layout_height="50dp"
                         android:layout_gravity="center"
                         android:background="@null"
@@ -149,17 +154,18 @@
                 </LinearLayout>
 
                 <LinearLayout
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="5dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:layout_margin="5dp"
                     android:orientation="horizontal">
 
 
                     <TextView
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
+                        android:layout_weight="0.5"
                         android:layout_height="wrap_content"
-                        android:paddingRight="20dp"
                         android:text="Purpose :"
                         android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
                         android:textColor="#142166"
@@ -167,7 +173,8 @@
 
                     <TextView
                         android:id="@+id/vneed_purpose"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
                         android:layout_height="wrap_content"
                         android:text="Emergency for heart transplantantion" />
                 </LinearLayout>

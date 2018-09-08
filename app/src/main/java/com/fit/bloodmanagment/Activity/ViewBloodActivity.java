@@ -156,11 +156,11 @@ public class ViewBloodActivity extends AppCompatActivity implements ObservableSc
         progressBar.setVisibility(View.VISIBLE);
         queue.add(stringRequest);
     }
-    @Override
-    public void onBackPressed() {
-        Intent intent = new Intent(ViewBloodActivity.this, MainMapActivity.class);
-        startActivity(intent);
-    }
+//    @Override
+//    public void onBackPressed() {
+//        Intent intent = new Intent(ViewBloodActivity.this, MainMapActivity.class);
+//        startActivity(intent);
+//    }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         //MenuInflater inflater = getMenuInflater();
@@ -270,16 +270,16 @@ public class ViewBloodActivity extends AppCompatActivity implements ObservableSc
                 @Override
                 public void onClick(View view) {
                     try {
-                        String mail =  data.get(position).getEmail();
-                        Toast.makeText(context, "mail."+mail, Toast.LENGTH_SHORT).show();
+                        String mails =  data.get(position).getEmail();
+                     //   Toast.makeText(context, "mail."+mails, Toast.LENGTH_SHORT).show();
                         Intent i = new Intent(Intent.ACTION_SENDTO);
                         i.setType("message/rfc822");
-                        i.setData(Uri.parse("mailto:"+ mail));
+                        i.setData(Uri.parse("mailto:"+ mails));
                         // i.putExtra(Intent.EXTRA_EMAIL  , new String[]{"recipient@example.com"});
                         i.putExtra(Intent.EXTRA_SUBJECT, "Urgent Requirement of Blood");
                         i.putExtra(Intent.EXTRA_TEXT   , "hi, Please send the complete details about blood avaible status");
                         i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                        context.startActivity(Intent.createChooser(i, "Send mail..."));
+                        startActivity(Intent.createChooser(i, "Send mail..."));
                     } catch (android.content.ActivityNotFoundException ex) {
                         Toast.makeText(context, "There are no email clients installed.", Toast.LENGTH_SHORT).show();
                     }

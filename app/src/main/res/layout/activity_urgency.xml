@@ -34,16 +34,24 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
-                <pl.droidsonroids.gif.GifImageView
-                    android:id="@+id/gifcall"
-                    android:layout_width="250dp"
-                    android:layout_height="100dp"
-                    android:layout_gravity="center"
-                    android:autoLink="phone"
-                    android:background="@null"
-                    android:clickable="true"
-                    android:linksClickable="true"
-                    android:src="@drawable/enquiryicon" />
+                <ImageView
+                    android:id="@+id/imageView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="40dp"
+                    android:gravity="center"
+                    android:src="@drawable/ic_emerg" />
+
+                <!--<pl.droidsonroids.gif.GifImageView-->
+                    <!--android:id="@+id/gifcall"-->
+                    <!--android:layout_width="250dp"-->
+                    <!--android:layout_height="100dp"-->
+                    <!--android:layout_gravity="center"-->
+                    <!--android:autoLink="phone"-->
+                    <!--android:background="@null"-->
+                    <!--android:clickable="true"-->
+                    <!--android:linksClickable="true"-->
+                    <!--android:src="@drawable/enquiryicon" />-->
 
                 <EditText
                     android:id="@+id/myUusername"

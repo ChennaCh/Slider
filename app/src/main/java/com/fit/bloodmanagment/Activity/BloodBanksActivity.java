@@ -164,11 +164,11 @@ public class BloodBanksActivity extends AppCompatActivity implements ObservableS
         return true;
     }
 
-    @Override
-    public void onBackPressed() {
-        Intent intent = new Intent(BloodBanksActivity.this, MainMapActivity.class);
-        startActivity(intent);
-    }
+//    @Override
+//    public void onBackPressed() {
+//        Intent intent = new Intent(BloodBanksActivity.this, MainMapActivity.class);
+//        startActivity(intent);
+//    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

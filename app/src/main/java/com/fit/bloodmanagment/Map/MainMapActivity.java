@@ -150,7 +150,6 @@ public class MainMapActivity extends FragmentActivity implements OnMapReadyCallb
     LocationRequest mLocationRequest;
     EditText mainsearch;
     ImageView pharmacyimage,hospitalimage,fab,fableft,shareimage,rating,profilepic,searchimage,donormain,dadd,notificatio_bar;
-    ProgressBar progressBar;
     ProgressDialog progressdialog;
     LinearLayout donorll,hospitalll,pharmacyll,fableftll;
     public  NavigationView navigationView;
@@ -163,6 +162,10 @@ public class MainMapActivity extends FragmentActivity implements OnMapReadyCallb
     public static final String mylatlongkey="mylatlong";
     public static final String  key = "nameKey";
 
+    TextView loading;
+    ProgressBar progressBar;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -171,6 +174,12 @@ public class MainMapActivity extends FragmentActivity implements OnMapReadyCallb
         final DrawerLayout drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        loading = (TextView)findViewById(R.id.load);
+        progressBar = (ProgressBar) findViewById(R.id.progress);
+        progressBar.setVisibility(View.VISIBLE);
+        loading.setVisibility(View.VISIBLE);
+
         View header  = navigationView.getHeaderView(0);
         if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             checkLocationPermission();
@@ -287,7 +296,8 @@ public class MainMapActivity extends FragmentActivity implements OnMapReadyCallb
         donormain.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showdonorsonmap();
+               //showdonorsonmap();
+                listapi();
             }
         });
 
@@ -823,14 +833,15 @@ public class MainMapActivity extends FragmentActivity implements OnMapReadyCallb
     @Override
     public void onLocationChanged(Location location) {
         Log.d("onLocationChanged", "entered");
-
+        mMap.clear();
+        progressBar.setVisibility(View.GONE);
+       // loading.setVisibility(View.GONE);
+        listapi();
         mLastLocation = location;
         if (mCurrLocationMarker != null) {
             mCurrLocationMarker.remove();
         }
-
-        showdonorsonmap();
-
+        //showdonorsonmap();
         //Place current location marker
         latitude = location.getLatitude();
         longitude = location.getLongitude();
@@ -1004,7 +1015,9 @@ public class MainMapActivity extends FragmentActivity implements OnMapReadyCallb
     {
         String Pharmacy = "pharmacy";
         mMap.clear();
-            listapi();
+        progressBar.setVisibility(View.GONE);
+        loading.setVisibility(View.GONE);
+        listapi();
     }
     private void listapi() {
        // Toast.makeText(getApplicationContext(),"first",Toast.LENGTH_SHORT).show();
@@ -1015,6 +1028,8 @@ public class MainMapActivity extends FragmentActivity implements OnMapReadyCallb
                 new com.android.volley.Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
+                        progressBar.setVisibility(View.GONE);
+                        loading.setVisibility(View.GONE);
                         try {
                             JSONObject jsonObj = new JSONObject(response);
                             JSONArray contacts = jsonObj.getJSONArray("result");
@@ -1073,6 +1088,8 @@ public class MainMapActivity extends FragmentActivity implements OnMapReadyCallb
                 new com.android.volley.Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
+                        progressBar.setVisibility(View.GONE);
+                        loading.setVisibility(View.GONE);
                         // error
                         //Toast.makeText(getApplicationContext(), "" + error, Toast.LENGTH_SHORT).show();
                         Toast.makeText(getApplicationContext(), "NO Network Connection", Toast.LENGTH_SHORT).show();
@@ -1085,6 +1102,8 @@ public class MainMapActivity extends FragmentActivity implements OnMapReadyCallb
                 return null;
             }
         };
+        progressBar.setVisibility(View.VISIBLE);
+        loading.setVisibility(View.VISIBLE);
         queue.add(getRequest);
     }
     @Override

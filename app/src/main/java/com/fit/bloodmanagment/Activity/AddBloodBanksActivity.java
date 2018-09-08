@@ -82,7 +82,7 @@ public class AddBloodBanksActivity extends AppCompatActivity {
                     // etcity.requestFocus();
                     err.setText("Please Enter Location or city");
                 } else if (blname.trim().length() > 0 && blmobile.trim().length() > 0 && blland.trim().length() > 0 && blemail.trim().length() > 0 && bladdres.trim().length() > 0 && blcity.trim().length() > 0) {
-                    if(ConnectivityReceiver.isConnected()==false){
+                    if(!ConnectivityReceiver.isConnected()){
                         //checkConnection();
                         displayMobileDataSettingsDialog(AddBloodBanksActivity.this);
                     }

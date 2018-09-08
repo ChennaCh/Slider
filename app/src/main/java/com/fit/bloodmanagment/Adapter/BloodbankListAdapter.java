@@ -106,15 +106,15 @@ public class BloodbankListAdapter extends RecyclerView.Adapter<RecyclerView.View
             public void onClick(View view) {
                 try {
                     String mail =  data.get(position).getBemail();
-                    Toast.makeText(context, mail, Toast.LENGTH_SHORT).show();
-//                    Intent i = new Intent(Intent.ACTION_SENDTO);
-//                    i.setType("message/rfc822");
-//                    i.setData(Uri.parse("mailto:"+ mail));
-//                   // i.putExtra(Intent.EXTRA_EMAIL  , new String[]{"recipient@example.com"});
-//                    i.putExtra(Intent.EXTRA_SUBJECT, "Urgent Requirement of Blood");
-//                    i.putExtra(Intent.EXTRA_TEXT   , "hi, Please send the complete details about blood avaible status");
-//                    i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-//                    context.startActivity(Intent.createChooser(i, "Send mail..."));
+                   // Toast.makeText(context, mail, Toast.LENGTH_SHORT).show();
+                    Intent i = new Intent(Intent.ACTION_SENDTO);
+                    i.setType("message/rfc822");
+                    i.setData(Uri.parse("mailto:"+ mail));
+                   // i.putExtra(Intent.EXTRA_EMAIL  , new String[]{"recipient@example.com"});
+                    i.putExtra(Intent.EXTRA_SUBJECT, "Urgent Requirement of Blood");
+                    i.putExtra(Intent.EXTRA_TEXT   , "hi, Please send the complete details about blood avaible status");
+                    i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    context.startActivity(Intent.createChooser(i, "Send mail..."));
                 } catch (android.content.ActivityNotFoundException ex) {
                     Toast.makeText(context, "There are no email clients installed.", Toast.LENGTH_SHORT).show();
                 }
