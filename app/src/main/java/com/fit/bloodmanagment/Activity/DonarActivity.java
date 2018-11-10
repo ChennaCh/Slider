@@ -188,12 +188,6 @@ public class DonarActivity extends AppCompatActivity implements ObservableScroll
         return true;
     }
     @Override
-    public void onBackPressed() {
-        Intent intent = new Intent(DonarActivity.this, MainMapActivity.class);
-        startActivity(intent);
-    }
-
-    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         //MenuInflater inflater = getMenuInflater();
         getMenuInflater().inflate(R.menu.search_menu, menu);

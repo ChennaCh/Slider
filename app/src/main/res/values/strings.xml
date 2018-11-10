@@ -28,7 +28,6 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
     <string name="action_settings">Settings</string>
-    <string name="loading">Loading...</string>
 
     <!--Navigation Drawer Titles-->
 
@@ -72,4 +71,5 @@
     <string name="title_activity_main_map">Map</string>
     <string name="title_activity_donorlist_map">Map</string>
     <string name="title_activity_view_needs_map">Map</string>
+    <string name="loading">Loading...</string>
 </resources>

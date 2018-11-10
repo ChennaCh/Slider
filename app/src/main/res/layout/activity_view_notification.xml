@@ -1,9 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:background="#E57373"
     tools:context="com.fit.bloodmanagment.Activity.ViewNotificationActivity">
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar_viewneeds"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        app:layout_scrollFlags="scroll|enterAlways"
+        app:titleTextColor="#fff"
+        app:theme="@style/ToolbarStyle"
+        android:background="?attr/colorPrimary"/>
+    <android.support.v7.widget.RecyclerView
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/notifications">
 
-</android.support.constraint.ConstraintLayout>
+</android.support.v7.widget.RecyclerView>
+</LinearLayout>

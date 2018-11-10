@@ -71,9 +71,11 @@ import com.fit.bloodmanagment.Activity.PrivacyPolicyActivity;
 import com.fit.bloodmanagment.Activity.UrgencyActivity;
 import com.fit.bloodmanagment.Activity.ViewBloodActivity;
 import com.fit.bloodmanagment.Activity.ViewNeedsActivity;
+import com.fit.bloodmanagment.Activity.ViewNotificationActivity;
 import com.fit.bloodmanagment.Adapter.DonorListAdapter;
 import com.fit.bloodmanagment.Beans.DonorBean;
 import com.fit.bloodmanagment.Beans.ImageHelperBean;
+import com.fit.bloodmanagment.Beans.Notifications;
 import com.fit.bloodmanagment.BuildConfig;
 import com.fit.bloodmanagment.GooglePlaces.GetNearByDonors;
 import com.fit.bloodmanagment.GooglePlaces.GetNearbyPlacesData;
@@ -165,6 +167,8 @@ public class MainMapActivity extends FragmentActivity implements OnMapReadyCallb
     TextView loading;
     ProgressBar progressBar;
 
+    TextView badgetxt;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -177,9 +181,10 @@ public class MainMapActivity extends FragmentActivity implements OnMapReadyCallb
 
         loading = (TextView)findViewById(R.id.load);
         progressBar = (ProgressBar) findViewById(R.id.progress);
+        badgetxt = (TextView) findViewById(R.id.textbadge);
         progressBar.setVisibility(View.VISIBLE);
         loading.setVisibility(View.VISIBLE);
-
+        showbadge();
         View header  = navigationView.getHeaderView(0);
         if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             checkLocationPermission();
@@ -312,7 +317,7 @@ public class MainMapActivity extends FragmentActivity implements OnMapReadyCallb
         notificatio_bar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(getApplicationContext(),UrgencyActivity.class);
+                Intent i = new Intent(getApplicationContext(),ViewNotificationActivity.class);
                 startActivity(i);
             }
         });
@@ -426,7 +431,48 @@ public class MainMapActivity extends FragmentActivity implements OnMapReadyCallb
         });
 
     }
+    private void showbadge() {
+        RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
+        String serverURL = API.showbadgecount;
+        final StringRequest getRequest = new StringRequest(Request.Method.GET, serverURL,
+                new com.android.volley.Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                       // badgetxt.setVisibility(View.VISIBLE);
+                        try {
+                            JSONObject jsonObj = new JSONObject(response);
+                            String count = jsonObj.getString("result");
+                            if(count.equals("0")){
+                                badgetxt.setVisibility(View.GONE);
+                            }else{
+                                badgetxt.setVisibility(View.VISIBLE);
+                                badgetxt.setText(""+count);
+                            }
+                            //Toast.makeText(MainMapActivity.this, "count:"+count, Toast.LENGTH_SHORT).show();
+                        } catch (final JSONException e) {
+                            Log.e(TAG, "Json parsing error: " + e.getMessage());
+                            e.printStackTrace();
+                        }
 
+                    }
+                },
+                new com.android.volley.Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        // error
+                        Toast.makeText(getApplicationContext(), "No Network Connection", Toast.LENGTH_LONG).show();
+                    }
+                }
+        ){
+            @Override
+            protected Map<String, String> getParams() {
+                Toast.makeText(getApplicationContext(), "Successful", Toast.LENGTH_SHORT).show();
+                return null;
+            }
+        };
+       // badgetxt.setVisibility(View.GONE);
+        queue.add(getRequest);
+    }
     public static String encodeTobase64(Bitmap image)
     {
         Bitmap immage = image;
@@ -912,6 +958,7 @@ public class MainMapActivity extends FragmentActivity implements OnMapReadyCallb
             case R.id.fab1:
                 bg="A+";
                 break;
+
             case R.id.fab2:
                 bg="A-";
                 break;

@@ -25,4 +25,9 @@ public class API {
 
     public static String addbloodbankurl="http://www.fratelloinnotech.com/saveworld/addbloodbank.php";
 
+    public static String shownotifications="http://www.fratelloinnotech.com/saveworld/getnotis.php";
+
+    public static String showbadgecount="http://fratelloinnotech.com/saveworld/getnotiscount.php";
+
+
 }

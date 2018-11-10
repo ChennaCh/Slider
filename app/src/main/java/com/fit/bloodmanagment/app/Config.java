@@ -5,7 +5,7 @@ package com.fit.bloodmanagment.app;
  */
 
 public class Config {
-    // global topic to receive app wide push notifications
+    // global topic to receive app wide push Notifications
     public static final String TOPIC_GLOBAL = "global";
 
     // broadcast receiver intent filters

@@ -63,26 +63,38 @@
                 android:paddingRight="10dp"
                 android:layout_weight="0.4">
                 <ImageView
+                    android:layout_marginRight="15dp"
                     android:id="@+id/dadd"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:layout_marginRight="15dp"
                     android:layout_gravity="right"
                     android:src="@drawable/dadd" />
                 <RelativeLayout
+                    android:layout_marginRight="15dp"
                     android:layout_gravity="center"
-                    android:layout_width="wrap_content"
+                    android:layout_width="42dp"
                     android:layout_height="wrap_content">
                 <ImageView
                     android:layout_toRightOf="@+id/dadd"
                     android:id="@+id/notificatio_bar"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginRight="15dp"
                     android:layout_gravity="right"
                     android:src="@drawable/ic_notifications_none_black_24dp"
                     android:layout_toEndOf="@+id/dadd"
                     tools:ignore="NotSibling" />
+
+                    <TextView
+                        android:id="@+id/textbadge"
+                        android:visibility="visible"
+                        android:layout_alignParentRight="true"
+                        android:text=""
+                        android:background="@drawable/notify_circle"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:gravity="center"
+                        android:textColor="#fff"
+                        android:layout_alignParentEnd="true" />
 
                 </RelativeLayout>
                 <ImageView

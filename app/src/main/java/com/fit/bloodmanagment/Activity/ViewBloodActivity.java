@@ -63,7 +63,6 @@ public class ViewBloodActivity extends AppCompatActivity implements ObservableSc
     ViewBloodAdapter viewBloodAdapter;
     List<ViewBloodCamp> data = new ArrayList<>();
     private String TAG = ViewBloodActivity.class.getSimpleName();
-
     ProgressBar progressBar;
     TextView errormsg;
 
