@@ -21,6 +21,9 @@ import com.fit.bloodmanagment.Network.VolleySingleton;
 import com.fit.bloodmanagment.R;
 import com.fit.bloodmanagment.UserProfile.SignUpActivity;
 import com.fit.bloodmanagment.Utils.API;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.MobileAds;
 
 import org.json.JSONObject;
 
@@ -36,10 +39,18 @@ public class AddBloodBanksActivity extends AppCompatActivity {
     EditText name,mob,landnum,email,addre,city;
     Button addbbank;
     TextView err;
+    AdView mAdView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_blood_banks);
+
+        MobileAds.initialize(this, "ca-app-pub-4682541119478126~4361374156");
+        mAdView = (AdView) findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        mAdView.loadAd(adRequest);
+
         toolbar = (Toolbar) findViewById(R.id.signup_toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);

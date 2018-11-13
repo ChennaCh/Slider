@@ -24,6 +24,9 @@ import com.fit.bloodmanagment.Beans.Notifications;
 import com.fit.bloodmanagment.Beans.ViewNeedsBean;
 import com.fit.bloodmanagment.R;
 import com.fit.bloodmanagment.Utils.API;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.MobileAds;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -37,14 +40,21 @@ public class ViewNotificationActivity extends AppCompatActivity {
 RecyclerView recyclerView;
 NotifyAdapter notifyAdapter;
     Toolbar toolbar;
+    AdView mAdView;
 
-List<Notifications> data = new ArrayList<>();
+    List<Notifications> data = new ArrayList<>();
     private String TAG = ViewNeedsActivity.class.getSimpleName();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_notification);
+
+        MobileAds.initialize(this, "ca-app-pub-4682541119478126~4361374156");
+        mAdView = (AdView) findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        mAdView.loadAd(adRequest);
+
         toolbar = (Toolbar) findViewById(R.id.toolbar_viewneeds);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);

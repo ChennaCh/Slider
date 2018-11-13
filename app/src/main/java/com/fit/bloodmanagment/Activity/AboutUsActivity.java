@@ -30,6 +30,10 @@ import android.widget.Toast;
 
 import com.fit.bloodmanagment.R;
 import com.fit.bloodmanagment.Utils.HttpHandler;
+import com.google.android.gms.ads.AdListener;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.MobileAds;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
@@ -57,6 +61,7 @@ public class AboutUsActivity extends AppCompatActivity implements View.OnClickLi
     TextView text1, text2, text3;
     View openLayout;
     GoogleMap gmap;
+    AdView mAdView;
 
     //String YOUR_API_KEY="AIzaSyDxBBCTnbdc_-7x2gYolw2UD9-k0difgQ8";
     //protected static final String STATIC_MAP_API_ENDPOINT = "http://maps.google.com/maps/api/staticmap?/center=17.49,78.39&maptype=roadmap&zoom=15&size=600x400";
@@ -65,6 +70,13 @@ public class AboutUsActivity extends AppCompatActivity implements View.OnClickLi
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_about_us);
+
+        MobileAds.initialize(this, "ca-app-pub-4682541119478126~4361374156");
+        mAdView = (AdView) findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        mAdView.loadAd(adRequest);
+        //mAdView.setAdListener(new AdListener());
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_aboutus);
         setSupportActionBar(toolbar);
         setTitle(getString(R.string.AboutUs));

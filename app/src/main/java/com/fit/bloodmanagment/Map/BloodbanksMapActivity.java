@@ -185,7 +185,7 @@ public class BloodbanksMapActivity extends FragmentActivity implements OnMapRead
 
         float dis = location.distanceTo(targetLocation);
         //Toast.makeText(getApplicationContext(),"Total Distance is : "+Math.round((dis/1000)*100.0f)/100.0+" kms",Toast.LENGTH_LONG).show();
-       distancetv.setText("Total Distance in kms: "+Math.round((dis/1000)*100.0f)/100.0);
+       distancetv.setText("Total Distance in kms: "+Math.round((dis/1000)*100.0f)/100.0+" Click on Marker to get directions");
 
 
 

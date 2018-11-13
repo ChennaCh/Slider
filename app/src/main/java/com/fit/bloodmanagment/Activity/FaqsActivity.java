@@ -13,16 +13,26 @@ import android.widget.TextView;
 
 
 import com.fit.bloodmanagment.R;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.MobileAds;
 
 public class FaqsActivity extends AppCompatActivity implements View.OnClickListener{
     TextView text1,text2,text3,text4,text5,text6,text7,text8,text9,text10,text11,text12,text13,text14,text15;
     LinearLayout panel1,panel2,panel3,panel4,panel5,panel6,panel7,panel8,panel9,panel10,panel11,panel12,panel13,panel14,panel15;
     View openLayout;
+    AdView mAdView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_faqs);
+
+        MobileAds.initialize(this, "ca-app-pub-4682541119478126~4361374156");
+        mAdView = (AdView) findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        mAdView.loadAd(adRequest);
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_faqs);
         setSupportActionBar(toolbar);
         setTitle(getString(R.string.Faqs));

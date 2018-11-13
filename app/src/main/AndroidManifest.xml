@@ -13,8 +13,8 @@
     <!-- <uses-permission android:name="android.permission.SET_DEBUG_APP" /> -->
     <uses-permission android:name="android.permission.CALL_PHONE" />
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-
+    <uses-permission android:name="android.permission.READ_SMS" />
+    <uses-permission android:name="android.permission.RECEIVE_SMS" />
     <!-- To use account credentials -->
     <uses-permission android:name="android.permission.USE_CREDENTIALS" />
 
@@ -110,7 +110,9 @@
         <activity android:name=".Activity.AddBloodCamp" />
         <activity android:name=".Activity.ViewBloodActivity" />
         <activity android:name=".Activity.AddBloodBanksActivity" />
-        <activity android:name=".Activity.ViewNotificationActivity"></activity>
+        <activity android:name=".Activity.ViewNotificationActivity" />
+        <activity android:name=".Activity.PaytmActivity" />
+        <activity android:name=".Activity.WebViewActivity"></activity>
     </application>
 
 </manifest>

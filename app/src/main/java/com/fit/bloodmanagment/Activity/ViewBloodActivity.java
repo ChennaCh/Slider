@@ -47,6 +47,9 @@ import com.fit.bloodmanagment.R;
 import com.fit.bloodmanagment.Utils.API;
 import com.github.ksoichiro.android.observablescrollview.ObservableScrollViewCallbacks;
 import com.github.ksoichiro.android.observablescrollview.ScrollState;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.MobileAds;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -65,11 +68,18 @@ public class ViewBloodActivity extends AppCompatActivity implements ObservableSc
     private String TAG = ViewBloodActivity.class.getSimpleName();
     ProgressBar progressBar;
     TextView errormsg;
+    AdView mAdView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_blood);
+
+        MobileAds.initialize(this, "ca-app-pub-4682541119478126~4361374156");
+        mAdView = (AdView) findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        mAdView.loadAd(adRequest);
+
         toolbar = (Toolbar) findViewById(R.id.viewcamp_toolbar);
         setTitle("Blood Donation Camps");
         setSupportActionBar(toolbar);

@@ -35,6 +35,9 @@ import com.fit.bloodmanagment.Network.ConnectivityReceiver;
 import com.fit.bloodmanagment.R;
 import com.fit.bloodmanagment.Utils.API;
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.MobileAds;
 import com.google.android.gms.common.SignInButton;
 
 
@@ -73,6 +76,8 @@ public class SignUpActivity extends AppCompatActivity  {
     Spinner spinnerbloodgroup;
     String fullname,email,password,phone,address,age,city,gender,bloodgroup;
     TextView regerror;
+    AdView mAdView;
+
     //Signin button
     private SignInButton signInButton;
     private int RC_SIGN_IN = 100;
@@ -90,6 +95,12 @@ public class SignUpActivity extends AppCompatActivity  {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
+
+        MobileAds.initialize(this, "ca-app-pub-4682541119478126~4361374156");
+        mAdView = (AdView) findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        mAdView.loadAd(adRequest);
+
         toolbar = (Toolbar) findViewById(R.id.signup_toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);

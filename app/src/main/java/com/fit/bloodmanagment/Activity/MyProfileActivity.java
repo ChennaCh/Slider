@@ -30,6 +30,9 @@ import com.fit.bloodmanagment.R;
 import com.fit.bloodmanagment.UserProfile.SignUpActivity;
 import com.fit.bloodmanagment.Utils.API;
 import com.fit.bloodmanagment.Utils.CustomVolleyRequest;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.MobileAds;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -63,6 +66,8 @@ public class MyProfileActivity extends AppCompatActivity {
      Toolbar toolbar;
     String RESULT_OK="1";
     Button updatebtn;
+    AdView mAdView;
+
     //Image Loader
     private ImageLoader imageLoader;
 
@@ -70,6 +75,12 @@ public class MyProfileActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_profile);
+
+        MobileAds.initialize(this, "ca-app-pub-4682541119478126~4361374156");
+        mAdView = (AdView) findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        mAdView.loadAd(adRequest);
+
         toolbar = (Toolbar) findViewById(R.id.myprofile_toolbar);
         setTitle(getString(R.string.Myprofile));
         setSupportActionBar(toolbar);

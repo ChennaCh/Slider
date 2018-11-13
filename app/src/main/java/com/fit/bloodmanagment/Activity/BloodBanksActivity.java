@@ -37,6 +37,9 @@ import com.github.ksoichiro.android.observablescrollview.ObservableRecyclerView;
 import com.github.ksoichiro.android.observablescrollview.ObservableScrollView;
 import com.github.ksoichiro.android.observablescrollview.ObservableScrollViewCallbacks;
 import com.github.ksoichiro.android.observablescrollview.ScrollState;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.MobileAds;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -57,6 +60,7 @@ public class BloodBanksActivity extends AppCompatActivity implements ObservableS
     Toolbar toolbar;
     ObservableScrollView mScrollView;
     TextView errormsg;
+    AdView mAdView;
 
 //    Display display = getWindowManager().getDefaultDisplay();
 //    Point size = new Point();
@@ -65,6 +69,12 @@ public class BloodBanksActivity extends AppCompatActivity implements ObservableS
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_blood_banks);
+
+        MobileAds.initialize(this, "ca-app-pub-4682541119478126~4361374156");
+        mAdView = (AdView) findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        mAdView.loadAd(adRequest);
+
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         mScrollView = (ObservableScrollView) findViewById(R.id.scrollable);

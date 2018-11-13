@@ -66,6 +66,7 @@ import com.fit.bloodmanagment.Activity.BloodBanksActivity;
 import com.fit.bloodmanagment.Activity.DonarActivity;
 import com.fit.bloodmanagment.Activity.FaqsActivity;
 import com.fit.bloodmanagment.Activity.MyProfileActivity;
+import com.fit.bloodmanagment.Activity.PaytmActivity;
 import com.fit.bloodmanagment.Activity.PrecautionsActivity;
 import com.fit.bloodmanagment.Activity.PrivacyPolicyActivity;
 import com.fit.bloodmanagment.Activity.UrgencyActivity;
@@ -88,6 +89,9 @@ import com.fit.bloodmanagment.UserProfile.SiginInActivity;
 import com.fit.bloodmanagment.UserProfile.SignUpActivity;
 import com.fit.bloodmanagment.Utils.API;
 import com.fit.bloodmanagment.Utils.CameraUtility;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.MobileAds;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -151,7 +155,7 @@ public class MainMapActivity extends FragmentActivity implements OnMapReadyCallb
     Marker mCurrLocationMarker;
     LocationRequest mLocationRequest;
     EditText mainsearch;
-    ImageView pharmacyimage,hospitalimage,fab,fableft,shareimage,rating,profilepic,searchimage,donormain,dadd,notificatio_bar;
+    ImageView pharmacyimage,hospitalimage,fab,fableft,shareimage,rating,profilepic,searchimage,donormain,dadd,notificatio_bar,donate_money;
     ProgressDialog progressdialog;
     LinearLayout donorll,hospitalll,pharmacyll,fableftll;
     public  NavigationView navigationView;
@@ -168,12 +172,22 @@ public class MainMapActivity extends FragmentActivity implements OnMapReadyCallb
     ProgressBar progressBar;
 
     TextView badgetxt;
+    AdView mAdView;
+
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main2);
+        if (ContextCompat.checkSelfPermission(MainMapActivity.this, Manifest.permission.READ_SMS) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(MainMapActivity.this, new String[]{Manifest.permission.READ_SMS, Manifest.permission.RECEIVE_SMS}, 101);
+        }
+        MobileAds.initialize(this, "ca-app-pub-4682541119478126~4361374156");
+        mAdView = (AdView) findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        mAdView.loadAd(adRequest);
+
         navbtn = (Button) findViewById(R.id.navigation_button);
         final DrawerLayout drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         navigationView = (NavigationView) findViewById(R.id.nav_view);
@@ -221,6 +235,7 @@ public class MainMapActivity extends FragmentActivity implements OnMapReadyCallb
         loginbtn = (Button) header.findViewById(R.id.signin_btn);
         signupbtn = (Button) header.findViewById(R.id.signup_btn);
         profilepic = (ImageView)header.findViewById(R.id.navimageview);
+        donate_money = (ImageView) findViewById(R.id.donate_img);
         mainsearch = (EditText) findViewById(R.id.mainsearch);
         rating=(ImageView) findViewById(R.id.rating);
         fableft=(ImageView)findViewById(R.id.fableft);
@@ -297,6 +312,14 @@ public class MainMapActivity extends FragmentActivity implements OnMapReadyCallb
         }
         shre =  getSharedPreferences(MYLOCATIONPREF, Context.MODE_PRIVATE);
         String location=shre.getString(mylatlongkey,String.valueOf(latLng));
+
+        donate_money.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+             Intent i = new Intent(getApplicationContext(), PaytmActivity.class);
+             startActivity(i);
+            }
+        });
 
         donormain.setOnClickListener(new View.OnClickListener() {
             @Override

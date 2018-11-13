@@ -28,6 +28,9 @@ import com.fit.bloodmanagment.Map.MainMapActivity;
 import com.fit.bloodmanagment.Network.ConnectivityReceiver;
 import com.fit.bloodmanagment.R;
 import com.fit.bloodmanagment.Utils.API;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.MobileAds;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.SignInButton;
 
@@ -57,11 +60,19 @@ public class SiginInActivity extends AppCompatActivity{
     ProgressBar progressbar;
     int flag = 0;
     private Activity activity;
+    AdView mAdView;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sigin_in);
+
+        MobileAds.initialize(this, "ca-app-pub-4682541119478126~4361374156");
+        mAdView = (AdView) findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        mAdView.loadAd(adRequest);
+
         toolbar = (Toolbar) findViewById(R.id.signin_toolbar);
         setTitle(getString(R.string.Signin));
         setSupportActionBar(toolbar);

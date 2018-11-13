@@ -29,6 +29,9 @@ import com.fit.bloodmanagment.R;
 import com.fit.bloodmanagment.UserProfile.SiginInActivity;
 import com.fit.bloodmanagment.UserProfile.SignUpActivity;
 import com.fit.bloodmanagment.Utils.API;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.MobileAds;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -62,6 +65,8 @@ public class UrgencyActivity extends AppCompatActivity {
     Button sendrequestbtn;
     String rescode;
     Calendar myCalendar = Calendar.getInstance();
+    AdView mAdView;
+
     //DatePickerDialog datePickerDialog=new DatePickerDialog();
     private String nname, nemail, nphone,naddress,npurpose,ncity,nbloodgroup,nrequredate;
     private int day;
@@ -72,6 +77,12 @@ public class UrgencyActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_urgency);
+
+        MobileAds.initialize(this, "ca-app-pub-4682541119478126~4361374156");
+        mAdView = (AdView) findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        mAdView.loadAd(adRequest);
+
         toolbar = (Toolbar) findViewById(R.id.urgency_toolbar);
         setTitle("Emergency Request");
         setSupportActionBar(toolbar);
