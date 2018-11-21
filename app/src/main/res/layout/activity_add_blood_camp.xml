@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="#E57373"
     tools:context="com.fit.bloodmanagment.Activity.AddBloodCamp">
     <android.support.v7.widget.Toolbar
         android:id="@+id/addcamp_toolbar"
@@ -26,7 +27,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_gravity="center"
-        android:background="#E57373"
         android:fitsSystemWindows="true"
         android:gravity="center"
         android:orientation="vertical">

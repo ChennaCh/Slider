@@ -122,8 +122,7 @@ public class AboutUsActivity extends AppCompatActivity implements View.OnClickLi
         aweb.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent viewIntent =
-                        new Intent("android.intent.action.VIEW", Uri.parse("http://www.fratelloinnotech.com/"));
+                Intent viewIntent = new Intent("android.intent.action.VIEW", Uri.parse("http://www.fratelloinnotech.com/"));
                 startActivity(viewIntent);
             }
         });

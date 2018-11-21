@@ -195,7 +195,7 @@
                     android:layout_width="80dp"
                     android:layout_height="50dp"
                     android:layout_gravity="center"
-                    android:layout_marginBottom="15dp"
+                    android:layout_marginBottom="17dp"
                     android:layout_marginTop="10dp"
                     android:src="@drawable/emergency" />
 
@@ -207,7 +207,8 @@
                 android:layout_weight="3.0"
                 android:orientation="horizontal"
                 android:paddingLeft="10dp"
-                android:paddingRight="10dp">
+                android:paddingRight="10dp"
+                android:layout_marginBottom="2dp">
 
 
                 <LinearLayout
@@ -418,7 +419,7 @@
                     android:layout_width="100dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:layout_marginBottom="15dp"
+                    android:layout_marginBottom="17dp"
                     android:layout_marginTop="10dp"
                     android:src="@drawable/plusfab" />
 
