@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="center"
-    tools:context="com.fit.bloodmanagment.Activity.ReceiverActivity">
+    android:orientation="vertical"
+    tools:context="com.fratelloinnotech.blooddonors.Activity.ReceiverActivity">
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar_receiver"
         android:layout_width="match_parent"
@@ -14,7 +14,15 @@
         app:titleTextColor="#fff"
         app:theme="@style/ToolbarStyle"
         android:background="?attr/colorPrimary"/>
-
+    <com.google.android.gms.ads.AdView
+        xmlns:ads="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/adView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        ads:adSize="BANNER"
+        android:layout_gravity="center"
+        ads:adUnitId="ca-app-pub-4682541119478126/9094826082">
+    </com.google.android.gms.ads.AdView>
     <RelativeLayout
         android:id="@+id/rlbloodbank"
         android:layout_width="match_parent"
@@ -36,15 +44,15 @@
         android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
         android:text="@string/Receiver"
         android:textColor="@color/white"/>
-        <com.google.android.gms.ads.AdView
-            xmlns:ads="http://schemas.android.com/apk/res-auto"
-            android:id="@+id/adView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            ads:adSize="BANNER"
-            android:layout_alignParentBottom="true"
-            android:layout_centerInParent="true"
-            ads:adUnitId="ca-app-pub-4682541119478126/9094826082">
-        </com.google.android.gms.ads.AdView>
+        <!--<com.google.android.gms.ads.AdView-->
+            <!--xmlns:ads="http://schemas.android.com/apk/res-auto"-->
+            <!--android:id="@+id/adView"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--ads:adSize="BANNER"-->
+            <!--android:layout_alignParentBottom="true"-->
+            <!--android:layout_centerInParent="true"-->
+            <!--ads:adUnitId="ca-app-pub-4682541119478126/9094826082">-->
+        <!--</com.google.android.gms.ads.AdView>-->
 </RelativeLayout>
-</RelativeLayout>
+</LinearLayout>

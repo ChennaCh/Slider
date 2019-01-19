@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="#E57373"
-    tools:context="com.fit.bloodmanagment.UserProfile.SignUpActivity">
+    tools:context="com.fratelloinnotech.blooddonors.UserProfile.SignUpActivity">
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/signup_toolbar"

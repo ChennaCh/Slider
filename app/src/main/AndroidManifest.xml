@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.fit.bloodmanagment">
+    package="com.fratelloinnotech.blooddonors">
 
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
@@ -19,33 +19,38 @@
     <uses-permission android:name="android.permission.USE_CREDENTIALS" />
 
     <application
-        android:name=".Network.MyApplication"
+        android:name="com.fratelloinnotech.blooddonors.Network.MyApplication"
         android:allowBackup="true"
         android:icon="@drawable/applogo"
         android:label="@string/app_name"
         android:theme="@style/MyMaterialTheme">
+
         <receiver
-            android:name=".Network.ConnectivityReceiver"
+            android:name="com.fratelloinnotech.blooddonors.Network.ConnectivityReceiver"
             android:enabled="true">
             <intent-filter>
                 <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
             </intent-filter>
         </receiver>
 
-        <activity android:name=".Slider.WelcomeActivity">
+        <activity android:name="com.fratelloinnotech.blooddonors.Slider.WelcomeActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <receiver
+            android:name="com.fratelloinnotech.blooddonors.Beans.AlarmReciever"
+            android:process=":remote" />
         <!-- Firebase Notifications -->
-        <service android:name=".service.MyFirebaseMessagingService">
+        <service android:name="com.fratelloinnotech.blooddonors.service.MyFirebaseMessagingService">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
-        <service android:name=".service.MyFirebaseInstanceIDService">
+        <service android:name="com.fratelloinnotech.blooddonors.service.MyFirebaseInstanceIDService">
             <intent-filter>
                 <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
             </intent-filter>
@@ -59,36 +64,36 @@
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
 
-        <activity android:name=".Activity.AboutUsActivity" />
-        <activity android:name=".Activity.DonarActivity" />
-        <activity android:name=".Activity.ReceiverActivity" />
-        <activity android:name=".Activity.BloodBanksActivity" />
-        <activity android:name=".Activity.PrecautionsActivity" />
-        <activity android:name=".Activity.ContactUsActivity" />
-        <activity android:name=".Activity.FeedBackActivity" />
+        <activity android:name="com.fratelloinnotech.blooddonors.Activity.AboutUsActivity" />
+        <activity android:name="com.fratelloinnotech.blooddonors.Activity.DonarActivity" />
+        <activity android:name="com.fratelloinnotech.blooddonors.Activity.ReceiverActivity" />
+        <activity android:name="com.fratelloinnotech.blooddonors.Activity.BloodBanksActivity" />
+        <activity android:name="com.fratelloinnotech.blooddonors.Activity.PrecautionsActivity" />
+        <activity android:name="com.fratelloinnotech.blooddonors.Activity.ContactUsActivity" />
+        <activity android:name="com.fratelloinnotech.blooddonors.Activity.FeedBackActivity" />
         <activity
-            android:name=".UserProfile.SiginInActivity"
+            android:name="com.fratelloinnotech.blooddonors.UserProfile.SiginInActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".UserProfile.SignUpActivity"
+            android:name="com.fratelloinnotech.blooddonors.UserProfile.SignUpActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".Activity.SplashActivity" />
+        <activity android:name="com.fratelloinnotech.blooddonors.Activity.SplashActivity" />
         <activity
-            android:name=".Map.BloodbanksMapActivity"
+            android:name="com.fratelloinnotech.blooddonors.Map.BloodbanksMapActivity"
             android:label="@string/title_activity_bloodbanks_map" />
-        <activity android:name=".Activity.MyProfileActivity" />
+        <activity android:name="com.fratelloinnotech.blooddonors.Activity.MyProfileActivity" />
 
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
 
         <activity
-            android:name=".Map.MainMapActivity"
+            android:name="com.fratelloinnotech.blooddonors.Map.MainMapActivity"
             android:label="@string/title_activity_main_map" />
-        <activity android:name=".Activity.UrgencyActivity" />
-        <activity android:name=".Activity.ViewNeedsActivity" />
-        <activity android:name=".Activity.FaqsActivity" />
-        <activity android:name=".Activity.PrivacyPolicyActivity" />
+        <activity android:name="com.fratelloinnotech.blooddonors.Activity.UrgencyActivity" />
+        <activity android:name="com.fratelloinnotech.blooddonors.Activity.ViewNeedsActivity" />
+        <activity android:name="com.fratelloinnotech.blooddonors.Activity.FaqsActivity" />
+        <activity android:name="com.fratelloinnotech.blooddonors.Activity.PrivacyPolicyActivity" />
         <!--
         <activity android:name=".Adapter.DonorListAdapter" />
         <activity android:name=".Adapter.ViewNeedsListAdapter" />
@@ -102,17 +107,21 @@
         -->
 
         <activity
-            android:name=".Map.DonorlistMapActivity"
+            android:name="com.fratelloinnotech.blooddonors.Map.DonorlistMapActivity"
             android:label="@string/title_activity_donorlist_map" />
         <activity
-            android:name=".Map.ViewNeedsMapActivity"
+            android:name="com.fratelloinnotech.blooddonors.Map.ViewNeedsMapActivity"
             android:label="@string/title_activity_view_needs_map" />
-        <activity android:name=".Activity.AddBloodCamp" />
-        <activity android:name=".Activity.ViewBloodActivity" />
-        <activity android:name=".Activity.AddBloodBanksActivity" />
-        <activity android:name=".Activity.ViewNotificationActivity" />
-        <activity android:name=".Activity.PaytmActivity" />
-        <activity android:name=".Activity.WebViewActivity"></activity>
+        <activity android:name="com.fratelloinnotech.blooddonors.Activity.AddBloodCamp" />
+        <activity android:name="com.fratelloinnotech.blooddonors.Activity.ViewBloodActivity" />
+        <activity android:name="com.fratelloinnotech.blooddonors.Activity.AddBloodBanksActivity" />
+        <activity android:name="com.fratelloinnotech.blooddonors.Activity.ViewNotificationActivity" />
+        <activity android:name="com.fratelloinnotech.blooddonors.Activity.PaytmActivity" />
+        <activity android:name="com.fratelloinnotech.blooddonors.Activity.WebViewActivity" />
+        <activity android:name="com.fratelloinnotech.blooddonors.Activity.EligibilityTest" />
+        <activity android:name="com.fratelloinnotech.blooddonors.Activity.TakeTest" />
+        <activity android:name="com.fratelloinnotech.blooddonors.Activity.ResultActivity" />
+        <activity android:name="com.fratelloinnotech.blooddonors.Activity.ScheduleActivity"></activity>
     </application>
 
 </manifest>

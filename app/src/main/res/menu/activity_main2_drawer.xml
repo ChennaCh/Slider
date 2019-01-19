@@ -1,108 +1,134 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-        <group android:checkableBehavior="single">
-                <item
+    <group android:checkableBehavior="single">
+        <item
             android:id="@+id/nav_aboutus"
-                    android:icon="@drawable/aboutus"
+            android:icon="@drawable/aboutus"
             android:title="@string/AboutUs" />
 
-            <group android:checkableBehavior="single"
-                android:id="@+id/groupnew">
-                <item
-                    android:id="@+id/nav_donoradd"
-                    android:icon="@drawable/donormain"
-                    android:title="Be a Donor" />
-            </group>
-
-    <group android:checkableBehavior="single"
-        android:id="@+id/group2">
-        <item
-            android:id="@+id/nav_donor"
-            android:icon="@drawable/blood_donor"
-            android:title="View Donors" />
+        <group android:checkableBehavior="single"
+            android:id="@+id/groupeligible">
+            <item
+                android:id="@+id/nav_eligibility"
+                android:icon="@drawable/ic_test"
+                android:title="Check Eligibility" />
+        </group>
+        <group android:checkableBehavior="single"
+            android:id="@+id/groupnew">
+            <item
+                android:id="@+id/nav_donoradd"
+                android:icon="@drawable/donormain"
+                android:title="Be a Donor" />
         </group>
 
-            <group android:checkableBehavior="single"
-                android:id="@+id/group11">
-                <item
-                    android:id="@+id/add_bloodbanks"
-                    android:icon="@drawable/bloodbanks"
-                    android:title="@string/ADDBloodBanks" />
+        <group android:checkableBehavior="single"
+            android:id="@+id/group2">
+            <item
+                android:id="@+id/nav_donor"
+                android:icon="@drawable/blood_donor"
+                android:title="View Donors" />
+        </group>
 
-            </group>
-
-    <group android:checkableBehavior="single"
-        android:id="@+id/group3">
-        <item
-            android:id="@+id/nav_bloodbanks"
-            android:icon="@drawable/viewneeds"
-            android:title="@string/BloodBanks" />
+        <group android:checkableBehavior="single"
+            android:id="@+id/group11">
+            <item
+                android:id="@+id/add_bloodbanks"
+                android:icon="@drawable/bloodbanks"
+                android:title="@string/ADDBloodBanks" />
 
         </group>
-            <group android:checkableBehavior="single"
-                android:id="@+id/group4">
-                <item
-                    android:id="@+id/nav_request"
-                    android:icon="@drawable/emergencyicon"
-                    android:title="@string/Request" />
-            </group>
-            <group android:checkableBehavior="single"
-                android:id="@+id/group9">
-                <item
-                    android:id="@+id/nav_addbloodcamp"
-                    android:icon="@drawable/bloodcamp"
-                    android:title="Add Blood Camp" />
-            </group>
-            <group android:checkableBehavior="single"
-                android:id="@+id/group10">
-                <item
-                    android:id="@+id/nav_viewbloodcamp"
-                    android:icon="@drawable/viewneeds"
-                    android:title="View Blood Camp" />
-            </group>
-            <group android:checkableBehavior="single"
-                android:id="@+id/group5">
-                <item
-                    android:id="@+id/nav_viewneeds"
-                    android:icon="@drawable/viewneeds"
-                    android:title="@string/Viewneeds" />
-            </group>
-            <group android:checkableBehavior="single"
-                android:id="@+id/group1">
-                <item
-                    android:id="@+id/nav_precautions"
-                    android:icon="@drawable/precautionicon"
-                    android:title="@string/Precautions" />
-            </group>
-            <group android:checkableBehavior="single"
-                android:id="@+id/group6">
-                <item
-                    android:id="@+id/nav_faqs"
-                    android:icon="@drawable/faqs"
-                    android:title="@string/Faqs" />
-            </group>
-            <group android:checkableBehavior="single"
-                android:id="@+id/group7">
-                <item
-                    android:id="@+id/nav_privacypolicy"
-                    android:icon="@drawable/privacypolicy"
-                    android:title="@string/PrivacyPolicy" />
-            </group>
 
-            <group android:checkableBehavior="single"
-              android:id="@+id/group8">
-        <item
-            android:id="@+id/nav_myprofile"
-            android:icon="@drawable/person"
-            android:title="@string/Myprofile"
-            android:visible="false" />
+        <group android:checkableBehavior="single"
+            android:id="@+id/group3">
+            <item
+                android:id="@+id/nav_bloodbanks"
+                android:icon="@drawable/viewneeds"
+                android:title="@string/BloodBanks" />
+
         </group>
+
+        <group android:checkableBehavior="single"
+            android:id="@+id/group9">
+            <item
+                android:id="@+id/nav_addbloodcamp"
+                android:icon="@drawable/bloodcamp"
+                android:title="Add Blood Camp" />
+        </group>
+        <group android:checkableBehavior="single"
+            android:id="@+id/group10">
+            <item
+                android:id="@+id/nav_viewbloodcamp"
+                android:icon="@drawable/viewneeds"
+                android:title="View Blood Camp" />
+        </group>
+        <group android:checkableBehavior="single"
+            android:id="@+id/group4">
+            <item
+                android:id="@+id/nav_request"
+                android:icon="@drawable/emergencyicon"
+                android:title="@string/Request" />
+        </group>
+        <group android:checkableBehavior="single"
+            android:id="@+id/group5">
+            <item
+                android:id="@+id/nav_viewneeds"
+                android:icon="@drawable/viewneeds"
+                android:title="@string/Viewneeds" />
+        </group>
+
+        <group android:checkableBehavior="single"
+            android:id="@+id/group12">
+            <item
+                android:id="@+id/nav_schedule"
+                android:icon="@drawable/ic_access_time_black_24dp"
+                android:title="Schedule" />
+        </group>
+
+        <group android:checkableBehavior="single"
+            android:id="@+id/group1">
+            <item
+                android:id="@+id/nav_precautions"
+                android:icon="@drawable/precautionicon"
+                android:title="@string/Precautions" />
+        </group>
+        <group android:checkableBehavior="single"
+            android:id="@+id/group6">
+            <item
+                android:id="@+id/nav_faqs"
+                android:icon="@drawable/faqs"
+                android:title="@string/Faqs" />
+        </group>
+        <group android:checkableBehavior="single"
+            android:id="@+id/group7">
+            <item
+                android:id="@+id/nav_privacypolicy"
+                android:icon="@drawable/privacypolicy"
+                android:title="@string/PrivacyPolicy" />
+        </group>
+
+        <group android:checkableBehavior="single"
+            android:id="@+id/group8">
+            <item
+                android:id="@+id/nav_myprofile"
+                android:icon="@drawable/person"
+                android:title="@string/Myprofile"
+                android:visible="false" />
+        </group>
+
+        <group android:checkableBehavior="single"
+            android:id="@+id/group23">
+            <item
+                android:id="@+id/nav_contribute"
+                android:icon="@drawable/ic_money"
+                android:title="Contribute" />
+        </group>
+
         <item
             android:id="@+id/nav_logout"
             android:visible="false"
             android:icon="@drawable/lockopen"
             android:title="@string/Logout" />
-        </group>
+    </group>
 </menu>
 
 

@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.fit.bloodmanagment.Activity.PrivacyPolicyActivity">
+    tools:context="com.fratelloinnotech.blooddonors.Activity.PrivacyPolicyActivity">
     <android.support.v7.widget.Toolbar
         android:id="@+id/privacytoolbar"
         android:layout_width="match_parent"

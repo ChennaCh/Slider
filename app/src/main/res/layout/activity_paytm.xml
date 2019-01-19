@@ -8,7 +8,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    tools:context="com.fit.bloodmanagment.Activity.PaytmActivity">
+    tools:context="com.fratelloinnotech.blooddonors.Activity.PaytmActivity">
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar_aboutus"
         android:layout_width="match_parent"
@@ -18,16 +18,14 @@
         app:theme="@style/ToolbarStyle"
         android:background="?attr/colorPrimary"/>
 <TextView
+    android:id="@+id/paytm_text"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:gravity="center"
     android:layout_margin="15dp"
     android:textColor="#000"
     android:text="@string/payment_txt"/>
-
-
     <ImageView
-        android:layout_marginTop="12dp"
         android:layout_width="match_parent"
         android:layout_height="42dp"
         android:src="@drawable/paytm"/>

@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.fit.bloodmanagment.Activity.PrecautionsActivity">
+    tools:context="com.fratelloinnotech.blooddonors.Activity.PrecautionsActivity">
     <android.support.v7.widget.Toolbar
         android:id="@+id/precautionstoolbar"
         android:layout_width="match_parent"

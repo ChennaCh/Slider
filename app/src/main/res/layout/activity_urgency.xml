@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="#E57373"
-    tools:context="com.fit.bloodmanagment.Activity.UrgencyActivity">
+    tools:context="com.fratelloinnotech.blooddonors.Activity.UrgencyActivity">
     <android.support.v7.widget.Toolbar
         android:id="@+id/urgency_toolbar"
         android:layout_width="match_parent"

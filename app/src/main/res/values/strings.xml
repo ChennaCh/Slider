@@ -5,7 +5,14 @@
     <string name="skip">SKIP</string>
     <string name="finish">FINISH</string>
 
-
+    <string name="ques1">How old are you ?</string>
+    <string name="ques2">Are you Pregnant or just given birth ?</string>
+    <string name="ques3">Do you have a serious heart condition ?</string>
+    <string name="ques4">Do you have any iron problems ?</string>
+    <string name="ques5">Have ever had recreational drugs ?</string>
+    <string name="ques6">Did you travel overseas in the last 4 months ?</string>
+    <string name="ques7">Are you less than 45 Kg in weight ?</string>
+    <string name="ques8">Did you have fever in the past 3 weeks ?</string>
     <string name="msg">Allow Application to access your location</string>
 
     <string name="slide_1_title">Donor Registration</string>
@@ -72,5 +79,6 @@
     <string name="title_activity_donorlist_map">Map</string>
     <string name="title_activity_view_needs_map">Map</string>
     <string name="loading">Loading...</string>
-    <string name="payment_txt">\"Your blood is precious : Donate, save a life &amp; make it Divine\"\n\nIf you like our services help us to do more by donating.\n\nYou can pay through Phone pay,Google Pay or Paytm\n\nTo this Contact : <b>9010990285</b>\n\nFratello InnoTech Pvt Ltd.,\nHyderabad\n\n---OR---\n</string>
+    <string name="payment_txt"><![CDATA[<b>\"Your blood is precious : Donate, save a life &amp; make it Divine\"</b><br/><br/>If you like our services help us to do more by donating.<br/><br/>You can pay through <b><font color=\'#ab1719\'>Phone pay,Google Pay or Paytm</font></b><br/><br/>To this Contact :<b><font color=\'#ab1719\'>9010990285</font></b><br/><br/>Fratello InnoTech Pvt Ltd.,<br/><br/>Hyderabad<br/><br/>---OR---<br/><br/>]]></string>
+    <string name="quiz">Yes, or no..  You\\\'ll only know it when you take this test that depends on the requirements of donation to decide, and you\\\'ll know how can you be a blood donor.  The test is based on the tests made by the american red cross and other blood donation organizations, so its result can be taken as a refrence</string>
 </resources>

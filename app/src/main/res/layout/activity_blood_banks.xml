@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="center"
     android:id="@+id/mainrl"
+    android:orientation="vertical"
     android:background="#E57373">
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"
@@ -15,30 +15,38 @@
         app:titleTextColor="#fff"
         app:theme="@style/ToolbarStyle"
         android:background="?attr/colorPrimary"/>
-
+    <com.google.android.gms.ads.AdView
+        xmlns:ads="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/adView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        ads:adSize="BANNER"
+        android:layout_gravity="center"
+        ads:adUnitId="ca-app-pub-4682541119478126/9094826082">
+    </com.google.android.gms.ads.AdView>
     <RelativeLayout
         android:layout_width="match_parent"
         android:id="@+id/rlrecycle"
         android:layout_below="@+id/toolbar"
         android:layout_height="match_parent">
 
-        <com.fit.bloodmanagment.Beans.ObservableRecyclerView
+        <com.fratelloinnotech.blooddonors.Beans.ObservableRecyclerView
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/bbrecyclerView"
         android:layout_width="match_parent"
             android:dividerHeight="1dp"
         android:layout_height="match_parent"/>
 
-        <com.google.android.gms.ads.AdView
-            xmlns:ads="http://schemas.android.com/apk/res-auto"
-            android:id="@+id/adView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            ads:adSize="BANNER"
-            android:layout_alignParentBottom="true"
-            android:layout_centerInParent="true"
-            ads:adUnitId="ca-app-pub-4682541119478126/9094826082">
-        </com.google.android.gms.ads.AdView>
+        <!--<com.google.android.gms.ads.AdView-->
+            <!--xmlns:ads="http://schemas.android.com/apk/res-auto"-->
+            <!--android:id="@+id/adView"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--ads:adSize="BANNER"-->
+            <!--android:layout_alignParentBottom="true"-->
+            <!--android:layout_centerInParent="true"-->
+            <!--ads:adUnitId="ca-app-pub-4682541119478126/9094826082">-->
+        <!--</com.google.android.gms.ads.AdView>-->
 
     </RelativeLayout>
 
@@ -60,4 +68,4 @@
         android:layout_centerInParent="true"
         android:text=""/>
 
-</RelativeLayout>
+</LinearLayout>
