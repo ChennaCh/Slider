@@ -44,7 +44,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import static android.support.v7.widget.StaggeredGridLayoutManager.TAG;
 import static com.fratelloinnotech.blooddonors.Network.Conn.displayMobileDataSettingsDialog;
 
 
@@ -187,7 +186,7 @@ public class MyProfileActivity extends AppCompatActivity {
 
                             }
                         } catch (final JSONException e) {
-                            Log.e(TAG, "Json parsing error: " + e.getMessage());
+                            Log.e("profile", "Json parsing error: " + e.getMessage());
                             e.printStackTrace();
                         }
 
