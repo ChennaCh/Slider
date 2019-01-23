@@ -123,43 +123,43 @@ import java.util.Random;
 
 import static com.fratelloinnotech.blooddonors.Network.Conn.displayMobileDataSettingsDialog;
 
-public class MainMapActivity extends FragmentActivity implements OnMapReadyCallback,NavigationView.OnNavigationItemSelectedListener,
+public class MainMapActivity extends FragmentActivity implements OnMapReadyCallback, NavigationView.OnNavigationItemSelectedListener,
         GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener,
-        LocationListener,View.OnClickListener,ConnectivityReceiver.ConnectivityReceiverListener{
+        LocationListener, View.OnClickListener, ConnectivityReceiver.ConnectivityReceiverListener {
     private Boolean isFabOpen = false;
-    TextView fab1,fab2,fab3,fab4,fab5,fab6,fab7,fab8;
-    private Animation fab_open,fab_close,rotate_forward,rotate_backward;
+    TextView fab1, fab2, fab3, fab4, fab5, fab6, fab7, fab8;
+    private Animation fab_open, fab_close, rotate_forward, rotate_backward;
     private GoogleMap mMap;
     View mapView;
-    private Button navbtn,loginbtn,signupbtn;
+    private Button navbtn, loginbtn, signupbtn;
     public static final String IMAGE_ID = "IMG_ID";
     private final String TAG = "MainMapActivity";
     private Activity activity;
-    ArrayList<DonorBean> donordata=new ArrayList<>();
+    ArrayList<DonorBean> donordata = new ArrayList<>();
     private ImageDatabaseHelper databaseHelper;
     int id;
     private String userChoosenTask;
     private int REQUEST_CAMERA = 0, SELECT_FILE = 1;
-    double latitude,longitude;
+    double latitude, longitude;
     private int PROXIMITY_RADIUS = 10000;
     GoogleApiClient mGoogleApiClient;
     Location mLastLocation;
     Marker mCurrLocationMarker;
     LocationRequest mLocationRequest;
     EditText mainsearch;
-    ImageView pharmacyimage,hospitalimage,fab,fableft,shareimage,rating,profilepic,searchimage,donormain,dadd,notificatio_bar,donate_money;
+    ImageView pharmacyimage, hospitalimage, fab, fableft, shareimage, rating, profilepic, searchimage, donormain, dadd, notificatio_bar, donate_money;
     ProgressDialog progressdialog;
-    LinearLayout donorll,hospitalll,pharmacyll,fableftll;
-    public  NavigationView navigationView;
+    LinearLayout donorll, hospitalll, pharmacyll, fableftll;
+    public NavigationView navigationView;
     LatLng latLng;
     SharedPreferences shre;
     Bitmap thumbnail;
     MarkerOptions markerOptions;
-    public static final String MyPREFERENCES = "MyPre" ;//file name
-    public static final String MYLOCATIONPREF="MyLocationPrefereces";
-    public static final String mylatlongkey="mylatlong";
-    public static final String  key = "nameKey";
+    public static final String MyPREFERENCES = "MyPre";//file name
+    public static final String MYLOCATIONPREF = "MyLocationPrefereces";
+    public static final String mylatlongkey = "mylatlong";
+    public static final String key = "nameKey";
 
     TextView loading;
     ProgressBar progressBar;
@@ -187,13 +187,13 @@ public class MainMapActivity extends FragmentActivity implements OnMapReadyCallb
         navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        loading = (TextView)findViewById(R.id.load);
+        loading = (TextView) findViewById(R.id.load);
         progressBar = (ProgressBar) findViewById(R.id.progress);
         badgetxt = (TextView) findViewById(R.id.textbadge);
         progressBar.setVisibility(View.VISIBLE);
         loading.setVisibility(View.VISIBLE);
         showbadge();
-        View header  = navigationView.getHeaderView(0);
+        View header = navigationView.getHeaderView(0);
         if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             checkLocationPermission();
         }
@@ -202,9 +202,8 @@ public class MainMapActivity extends FragmentActivity implements OnMapReadyCallb
         if (!CheckGooglePlayServices()) {
             Log.d("onCreate", "Finishing test case since Google Play Services are not available");
             finish();
-        }
-        else {
-            Log.d("onCreate","Google Play Services available.");
+        } else {
+            Log.d("onCreate", "Google Play Services available.");
         }
 
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
@@ -215,24 +214,24 @@ public class MainMapActivity extends FragmentActivity implements OnMapReadyCallb
 //        mapprogressbar = (ProgressBar) findViewById(R.id.mapprogressbar);
 //
 //   mapprogressbar.getIndeterminateDrawable().setColorFilter(0xFFFF0000, android.graphics.PorterDuff.Mode.MULTIPLY);
-        fableftll=(LinearLayout)findViewById(R.id.fableftll);
-        pharmacyll=(LinearLayout)findViewById(R.id.pharmacyll);
-        hospitalll=(LinearLayout)findViewById(R.id.hospitalll);
-        donorll=(LinearLayout)findViewById(R.id.donorll);
-        pharmacyimage=(ImageView) findViewById(R.id.pharmacyimage);
-        hospitalimage=(ImageView) findViewById(R.id.hospitalsimage);
+        fableftll = (LinearLayout) findViewById(R.id.fableftll);
+        pharmacyll = (LinearLayout) findViewById(R.id.pharmacyll);
+        hospitalll = (LinearLayout) findViewById(R.id.hospitalll);
+        donorll = (LinearLayout) findViewById(R.id.donorll);
+        pharmacyimage = (ImageView) findViewById(R.id.pharmacyimage);
+        hospitalimage = (ImageView) findViewById(R.id.hospitalsimage);
         searchimage = (ImageView) findViewById(R.id.searchimage);
         dadd = (ImageView) findViewById(R.id.dadd);
         notificatio_bar = (ImageView) findViewById(R.id.notificatio_bar);
-        shareimage=(ImageView)findViewById(R.id.share_app);
-        donormain = (ImageView)findViewById(R.id.donormain);
+        shareimage = (ImageView) findViewById(R.id.share_app);
+        donormain = (ImageView) findViewById(R.id.donormain);
         loginbtn = (Button) header.findViewById(R.id.signin_btn);
         signupbtn = (Button) header.findViewById(R.id.signup_btn);
-        profilepic = (ImageView)header.findViewById(R.id.navimageview);
+        profilepic = (ImageView) header.findViewById(R.id.navimageview);
         donate_money = (ImageView) findViewById(R.id.donate_img);
         mainsearch = (EditText) findViewById(R.id.mainsearch);
-        rating=(ImageView) findViewById(R.id.rating);
-        fableft=(ImageView)findViewById(R.id.fableft);
+        rating = (ImageView) findViewById(R.id.rating);
+        fableft = (ImageView) findViewById(R.id.fableft);
         fab = (ImageView) findViewById(R.id.fabright);
         fab1 = (TextView) findViewById(R.id.fab1);
         fab2 = (TextView) findViewById(R.id.fab2);
@@ -244,9 +243,9 @@ public class MainMapActivity extends FragmentActivity implements OnMapReadyCallb
         fab8 = (TextView) findViewById(R.id.fab8);
 
         fab_open = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fab_open);
-        fab_close = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.fab_close);
-        rotate_forward = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.rotate_forward);
-        rotate_backward = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.rotate_backward);
+        fab_close = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fab_close);
+        rotate_forward = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.rotate_forward);
+        rotate_backward = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.rotate_backward);
         fab.setOnClickListener(this);
         fab1.setOnClickListener(this);
         fab2.setOnClickListener(this);
@@ -256,30 +255,29 @@ public class MainMapActivity extends FragmentActivity implements OnMapReadyCallb
         fab6.setOnClickListener(this);
         fab7.setOnClickListener(this);
         fab8.setOnClickListener(this);
-        final LocationManager manager = (LocationManager) getSystemService( Context.LOCATION_SERVICE );
-        if ( !manager.isProviderEnabled( LocationManager.GPS_PROVIDER ) ) {
+        final LocationManager manager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        if (!manager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
             buildAlertMessageNoGps();
         }
         checkConnection();
-        if(ConnectivityReceiver.isConnected()==false){
+        if (ConnectivityReceiver.isConnected() == false) {
             displayMobileDataSettingsDialog(this);
         }
-        shre =  getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
-        if (shre.contains(key))
-        {//save required image
-            String u=shre.getString(key, "");
-            thumbnail=decodeBase64(u);
+        shre = getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
+        if (shre.contains(key)) {//save required image
+            String u = shre.getString(key, "");
+            thumbnail = decodeBase64(u);
             profilepic.setImageBitmap(thumbnail);
         }
-        shre = getSharedPreferences("userdetails",MODE_PRIVATE);
-        String loginuname = shre.getString("fullname",null);
-        if(loginuname=="" || loginuname==null){
-           // Toast.makeText(getApplicationContext(),"Login again",Toast.LENGTH_LONG).show();
-            LinearLayout ll =(LinearLayout)header.findViewById(R.id.loginorsignup);
+        shre = getSharedPreferences("userdetails", MODE_PRIVATE);
+        String loginuname = shre.getString("fullname", null);
+        if (loginuname == "" || loginuname == null) {
+            // Toast.makeText(getApplicationContext(),"Login again",Toast.LENGTH_LONG).show();
+            LinearLayout ll = (LinearLayout) header.findViewById(R.id.loginorsignup);
             ll.setVisibility(View.VISIBLE);
-            LinearLayout ll2=(LinearLayout)header.findViewById(R.id.myloginusername);
+            LinearLayout ll2 = (LinearLayout) header.findViewById(R.id.myloginusername);
             ll2.setVisibility(View.GONE);
-            Menu menuNav=navigationView.getMenu();
+            Menu menuNav = navigationView.getMenu();
             MenuItem nav_myprofile = menuNav.findItem(R.id.nav_myprofile);
             nav_myprofile.setVisible(false);
             MenuItem nav_logout = menuNav.findItem(R.id.nav_logout);
@@ -288,14 +286,14 @@ public class MainMapActivity extends FragmentActivity implements OnMapReadyCallb
             nav_beadonor.setVisible(true);
 
             //nav_donoradd
-        }else{
-            LinearLayout ll =(LinearLayout)header.findViewById(R.id.loginorsignup);
+        } else {
+            LinearLayout ll = (LinearLayout) header.findViewById(R.id.loginorsignup);
             ll.setVisibility(View.GONE);
-            LinearLayout ll2=(LinearLayout)header.findViewById(R.id.myloginusername);
+            LinearLayout ll2 = (LinearLayout) header.findViewById(R.id.myloginusername);
             ll2.setVisibility(View.VISIBLE);
-            TextView username=(TextView)header.findViewById(R.id.username);
+            TextView username = (TextView) header.findViewById(R.id.username);
             username.setText(loginuname);
-            Menu menuNav=navigationView.getMenu();
+            Menu menuNav = navigationView.getMenu();
             MenuItem nav_myprofile = menuNav.findItem(R.id.nav_myprofile);
             nav_myprofile.setVisible(true);
             MenuItem nav_logout = menuNav.findItem(R.id.nav_logout);
@@ -304,21 +302,21 @@ public class MainMapActivity extends FragmentActivity implements OnMapReadyCallb
             nav_beadonor.setVisible(false);
 
         }
-        shre =  getSharedPreferences(MYLOCATIONPREF, Context.MODE_PRIVATE);
-        String location=shre.getString(mylatlongkey,String.valueOf(latLng));
+        shre = getSharedPreferences(MYLOCATIONPREF, Context.MODE_PRIVATE);
+        String location = shre.getString(mylatlongkey, String.valueOf(latLng));
 
         donate_money.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-             Intent i = new Intent(getApplicationContext(), PaytmActivity.class);
-             startActivity(i);
+                Intent i = new Intent(getApplicationContext(), PaytmActivity.class);
+                startActivity(i);
             }
         });
 
         donormain.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               //showdonorsonmap();
+                //showdonorsonmap();
                 listapi();
             }
         });
@@ -326,7 +324,7 @@ public class MainMapActivity extends FragmentActivity implements OnMapReadyCallb
         dadd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(getApplicationContext(),SignUpActivity.class);
+                Intent i = new Intent(getApplicationContext(), SignUpActivity.class);
                 startActivity(i);
             }
         });
@@ -334,7 +332,7 @@ public class MainMapActivity extends FragmentActivity implements OnMapReadyCallb
         notificatio_bar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(getApplicationContext(),ViewNotificationActivity.class);
+                Intent i = new Intent(getApplicationContext(), ViewNotificationActivity.class);
                 startActivity(i);
             }
         });
@@ -343,19 +341,16 @@ public class MainMapActivity extends FragmentActivity implements OnMapReadyCallb
             @Override
             public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
                 if (i == EditorInfo.IME_ACTION_SEARCH) {
-                    String name=mainsearch.getText().toString().trim();
-                    if(name.equals(""))
-                    {
+                    String name = mainsearch.getText().toString().trim();
+                    if (name.equals("")) {
                         Toast.makeText(MainMapActivity.this, "Searchbox can't be empty", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(MainMapActivity.this, "Results for " + name, Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(getApplicationContext(), DonarActivity.class);
+                        intent.putExtra("sq", name);
+                        startActivity(intent);
+                        return true;
                     }
-                    else
-                    {
-                    Toast.makeText(MainMapActivity.this, "Results for "+name, Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(getApplicationContext(),DonarActivity.class);
-                    intent.putExtra("sq",name);
-                    startActivity(intent);
-                    return true;
-                }
                 }
                 return false;
             }
@@ -365,16 +360,13 @@ public class MainMapActivity extends FragmentActivity implements OnMapReadyCallb
             @Override
             public void onClick(View v) {
 
-                String name=mainsearch.getText().toString().trim();
-                if(name.equals(""))
-                {
+                String name = mainsearch.getText().toString().trim();
+                if (name.equals("")) {
                     Toast.makeText(MainMapActivity.this, "Searchbox can't be empty", Toast.LENGTH_SHORT).show();
-                }
-                else
-                {
-                    Toast.makeText(MainMapActivity.this, "Results for "+name, Toast.LENGTH_SHORT).show();
-                    Intent i = new Intent(getApplicationContext(),DonarActivity.class);
-                    i.putExtra("sq",name);
+                } else {
+                    Toast.makeText(MainMapActivity.this, "Results for " + name, Toast.LENGTH_SHORT).show();
+                    Intent i = new Intent(getApplicationContext(), DonarActivity.class);
+                    i.putExtra("sq", name);
                     startActivity(i);
                 }
             }
@@ -391,7 +383,7 @@ public class MainMapActivity extends FragmentActivity implements OnMapReadyCallb
                     shareapp = shareapp + "https://play.google.com/store/apps/details?id=com.fratelloinnotech.blooddonors";
                     i.putExtra(Intent.EXTRA_TEXT, shareapp);
                     startActivity(Intent.createChooser(i, "Choose One"));
-                } catch(Exception e) {
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
 
@@ -401,25 +393,25 @@ public class MainMapActivity extends FragmentActivity implements OnMapReadyCallb
         rating.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                    Uri uri = Uri.parse("market://details?id=" + getPackageName());
-                    Intent myAppLinkToMarket = new Intent(Intent.ACTION_VIEW, uri);
-                    try {
-                        startActivity(myAppLinkToMarket);
-                    } catch (ActivityNotFoundException e) {
-                        Toast.makeText(getApplicationContext()," unable to find application in playstore", Toast.LENGTH_LONG).show();
-                    }
+                Uri uri = Uri.parse("market://details?id=" + getPackageName());
+                Intent myAppLinkToMarket = new Intent(Intent.ACTION_VIEW, uri);
+                try {
+                    startActivity(myAppLinkToMarket);
+                } catch (ActivityNotFoundException e) {
+                    Toast.makeText(getApplicationContext(), " unable to find application in playstore", Toast.LENGTH_LONG).show();
                 }
+            }
         });
         loginbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(MainMapActivity.this,SiginInActivity.class));
+                startActivity(new Intent(MainMapActivity.this, SiginInActivity.class));
             }
         });
         signupbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(MainMapActivity.this,SignUpActivity.class));
+                startActivity(new Intent(MainMapActivity.this, SignUpActivity.class));
             }
         });
 
@@ -443,11 +435,12 @@ public class MainMapActivity extends FragmentActivity implements OnMapReadyCallb
         fableftll.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(MainMapActivity.this,UrgencyActivity.class));
+                startActivity(new Intent(MainMapActivity.this, UrgencyActivity.class));
             }
         });
 
     }
+
     private void showbadge() {
         RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
         String serverURL = API.showbadgecount;
@@ -455,15 +448,15 @@ public class MainMapActivity extends FragmentActivity implements OnMapReadyCallb
                 new com.android.volley.Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                       // badgetxt.setVisibility(View.VISIBLE);
+                        // badgetxt.setVisibility(View.VISIBLE);
                         try {
                             JSONObject jsonObj = new JSONObject(response);
                             String count = jsonObj.getString("result");
-                            if(count.equals("0")){
+                            if (count.equals("0")) {
                                 badgetxt.setVisibility(View.GONE);
-                            }else{
+                            } else {
                                 badgetxt.setVisibility(View.VISIBLE);
-                                badgetxt.setText(""+count);
+                                badgetxt.setText("" + count);
                             }
                             //Toast.makeText(MainMapActivity.this, "count:"+count, Toast.LENGTH_SHORT).show();
                         } catch (final JSONException e) {
@@ -480,18 +473,18 @@ public class MainMapActivity extends FragmentActivity implements OnMapReadyCallb
                         Toast.makeText(getApplicationContext(), "No Network Connection", Toast.LENGTH_LONG).show();
                     }
                 }
-        ){
+        ) {
             @Override
             protected Map<String, String> getParams() {
                 Toast.makeText(getApplicationContext(), "Successful", Toast.LENGTH_SHORT).show();
                 return null;
             }
         };
-       // badgetxt.setVisibility(View.GONE);
+        // badgetxt.setVisibility(View.GONE);
         queue.add(getRequest);
     }
-    public static String encodeTobase64(Bitmap image)
-    {
+
+    public static String encodeTobase64(Bitmap image) {
         Bitmap immage = image;
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         immage.compress(Bitmap.CompressFormat.PNG, 100, baos);
@@ -502,8 +495,8 @@ public class MainMapActivity extends FragmentActivity implements OnMapReadyCallb
         return imageEncoded;
 
     }
-    public static Bitmap decodeBase64(String input)
-    {
+
+    public static Bitmap decodeBase64(String input) {
         byte[] decodedByte = Base64.decode(input, 0);
         return BitmapFactory.decodeByteArray(decodedByte, 0, decodedByte.length);
     }
@@ -512,8 +505,8 @@ public class MainMapActivity extends FragmentActivity implements OnMapReadyCallb
     private boolean CheckGooglePlayServices() {
         GoogleApiAvailability googleAPI = GoogleApiAvailability.getInstance();
         int result = googleAPI.isGooglePlayServicesAvailable(this);
-        if(result != ConnectionResult.SUCCESS) {
-            if(googleAPI.isUserResolvableError(result)) {
+        if (result != ConnectionResult.SUCCESS) {
+            if (googleAPI.isUserResolvableError(result)) {
                 googleAPI.getErrorDialog(this, result,
                         0).show();
             }
@@ -528,9 +521,9 @@ public class MainMapActivity extends FragmentActivity implements OnMapReadyCallb
         switch (requestCode) {
             case CameraUtility.MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE:
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    if(userChoosenTask.equals("Take Photo"))
+                    if (userChoosenTask.equals("Take Photo"))
                         cameraIntent();
-                    else if(userChoosenTask.equals("Choose from Library"))
+                    else if (userChoosenTask.equals("Choose from Library"))
                         galleryIntent();
                 } else {
                     //code for deny
@@ -569,23 +562,23 @@ public class MainMapActivity extends FragmentActivity implements OnMapReadyCallb
     }
 
     private void selectImage() {
-        final CharSequence[] items = { "Take Photo", "Choose from Library",
-                "Cancel" };
+        final CharSequence[] items = {"Take Photo", "Choose from Library",
+                "Cancel"};
 
         android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(MainMapActivity.this);
         builder.setTitle("Add Photo!");
         builder.setItems(items, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int item) {
-                boolean result= CameraUtility.checkPermission(MainMapActivity.this);
+                boolean result = CameraUtility.checkPermission(MainMapActivity.this);
 
                 if (items[item].equals("Take Photo")) {
-                    userChoosenTask ="Take Photo";
-                    if(result)
+                    userChoosenTask = "Take Photo";
+                    if (result)
                         cameraIntent();
                 } else if (items[item].equals("Choose from Library")) {
-                    userChoosenTask ="Choose from Library";
-                    if(result)
+                    userChoosenTask = "Choose from Library";
+                    if (result)
                         galleryIntent();
 
                 } else if (items[item].equals("Cancel")) {
@@ -595,27 +588,28 @@ public class MainMapActivity extends FragmentActivity implements OnMapReadyCallb
         });
         builder.show();
     }
-    private void cameraIntent()
-    {
+
+    private void cameraIntent() {
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         startActivityForResult(intent, REQUEST_CAMERA);
     }
-    private void galleryIntent()
-    {
+
+    private void galleryIntent() {
         Intent intent = new Intent();
         intent.setType("image/*");
         intent.setAction(Intent.ACTION_GET_CONTENT);//
-        startActivityForResult(Intent.createChooser(intent, "Select File"),SELECT_FILE);
+        startActivityForResult(Intent.createChooser(intent, "Select File"), SELECT_FILE);
 
     }
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
         if (resultCode == Activity.RESULT_OK) {
-            if (requestCode == SELECT_FILE){
+            if (requestCode == SELECT_FILE) {
                 //onSelectFromGalleryResult(data);
-                Bitmap bm=null;
+                Bitmap bm = null;
                 if (data != null) {
                     try {
                         bm = MediaStore.Images.Media.getBitmap(getApplicationContext().getContentResolver(), data.getData());
@@ -626,9 +620,7 @@ public class MainMapActivity extends FragmentActivity implements OnMapReadyCallb
                     profilepic.setImageBitmap(bm);
 
                 }
-            }
-
-            else if (requestCode == REQUEST_CAMERA) {
+            } else if (requestCode == REQUEST_CAMERA) {
                 //onCaptureImageResult(data);
                 Bitmap bm = (Bitmap) data.getExtras().get("data");
                 storeImage(bm);
@@ -637,6 +629,7 @@ public class MainMapActivity extends FragmentActivity implements OnMapReadyCallb
             }
         }
     }
+
     private void storeImage(Bitmap thumbnail) {
         // Removing image saved earlier in shared prefernces
         PreferenceManager.getDefaultSharedPreferences(this).edit().clear().apply();
@@ -646,11 +639,11 @@ public class MainMapActivity extends FragmentActivity implements OnMapReadyCallb
         Random generator = new Random();
         int n = 10000;
         n = generator.nextInt(n);
-        String fname = "Image-"+ n +".jpg";
+        String fname = "Image-" + n + ".jpg";
 
         // set the file path
         // sdcard/PictureFolder/ is the folder created in create folder method
-        String filePath = "/sdcard/PictureFolder/"+fname;
+        String filePath = "/sdcard/PictureFolder/" + fname;
         // the rest of the code is for saving the file to filepath mentioned above
         FileOutputStream fileOutputStream = null;
         try {
@@ -662,9 +655,9 @@ public class MainMapActivity extends FragmentActivity implements OnMapReadyCallb
         BufferedOutputStream bos = new BufferedOutputStream(fileOutputStream);
         //choose another format if PNG doesn't suit you
         thumbnail.compress(Bitmap.CompressFormat.PNG, 100, bos);
-        shre =  getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
+        shre = getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = shre.edit();
-        editor.putString(key,encodeTobase64(thumbnail));
+        editor.putString(key, encodeTobase64(thumbnail));
         editor.commit();
         try {
             bos.flush();
@@ -679,8 +672,8 @@ public class MainMapActivity extends FragmentActivity implements OnMapReadyCallb
             e.printStackTrace();
         }
     }
-    public void createFolder()
-    {
+
+    public void createFolder() {
         // here PictureFolder is the folder name you can change it offcourse
         String RootDir = Environment.getExternalStorageDirectory()
                 + File.separator + "PictureFolder";
@@ -698,22 +691,19 @@ public class MainMapActivity extends FragmentActivity implements OnMapReadyCallb
             Intent intent = new Intent(MainMapActivity.this, AboutUsActivity.class);
             startActivity(intent);
 
-        }
-        else if (id == R.id.nav_eligibility) {
+        } else if (id == R.id.nav_eligibility) {
             Intent intent = new Intent(MainMapActivity.this, EligibilityTest.class);
             startActivity(intent);
 
-        }
-        else if (id == R.id.nav_donoradd) {
+        } else if (id == R.id.nav_donoradd) {
             Intent intent = new Intent(MainMapActivity.this, SignUpActivity.class);
             startActivity(intent);
 
-        }
-        else if (id == R.id.nav_donor) {
+        } else if (id == R.id.nav_donor) {
             Intent intent = new Intent(MainMapActivity.this, DonarActivity.class);
             startActivity(intent);
 
-        }  else if (id == R.id.add_bloodbanks) {
+        } else if (id == R.id.add_bloodbanks) {
             Intent intent = new Intent(MainMapActivity.this, AddBloodBanksActivity.class);
             startActivity(intent);
 
@@ -732,34 +722,29 @@ public class MainMapActivity extends FragmentActivity implements OnMapReadyCallb
         } else if (id == R.id.nav_request) {
             Intent intent = new Intent(MainMapActivity.this, UrgencyActivity.class);
             startActivity(intent);
-        }else if(id ==R.id.nav_viewneeds){
+        } else if (id == R.id.nav_viewneeds) {
             Intent intent = new Intent(MainMapActivity.this, ViewNeedsActivity.class);
             startActivity(intent);
-        }
-        else if(id ==R.id.nav_schedule){
+        } else if (id == R.id.nav_schedule) {
             Intent intent = new Intent(MainMapActivity.this, ScheduleActivity.class);
             startActivity(intent);
-        }
-
-        else if(id ==R.id.nav_contribute){
+        } else if (id == R.id.nav_contribute) {
             Intent intent = new Intent(MainMapActivity.this, PaytmActivity.class);
             startActivity(intent);
-        }
-        else if(id==R.id.nav_faqs){
+        } else if (id == R.id.nav_faqs) {
             Intent intent = new Intent(MainMapActivity.this, FaqsActivity.class);
             startActivity(intent);
-        }else if(id==R.id.nav_privacypolicy){
+        } else if (id == R.id.nav_privacypolicy) {
             Intent intent = new Intent(MainMapActivity.this, PrivacyPolicyActivity.class);
             startActivity(intent);
-        }else if(id==R.id.nav_logout){
+        } else if (id == R.id.nav_logout) {
             Intent intent = new Intent(getApplicationContext(), MainMapActivity.class);
             getApplicationContext().getSharedPreferences("userdetails", 0).edit().clear().commit();
             startActivity(intent);
-        }else if(id==R.id.nav_addbloodcamp){
+        } else if (id == R.id.nav_addbloodcamp) {
             Intent intent = new Intent(MainMapActivity.this, AddBloodCamp.class);
             startActivity(intent);
-        }
-        else if(id==R.id.nav_viewbloodcamp){
+        } else if (id == R.id.nav_viewbloodcamp) {
             Intent intent = new Intent(MainMapActivity.this, ViewBloodActivity.class);
             startActivity(intent);
         }
@@ -774,7 +759,7 @@ public class MainMapActivity extends FragmentActivity implements OnMapReadyCallb
         mMap = googleMap;
         googleMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
         // mMap.setMapType(GoogleMap.);
-        LatLng india = new LatLng(20.5937,78.9629);
+        LatLng india = new LatLng(20.5937, 78.9629);
         googleMap.moveCamera(CameraUpdateFactory.newLatLng(india));
         mMap.animateCamera(CameraUpdateFactory.zoomTo(5.0f));
         //Initialize Google Play Services
@@ -789,8 +774,7 @@ public class MainMapActivity extends FragmentActivity implements OnMapReadyCallb
                 //mMap.setPadding(0, 0, 30, );
                 //mMap.setPadding(left, top, right, bottom);
             }
-        }
-        else {
+        } else {
             buildGoogleApiClient();
             setPadding(mapView);
             mMap.setMyLocationEnabled(true);
@@ -803,11 +787,11 @@ public class MainMapActivity extends FragmentActivity implements OnMapReadyCallb
             @Override
             public void onClick(View v) {
                 try {
-                if(ConnectivityReceiver.isConnected()==false){
-                    checkConnection();
-                    //displayMobileDataSettingsDialog(MainMapActivity.this);
-                }
-                   // progressdialog = new ProgressDialog(MainMapActivity.this,R.style.MyAlertDialogStyle);
+                    if (ConnectivityReceiver.isConnected() == false) {
+                        checkConnection();
+                        //displayMobileDataSettingsDialog(MainMapActivity.this);
+                    }
+                    // progressdialog = new ProgressDialog(MainMapActivity.this,R.style.MyAlertDialogStyle);
                     String Pharmacy = "pharmacy";
 
                     // Log.d("onClick", "Button is Clicked");
@@ -823,12 +807,11 @@ public class MainMapActivity extends FragmentActivity implements OnMapReadyCallb
                         Log.d("onClick", url);
                         GetNearbyPlacesData getNearbyPlacesData = new GetNearbyPlacesData();
                         getNearbyPlacesData.execute(DataTransfer);
-                       // progressdialog.dismiss();
+                        // progressdialog.dismiss();
                         Toast.makeText(MainMapActivity.this, "Nearby Pharmacies", Toast.LENGTH_LONG).show();
                     }
-                }
-                catch (Exception e){
-                    Log.e("ERROR","EXCEPTION");
+                } catch (Exception e) {
+                    Log.e("ERROR", "EXCEPTION");
                 }
 
 
@@ -837,14 +820,14 @@ public class MainMapActivity extends FragmentActivity implements OnMapReadyCallb
         hospitalll.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(ConnectivityReceiver.isConnected()==false){
+                if (ConnectivityReceiver.isConnected() == false) {
                     checkConnection();
                     //displayMobileDataSettingsDialog(MainMapActivity.this);
                 }
                 setProgress(v.VISIBLE);
                 //ProgressDialog loading;
                 //loading = ProgressDialog.show(MainMapActivity.this, "Uploading...", null,true,true);
-                String Hospital="hospital";
+                String Hospital = "hospital";
 
                 //Log.d("onClick", "Button is Clicked");
                 mMap.clear();
@@ -860,17 +843,19 @@ public class MainMapActivity extends FragmentActivity implements OnMapReadyCallb
                     getNearbyPlacesData.execute(DataTransfer);
                     //loading.dismiss();
                     setProgress(v.GONE);
-                    Toast.makeText(MainMapActivity.this,"Nearby Hospitals", Toast.LENGTH_LONG).show();
+                    Toast.makeText(MainMapActivity.this, "Nearby Hospitals", Toast.LENGTH_LONG).show();
                 }
 
 
             }
         });
     }
-    public void setPadding(View mapView){
-        mMap.setPadding(0,300,0,0);
+
+    public void setPadding(View mapView) {
+        mMap.setPadding(0, 300, 0, 0);
         //left,top,right,bottom
     }
+
     protected synchronized void buildGoogleApiClient() {
         mGoogleApiClient = new GoogleApiClient.Builder(this)
                 .addConnectionCallbacks(this)
@@ -879,6 +864,7 @@ public class MainMapActivity extends FragmentActivity implements OnMapReadyCallb
                 .build();
         mGoogleApiClient.connect();
     }
+
     @Override
     public void onConnected(Bundle bundle) {
         mLocationRequest = new LocationRequest();
@@ -913,7 +899,7 @@ public class MainMapActivity extends FragmentActivity implements OnMapReadyCallb
         Log.d("onLocationChanged", "entered");
         mMap.clear();
         progressBar.setVisibility(View.GONE);
-       // loading.setVisibility(View.GONE);
+        // loading.setVisibility(View.GONE);
         listapi();
         mLastLocation = location;
         if (mCurrLocationMarker != null) {
@@ -923,26 +909,26 @@ public class MainMapActivity extends FragmentActivity implements OnMapReadyCallb
         //Place current location marker
         latitude = location.getLatitude();
         longitude = location.getLongitude();
-         latLng = new LatLng(location.getLatitude(), location.getLongitude());
-        if(mCircle == null || mCurrLocationMarker == null){
+        latLng = new LatLng(location.getLatitude(), location.getLongitude());
+        if (mCircle == null || mCurrLocationMarker == null) {
             drawMarkerWithCircle(latLng);
-        }else{
+        } else {
             updateMarkerWithCircle(latLng);
         }
-         markerOptions = new MarkerOptions();
+        markerOptions = new MarkerOptions();
         markerOptions.position(latLng);
         markerOptions.title("Current Position");
-       // markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_MAGENTA));
+        // markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_MAGENTA));
         mCurrLocationMarker = mMap.addMarker(markerOptions);
         //move map camera
         mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
         mMap.animateCamera(CameraUpdateFactory.zoomTo(10));
-        shre =  getSharedPreferences(MYLOCATIONPREF, Context.MODE_PRIVATE);
+        shre = getSharedPreferences(MYLOCATIONPREF, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = shre.edit();
-        editor.putString(mylatlongkey,String.valueOf(latLng));
+        editor.putString(mylatlongkey, String.valueOf(latLng));
         editor.commit();
         //Toast.makeText(MainMapActivity.this,"Your Current Location", Toast.LENGTH_LONG).show();
-        Log.d("onLocationChanged", String.format("latitude:%.3f longitude:%.3f",latitude,longitude));
+        Log.d("onLocationChanged", String.format("latitude:%.3f longitude:%.3f", latitude, longitude));
         //stop location updates
         if (mGoogleApiClient != null) {
             LocationServices.FusedLocationApi.removeLocationUpdates(mGoogleApiClient, this);
@@ -956,7 +942,8 @@ public class MainMapActivity extends FragmentActivity implements OnMapReadyCallb
         mCircle.setCenter(position);
         mCurrLocationMarker.setPosition(position);
     }
-    private void drawMarkerWithCircle(LatLng position){
+
+    private void drawMarkerWithCircle(LatLng position) {
         double radiusInMeters = 15000.0;
         int strokeColor = 0xffff0000; //red outline
         int shadeColor = 0x44ab1719; //opaque red fill
@@ -971,7 +958,8 @@ public class MainMapActivity extends FragmentActivity implements OnMapReadyCallb
     }
 
     public static final int MY_PERMISSIONS_REQUEST_LOCATION = 99;
-    public boolean checkLocationPermission(){
+
+    public boolean checkLocationPermission() {
         if (ContextCompat.checkSelfPermission(this,
                 Manifest.permission.ACCESS_FINE_LOCATION)
                 != PackageManager.PERMISSION_GRANTED) {
@@ -994,42 +982,43 @@ public class MainMapActivity extends FragmentActivity implements OnMapReadyCallb
             return true;
         }
     }
+
     @Override
     public void onClick(View v) {
         int id = v.getId();
-        String bg="";
-       // Toast.makeText(getApplicationContext(), "id"+id, Toast.LENGTH_SHORT).show();
-        switch (id){
+        String bg = "";
+        // Toast.makeText(getApplicationContext(), "id"+id, Toast.LENGTH_SHORT).show();
+        switch (id) {
             case R.id.fabright:
                 animateFAB();
                 break;
             case R.id.fab1:
-                bg="A+";
+                bg = "A+";
                 break;
 
             case R.id.fab2:
-                bg="A-";
+                bg = "A-";
                 break;
             case R.id.fab3:
-                bg="B+";
+                bg = "B+";
                 break;
             case R.id.fab4:
-                bg="B-";
+                bg = "B-";
                 break;
             case R.id.fab5:
-                bg="AB+";
+                bg = "AB+";
                 break;
             case R.id.fab6:
-                bg="AB-";
+                bg = "AB-";
                 break;
             case R.id.fab7:
-                bg="O+";
+                bg = "O+";
                 break;
             case R.id.fab8:
-                bg="O-";
+                bg = "O-";
                 break;
         }
-        if(id!=R.id.fabright) {
+        if (id != R.id.fabright) {
             Toast.makeText(MainMapActivity.this, "Results for " + bg, Toast.LENGTH_SHORT).show();
             Intent i = new Intent(getApplicationContext(), DonarActivity.class);
             i.putExtra("sq", bg);
@@ -1037,9 +1026,9 @@ public class MainMapActivity extends FragmentActivity implements OnMapReadyCallb
         }
     }
 
-    public void animateFAB(){
+    public void animateFAB() {
 
-        if(isFabOpen){
+        if (isFabOpen) {
             fab.startAnimation(rotate_backward);
             fab1.startAnimation(fab_close);
             fab2.startAnimation(fab_close);
@@ -1092,7 +1081,7 @@ public class MainMapActivity extends FragmentActivity implements OnMapReadyCallb
             fab7.setClickable(true);
             fab8.setClickable(true);
             isFabOpen = true;
-            Log.d("Raj","open");
+            Log.d("Raj", "open");
 
         }
     }
@@ -1104,16 +1093,17 @@ public class MainMapActivity extends FragmentActivity implements OnMapReadyCallb
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
     }
-    public void showdonorsonmap()
-    {
+
+    public void showdonorsonmap() {
         String Pharmacy = "pharmacy";
         mMap.clear();
         progressBar.setVisibility(View.GONE);
         loading.setVisibility(View.GONE);
         listapi();
     }
+
     private void listapi() {
-       // Toast.makeText(getApplicationContext(),"first",Toast.LENGTH_SHORT).show();
+        // Toast.makeText(getApplicationContext(),"first",Toast.LENGTH_SHORT).show();
         mMap.clear();
         RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
         String serverURL = API.getalldonorsurl;
@@ -1129,35 +1119,33 @@ public class MainMapActivity extends FragmentActivity implements OnMapReadyCallb
 
                             for (int i = 0; i < contacts.length(); i++) {
                                 JSONObject c = contacts.getJSONObject(i);
-                                String id=c.getString("id");
-                                String fullname = c.getString("fullname");
+                                String id = c.getString("id");
+                                final String fullname = c.getString("fullname");
                                 String email = c.getString("email");
                                 String password = c.getString("password");
-                                String mobile = c.getString("mobile");
+                                final String mobile = c.getString("mobile");
                                 String gender = c.getString("gender");
-                                String address = c.getString("address");
-                                String bloodgroup = c.getString("bloodgroup");
-                                String age=c.getString("age");
-                                String city=c.getString("city");
+                                final String address = c.getString("address");
+                                final String bloodgroup = c.getString("bloodgroup");
+                                String age = c.getString("age");
+                                String city = c.getString("city");
 //                        validation(name,pass);
-                                donordata.add(new DonorBean(id,fullname,email,password,mobile,gender,address,bloodgroup,age,city));
+                                donordata.add(new DonorBean(id, fullname, email, password, mobile, gender, address, bloodgroup, age, city));
 
-                                MarkerOptions markerOptionsall = new MarkerOptions();
+                                final MarkerOptions markerOptionsall = new MarkerOptions();
                                 Geocoder coder = new Geocoder(getApplicationContext());
                                 List<Address> addressall = null;
                                 Address locationall = null;
                                 try {
                                     addressall = coder.getFromLocationName(address, 1);
 
-                                    locationall=addressall.get(0);
+                                    locationall = addressall.get(0);
 
-                                }
-                                catch(Exception e)
-                                {
+                                } catch (Exception e) {
                                     //e.printStackTrace();
                                 }
 
-                                if(locationall!=null) {
+                                if (locationall != null) {
                                     LatLng latLngall = new LatLng(locationall.getLatitude(), locationall.getLongitude());
 
                                     String url = getUrl(latLng, latLngall);
@@ -1181,270 +1169,307 @@ public class MainMapActivity extends FragmentActivity implements OnMapReadyCallb
                                     //stop location updates
                                     // Toast.makeText(getApplicationContext(), "Distance between places: " + dis, Toast.LENGTH_SHORT).show();
                                     //stop location updates
-                                    if(dis/1000<15) {
+                                    if (dis / 1000 < 15) {
                                         markerOptionsall.position(latLngall);
-                                        markerOptionsall.title(fullname + " : " + bloodgroup + " : " + mobile + " : " + address);
-                                        // Toast.makeText(getApplicationContext(), "hi" + fullname + " : " + bloodgroup + " : " + mobile + " : " + address, Toast.LENGTH_SHORT).show();
 
-                                        mMap.addMarker(markerOptions);
+                                        mMap.setInfoWindowAdapter(new GoogleMap.InfoWindowAdapter() {
+                                                                      @Override
+                                                                      public View getInfoWindow(Marker marker) {
+
+                                                                          return null;
+                                                                      }
+
+                                                                      @Override
+                                                                      public View getInfoContents(Marker marker) {
+
+                                                                          View v = getLayoutInflater().inflate(R.layout.maptitle, null);
+
+                                                                          final TextView name = (TextView) v.findViewById(R.id.tname);
+                                                                          TextView tmobile = (TextView) v.findViewById(R.id.tmobile);
+
+                                                                          String details=fullname+","+bloodgroup+","+address;
+                                                                          name.setText(details);
+                                                                          tmobile.setText(mobile);
+
+                                                                          mMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
+                                                                              @Override
+                                                                              public void onInfoWindowClick(Marker marker) {
+                                                                                  marker.getTitle();
+                                                                              }
+                                                                          });
+
+                                                                          return v;
+                                                                      }
+                                        });
+
+
+                                        //markerOptionsall.title(fullname +" : "+bloodgroup +" : "+mobile +" : "+address);
+                                            // Toast.makeText(getApplicationContext(), "hi" + fullname + " : " + bloodgroup + " : " + mobile + " : " + address, Toast.LENGTH_SHORT).show();
+
+                                        mMap.addMarker(markerOptionsall);
                                         markerOptionsall.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED));
-                                        mCurrLocationMarker = mMap.addMarker(markerOptionsall);
+                                            mCurrLocationMarker =mMap.addMarker(markerOptionsall);
                                        /* //move map camera
                                         mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
                                         mMap.animateCamera(CameraUpdateFactory.zoomTo(10));*/
+                                        }
+
                                     }
-
                                 }
+                            } catch( final JSONException e){
+                                Log.e(TAG, "Json parsing error: " + e.getMessage());
+                                e.printStackTrace();
                             }
-                        } catch (final JSONException e) {
-                            Log.e(TAG, "Json parsing error: " + e.getMessage());
-                            e.printStackTrace();
-                        }
 
-                    }
-                },
-                new com.android.volley.Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
+                        }
+                    },
+                            new com.android.volley.Response.ErrorListener()
+
+                    {
+                        @Override
+                        public void onErrorResponse (VolleyError error){
                         progressBar.setVisibility(View.GONE);
                         loading.setVisibility(View.GONE);
                         // error
                         //Toast.makeText(getApplicationContext(), "" + error, Toast.LENGTH_SHORT).show();
                         Toast.makeText(getApplicationContext(), "NO Network Connection", Toast.LENGTH_SHORT).show();
                     }
-                }
-        ){
-            @Override
-            protected Map<String, String> getParams() {
-                Toast.makeText(activity, "Successful", Toast.LENGTH_SHORT).show();
-                return null;
-            }
-        };
+                    }
+        )
+
+                    {
+                        @Override
+                        protected Map<String, String> getParams () {
+                        Toast.makeText(activity, "Successful", Toast.LENGTH_SHORT).show();
+                        return null;
+                    }
+                    }
+
+                    ;
         progressBar.setVisibility(View.VISIBLE);
         loading.setVisibility(View.VISIBLE);
         queue.add(getRequest);
-    }
-    @Override
-    protected void onResume() {
-        super.onResume();
+                }
+        @Override
+        protected void onResume () {
+            super.onResume();
 
-        // register connection status listener
-        MyApplication.getInstance().setConnectivityListener(this);
-    }
-
-
-    @Override
-    public void onNetworkConnectionChanged(boolean isConnected) {
-        showSnack(isConnected);
-    }
-    private void checkConnection() {
-        boolean isConnected = ConnectivityReceiver.isConnected();
-        showSnack(isConnected);
-    }
-    // Showing the status in Snackbar
-    private void showSnack(boolean isConnected) {
-        String message;
-        int color;
-        if (isConnected) {
-            message = "Good! Connected to Internet";
-            color = Color.WHITE;
-        } else {
-            message = "Sorry! Not connected to internet";
-            color = Color.RED;
+            // register connection status listener
+            MyApplication.getInstance().setConnectivityListener(this);
         }
 
-        Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content),message , Snackbar.LENGTH_LONG);
-        // snackbar.show();
+
+        @Override
+        public void onNetworkConnectionChanged ( boolean isConnected){
+            showSnack(isConnected);
+        }
+        private void checkConnection () {
+            boolean isConnected = ConnectivityReceiver.isConnected();
+            showSnack(isConnected);
+        }
+        // Showing the status in Snackbar
+        private void showSnack ( boolean isConnected){
+            String message;
+            int color;
+            if (isConnected) {
+                message = "Good! Connected to Internet";
+                color = Color.WHITE;
+            } else {
+                message = "Sorry! Not connected to internet";
+                color = Color.RED;
+            }
+
+            Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content), message, Snackbar.LENGTH_LONG);
+            // snackbar.show();
 //        Snackbar snackbar = Snackbar
 //                .make(findViewById(R.id.fab), message, Snackbar.LENGTH_LONG);
 
-        View sbView = snackbar.getView();
-        TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
-        textView.setTextColor(color);
-        snackbar.show();
-    }
-    private void buildAlertMessageNoGps() {
-        final AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setMessage("Your GPS seems to be disabled, do you want to enable it?")
-                .setCancelable(false)
-                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                    public void onClick(@SuppressWarnings("unused") final DialogInterface dialog, @SuppressWarnings("unused") final int id) {
-                        startActivity(new Intent(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS));
-                    }
-                })
-                .setNegativeButton("No", new DialogInterface.OnClickListener() {
-                    public void onClick(final DialogInterface dialog, @SuppressWarnings("unused") final int id) {
-                        dialog.cancel();
-                    }
-                });
-        final AlertDialog alert = builder.create();
-        alert.show();
-    }
-
-    private String getUrl(LatLng origin, LatLng dest) {
-
-        // Origin of route
-        String str_origin = "origin=" + origin.latitude + "," + origin.longitude;
-
-        // Destination of route
-        String str_dest = "destination=" + dest.latitude + "," + dest.longitude;
-
-
-        // Sensor enabled
-        String sensor = "sensor=false";
-
-        // Building the parameters to the web service
-        String parameters = str_origin + "&" + str_dest + "&" + sensor;
-
-        // Output format
-        String output = "json";
-
-        // Building the url to the web service
-        String url = "https://maps.googleapis.com/maps/api/directions/" + output + "?" + parameters;
-
-
-        return url;
-    }
-
-
-    private String downloadUrl(String strUrl) throws IOException {
-        String data = "";
-        InputStream iStream = null;
-        HttpURLConnection urlConnection = null;
-        try {
-            URL url = new URL(strUrl);
-
-            // Creating an http connection to communicate with url
-            urlConnection = (HttpURLConnection) url.openConnection();
-
-            // Connecting to url
-            urlConnection.connect();
-
-            // Reading data from url
-            iStream = urlConnection.getInputStream();
-
-            BufferedReader br = new BufferedReader(new InputStreamReader(iStream));
-
-            StringBuffer sb = new StringBuffer();
-
-            String line = "";
-            while ((line = br.readLine()) != null) {
-                sb.append(line);
-            }
-
-            data = sb.toString();
-            Log.d("downloadUrl", data.toString());
-            br.close();
-
-        } catch (Exception e) {
-            Log.d("Exception", e.toString());
-        } finally {
-            iStream.close();
-            urlConnection.disconnect();
+            View sbView = snackbar.getView();
+            TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
+            textView.setTextColor(color);
+            snackbar.show();
         }
-        return data;
-    }
+        private void buildAlertMessageNoGps () {
+            final AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setMessage("Your GPS seems to be disabled, do you want to enable it?")
+                    .setCancelable(false)
+                    .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                        public void onClick(@SuppressWarnings("unused") final DialogInterface dialog, @SuppressWarnings("unused") final int id) {
+                            startActivity(new Intent(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS));
+                        }
+                    })
+                    .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                        public void onClick(final DialogInterface dialog, @SuppressWarnings("unused") final int id) {
+                            dialog.cancel();
+                        }
+                    });
+            final AlertDialog alert = builder.create();
+            alert.show();
+        }
+
+        private String getUrl (LatLng origin, LatLng dest){
+
+            // Origin of route
+            String str_origin = "origin=" + origin.latitude + "," + origin.longitude;
+
+            // Destination of route
+            String str_dest = "destination=" + dest.latitude + "," + dest.longitude;
 
 
-    private class FetchUrl extends AsyncTask<String, Void, String> {
+            // Sensor enabled
+            String sensor = "sensor=false";
 
-        @Override
-        protected String doInBackground(String... url) {
+            // Building the parameters to the web service
+            String parameters = str_origin + "&" + str_dest + "&" + sensor;
 
-            // For storing data from web service
+            // Output format
+            String output = "json";
+
+            // Building the url to the web service
+            String url = "https://maps.googleapis.com/maps/api/directions/" + output + "?" + parameters;
+
+
+            return url;
+        }
+
+
+        private String downloadUrl (String strUrl) throws IOException {
             String data = "";
-
+            InputStream iStream = null;
+            HttpURLConnection urlConnection = null;
             try {
-                // Fetching the data from web service
-                data = downloadUrl(url[0]);
-                Log.d("Background Task data", data.toString());
+                URL url = new URL(strUrl);
+
+                // Creating an http connection to communicate with url
+                urlConnection = (HttpURLConnection) url.openConnection();
+
+                // Connecting to url
+                urlConnection.connect();
+
+                // Reading data from url
+                iStream = urlConnection.getInputStream();
+
+                BufferedReader br = new BufferedReader(new InputStreamReader(iStream));
+
+                StringBuffer sb = new StringBuffer();
+
+                String line = "";
+                while ((line = br.readLine()) != null) {
+                    sb.append(line);
+                }
+
+                data = sb.toString();
+                Log.d("downloadUrl", data.toString());
+                br.close();
+
             } catch (Exception e) {
-                Log.d("Background Task", e.toString());
+                Log.d("Exception", e.toString());
+            } finally {
+                iStream.close();
+                urlConnection.disconnect();
             }
             return data;
         }
 
-        @Override
-        protected void onPostExecute(String result) {
-            super.onPostExecute(result);
 
-            ParserTask parserTask = new ParserTask();
+        private class FetchUrl extends AsyncTask<String, Void, String> {
 
-            // Invokes the thread for parsing the JSON data
-            parserTask.execute(result);
+            @Override
+            protected String doInBackground(String... url) {
 
-        }
-    }
+                // For storing data from web service
+                String data = "";
 
-    private class ParserTask extends AsyncTask<String, Integer, List<List<HashMap<String, String>>>> {
-
-        // Parsing the data in non-ui thread
-        @Override
-        protected List<List<HashMap<String, String>>> doInBackground(String... jsonData) {
-
-            JSONObject jObject;
-            List<List<HashMap<String, String>>> routes = null;
-
-            try {
-                jObject = new JSONObject(jsonData[0]);
-                Log.d("ParserTask",jsonData[0].toString());
-                DataParser parser = new DataParser();
-                Log.d("ParserTask", parser.toString());
-
-                // Starts parsing data
-                routes = parser.parse(jObject);
-                Log.d("ParserTask","Executing routes");
-                Log.d("ParserTask",routes.toString());
-
-            } catch (Exception e) {
-                Log.d("ParserTask",e.toString());
-                e.printStackTrace();
+                try {
+                    // Fetching the data from web service
+                    data = downloadUrl(url[0]);
+                    Log.d("Background Task data", data.toString());
+                } catch (Exception e) {
+                    Log.d("Background Task", e.toString());
+                }
+                return data;
             }
-            return routes;
+
+            @Override
+            protected void onPostExecute(String result) {
+                super.onPostExecute(result);
+
+                ParserTask parserTask = new ParserTask();
+
+                // Invokes the thread for parsing the JSON data
+                parserTask.execute(result);
+
+            }
         }
 
-        // Executes in UI thread, after the parsing process
-        @Override
-        protected void onPostExecute(List<List<HashMap<String, String>>> result) {
-            ArrayList<LatLng> points;
-            PolylineOptions lineOptions = null;
+        private class ParserTask extends AsyncTask<String, Integer, List<List<HashMap<String, String>>>> {
 
-            // Traversing through all the routes
-            for (int i = 0; i < result.size(); i++) {
-                points = new ArrayList<>();
-                lineOptions = new PolylineOptions();
+            // Parsing the data in non-ui thread
+            @Override
+            protected List<List<HashMap<String, String>>> doInBackground(String... jsonData) {
 
-                // Fetching i-th route
-                List<HashMap<String, String>> path = result.get(i);
+                JSONObject jObject;
+                List<List<HashMap<String, String>>> routes = null;
 
-                // Fetching all the points in i-th route
-                for (int j = 0; j < path.size(); j++) {
-                    HashMap<String, String> point = path.get(j);
+                try {
+                    jObject = new JSONObject(jsonData[0]);
+                    Log.d("ParserTask", jsonData[0].toString());
+                    DataParser parser = new DataParser();
+                    Log.d("ParserTask", parser.toString());
 
-                    double lat = Double.parseDouble(point.get("lat"));
-                    double lng = Double.parseDouble(point.get("lng"));
-                    LatLng position = new LatLng(lat, lng);
+                    // Starts parsing data
+                    routes = parser.parse(jObject);
+                    Log.d("ParserTask", "Executing routes");
+                    Log.d("ParserTask", routes.toString());
 
-                    points.add(position);
+                } catch (Exception e) {
+                    Log.d("ParserTask", e.toString());
+                    e.printStackTrace();
+                }
+                return routes;
+            }
+
+            // Executes in UI thread, after the parsing process
+            @Override
+            protected void onPostExecute(List<List<HashMap<String, String>>> result) {
+                ArrayList<LatLng> points;
+                PolylineOptions lineOptions = null;
+
+                // Traversing through all the routes
+                for (int i = 0; i < result.size(); i++) {
+                    points = new ArrayList<>();
+                    lineOptions = new PolylineOptions();
+
+                    // Fetching i-th route
+                    List<HashMap<String, String>> path = result.get(i);
+
+                    // Fetching all the points in i-th route
+                    for (int j = 0; j < path.size(); j++) {
+                        HashMap<String, String> point = path.get(j);
+
+                        double lat = Double.parseDouble(point.get("lat"));
+                        double lng = Double.parseDouble(point.get("lng"));
+                        LatLng position = new LatLng(lat, lng);
+
+                        points.add(position);
+                    }
+
+                    // Adding all the points in the route to LineOptions
+                    lineOptions.addAll(points);
+                    lineOptions.width(10);
+                    lineOptions.color(Color.RED);
+
+                    Log.d("onPostExecute", "onPostExecute lineoptions decoded");
+
                 }
 
-                // Adding all the points in the route to LineOptions
-                lineOptions.addAll(points);
-                lineOptions.width(10);
-                lineOptions.color(Color.RED);
-
-                Log.d("onPostExecute","onPostExecute lineoptions decoded");
-
-            }
-
-            // Drawing polyline in the Google Map for the i-th route
-            if(lineOptions != null) {
-                mMap.addPolyline(lineOptions);
-            }
-            else {
-                Log.d("onPostExecute","without Polylines drawn");
+                // Drawing polyline in the Google Map for the i-th route
+                if (lineOptions != null) {
+                    mMap.addPolyline(lineOptions);
+                } else {
+                    Log.d("onPostExecute", "without Polylines drawn");
+                }
             }
         }
-    }
 
-}
+    }

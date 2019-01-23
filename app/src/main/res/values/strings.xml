@@ -81,4 +81,5 @@
     <string name="loading">Loading...</string>
     <string name="payment_txt"><![CDATA[<b>\"Your blood is precious : Donate, save a life &amp; make it Divine\"</b><br/><br/>If you like our services help us to do more by donating.<br/><br/>You can pay through <b><font color=\'#ab1719\'>Phone pay,Google Pay or Paytm</font></b><br/><br/>To this Contact :<b><font color=\'#ab1719\'>9010990285</font></b><br/><br/>Fratello InnoTech Pvt Ltd.,<br/><br/>Hyderabad<br/><br/>---OR---<br/><br/>]]></string>
     <string name="quiz">Yes, or no..  You\\\'ll only know it when you take this test that depends on the requirements of donation to decide, and you\\\'ll know how can you be a blood donor.  The test is based on the tests made by the american red cross and other blood donation organizations, so its result can be taken as a refrence</string>
+    <string name="note"><u>For direction click on direction icon at bottom</u></string>
 </resources>
