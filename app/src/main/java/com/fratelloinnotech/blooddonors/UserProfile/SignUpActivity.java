@@ -136,7 +136,16 @@ public class SignUpActivity extends AppCompatActivity  {
                 } else if (age.equals("")) {
                    // etage.requestFocus();
                     regerror.setText("Please Enter Age");
-                } else if (city.equals("")) {
+                }
+                else if (Integer.parseInt(age)<18 ) {
+                    // etage.requestFocus();
+                    regerror.setText("Your Age must be more than 18 Yrs");
+                }
+                else if (Integer.parseInt(age)>=60 ) {
+                    // etage.requestFocus();
+                    regerror.setText("Your Age must be less than 60 Yrs");
+                }
+                else if (city.equals("")) {
                    // etcity.requestFocus();
                     regerror.setText("Please Enter Location");
                 }
