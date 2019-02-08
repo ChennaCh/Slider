@@ -85,7 +85,7 @@ public class ViewNeedsActivity  extends AppCompatActivity implements ObservableS
         vneedrecycle.setScrollViewCallbacks(this);
         errormsg = (TextView) findViewById(R.id.displayerror);
         errormsg.setText("No Needy found :(");
-
+        vneedrecycle.setEmptyView(errormsg);
 //        new BloodbankAsyncFetch().execute();
         listapi();
     }
@@ -98,7 +98,10 @@ public class ViewNeedsActivity  extends AppCompatActivity implements ObservableS
                 new com.android.volley.Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
+                        vneedprogress.setVisibility(View.GONE);
+
                         try {
+
                             JSONObject jsonObj = new JSONObject(response);
                             JSONArray contacts = jsonObj.getJSONArray("result");
                             for (int i = 0; i < contacts.length(); i++) {
@@ -117,7 +120,6 @@ public class ViewNeedsActivity  extends AppCompatActivity implements ObservableS
                                 vneedListAdapter = new ViewNeedsListAdapter(ViewNeedsActivity.this,vneedsdata);
                                 vneedrecycle.setAdapter(vneedListAdapter);
                                 vneedrecycle.setLayoutManager(new LinearLayoutManager(ViewNeedsActivity.this));
-                                vneedprogress.setVisibility(View.GONE);
                             }
                         } catch (final JSONException e) {
                             Log.e(TAG, "Json parsing error: " + e.getMessage());

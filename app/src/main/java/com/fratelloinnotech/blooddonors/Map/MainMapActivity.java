@@ -13,6 +13,7 @@ import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
@@ -33,6 +34,7 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.util.Base64;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -1173,303 +1175,321 @@ public class MainMapActivity extends FragmentActivity implements OnMapReadyCallb
                                         markerOptionsall.position(latLngall);
 
                                         mMap.setInfoWindowAdapter(new GoogleMap.InfoWindowAdapter() {
-                                                                      @Override
-                                                                      public View getInfoWindow(Marker marker) {
+                                            @Override
+                                            public View
+                                            getInfoWindow(Marker marker) {
 
-                                                                          return null;
-                                                                      }
+                                                return null;
+                                            }
 
-                                                                      @Override
-                                                                      public View getInfoContents(Marker marker) {
+                                            @Override
+                                            public View
+                                            getInfoContents(final Marker marker) {
 
-                                                                          View v = getLayoutInflater().inflate(R.layout.maptitle, null);
+                                                LinearLayout info =
+                                                        new LinearLayout(getApplicationContext());
 
-                                                                          final TextView name = (TextView) v.findViewById(R.id.tname);
-                                                                          TextView tmobile = (TextView) v.findViewById(R.id.tmobile);
+                                                info.setOrientation(LinearLayout.VERTICAL);
 
-                                                                          String details=fullname+","+bloodgroup+","+address;
-                                                                          name.setText(details);
-                                                                          tmobile.setText(mobile);
+                                                final TextView title =
+                                                        new TextView(getApplicationContext());
+                                                title.setTextColor(Color.BLUE);
 
-                                                                          mMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
-                                                                              @Override
-                                                                              public void onInfoWindowClick(Marker marker) {
-                                                                                  marker.getTitle();
-                                                                              }
-                                                                          });
+                                                title.setGravity(Gravity.CENTER);
 
-                                                                          return v;
-                                                                      }
+                                                title.setTypeface(null, Typeface.BOLD);
+
+                                                title.setText(marker.getTitle());
+
+                                                final TextView snippet
+                                                        = new TextView(getApplicationContext());
+
+                                                snippet.setTextColor(Color.BLACK);
+
+                                                snippet.setText(marker.getSnippet());
+
+
+                                                info.addView(title);
+                                                info.addView(snippet);
+
+                                                return info;
+                                            }
                                         });
 
 
+                                        markerOptionsall.snippet(fullname + " : " + bloodgroup + " : " + address);
+                                        markerOptionsall.title("CALL:" + mobile);
+
+
                                         //markerOptionsall.title(fullname +" : "+bloodgroup +" : "+mobile +" : "+address);
-                                            // Toast.makeText(getApplicationContext(), "hi" + fullname + " : " + bloodgroup + " : " + mobile + " : " + address, Toast.LENGTH_SHORT).show();
+                                        // Toast.makeText(getApplicationContext(), "hi" + fullname + " : " + bloodgroup + " : " + mobile + " : " + address, Toast.LENGTH_SHORT).show();
 
                                         mMap.addMarker(markerOptionsall);
                                         markerOptionsall.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED));
-                                            mCurrLocationMarker =mMap.addMarker(markerOptionsall);
+                                        mCurrLocationMarker = mMap.addMarker(markerOptionsall);
                                        /* //move map camera
                                         mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
                                         mMap.animateCamera(CameraUpdateFactory.zoomTo(10));*/
-                                        }
-
                                     }
+
                                 }
-                            } catch( final JSONException e){
-                                Log.e(TAG, "Json parsing error: " + e.getMessage());
-                                e.printStackTrace();
                             }
-
+                        } catch (final JSONException e) {
+                            Log.e(TAG, "Json parsing error: " + e.getMessage());
+                            e.printStackTrace();
                         }
-                    },
-                            new com.android.volley.Response.ErrorListener()
 
-                    {
-                        @Override
-                        public void onErrorResponse (VolleyError error){
+                    }
+                },
+                new com.android.volley.Response.ErrorListener()
+
+                {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
                         progressBar.setVisibility(View.GONE);
                         loading.setVisibility(View.GONE);
                         // error
                         //Toast.makeText(getApplicationContext(), "" + error, Toast.LENGTH_SHORT).show();
                         Toast.makeText(getApplicationContext(), "NO Network Connection", Toast.LENGTH_SHORT).show();
                     }
-                    }
+                }
         )
 
-                    {
-                        @Override
-                        protected Map<String, String> getParams () {
-                        Toast.makeText(activity, "Successful", Toast.LENGTH_SHORT).show();
-                        return null;
-                    }
-                    }
-
-                    ;
+        {
+            @Override
+            protected Map<String, String> getParams() {
+                Toast.makeText(activity, "Successful", Toast.LENGTH_SHORT).show();
+                return null;
+            }
+        };
         progressBar.setVisibility(View.VISIBLE);
         loading.setVisibility(View.VISIBLE);
         queue.add(getRequest);
-                }
-        @Override
-        protected void onResume () {
-            super.onResume();
+    }
 
-            // register connection status listener
-            MyApplication.getInstance().setConnectivityListener(this);
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        // register connection status listener
+        MyApplication.getInstance().setConnectivityListener(this);
+    }
+
+
+    @Override
+    public void onNetworkConnectionChanged(boolean isConnected) {
+        showSnack(isConnected);
+    }
+
+    private void checkConnection() {
+        boolean isConnected = ConnectivityReceiver.isConnected();
+        showSnack(isConnected);
+    }
+
+    // Showing the status in Snackbar
+    private void showSnack(boolean isConnected) {
+        String message;
+        int color;
+        if (isConnected) {
+            message = "Good! Connected to Internet";
+            color = Color.WHITE;
+        } else {
+            message = "Sorry! Not connected to internet";
+            color = Color.RED;
         }
 
-
-        @Override
-        public void onNetworkConnectionChanged ( boolean isConnected){
-            showSnack(isConnected);
-        }
-        private void checkConnection () {
-            boolean isConnected = ConnectivityReceiver.isConnected();
-            showSnack(isConnected);
-        }
-        // Showing the status in Snackbar
-        private void showSnack ( boolean isConnected){
-            String message;
-            int color;
-            if (isConnected) {
-                message = "Good! Connected to Internet";
-                color = Color.WHITE;
-            } else {
-                message = "Sorry! Not connected to internet";
-                color = Color.RED;
-            }
-
-            Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content), message, Snackbar.LENGTH_LONG);
-            // snackbar.show();
+        Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content), message, Snackbar.LENGTH_LONG);
+        // snackbar.show();
 //        Snackbar snackbar = Snackbar
 //                .make(findViewById(R.id.fab), message, Snackbar.LENGTH_LONG);
 
-            View sbView = snackbar.getView();
-            TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
-            textView.setTextColor(color);
-            snackbar.show();
+        View sbView = snackbar.getView();
+        TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
+        textView.setTextColor(color);
+        snackbar.show();
+    }
+
+    private void buildAlertMessageNoGps() {
+        final AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage("Your GPS seems to be disabled, do you want to enable it?")
+                .setCancelable(false)
+                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    public void onClick(@SuppressWarnings("unused") final DialogInterface dialog, @SuppressWarnings("unused") final int id) {
+                        startActivity(new Intent(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS));
+                    }
+                })
+                .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    public void onClick(final DialogInterface dialog, @SuppressWarnings("unused") final int id) {
+                        dialog.cancel();
+                    }
+                });
+        final AlertDialog alert = builder.create();
+        alert.show();
+    }
+
+    private String getUrl(LatLng origin, LatLng dest) {
+
+        // Origin of route
+        String str_origin = "origin=" + origin.latitude + "," + origin.longitude;
+
+        // Destination of route
+        String str_dest = "destination=" + dest.latitude + "," + dest.longitude;
+
+
+        // Sensor enabled
+        String sensor = "sensor=false";
+
+        // Building the parameters to the web service
+        String parameters = str_origin + "&" + str_dest + "&" + sensor;
+
+        // Output format
+        String output = "json";
+
+        // Building the url to the web service
+        String url = "https://maps.googleapis.com/maps/api/directions/" + output + "?" + parameters;
+
+
+        return url;
+    }
+
+
+    private String downloadUrl(String strUrl) throws IOException {
+        String data = "";
+        InputStream iStream = null;
+        HttpURLConnection urlConnection = null;
+        try {
+            URL url = new URL(strUrl);
+
+            // Creating an http connection to communicate with url
+            urlConnection = (HttpURLConnection) url.openConnection();
+
+            // Connecting to url
+            urlConnection.connect();
+
+            // Reading data from url
+            iStream = urlConnection.getInputStream();
+
+            BufferedReader br = new BufferedReader(new InputStreamReader(iStream));
+
+            StringBuffer sb = new StringBuffer();
+
+            String line = "";
+            while ((line = br.readLine()) != null) {
+                sb.append(line);
+            }
+
+            data = sb.toString();
+            Log.d("downloadUrl", data.toString());
+            br.close();
+
+        } catch (Exception e) {
+            Log.d("Exception", e.toString());
+        } finally {
+            iStream.close();
+            urlConnection.disconnect();
         }
-        private void buildAlertMessageNoGps () {
-            final AlertDialog.Builder builder = new AlertDialog.Builder(this);
-            builder.setMessage("Your GPS seems to be disabled, do you want to enable it?")
-                    .setCancelable(false)
-                    .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                        public void onClick(@SuppressWarnings("unused") final DialogInterface dialog, @SuppressWarnings("unused") final int id) {
-                            startActivity(new Intent(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS));
-                        }
-                    })
-                    .setNegativeButton("No", new DialogInterface.OnClickListener() {
-                        public void onClick(final DialogInterface dialog, @SuppressWarnings("unused") final int id) {
-                            dialog.cancel();
-                        }
-                    });
-            final AlertDialog alert = builder.create();
-            alert.show();
-        }
-
-        private String getUrl (LatLng origin, LatLng dest){
-
-            // Origin of route
-            String str_origin = "origin=" + origin.latitude + "," + origin.longitude;
-
-            // Destination of route
-            String str_dest = "destination=" + dest.latitude + "," + dest.longitude;
+        return data;
+    }
 
 
-            // Sensor enabled
-            String sensor = "sensor=false";
+    private class FetchUrl extends AsyncTask<String, Void, String> {
 
-            // Building the parameters to the web service
-            String parameters = str_origin + "&" + str_dest + "&" + sensor;
+        @Override
+        protected String doInBackground(String... url) {
 
-            // Output format
-            String output = "json";
-
-            // Building the url to the web service
-            String url = "https://maps.googleapis.com/maps/api/directions/" + output + "?" + parameters;
-
-
-            return url;
-        }
-
-
-        private String downloadUrl (String strUrl) throws IOException {
+            // For storing data from web service
             String data = "";
-            InputStream iStream = null;
-            HttpURLConnection urlConnection = null;
+
             try {
-                URL url = new URL(strUrl);
-
-                // Creating an http connection to communicate with url
-                urlConnection = (HttpURLConnection) url.openConnection();
-
-                // Connecting to url
-                urlConnection.connect();
-
-                // Reading data from url
-                iStream = urlConnection.getInputStream();
-
-                BufferedReader br = new BufferedReader(new InputStreamReader(iStream));
-
-                StringBuffer sb = new StringBuffer();
-
-                String line = "";
-                while ((line = br.readLine()) != null) {
-                    sb.append(line);
-                }
-
-                data = sb.toString();
-                Log.d("downloadUrl", data.toString());
-                br.close();
-
+                // Fetching the data from web service
+                data = downloadUrl(url[0]);
+                Log.d("Background Task data", data.toString());
             } catch (Exception e) {
-                Log.d("Exception", e.toString());
-            } finally {
-                iStream.close();
-                urlConnection.disconnect();
+                Log.d("Background Task", e.toString());
             }
             return data;
         }
 
+        @Override
+        protected void onPostExecute(String result) {
+            super.onPostExecute(result);
 
-        private class FetchUrl extends AsyncTask<String, Void, String> {
+            ParserTask parserTask = new ParserTask();
 
-            @Override
-            protected String doInBackground(String... url) {
+            // Invokes the thread for parsing the JSON data
+            parserTask.execute(result);
 
-                // For storing data from web service
-                String data = "";
-
-                try {
-                    // Fetching the data from web service
-                    data = downloadUrl(url[0]);
-                    Log.d("Background Task data", data.toString());
-                } catch (Exception e) {
-                    Log.d("Background Task", e.toString());
-                }
-                return data;
-            }
-
-            @Override
-            protected void onPostExecute(String result) {
-                super.onPostExecute(result);
-
-                ParserTask parserTask = new ParserTask();
-
-                // Invokes the thread for parsing the JSON data
-                parserTask.execute(result);
-
-            }
         }
-
-        private class ParserTask extends AsyncTask<String, Integer, List<List<HashMap<String, String>>>> {
-
-            // Parsing the data in non-ui thread
-            @Override
-            protected List<List<HashMap<String, String>>> doInBackground(String... jsonData) {
-
-                JSONObject jObject;
-                List<List<HashMap<String, String>>> routes = null;
-
-                try {
-                    jObject = new JSONObject(jsonData[0]);
-                    Log.d("ParserTask", jsonData[0].toString());
-                    DataParser parser = new DataParser();
-                    Log.d("ParserTask", parser.toString());
-
-                    // Starts parsing data
-                    routes = parser.parse(jObject);
-                    Log.d("ParserTask", "Executing routes");
-                    Log.d("ParserTask", routes.toString());
-
-                } catch (Exception e) {
-                    Log.d("ParserTask", e.toString());
-                    e.printStackTrace();
-                }
-                return routes;
-            }
-
-            // Executes in UI thread, after the parsing process
-            @Override
-            protected void onPostExecute(List<List<HashMap<String, String>>> result) {
-                ArrayList<LatLng> points;
-                PolylineOptions lineOptions = null;
-
-                // Traversing through all the routes
-                for (int i = 0; i < result.size(); i++) {
-                    points = new ArrayList<>();
-                    lineOptions = new PolylineOptions();
-
-                    // Fetching i-th route
-                    List<HashMap<String, String>> path = result.get(i);
-
-                    // Fetching all the points in i-th route
-                    for (int j = 0; j < path.size(); j++) {
-                        HashMap<String, String> point = path.get(j);
-
-                        double lat = Double.parseDouble(point.get("lat"));
-                        double lng = Double.parseDouble(point.get("lng"));
-                        LatLng position = new LatLng(lat, lng);
-
-                        points.add(position);
-                    }
-
-                    // Adding all the points in the route to LineOptions
-                    lineOptions.addAll(points);
-                    lineOptions.width(10);
-                    lineOptions.color(Color.RED);
-
-                    Log.d("onPostExecute", "onPostExecute lineoptions decoded");
-
-                }
-
-                // Drawing polyline in the Google Map for the i-th route
-                if (lineOptions != null) {
-                    mMap.addPolyline(lineOptions);
-                } else {
-                    Log.d("onPostExecute", "without Polylines drawn");
-                }
-            }
-        }
-
     }
+
+    private class ParserTask extends AsyncTask<String, Integer, List<List<HashMap<String, String>>>> {
+
+        // Parsing the data in non-ui thread
+        @Override
+        protected List<List<HashMap<String, String>>> doInBackground(String... jsonData) {
+
+            JSONObject jObject;
+            List<List<HashMap<String, String>>> routes = null;
+
+            try {
+                jObject = new JSONObject(jsonData[0]);
+                Log.d("ParserTask", jsonData[0].toString());
+                DataParser parser = new DataParser();
+                Log.d("ParserTask", parser.toString());
+
+                // Starts parsing data
+                routes = parser.parse(jObject);
+                Log.d("ParserTask", "Executing routes");
+                Log.d("ParserTask", routes.toString());
+
+            } catch (Exception e) {
+                Log.d("ParserTask", e.toString());
+                e.printStackTrace();
+            }
+            return routes;
+        }
+
+        // Executes in UI thread, after the parsing process
+        @Override
+        protected void onPostExecute(List<List<HashMap<String, String>>> result) {
+            ArrayList<LatLng> points;
+            PolylineOptions lineOptions = null;
+
+            // Traversing through all the routes
+            for (int i = 0; i < result.size(); i++) {
+                points = new ArrayList<>();
+                lineOptions = new PolylineOptions();
+
+                // Fetching i-th route
+                List<HashMap<String, String>> path = result.get(i);
+
+                // Fetching all the points in i-th route
+                for (int j = 0; j < path.size(); j++) {
+                    HashMap<String, String> point = path.get(j);
+
+                    double lat = Double.parseDouble(point.get("lat"));
+                    double lng = Double.parseDouble(point.get("lng"));
+                    LatLng position = new LatLng(lat, lng);
+
+                    points.add(position);
+                }
+
+                // Adding all the points in the route to LineOptions
+                lineOptions.addAll(points);
+                lineOptions.width(10);
+                lineOptions.color(Color.RED);
+
+                Log.d("onPostExecute", "onPostExecute lineoptions decoded");
+
+            }
+
+            // Drawing polyline in the Google Map for the i-th route
+            if (lineOptions != null) {
+                mMap.addPolyline(lineOptions);
+            } else {
+                Log.d("onPostExecute", "without Polylines drawn");
+            }
+        }
+    }
+
+}

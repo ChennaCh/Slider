@@ -47,25 +47,25 @@
             <!--android:layout_centerInParent="true"-->
             <!--ads:adUnitId="ca-app-pub-4682541119478126/9094826082">-->
         <!--</com.google.android.gms.ads.AdView>-->
-
+        <ProgressBar
+            android:id="@+id/bloodbank_progress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:visibility="gone"/>
+        <TextView
+            android:visibility="gone"
+            android:id="@+id/displayerror"
+            android:gravity="center"
+            android:textStyle="bold"
+            android:textSize="18sp"
+            android:textColor="#fff"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text=""/>
     </RelativeLayout>
 
-    <ProgressBar
-        android:id="@+id/bloodbank_progress"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:visibility="gone"/>
-    <TextView
-        android:visibility="gone"
-        android:id="@+id/displayerror"
-        android:gravity="center"
-        android:textStyle="bold"
-        android:textSize="18sp"
-        android:textColor="#fff"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:text=""/>
+
 
 </LinearLayout>

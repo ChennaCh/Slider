@@ -84,6 +84,7 @@ public class BloodBanksActivity extends AppCompatActivity implements ObservableS
         errormsg = (TextView) findViewById(R.id.displayerror);
         errormsg.setText("No Blood Bank found :(");
 //        new BloodbankAsyncFetch().execute();
+        bloodbankrecyle.setEmptyView(errormsg);
         listapi();
     }
 
@@ -95,6 +96,8 @@ public class BloodBanksActivity extends AppCompatActivity implements ObservableS
                 new com.android.volley.Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
+                        bloodbankprogress.setVisibility(View.GONE);
+
                         try {
                             JSONObject jsonObj = new JSONObject(response);
                             JSONArray contacts = jsonObj.getJSONArray("result");
@@ -113,7 +116,6 @@ public class BloodBanksActivity extends AppCompatActivity implements ObservableS
                                 bloodbankListAdapter = new BloodbankListAdapter(BloodBanksActivity.this, bbdata);
                                 bloodbankrecyle.setAdapter(bloodbankListAdapter);
                                 bloodbankrecyle.setLayoutManager(new LinearLayoutManager(BloodBanksActivity.this));
-                                bloodbankprogress.setVisibility(View.GONE);
                             }
                         } catch (final JSONException e) {
                             Log.e(TAG, "Json parsing error: " + e.getMessage());

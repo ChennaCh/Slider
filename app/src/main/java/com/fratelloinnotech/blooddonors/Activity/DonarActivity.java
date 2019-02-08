@@ -98,6 +98,8 @@ public class DonarActivity extends AppCompatActivity implements ObservableScroll
                 new com.android.volley.Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
+                        donorprogress.setVisibility(View.GONE);
+
                         try {
                             JSONObject jsonObj = new JSONObject(response);
                             JSONArray contacts = jsonObj.getJSONArray("result");
@@ -120,7 +122,6 @@ public class DonarActivity extends AppCompatActivity implements ObservableScroll
                                     donorListAdapter = new DonorListAdapter(DonarActivity.this,donordata);
                                 donorrecycle.setAdapter(donorListAdapter);
                                 donorrecycle.setLayoutManager(new LinearLayoutManager(DonarActivity.this));
-                                donorprogress.setVisibility(View.GONE);
                                }
                                 else
                                {
